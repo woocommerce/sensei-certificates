@@ -1,4 +1,4 @@
-<?php
+ <?php
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
@@ -34,12 +34,39 @@ class WooThemes_Sensei_Certificates {
 	public function __construct() {
 
 		// Hook onto Sensei settings and load a new tab with settings for extension
-		add_filter( 'sensei_settings_tabs', array( &$this, 'certificates_settings_tabs' ) );
-		add_filter( 'sensei_settings_fields', array( &$this, 'certificates_settings_fields' ) );
-		// Hook onto load post types in Sensei and load the certificates post type
-		$this->labels = array();
-		$this->setup_post_type_labels_base();
-		add_action( 'init', array( &$this, 'setup_certificates_post_type' ), 110 );
+		add_filter( 'sensei_settings_tabs', array( $this, 'certificates_settings_tabs' ) );
+		add_filter( 'sensei_settings_fields', array( $this, 'certificates_settings_fields' ) );
+
+		/**
+		 * FRONTEND
+		 */
+		// Add View certificate link on Learner Profile.
+		add_action( 'sensei_course_after_profile', array( $this, 'function_to_add' ) );
+		// Add View certificate link to My Courses
+		add_action( 'sensei_item_after_my_courses_completed', array( $this, 'function_to_add' ) );
+		// Add View Ceritificate link to Single Course page
+		add_action( 'sensei_after_main_content', array( $this, 'function_to_add' ), 9 );
+		// Add View Ceritificate link to Course Completed page
+		add_action( 'sensei_after_course_completed', array( $this, 'function_to_add' ) );
+
+		/**
+		 * BACKEND
+		 */
+		if ( is_admin() ) {
+			// Add Certificates Menu
+			add_action( 'admin_menu', array( $this, 'certificates_admin_menu' ) );
+			//add_action( 'admin_print_scripts', array( $this, 'enqueue_scripts' ) );
+			add_action( 'admin_print_styles', array( $this, 'enqueue_styles' ) );
+			add_action( 'certificates_wrapper_container', array( $this, 'wrapper_container'  ) );
+			// Extend user analasys columns
+			//add_filter( 'analysis_user_profile_columns' );
+			// Extend user analasys query
+			//add_filter( 'analasys_user_profile_data_query' );
+			// Extend analasys learners taking course columns
+			//add_filter( 'analysis_users_taking_course_columns' );
+			// Extend analasys learners taking course query
+			//add_filter( 'analasys_users_taking_course_data_query' );
+		}
 
 	} // End __construct()
 
@@ -65,9 +92,9 @@ class WooThemes_Sensei_Certificates {
 	public function certificates_settings_tabs( $sections ) {
 
 		$sections['certificate-settings'] = array(
-						'name' 			=> __( 'Certificate Settings', 'woothemes-sensei-certificates' ),
-						'description'	=> __( 'Optional settings for the Certificates functions.', 'woothemes-sensei-certificates' )
-					);
+			'name' 			=> __( 'Certificate Settings', 'woothemes-sensei-certificates' ),
+			'description'	=> __( 'Options for the Certificate Extension.', 'woothemes-sensei-certificates' )
+		);
 
 		return $sections;
 
@@ -88,9 +115,30 @@ class WooThemes_Sensei_Certificates {
 			'default' 		=> true,
 			'section' 		=> 'certificate-settings'
 		);
-		$fields['certificates_public'] = array(
-			'name' 			=> __( 'Publicly Viewable', 'woothemes-sensei-certificates' ),
-			'description' 	=> __( 'Allow certificates to be publickly viewable by anyone.', 'woothemes-sensei-certificates' ),
+		$fields['certificates_view_courses'] = array(
+			'name' 			=> __( 'View in Courses', 'woothemes-sensei-certificates' ),
+			'description' 	=> __( 'Show a view certificate link in the single Course page and the My Courses page.', 'woothemes-sensei-certificates' ),
+			'type' 			=> 'checkbox',
+			'default' 		=> true,
+			'section' 		=> 'certificate-settings'
+		);
+		$fields['certificates_view_profile'] = array(
+			'name' 			=> __( 'View in Learner Profile', 'woothemes-sensei-certificates' ),
+			'description' 	=> __( 'Show a list of all the Learner Certificates in their Learner Profile page.', 'woothemes-sensei-certificates' ),
+			'type' 			=> 'checkbox',
+			'default' 		=> true,
+			'section' 		=> 'certificate-settings'
+		);
+		$fields['certificates_public_viewable'] = array(
+			'name' 			=> __( 'Public Certificate', 'woothemes-sensei-certificates' ),
+			'description' 	=> __( 'Allow the Learner to share their Certificate with the public.', 'woothemes-sensei-certificates' ),
+			'type' 			=> 'checkbox',
+			'default' 		=> true,
+			'section' 		=> 'certificate-settings'
+		);
+		$fields['certificates_show_course_grade'] = array(
+			'name' 			=> __( 'Course Grade', 'woothemes-sensei-certificates' ),
+			'description' 	=> __( 'Calculate and display an average Grade for the Course.', 'woothemes-sensei-certificates' ),
 			'type' 			=> 'checkbox',
 			'default' 		=> true,
 			'section' 		=> 'certificate-settings'
@@ -101,102 +149,83 @@ class WooThemes_Sensei_Certificates {
 	} // End certificates_settings_fields()
 
 	/**
-	 * Setup the "extension" post type, it's admin menu item and the appropriate labels and permissions.
+	 * certificates_admin_menu function.
 	 * @since  1.0.0
-	 * @uses  global $woothemes_sensei
+	 * @access public
 	 * @return void
 	 */
-	public function setup_certificates_post_type () {
+	public function certificates_admin_menu() {
+	    global $menu, $woocommerce;
+	    if ( current_user_can( 'manage_options' ) )
+	    	$certificates_page = add_submenu_page('edit.php?post_type=lesson', __( 'Certificates', 'woothemes-sensei-certificates' ),  __( 'Certificates', 'woothemes-sensei-certificates'), 'manage_options', 'sensei_certificates', array( $this, 'certificates_page' ) );
+	} // End certificates_admin_menu()
 
+	/**
+	 * enqueue_styles function.
+	 *
+	 * @description Load in CSS styles where necessary.
+	 * @access public
+	 * @since 1.0.0
+	 * @return void
+	 */
+	public function enqueue_styles () {
 		global $woothemes_sensei;
-
-		$args = array(
-		    'labels' => $this->create_post_type_labels( 'extension', $this->labels['extension']['singular'], $this->labels['extension']['plural'], $this->labels['extension']['menu'] ),
-		    'public' => true,
-		    'publicly_queryable' => true,
-		    'show_ui' => true,
-		    'show_in_menu' => 'edit.php?post_type=lesson',
-		    'query_var' => true,
-		    'rewrite' => array( 'slug' => esc_attr( apply_filters( 'sensei_certificate_slug', 'certificate' ) ) , 'with_front' => true, 'feeds' => true, 'pages' => true ),
-		    'map_meta_cap' => true,
-		    // 'capability_type' => 'extension',
-		    // 'capabilities' => array(
-						// 				// meta caps (don't assign these to roles)
-						// 				'edit_post'              => 'edit_extension',
-						// 				'read_post'              => 'read_extension',
-						// 				'delete_post'            => 'delete_extension',
-
-						// 				// primitive/meta caps
-						// 				'create_posts'           => 'create_extensions',
-
-						// 				// primitive caps used outside of map_meta_cap()
-						// 				'edit_posts'             => 'edit_extensions',
-						// 				'edit_others_posts'      => 'edit_others_extensions',
-						// 				'publish_posts'          => 'publish_extensions',
-						// 				'read_private_posts'     => 'read_private_extensions',
-
-						// 				// primitive caps used inside of map_meta_cap()
-						// 				'read'                   => 'read',
-						// 				'delete_posts'           => 'delete_extensions',
-						// 				'delete_private_posts'   => 'delete_private_extensions',
-						// 				'delete_published_posts' => 'delete_published_extensions',
-						// 				'delete_others_posts'    => 'delete_others_extensions',
-						// 				'edit_private_posts'     => 'edit_private_extensions',
-						// 				'edit_published_posts'   => 'edit_published_extensions'
-						// 			),
-		    'has_archive' => true,
-		    'hierarchical' => false,
-		    'menu_position' => 20, // Below "Pages"
-		    'menu_icon' => esc_url( $woothemes_sensei->plugin_url . 'assets/images/icon_course_16.png' ),
-		    'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail' )
-		);
-
-		register_post_type( 'certificate', $args );
-
-	} // End setup_certificates_post_type()
+		wp_enqueue_style( $woothemes_sensei->token . '-admin' );
+	} // End enqueue_styles()
 
 	/**
-	 * Create the labels for a specified post type.
-	 * @since  1.0.0
-	 * @param  string $token    The post type for which to setup labels (used to provide context)
-	 * @param  string $singular The label for a singular instance of the post type
-	 * @param  string $plural   The label for a plural instance of the post type
-	 * @param  string $menu     The menu item label
-	 * @return array            An array of the labels to be used
+	 * certificates_page function.
+	 * @since 1.0.0
+	 * @access public
+	 * @return void
 	 */
-	private function create_post_type_labels ( $token, $singular, $plural, $menu ) {
-
-		$labels = array(
-		    'name' => sprintf( _x( '%s', 'post type general name', 'woothemes-sensei-certificates' ), $plural ),
-		    'singular_name' => sprintf( _x( '%s', 'post type singular name', 'woothemes-sensei-certificates' ), $singular ),
-		    'add_new' => sprintf( _x( 'Add New %s', $token, 'woothemes-sensei-certificates' ), $singular ),
-		    'add_new_item' => sprintf( __( 'Add New %s', 'woothemes-sensei-certificates' ), $singular ),
-		    'edit_item' => sprintf( __( 'Edit %s', 'woothemes-sensei-certificates' ), $singular ),
-		    'new_item' => sprintf( __( 'New %s', 'woothemes-sensei-certificates' ), $singular ),
-		    'all_items' => sprintf( __( 'All %s', 'woothemes-sensei-certificates' ), $plural ),
-		    'view_item' => sprintf( __( 'View %s', 'woothemes-sensei-certificates' ), $singular ),
-		    'search_items' => sprintf( __( 'Search %s', 'woothemes-sensei-certificates' ), $plural ),
-		    'not_found' =>  sprintf( __( 'No %s found', 'woothemes-sensei-certificates' ), strtolower( $plural ) ),
-		    'not_found_in_trash' => sprintf( __( 'No %s found in Trash', 'woothemes-sensei-certificates' ), strtolower( $plural ) ),
-		    'parent_item_colon' => '',
-		    'menu_name' => sprintf( __( '%s', 'woothemes-sensei-certificates' ), $menu )
-		  );
-
-		return $labels;
-
-	} // End create_post_type_labels()
+	public function certificates_page() {
+		$this->certificates_default_view();
+	} // End certificates_page()
 
 	/**
-	 * Setup the singular, plural and menu label names for the post types.
+	 * certificates_default_view default view for analysis page
 	 * @since  1.0.0
 	 * @return void
 	 */
-	private function setup_post_type_labels_base () {
+	public function certificates_default_view( $type = '' ) {
 
-		$this->labels = array( 'extension' => array() );
+		// Wrappers
+		do_action( 'certificates_before_container' );
+		do_action( 'certificates_wrapper_container', 'top' );
 
-		$this->labels['certificate'] = array( 'singular' => __( 'Certificate', 'woothemes-sensei-certificates' ), 'plural' => __( 'Certificates', 'woothemes-sensei-certificates' ), 'menu' => __( 'Certificates', 'woothemes-sensei-certificates' ) );
+		$this->certificates_default_nav();
 
-	} // End setup_post_type_labels_base()
+		do_action( 'certificates_wrapper_container', 'bottom' );
+		do_action( 'certificates_after_container' );
+	} // End certificates_default_view
+
+	/**
+	 * wrapper_container wrapper for analysis area
+	 * @since  1.0.0
+	 * @param $which string
+	 * @return void
+	 */
+	public function wrapper_container( $which ) {
+		global $woothemes_sensei;
+		if ( 'top' == $which ) {
+			?><div id="woothemes-sensei" class="wrap <?php echo esc_attr( $woothemes_sensei->token ); ?>"><?php
+		} elseif ( 'bottom' == $which ) {
+			?></div><!--/#woothemes-sensei--><?php
+		} // End If Statement
+	} // End wrapper_container()
+
+	/**
+	 * analysis_default_nav default nav area for analysis
+	 * @since  1.0.0
+	 * @return void
+	 */
+	public function certificates_default_nav() {
+		global $woothemes_sensei;
+		?><?php screen_icon( 'woothemes-sensei' ); ?>
+			<h2><?php _e( 'Certificates', 'woothemes-sensei-certificates' ); ?></h2>
+			<p class="powered-by-woo"><?php _e( 'Powered by', 'woothemes-sensei-certificates' ); ?><a href="http://www.woothemes.com/" title="WooThemes"><img src="<?php echo $woothemes_sensei->plugin_url; ?>assets/images/woothemes.png" alt="WooThemes" /></a></p>
+			<br class="clear"><?php
+	} // End certificates_default_nav()
 
 } // End Class
