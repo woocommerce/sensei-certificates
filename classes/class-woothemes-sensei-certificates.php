@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  * - setup_post_type_labels_base()
  */
 class WooThemes_Sensei_Certificates {
-
+	public $plugin_url;
 	/**
 	 * __construct function.
 	 *
@@ -31,8 +31,8 @@ class WooThemes_Sensei_Certificates {
 	 * @return void
 	 * @since 1.0.0
 	 */
-	public function __construct() {
-
+	public function __construct( $file ) {
+		$this->plugin_url = trailingslashit( plugins_url( '', $file ) );
 		// Hook onto Sensei settings and load a new tab with settings for extension
 		add_filter( 'sensei_settings_tabs', array( $this, 'certificates_settings_tabs' ) );
 		add_filter( 'sensei_settings_fields', array( $this, 'certificates_settings_fields' ) );
@@ -48,6 +48,8 @@ class WooThemes_Sensei_Certificates {
 		add_action( 'sensei_after_main_content', array( $this, 'function_to_add' ), 9 );
 		// Add View Ceritificate link to Course Completed page
 		add_action( 'sensei_after_course_completed', array( $this, 'function_to_add' ) );
+		// Load the View Certificate template via shortcode
+		add_shortcode( 'view-certificate', array( $this, 'shortcode_view_certificate' ) );
 
 		/**
 		 * BACKEND
@@ -55,17 +57,13 @@ class WooThemes_Sensei_Certificates {
 		if ( is_admin() ) {
 			// Add Certificates Menu
 			add_action( 'admin_menu', array( $this, 'certificates_admin_menu' ) );
+			// Show install certificate page admin notice
+			add_action( 'admin_print_styles', array( $this, 'admin_notices_styles' ) );
+			add_action( 'settings_before_form', array( $this, 'install_pages_output' ) );
+			register_activation_hook( $file, array( $this, 'activate_sensei_certificates' ) );
 			//add_action( 'admin_print_scripts', array( $this, 'enqueue_scripts' ) );
 			add_action( 'admin_print_styles', array( $this, 'enqueue_styles' ) );
 			add_action( 'certificates_wrapper_container', array( $this, 'wrapper_container'  ) );
-			// Extend user analasys columns
-			//add_filter( 'analysis_user_profile_columns' );
-			// Extend user analasys query
-			//add_filter( 'analasys_user_profile_data_query' );
-			// Extend analasys learners taking course columns
-			//add_filter( 'analysis_users_taking_course_columns' );
-			// Extend analasys learners taking course query
-			//add_filter( 'analasys_users_taking_course_data_query' );
 		}
 
 	} // End __construct()
@@ -107,13 +105,23 @@ class WooThemes_Sensei_Certificates {
 	 * @return $fields array
 	 */
 	public function certificates_settings_fields( $fields ) {
-
+		$pages_array = array();
+		$pages_array = $this->pages_array();
 		$fields['certificates_enabled'] = array(
 			'name' 			=> __( 'Enable Certificates', 'woothemes-sensei-certificates' ),
 			'description' 	=> __( 'A description for the extension setting.', 'woothemes-sensei-certificates' ),
 			'type' 			=> 'checkbox',
 			'default' 		=> true,
 			'section' 		=> 'certificate-settings'
+		);
+		$fields['certificates_page'] = array(
+			'name' => __( 'View Certificate Page', 'woothemes-sensei' ),
+			'description' => __( 'The page to use to display certificates.', 'woothemes-sensei-certificates' ),
+			'type' => 'select',
+			'default' => '',
+			'required' => 1,
+			'section' => 'certificate-settings',
+			'options' => $pages_array
 		);
 		$fields['certificates_view_courses'] = array(
 			'name' 			=> __( 'View in Courses', 'woothemes-sensei-certificates' ),
@@ -138,7 +146,7 @@ class WooThemes_Sensei_Certificates {
 		);
 		$fields['certificates_show_course_grade'] = array(
 			'name' 			=> __( 'Course Grade', 'woothemes-sensei-certificates' ),
-			'description' 	=> __( 'Calculate and display an average Grade for the Course.', 'woothemes-sensei-certificates' ),
+			'description' 	=> __( 'Calculate and display an average Grade for the Course on the Certificate.', 'woothemes-sensei-certificates' ),
 			'type' 			=> 'checkbox',
 			'default' 		=> true,
 			'section' 		=> 'certificate-settings'
@@ -171,7 +179,45 @@ class WooThemes_Sensei_Certificates {
 	public function enqueue_styles () {
 		global $woothemes_sensei;
 		wp_enqueue_style( $woothemes_sensei->token . '-admin' );
+		wp_register_style( 'woothemes-sensei-certificates-admin', $this->plugin_url . 'assets/css/admin.css' );
+		wp_enqueue_style( 'woothemes-sensei-certificates-admin' );
 	} // End enqueue_styles()
+
+	/**
+	 * Return an array of pages.
+	 * @access private
+	 * @since  1.0.0
+	 * @return void
+	 */
+	private function pages_array() {
+		// REFACTOR - Transform this into a field type instead.
+		// Setup an array of portfolio gallery terms for a dropdown.
+		$args = array( 'echo' => 0, 'hierarchical' => 1, 'sort_column' => 'post_title', 'sort_order' => 'ASC' );
+		$pages_dropdown = wp_dropdown_pages( $args );
+		$page_items = array();
+
+		// Quick string hack to make sure we get the pages with the indents.
+		$pages_dropdown = str_replace( "<select name='page_id' id='page_id'>", '', $pages_dropdown );
+		$pages_dropdown = str_replace( '</select>', '', $pages_dropdown );
+		$pages_split = explode( '</option>', $pages_dropdown );
+
+		$page_items[] = __( 'Select a Page:', 'woothemes-sensei-certificates' );
+
+		foreach ( $pages_split as $k => $v ) {
+		    $id = '';
+		    // Get the ID value.
+		    preg_match( '/value="(.*?)"/i', $v, $matches );
+
+		    if ( isset( $matches[1] ) ) {
+		        $id = $matches[1];
+		        $page_items[$id] = trim( strip_tags( $v ) );
+		    } // End If Statement
+		} // End For Loop
+
+		$pages_array = $page_items;
+
+		return $pages_array;
+	} // End pages_array()
 
 	/**
 	 * certificates_page function.
@@ -195,6 +241,17 @@ class WooThemes_Sensei_Certificates {
 		do_action( 'certificates_wrapper_container', 'top' );
 
 		$this->certificates_default_nav();
+		?>
+			<div id="poststuff" class="sensei-certificates-wrap">
+				<div class="sensei-certificates-main">
+					<?php
+						require_once "class-woothemes-sensei-certificates-list-table.php";
+						$sensei_analysis_overview = new WooThemes_Sensei_Certificates_List_Table();
+						$sensei_analysis_overview->display();
+					?>
+				</div>
+			</div>
+		<?php
 
 		do_action( 'certificates_wrapper_container', 'bottom' );
 		do_action( 'certificates_after_container' );
@@ -222,10 +279,148 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function certificates_default_nav() {
 		global $woothemes_sensei;
-		?><?php screen_icon( 'woothemes-sensei' ); ?>
+		?><?php screen_icon( 'woothemes-sensei-certificates' ); ?>
 			<h2><?php _e( 'Certificates', 'woothemes-sensei-certificates' ); ?></h2>
 			<p class="powered-by-woo"><?php _e( 'Powered by', 'woothemes-sensei-certificates' ); ?><a href="http://www.woothemes.com/" title="WooThemes"><img src="<?php echo $woothemes_sensei->plugin_url; ?>assets/images/woothemes.png" alt="WooThemes" /></a></p>
 			<br class="clear"><?php
 	} // End certificates_default_nav()
+
+	/**
+	 * admin_notices_styles function.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	function admin_notices_styles() {
+		global $woothemes_sensei;
+		// Installed notices
+	    if ( get_option( 'sensei_certificates_installed', 1 ) == 1 ) {
+	    			print "Im HERE";
+	    	wp_enqueue_style( 'sensei-activation' );
+
+	    	if ( get_option( 'skip_install_sensei_certficate_pages' ) != 1 && $woothemes_sensei->settings->settings['certificates_page'] < 1 && ! isset( $_GET['install_sensei_certificate_pages'] ) && ! isset( $_GET[ 'skip_install_sensei_certificate_pages' ] ) ) {
+	    		add_action( 'admin_notices', array( $this, 'admin_install_notice' ) );
+	    	} elseif ( ! isset( $_GET['page'] ) || $_GET['page'] != 'woothemes-sensei-settings' ) {
+	    		add_action( 'admin_notices', array( &$this, 'admin_installed_notice' ) );
+	    	} // End If Statement
+
+	    } // End If Statement
+	} // End admin_notices_styles()
+
+	/**
+	 * admin_install_notice function.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	function admin_install_notice() {
+	    ?>
+	    <div id="message" class="updated sensei-message sensei-connect">
+	    	<div class="squeezer">
+	    		<h4><?php _e( '<strong>Welcome to Sensei Certificates</strong> &#8211; You\'re almost ready view some certificates :)', 'woothemes-sensei-certificates' ); ?></h4>
+	    		<p class="submit"><a href="<?php echo add_query_arg('install_sensei_certificate_pages', 'true', admin_url('edit.php?post_type=lesson&page=woothemes-sensei-settings')); ?>" class="button-primary"><?php _e( 'Install Sensei Certificates Pages', 'woothemes-sensei-certificates' ); ?></a> <a class="skip button" href="<?php echo add_query_arg('skip_install_sensei_certificate_pages', 'true', admin_url('edit.php?post_type=lesson&page=woothemes-sensei-settings')); ?>"><?php _e('Skip Certificates setup', 'woothemes-sensei-certificates'); ?></a></p>
+	    	</div>
+	    </div>
+	    <?php
+	} // End admin_install_notice()
+
+
+	/**
+	 * admin_installed_notice function.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	function admin_installed_notice() {
+	    ?>
+	    <div id="message" class="updated sensei-message sensei-connect">
+	    	<div class="squeezer">
+	    		<h4><?php _e( '<strong>Sensei Certificates has been installed</strong> &#8211; You\'re ready to viewing certificates :)', 'woothemes-sensei-certificates' ); ?></h4>
+
+	    		<p class="submit"><a href="<?php echo admin_url('edit.php?post_type=lesson&page=woothemes-sensei-settings'); ?>" class="button-primary"><?php _e( 'Settings', 'woothemes-sensei' ); ?></a> <a class="docs button-primary" href="http://www.woothemes.com/sensei-docs/"><?php _e('Documentation', 'woothemes-sensei-certificates'); ?></a></p>
+
+	    		<p><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.woothemes.com/sensei/" data-text="A premium Learning Management plugin for #WordPress that helps you teach courses online. Beautifully." data-via="WooThemes" data-size="large" data-hashtags="Sensei">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></p>
+	    	</div>
+	    </div>
+	    <?php
+
+	    // Set installed option
+	    update_option('sensei_certificates_installed', 0);
+	} // End admin_installed_notice()
+
+	/**
+	 * install_pages_output function.
+	 *
+	 * Handles installation of the 2 pages needs for courses and my courses
+	 *
+	 * @access public
+	 * @return void
+	 */
+	function install_pages_output() {
+		global $woothemes_sensei;
+
+		// Install/page installer
+	    $install_complete = false;
+
+	    // Add pages button
+	    if (isset($_GET['install_sensei_certificate_pages']) && $_GET['install_sensei_certificate_pages']) {
+
+			$woothemes_sensei->admin->create_page( esc_sql( _x('view-certificate', 'page_slug', 'woothemes-sensei-certificates') ), $woothemes_sensei->admin->token . '_view_certificate_page_id', __('View Certificate', 'woothemes-sensei-certificates'), '[view-certificate]' );
+	    	update_option('skip_install_sensei_certificate_pages', 1);
+	    	$install_complete = true;
+
+		// Skip button
+	    } elseif (isset($_GET['skip_install_sensei_certificate_pages']) && $_GET['skip_install_sensei_certificate_pages']) {
+
+	    	update_option('skip_install_sensei_certificate_pages', 1);
+	    	$install_complete = true;
+
+	    }
+
+		if ($install_complete) {
+			?>
+	    	<div id="message" class="updated sensei-message sensei-connect">
+				<div class="squeezer">
+					<h4><?php _e( '<strong>Congratulations!</strong> &#8211; Sensei Certificates has been installed and setup. Enjoy :)', 'woothemes-sensei' ); ?></h4>
+					<p><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.woothemes.com/sensei/" data-text="A premium Learning Management plugin for #WordPress that helps you create courses. Beautifully." data-via="WooThemes" data-size="large" data-hashtags="Sensei">Tweet</a>
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></p>
+				</div>
+			</div>
+			<?php
+
+			// Flush rules after install
+			flush_rewrite_rules( false );
+
+			// Set installed option
+			update_option('sensei_certificates_installed', 0);
+		}
+
+	} // End install_pages_output()
+
+	/**
+	 * Run on activation of the plugin.
+	 * @access public
+	 * @since  1.0.0
+	 * @return void
+	 */
+	public function activate_sensei_certificates () {
+		update_option( 'skip_install_sensei_certificate_pages', 0 );
+		update_option( 'sensei_certificates_installed', 1 );
+	} // End activate_sensei()
+
+	/**
+	 * Load the view certificate template.
+	 * @access public
+	 * @since  1.0.0
+	 * @return void
+	 */
+	public function shortcode_view_certificate() {
+		global $woothemes_sensei;
+		ob_start();
+		$woothemes_sensei->frontend->sensei_get_template( 'view-certificate.php' );
+		$content = ob_get_clean();
+		return $content;
+	} // End shortcode_view_certificate()
 
 } // End Class
