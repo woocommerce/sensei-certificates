@@ -24,6 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  */
 class WooThemes_Sensei_Certificates {
 	public $plugin_url;
+	public $plugin_path;
 	/**
 	 * __construct function.
 	 *
@@ -33,6 +34,7 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function __construct( $file ) {
 		$this->plugin_url = trailingslashit( plugins_url( '', $file ) );
+		$this->plugin_path = plugin_dir_path( $file );
 		// Hook onto Sensei settings and load a new tab with settings for extension
 		add_filter( 'sensei_settings_tabs', array( $this, 'certificates_settings_tabs' ) );
 		add_filter( 'sensei_settings_fields', array( $this, 'certificates_settings_fields' ) );
@@ -49,7 +51,7 @@ class WooThemes_Sensei_Certificates {
 		// Add View Ceritificate link to Course Completed page
 		add_action( 'sensei_after_course_completed', array( $this, 'function_to_add' ) );
 		// Load the View Certificate template via shortcode
-		add_shortcode( 'view-certificate', array( $this, 'shortcode_view_certificate' ) );
+		add_shortcode( 'certificate', array( $this, 'shortcode_certificate' ) );
 
 		/**
 		 * BACKEND
@@ -65,6 +67,11 @@ class WooThemes_Sensei_Certificates {
 			add_action( 'admin_print_styles', array( $this, 'enqueue_styles' ) );
 			add_action( 'certificates_wrapper_container', array( $this, 'wrapper_container'  ) );
 		}
+
+		// Generate certificate hash when course is completed.
+		add_action( 'sensei_log_activity_after', array( $this, 'generate_certificate_number' ), 10, 2 );
+		// Generate the certificate
+		add_action( 'sensei_certificate', array( $this, 'generate_certificate' ) );
 
 	} // End __construct()
 
@@ -366,7 +373,7 @@ class WooThemes_Sensei_Certificates {
 	    // Add pages button
 	    if (isset($_GET['install_sensei_certificate_pages']) && $_GET['install_sensei_certificate_pages']) {
 
-			$woothemes_sensei->admin->create_page( esc_sql( _x('view-certificate', 'page_slug', 'woothemes-sensei-certificates') ), $woothemes_sensei->admin->token . '_view_certificate_page_id', __('View Certificate', 'woothemes-sensei-certificates'), '[view-certificate]' );
+			$woothemes_sensei->admin->create_page( esc_sql( _x('certificate', 'page_slug', 'woothemes-sensei-certificates') ), $woothemes_sensei->admin->token . '_view_certificate_page_id', __('Certificate', 'woothemes-sensei-certificates'), '[certificate]' );
 	    	update_option('skip_install_sensei_certificate_pages', 1);
 	    	$install_complete = true;
 
@@ -415,12 +422,81 @@ class WooThemes_Sensei_Certificates {
 	 * @since  1.0.0
 	 * @return void
 	 */
-	public function shortcode_view_certificate() {
+	public function shortcode_certificate() {
 		global $woothemes_sensei;
 		ob_start();
-		$woothemes_sensei->frontend->sensei_get_template( 'view-certificate.php' );
+		$woothemes_sensei->frontend->sensei_get_template( 'certificate.php', array(), '', $this->plugin_path . 'templates/' );
 		$content = ob_get_clean();
 		return $content;
 	} // End shortcode_view_certificate()
+
+	/**
+	 * Generate unique certificate hash and save as comment.
+	 * @access public
+	 * @since  1.0.0
+	 * @return void
+	 */
+	public function generate_certificate_number( $args, $data ) {
+		if ( isset( $args['type'] ) && $args['type'] == 'sensei_course_end' ) {
+			$cert_args = array(
+				'post_id' => $args['post_id'],
+				'username' => $args['username'],
+				'user_email' => $args['user_email'],
+				'user_url' => $args['user_url'],
+				'data' => substr( md5( $args['post_id'] . $args['user_id'] ), -8 ), // Use last 8 chars of hash only
+				'type' => 'sensei_certificate', /* FIELD SIZE 20 */
+				'parent' => 0,
+				'user_id' => $args['user_id'],
+				'action' => 'update'
+			);
+			$activity_logged = WooThemes_Sensei_Utils::sensei_log_activity( $cert_args );
+		}
+
+	} // End generate_certificate_number()
+
+	/**
+	 * Check if certificate is viewable
+	 * @access public
+	 * @since  1.0.0
+	 * @return void
+	 */
+	public function can_view_certificate() {
+		global $woothemes_sensei;
+
+		// Check if student can only view certificate
+		$grant_access = $woothemes_sensei->settings->settings['certificates_public_viewable'];
+		if ( ! $grant_access ) {
+			$grant_access = current_user_can( 'manage_options' ) ? true : false;
+		}
+
+		if ( ! $grant_access )
+			return false;
+
+		if ( ! isset( $_GET['certificate'] ) )
+			return false;
+
+		if( isset( $_GET['certificate'] ) && strlen( $_GET['certificate'] ) <> 8 )
+			return false;
+
+		return true;
+	} // End can_view_certificate
+
+	/**
+	 * Generate the certificate
+	 * @access public
+	 * @since  1.0.0
+	 * @return void
+	 */
+	public function generate_certificate() {
+		global $woothemes_sensei;
+		if ( $this->can_view_certificate() ) {
+			// Generate the certificate here
+			require_once( 'class-woothemes-sensei-certificate.php' );
+			$pdf = new WooThemes_Sensei_Certificate( $_GET['certificate'] );
+			$pdf->generate_pdf();
+		}
+	} // End generate_certificate
+
+
 
 } // End Class

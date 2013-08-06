@@ -141,11 +141,15 @@ class WooThemes_Sensei_Certificates_List_Table extends WP_List_Table {
 			foreach ( $posts_array as $course_item ) {
 				$course_end_date = WooThemes_Sensei_Utils::sensei_get_activity_value( array( 'post_id' => $course_item->ID, 'user_id' => $user_item->ID, 'type' => 'sensei_course_end', 'field' => 'comment_date' ) );
 				if ( isset( $course_end_date ) && '' != $course_end_date ) {
+					$certificate_page_id = intval( $woothemes_sensei->settings->settings['certificates_page'] );
+					$certificate_hash = WooThemes_Sensei_Utils::sensei_get_activity_value( array( 'post_id' => $course_item->ID, 'user_id' => $user_item->ID, 'type' => 'sensei_certificate', 'field' => 'comment_content' ) );
+					if ( ! $certificate_hash )
+						$certificate_hash = '00000000';
 					$data_array = array(
 						'certificate_learner' => '<a href="' . add_query_arg( array( 'page' => 'sensei_analysis', 'user' => $user_item->ID, 'course_id' => $course_item->ID ), admin_url( 'edit.php?post_type=lesson' ) ) . '">'.$user_item->user_login.'</a>',
 						'certificate_course' => '<a href="' . add_query_arg( array( 'page' => 'sensei_analysis', 'course_id' => $course_item->ID ), admin_url( 'edit.php?post_type=lesson' ) ) . '">'.$course_item->post_title.'</a>',
 						'certificate_course_completed' => $course_end_date,
-						'certificate_actions' => ''
+						'certificate_actions' => '<a href="' . add_query_arg( array( 'certificate' => $certificate_hash ), get_permalink( $certificate_page_id ) ) . '">'. __( 'View Certificate', 'woothemes-sensei-certificates' ) . '</a>'
 					);
 					array_push( $return_array, $data_array );
 				}
