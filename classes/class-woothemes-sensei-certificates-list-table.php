@@ -149,7 +149,7 @@ class WooThemes_Sensei_Certificates_List_Table extends WP_List_Table {
 						'certificate_learner' => '<a href="' . add_query_arg( array( 'page' => 'sensei_analysis', 'user' => $user_item->ID, 'course_id' => $course_item->ID ), admin_url( 'edit.php?post_type=lesson' ) ) . '">'.$user_item->user_login.'</a>',
 						'certificate_course' => '<a href="' . add_query_arg( array( 'page' => 'sensei_analysis', 'course_id' => $course_item->ID ), admin_url( 'edit.php?post_type=lesson' ) ) . '">'.$course_item->post_title.'</a>',
 						'certificate_course_completed' => $course_end_date,
-						'certificate_actions' => '<a href="' . add_query_arg( array( 'certificate' => $certificate_hash ), get_permalink( $certificate_page_id ) ) . '">'. __( 'View Certificate', 'woothemes-sensei-certificates' ) . '</a>'
+						'certificate_actions' => '<a href="' . add_query_arg( array( 'certificate' => '1', 'hash' => $certificate_hash ), site_url() ) . '">'. __( 'View Certificate', 'woothemes-sensei-certificates' ) . '</a>'
 					);
 					array_push( $return_array, $data_array );
 				}

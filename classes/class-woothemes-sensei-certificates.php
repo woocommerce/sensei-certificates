@@ -50,8 +50,6 @@ class WooThemes_Sensei_Certificates {
 		add_action( 'sensei_after_main_content', array( $this, 'function_to_add' ), 9 );
 		// Add View Ceritificate link to Course Completed page
 		add_action( 'sensei_after_course_completed', array( $this, 'function_to_add' ) );
-		// Download certificate
-		//add_action( 'init', array( $this, 'download_certificate' ) );
 
 		// Create certificate endpoint and handle generation of pdf certificate
 		add_filter( 'query_vars', array( $this, 'add_query_vars' ), 0 );
@@ -107,7 +105,6 @@ class WooThemes_Sensei_Certificates {
 			foreach ( $posts_array as $course_item ) {
 				$course_end_date = WooThemes_Sensei_Utils::sensei_get_activity_value( array( 'post_id' => $course_item->ID, 'user_id' => $user_item->ID, 'type' => 'sensei_course_end', 'field' => 'comment_date' ) );
 				if ( isset( $course_end_date ) && '' != $course_end_date ) {
-					$certificate_page_id = intval( $woothemes_sensei->settings->settings['certificates_page'] );
 					$certificate_hash = WooThemes_Sensei_Utils::sensei_get_activity_value( array( 'post_id' => $course_item->ID, 'user_id' => $user_item->ID, 'type' => 'sensei_certificate', 'field' => 'comment_content' ) );
 					if ( ! $certificate_hash ) {
 						$cert_args = array(
