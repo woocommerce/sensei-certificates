@@ -37,7 +37,7 @@ function init_sensei_certificates() {
 
 	if ( is_sensei_active() ) {
 		require_once( 'classes/class-woothemes-sensei-certificates.php' );
-		$GLOBAL['woothemes_sensei_certificates'] = new WooThemes_Sensei_Certificates( __FILE__ );
+		$GLOBALS['woothemes_sensei_certificates'] = new WooThemes_Sensei_Certificates( __FILE__ );
 	}
 
 } // End init_sensei_extension()

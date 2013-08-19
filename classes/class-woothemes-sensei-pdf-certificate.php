@@ -1,6 +1,6 @@
 <?php
 /**
- * Sensei Certificate Object Class
+ * Sensei PDF Certificate Object Class
  *
  * All functionality pertaining to the idividual Certificate.
  *
@@ -14,23 +14,23 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
- * WooCommerce voucher
+ * Sensei PDF Certificate
  *
- * The WooCommerce PDF Product Vouchers class gets voucher data from storage.  This class
- * represents two different concepts:  a "voucher template" and a "product voucher".
- * The voucher template can be thought of as the blueprint for a voucher, it
- * contains everything needed to create a voucher (one or more images, the
- * coordinates for a number of fields, expiry days, etc).  The "product voucher"
- * is an instantiation of a voucher template, it also contains the voucher data.
+ * The Sensei PDF PCertificate class acts as a blueprint for all certificates.
  *
  * @since 1.0
  */
-class WooThemes_Sensei_Certificate {
+class WooThemes_Sensei_PDF_Certificate {
 
 	/**
 	 * @var int certificate hash
 	 */
 	public $hash;
+
+	/**
+	 * @var mixed certificate pdf data
+	 */
+	public $certificate_pdf_data;
 
 
 	/**
@@ -41,6 +41,12 @@ class WooThemes_Sensei_Certificate {
 	 */
 	function __construct( $certificate_hash ) {
 		$this->hash  = $certificate_hash;
+		$this->certificate_pdf_data = apply_filters( 'woothemes_sensei_certificates_pdf_data', array(
+			'font_color'   => '#000000',
+			'font_size'    => '50',
+			'font_style'   => 'B',
+			'font_family'  => 'Courier'
+		) );
 	}
 
 
@@ -111,39 +117,35 @@ class WooThemes_Sensei_Certificate {
 
 		// include the pdf library
 		$root_dir = dirname( __FILE__ ) . DIRECTORY_SEPARATOR;
-		require_once( $root_dir . '/../lib/fpdf/fpdf.php' );
+		require_once( $root_dir . '../lib/fpdf/fpdf.php' );
 
-		// determine orientation: landscape or portrait
-		$orientation = 'L';
+		$image = apply_filters( 'woothemes_sensei_certificates_background', $GLOBALS['woothemes_sensei_certificates']->plugin_path . 'assets/images/certificate_template.png' );
+		$image_attr = getimagesize( $image );
+		if ( $image_attr[0] > $image[1] ) {
+			$orientation = 'L';
+		} else {
+			$orientation = 'P';
+		}
 
 		// Create the pdf
 		// TODO: we're assuming a standard DPI here of where 1 point = 1/72 inch = 1 pixel
 		// When writing text to a Cell, the text is vertically-aligned in the middle
-		$fpdf = new FPDF( $orientation, 'pt', 100, 50 );
+		$fpdf = new FPDF( $orientation, 'pt', array( $image_attr[0], $image_attr[1] ) );
+
 		$fpdf->AddPage();
 		$fpdf->SetAutoPageBreak( false );
 
-		// this is useful for displaying the text cell borders when debugging the PDF layout,
-		//  though keep in mind that we translate the box position to align the text to bottom
-		//  edge of what the user selected, so if you want to see the originally selected box,
-		//  display that prior to the translation
-		$show_border = 0;
+		// Set the border image as the background
+		$fpdf->Image( $image, 0, 0, $image_attr[0], $image_attr[1] );
 
-		// voucher message text, this is multi-line, so it's handled specially
-		//$this->textarea_field( $fpdf, 'message', $this->get_message(), $show_border );
-
-		// product name
-		$this->text_field( $fpdf, 'product_name', 'Course Name', $show_border );
-
-		// recepient name
-		$this->text_field( $fpdf, 'recipient_name', 'This is to certify that Gerhard', $show_border );
+		do_action( 'sensei_certificates_before_pdf_output', $this, $fpdf );
 
 		if ( $path ) {
 			// save the pdf as a file
 			$fpdf->Output( $path . '/' . $this->get_voucher_path() . '/' . $this->get_voucher_filename(), 'F' );
 		} else {
 			// download file
-			$fpdf->Output( 'certificate-preview-' . $this->hash . '.pdf', 'D' );
+			$fpdf->Output( 'certificate-preview-' . $this->hash . '.pdf', 'I' );
 		}
 	}
 
@@ -158,25 +160,32 @@ class WooThemes_Sensei_Certificate {
 	 * @param int $show_border a debugging/helper option to display a border
 	 *        around the position for this field
 	 */
-	private function textarea_field( $fpdf, $field_name, $value, $show_border ) {
-		if ( $this->get_field_position( $field_name ) && $value ) {
+	public function textarea_field( $fpdf, $value, $show_border, $position, $font = array() ) {
+		if ( $value ) {
 
-			$font = $this->get_field_font( $field_name );
+			if ( empty( $font ) ) {
+				$font = array(
+					'font_color' => $this->certificate_pdf_data['font_color'],
+					'font_family' => $this->certificate_pdf_data['font_family'],
+					'font_style' => $this->certificate_pdf_data['font_style'],
+					'font_size' => $this->certificate_pdf_data['font_size']
+				);
+			}
 
 			// get the field position
-			list( $x, $y, $w, $h ) = array_values( $this->get_field_position( $field_name ) );
+			list( $x, $y, $w, $h ) = $position;
 
 			// font color
-			$font['color'] = $this->hex2rgb( $font['color'] );
-			$fpdf->SetTextColor( $font['color'][0], $font['color'][1], $font['color'][2] );
+			$font_color = $this->hex2rgb( $font['font_color'] );
+			$fpdf->SetTextColor( $font_color[0], $font_color[1], $font_color[2] );
 
 			// set the field text styling
-			$fpdf->SetFont( $font['family'], $font['style'], $font['size'] );
+			$fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] );
 
 			$fpdf->setXY( $x, $y );
 
 			// and write out the value
-			$fpdf->Multicell( $w, $font['size'], utf8_decode( $value ), $show_border );
+			$fpdf->Multicell( $w, $font['font_size'], utf8_decode( $value ), $show_border );
 		}
 	}
 
@@ -191,22 +200,26 @@ class WooThemes_Sensei_Certificate {
 	 * @param int $show_border a debugging/helper option to display a border
 	 *        around the position for this field
 	 */
-	private function text_field( $fpdf, $field_name, $value, $show_border ) {
-
-		//if ( $this->get_field_position( $field_name ) && $value ) {
+	public function text_field( $fpdf, $value, $show_border, $position, $font = array() ) {
 		if ( $value ) {
 
-			$font = $this->get_field_font( $field_name );
-
+			if ( empty( $font ) ) {
+				$font = array(
+					'font_color' => $this->certificate_pdf_data['font_color'],
+					'font_family' => $this->certificate_pdf_data['font_family'],
+					'font_style' => $this->certificate_pdf_data['font_style'],
+					'font_size' => $this->certificate_pdf_data['font_size']
+				);
+			}
 			// get the field position
-			list( $x, $y, $w, $h ) = array( 1,1,100,20 );//array_values( $this->get_field_position( $field_name ) );
+			list( $x, $y, $w, $h ) = $position;
 
 			// font color
-			$font['color'] = $this->hex2rgb( $font['color'] );
-			$fpdf->SetTextColor( $font['color'][0], $font['color'][1], $font['color'][2] );
+			$font_color = $this->hex2rgb( $font['font_color'] );
+			$fpdf->SetTextColor( $font_color[0], $font_color[1], $font_color[2] );
 
 			// set the field text styling
-			$fpdf->SetFont( $font['family'], $font['style'], $font['size'] );
+			$fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] );
 
 			// show a border for debugging purposes
 			if ( $show_border ) {
@@ -215,7 +228,7 @@ class WooThemes_Sensei_Certificate {
 			}
 
 			// align the text to the bottom edge of the cell by translating as needed
-			$y = $font['size'] > $h ? $y - ( $font['size'] - $h ) / 2 : $y + ( $h - $font['size'] ) / 2;
+			$y =$font['font_size'] > $h ? $y - ( $font['font_size'] - $h ) / 2 : $y + ( $h - $font['font_size'] ) / 2;
 			$fpdf->setXY( $x, $y );
 
 			// and write out the value
@@ -251,30 +264,4 @@ class WooThemes_Sensei_Certificate {
 		return array( $r, $g, $b );
 	}
 
-
-	/** Helper methods ******************************************************/
-
-
-	/**
-	 * Returns the value for $meta_name, or empty string
-	 *
-	 * @since 1.0
-	 * @param string $meta_name untranslated meta name
-	 *
-	 * @return string value for $meta_name or empty string
-	 */
-	private function get_item_meta_value( $meta_name ) {
-
-		// no item set
-		if ( ! $this->item ) return '';
-
-		foreach ( $this->item as $name => $value ) {
-			if ( __( $meta_name, WC_PDF_Product_Vouchers::TEXT_DOMAIN ) == $name ) {
-				return $value;
-			}
-		}
-
-		// not found
-		return '';
-	}
 }
