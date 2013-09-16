@@ -43,16 +43,52 @@ function init_sensei_certificates() {
 } // End init_sensei_extension()
 add_action( 'plugins_loaded', 'init_sensei_certificates', 0 );
 
-
 /**
- * activate_sensei_certificates function
+ * install function to generate cert hashes
  * @since  1.0.0
- * @return void
+ * @return string
  */
-function activate_sensei_certificates() {
-
-} // End activate_sensei_certificates()
-register_activation_hook( __FILE__, 'activate_sensei_certificates' );
+function sensei_certificates_install() {
+	global $woothemes_sensei;
+	$users = get_users();
+	foreach ( $users as $user_key => $user_item ) {
+		$course_ids = WooThemes_Sensei_Utils::sensei_activity_ids( array( 'user_id' => $user_item->ID, 'type' => 'sensei_course_start' ) );
+		$posts_array = array();
+		if ( 0 < intval( count( $course_ids ) ) ) {
+			$posts_array = $woothemes_sensei->post_types->course->course_query( -1, 'usercourses', $course_ids );
+		} // End If Statement
+		foreach ( $posts_array as $course_item ) {
+			$course_end_date = WooThemes_Sensei_Utils::sensei_get_activity_value( array( 'post_id' => $course_item->ID, 'user_id' => $user_item->ID, 'type' => 'sensei_course_end', 'field' => 'comment_date' ) );
+			if ( isset( $course_end_date ) && '' != $course_end_date ) {
+				$args = array(
+					'post_type' => 'certificate',
+					'author' => $user_item->ID,
+					'meta_key' => 'course_id',
+					'meta_value' => $course_item->ID
+				);
+				$query = new WP_Query( $args );
+				if ( ! $query->have_posts() ) {
+					// Insert custom post type
+					$cert_args = array(
+						'post_author' => intval( $user_item->ID ),
+						'post_title' => esc_html( substr( md5( $course_item->ID . $user_item->ID ), -8 ) ),
+						'post_name' => esc_html( substr( md5( $course_item->ID . $user_item->ID ), -8 ) ),
+						'post_type' => 'certificate',
+						'post_status'   => 'publish'
+					);
+					$post_id = wp_insert_post( $cert_args, $wp_error = false );
+					if ( ! is_wp_error( $post_id ) ) {
+						add_post_meta( $post_id, 'course_id', intval( $course_item->ID ) );
+						add_post_meta( $post_id, 'learner_id', intval( $user_item->ID ) );
+						add_post_meta( $post_id, 'certificate_hash',esc_html( substr( md5( $course_item->ID . $user_item->ID ), -8 ) ) );
+					}
+				}
+				wp_reset_query();
+			}
+		}
+	}
+} // End sensei_certificates_install()
+register_activation_hook( __FILE__, 'sensei_certificates_install' );
 
 /**
  * Functions used by plugins
