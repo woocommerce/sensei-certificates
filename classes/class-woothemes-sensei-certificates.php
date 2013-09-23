@@ -50,14 +50,21 @@ class WooThemes_Sensei_Certificates {
 		/**
 		 * FRONTEND
 		 */
-		// Add View certificate link on Learner Profile.
-		add_action( 'sensei_course_after_profile', array( $this, 'function_to_add' ) );
-		// Add View certificate link to My Courses
-		add_action( 'sensei_item_after_my_courses_completed', array( $this, 'function_to_add' ) );
-		// Add View Ceritificate link to Single Course page
-		add_action( 'sensei_after_main_content', array( $this, 'function_to_add' ), 9 );
-		// Add View Ceritificate link to Course Completed page
-		add_action( 'sensei_after_course_completed', array( $this, 'function_to_add' ) );
+		// // Add View certificate link on Learner Profile.
+		// add_action( 'sensei_course_after_profile', array( $this, 'function_to_add' ) );
+		// // Add View certificate link to My Courses
+		// add_action( 'sensei_item_after_my_courses_completed', array( $this, 'function_to_add' ) );
+		// // Add View Ceritificate link to Single Course page
+		// add_action( 'sensei_after_main_content', array( $this, 'function_to_add' ), 9 );
+		// // Add View Ceritificate link to Course Completed page
+		// add_action( 'sensei_after_course_completed', array( $this, 'function_to_add' ) );
+
+		// add_action( '', array( $this, 'certificate_link' ) );
+
+		add_filter( 'sensei_user_course_status_passed', array( $this, 'certificate_link' ), 10, 1 );
+		add_filter( 'sensei_view_results_text', array( $this, 'certificate_link' ), 10, 1 );
+
+		add_action( 'sensei_additional_styles', array( $this, 'enqueue_styles' ) );
 
 		// Create certificate endpoint and handle generation of pdf certificate
 		add_filter( 'query_vars', array( $this, 'add_query_vars' ), 0 );
@@ -72,6 +79,8 @@ class WooThemes_Sensei_Certificates {
 			//add_action( 'admin_menu', array( $this, 'certificates_admin_menu' ) );
 			//add_action( 'admin_print_styles', array( $this, 'enqueue_styles' ) );
 			//add_action( 'certificates_wrapper_container', array( $this, 'wrapper_container'  ) );
+			add_action( 'sensei_analysis_course_user_columns', array( $this, 'create_columns' ), 10, 1 );
+			add_action( 'sensei_analysis_course_user_column_data', array( $this, 'populate_columns' ), 10, 3 );
 		}
 
 		// Generate certificate hash when course is completed.
@@ -316,6 +325,8 @@ class WooThemes_Sensei_Certificates {
 			$grant_access = current_user_can( 'manage_options' ) ? true : false;
 		}
 
+		// TODO - check if user has permissions to view this certificate, ie if it is his certificate
+
 		if ( ! $grant_access )
 			return false;
 
@@ -438,5 +449,76 @@ class WooThemes_Sensei_Certificates {
 			exit;
 		}
 	}
+
+	/**
+	 * certificate_link frontend output function for certificate link
+	 * @access public
+	 * @since  1.0.0
+	 * @param  string $message html
+	 * @return string $message html
+	 */
+	public function certificate_link( $message ) {
+		global $current_user, $course, $woothemes_sensei, $wp_query;
+		$my_account_page_id = intval( $woothemes_sensei->settings->settings[ 'my_course_page' ] );
+		// Get User Meta
+		get_currentuserinfo();
+		$certificate_url = $this->get_certificate_url( $course->ID, $current_user->ID );
+		if ( '' != $certificate_url ) {
+			$classes = '';
+			if ( is_page( $my_account_page_id ) || isset( $wp_query->query_vars['learner_profile'] ) ) {
+				$classes = 'button ';
+			} // End If Statement
+			$message = $message . '<a href="' . $certificate_url . '" class="' . $classes . 'sensei-certificate-link" title="' . esc_attr( __( 'View Certificate', 'woothemes-sensei-certificates' ) ) . '">View Certificate</>';
+		} // End If Statement
+		return $message;
+	} // End certificate_link()
+
+	private function get_certificate_url( $course_id, $user_id ) {
+		$certificate_url = '';
+		$args = array(
+			'post_type' => 'certificate',
+			'author' => $user_id,
+			'meta_key' => 'course_id',
+			'meta_value' => $course_id
+		);
+		$query = new WP_Query( $args );
+		if ( $query->have_posts() ) {
+			$count = 0;
+			while ($query->have_posts()) {
+				$query->the_post();
+				$certificate_url = get_permalink();
+			} // End While Loop
+		} // End If Statement
+		wp_reset_query();
+		return $certificate_url;
+	} // End get_certificate_url()
+
+	/**
+	 * enqueue_styles loads frontend styles
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function enqueue_styles() {
+		// TODO - set plugin token
+		$this->token = 'sensei-certificates';
+		wp_register_style( $this->token . '-frontend', $this->plugin_url . 'assets/css/frontend.css', '', '1.0.0', 'screen' );
+		wp_enqueue_style( $this->token . '-frontend' );
+	} // End enqueue_styles()
+
+	public function create_columns( $columns ) {
+		$columns['certificates_link'] = __( 'Certificate', 'woothemes-sensei' );
+		return $columns;
+	} // End create_columns()
+
+	public function populate_columns( $content, $course_id, $user_id ) {
+		$certificate_url = $this->get_certificate_url( $course_id, $user_id );
+		$output = '';
+		if ( '' != $certificate_url ) {
+			$output = '<a href="' . $certificate_url . '" class="sensei-certificate-link" title="' . esc_attr( __( 'View Certificate', 'woothemes-sensei-certificates' ) ) . '">View Certificate</>';
+		} // End If Statement
+		$content['certificates_link'] = $output;
+		return $content;
+	} // End populate_columns()
 
 } // End Class
