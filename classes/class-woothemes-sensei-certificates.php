@@ -351,7 +351,7 @@ class WooThemes_Sensei_Certificates {
 		global $woothemes_sensei;
 		$show_border = apply_filters( 'woothemes_sensei_certificates_show_border', 0 );
 		// Intro text
-		$pdf_certificate->text_field( $fpdf, __( 'Certificate of Completion', 'woothemes-sensei-certificates' ), $show_border, array( 170, 150, 100, 20 ) );
+		$pdf_certificate->text_field( $fpdf, __( 'Certificate of Completion', 'woothemes-sensei-certificates' ), $show_border, array( 250, 100, 100, 20 ) );
 
 		$args = array(
 			'post_type' => 'certificate',
@@ -378,8 +378,18 @@ class WooThemes_Sensei_Certificates {
 		$course = $course[0];
 		$course_end_date = $course_end_date = WooThemes_Sensei_Utils::sensei_get_activity_value( array( 'post_id' => $course_id, 'user_id' => $user_id, 'type' => 'sensei_course_end', 'field' => 'comment_date' ) );
 
-		// voucher message text, this is multi-line, so it's handled specially
-		$pdf_certificate->textarea_field( $fpdf, sprintf( __( 'This is to certify that %s has completed the %s online course on %s', 'woothemes-sensei-certificates' ), $student_name, $course->post_title, $course_end_date ), $show_border, array( 100, 300, 900, 400 ) );
+		// This is the certify that
+		$pdf_certificate->textarea_field( $fpdf, __( 'This is to certify that', 'woothemes-sensei-certificates' ), $show_border, array( 300, 150, 900, 400 ) );
+		// Student Name
+		$pdf_certificate->text_field_userdata( $fpdf, $student_name, $show_border, array( 400, 250, 100, 20 ) );
+		// Has completed the
+		$pdf_certificate->textarea_field( $fpdf, __( 'Has completed the course', 'woothemes-sensei-certificates' ), $show_border, array( 230, 300, 900, 400 ) );
+		// Course Name
+		$pdf_certificate->text_field_userdata( $fpdf, $course->post_title, $show_border, array( 350, 400, 100, 20 ) );
+		// Course end date
+		$pdf_certificate->text_field_userdata( $fpdf, date( 'jS F Y', strtotime( $course_end_date ) ), $show_border, array( 300, 475, 100, 20 ) );
+		// At [WEBSITE NAME]
+		$pdf_certificate->textarea_field( $fpdf, sprintf( __( 'At %s', 'woothemes-sensei-certificates' ), get_bloginfo( 'name' ) ), $show_border, array( 350, 525, 900, 400 ) );
 	} // End certificate_text
 
 	/**

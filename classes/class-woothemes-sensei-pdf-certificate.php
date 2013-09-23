@@ -47,6 +47,12 @@ class WooThemes_Sensei_PDF_Certificate {
 			'font_style'   => 'B',
 			'font_family'  => 'Helvetica'
 		) );
+		$this->certificate_pdf_data_userdata = apply_filters( 'woothemes_sensei_certificates_pdf_data_userdata', array(
+			'font_color'   => '#666666',
+			'font_size'    => '50',
+			'font_style'   => 'I',
+			'font_family'  => 'Times'
+		) );
 	}
 
 
@@ -209,6 +215,52 @@ class WooThemes_Sensei_PDF_Certificate {
 					'font_family' => $this->certificate_pdf_data['font_family'],
 					'font_style' => $this->certificate_pdf_data['font_style'],
 					'font_size' => $this->certificate_pdf_data['font_size']
+				);
+			}
+			// get the field position
+			list( $x, $y, $w, $h ) = $position;
+
+			// font color
+			$font_color = $this->hex2rgb( $font['font_color'] );
+			$fpdf->SetTextColor( $font_color[0], $font_color[1], $font_color[2] );
+
+			// set the field text styling
+			$fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] );
+
+			// show a border for debugging purposes
+			if ( $show_border ) {
+				$fpdf->setXY( $x, $y );
+				$fpdf->Cell( $w, $h, '', 1 );
+			}
+
+			// align the text to the bottom edge of the cell by translating as needed
+			$y =$font['font_size'] > $h ? $y - ( $font['font_size'] - $h ) / 2 : $y + ( $h - $font['font_size'] ) / 2;
+			$fpdf->setXY( $x, $y );
+
+			// and write out the value
+			$fpdf->Cell( $w, $h, utf8_decode( $value ) );  // can try iconv('UTF-8', 'windows-1252', $content); if this doesn't work correctly for accents
+		}
+	}
+
+	/**
+	 * Render a single-line text field to the PDF, with custom styling for the user data
+	 *
+	 * @since 1.0
+	 * @param FPDF $fpdf fpdf library object
+	 * @param string $field_name the field name
+	 * @param mixed $value string or int value to display
+	 * @param int $show_border a debugging/helper option to display a border
+	 *        around the position for this field
+	 */
+	public function text_field_userdata( $fpdf, $value, $show_border, $position, $font = array() ) {
+		if ( $value ) {
+
+			if ( empty( $font ) ) {
+				$font = array(
+					'font_color' => $this->certificate_pdf_data_userdata['font_color'],
+					'font_family' => $this->certificate_pdf_data_userdata['font_family'],
+					'font_style' => $this->certificate_pdf_data_userdata['font_style'],
+					'font_size' => $this->certificate_pdf_data_userdata['font_size']
 				);
 			}
 			// get the field position
