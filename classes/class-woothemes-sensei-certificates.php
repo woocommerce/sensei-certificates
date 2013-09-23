@@ -350,8 +350,13 @@ class WooThemes_Sensei_Certificates {
 	public function certificate_text( $pdf_certificate, $fpdf ) {
 		global $woothemes_sensei;
 		$show_border = apply_filters( 'woothemes_sensei_certificates_show_border', 0 );
+
+		$start_position = 200;
+
+		// Logo image
+		$pdf_certificate->image_field( $fpdf, esc_url( apply_filters( 'woothemes_sensei_certificates_logo_url', $this->plugin_path . '/assets/images/certificate-logo.png' ) ), $show_border, array( 490, 75, 75, 75 ) );
 		// Intro text
-		$pdf_certificate->text_field( $fpdf, __( 'Certificate of Completion', 'woothemes-sensei-certificates' ), $show_border, array( 250, 100, 100, 20 ) );
+		$pdf_certificate->text_field( $fpdf, __( 'Certificate of Completion', 'woothemes-sensei-certificates' ), $show_border, array( 250, $start_position, 100, 20 ) );
 
 		$args = array(
 			'post_type' => 'certificate',
@@ -379,17 +384,23 @@ class WooThemes_Sensei_Certificates {
 		$course_end_date = $course_end_date = WooThemes_Sensei_Utils::sensei_get_activity_value( array( 'post_id' => $course_id, 'user_id' => $user_id, 'type' => 'sensei_course_end', 'field' => 'comment_date' ) );
 
 		// This is the certify that
-		$pdf_certificate->textarea_field( $fpdf, __( 'This is to certify that', 'woothemes-sensei-certificates' ), $show_border, array( 300, 150, 900, 400 ) );
+		$start_position += 50;
+		$pdf_certificate->textarea_field( $fpdf, __( 'This is to certify that', 'woothemes-sensei-certificates' ), $show_border, array( 300, $start_position, 900, 400 ) );
 		// Student Name
-		$pdf_certificate->text_field_userdata( $fpdf, $student_name, $show_border, array( 400, 250, 100, 20 ) );
+		$start_position += 100;
+		$pdf_certificate->text_field_userdata( $fpdf, $student_name, $show_border, array( 400, $start_position, 100, 20 ) );
 		// Has completed the
-		$pdf_certificate->textarea_field( $fpdf, __( 'Has completed the course', 'woothemes-sensei-certificates' ), $show_border, array( 230, 300, 900, 400 ) );
+		$start_position += 50;
+		$pdf_certificate->textarea_field( $fpdf, __( 'Has completed the course', 'woothemes-sensei-certificates' ), $show_border, array( 230, $start_position, 900, 400 ) );
 		// Course Name
-		$pdf_certificate->text_field_userdata( $fpdf, $course->post_title, $show_border, array( 350, 400, 100, 20 ) );
+		$start_position += 100;
+		$pdf_certificate->text_field_userdata( $fpdf, $course->post_title, $show_border, array( 350, $start_position, 100, 20 ) );
 		// Course end date
-		$pdf_certificate->text_field_userdata( $fpdf, date( 'jS F Y', strtotime( $course_end_date ) ), $show_border, array( 300, 475, 100, 20 ) );
+		$start_position += 75;
+		$pdf_certificate->text_field_userdata( $fpdf, date( 'jS F Y', strtotime( $course_end_date ) ), $show_border, array( 300, $start_position, 100, 20 ) );
 		// At [WEBSITE NAME]
-		$pdf_certificate->textarea_field( $fpdf, sprintf( __( 'At %s', 'woothemes-sensei-certificates' ), get_bloginfo( 'name' ) ), $show_border, array( 350, 525, 900, 400 ) );
+		$start_position += 50;
+		$pdf_certificate->textarea_field( $fpdf, sprintf( __( 'At %s', 'woothemes-sensei-certificates' ), get_bloginfo( 'name' ) ), $show_border, array( 350, $start_position, 900, 400 ) );
 	} // End certificate_text
 
 	/**

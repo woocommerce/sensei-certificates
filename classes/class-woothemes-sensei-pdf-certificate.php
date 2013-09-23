@@ -195,6 +195,28 @@ class WooThemes_Sensei_PDF_Certificate {
 		}
 	}
 
+	/**
+	 * Render an image field to the PDF
+	 *
+	 * @since 1.0
+	 * @param FPDF $fpdf fpdf library object
+	 * @param string $field_name the field name
+	 * @param mixed $value string or int value to display
+	 * @param int $show_border a debugging/helper option to display a border
+	 *        around the position for this field
+	 */
+	public function image_field( $fpdf, $value, $show_border, $position ) {
+		if ( $value ) {
+			// get the field position
+			list( $x, $y, $w, $h ) = $position;
+
+			$fpdf->setXY( $x, $y );
+
+			// and write out the value
+			$fpdf->Image( esc_url( utf8_decode( $value ) ), $x, $y, $w, $h );
+		}
+	}
+
 
 	/**
 	 * Render a single-line text field to the PDF
