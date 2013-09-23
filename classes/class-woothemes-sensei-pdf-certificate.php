@@ -39,13 +39,13 @@ class WooThemes_Sensei_PDF_Certificate {
 	 * @since 1.0
 	 * @param int $certificate_hash Certificate hash
 	 */
-	function __construct( $certificate_hash ) {
+	public function __construct( $certificate_hash ) {
 		$this->hash  = $certificate_hash;
 		$this->certificate_pdf_data = apply_filters( 'woothemes_sensei_certificates_pdf_data', array(
 			'font_color'   => '#000000',
 			'font_size'    => '50',
 			'font_style'   => 'B',
-			'font_family'  => 'Courier'
+			'font_family'  => 'Helvetica'
 		) );
 	}
 
