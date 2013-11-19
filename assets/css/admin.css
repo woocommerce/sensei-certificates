@@ -1,0 +1,11 @@
+#certificate_image_wrapper .certificate_field {
+	background-color: #CCCCCC;
+	border: 1px dashed #888888;
+	opacity: 0.5;
+	position: absolute;
+	text-align: center;
+}
+
+.colorpick-form-field {
+	position:relative;
+}
