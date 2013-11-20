@@ -586,7 +586,7 @@ class WooThemes_Sensei_Certificates {
 			if ( is_page( $my_account_page_id ) || isset( $wp_query->query_vars['learner_profile'] ) ) {
 				$classes = 'button ';
 			} // End If Statement
-			$message = $message . '<a href="' . $certificate_url . '" class="' . $classes . 'sensei-certificate-link" title="' . esc_attr( __( 'View Certificate', 'woothemes-sensei-certificates' ) ) . '">View Certificate</>';
+			$message = $message . '<a href="' . $certificate_url . '" class="' . $classes . 'sensei-certificate-link" title="' . esc_attr( __( 'View Certificate', 'woothemes-sensei-certificates' ) ) . '">View Certificate</a>';
 		} // End If Statement
 		return $message;
 	} // End certificate_link()
