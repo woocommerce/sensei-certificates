@@ -578,15 +578,25 @@ class WooThemes_Sensei_Certificates {
 	public function certificate_link( $message ) {
 		global $current_user, $course, $woothemes_sensei, $wp_query;
 		$my_account_page_id = intval( $woothemes_sensei->settings->settings[ 'my_course_page' ] );
-		// Get User Meta
-		get_currentuserinfo();
-		$certificate_url = $this->get_certificate_url( $course->ID, $current_user->ID );
-		if ( '' != $certificate_url ) {
-			$classes = '';
-			if ( is_page( $my_account_page_id ) || isset( $wp_query->query_vars['learner_profile'] ) ) {
-				$classes = 'button ';
+		$view_link_courses = $woothemes_sensei->settings->settings[ 'certificates_view_courses' ];
+		$view_link_profile = $woothemes_sensei->settings->settings[ 'certificates_view_profile' ];
+		$is_viewable = false;
+		if ( ( is_page( $my_account_page_id ) || is_singular( 'course' ) || isset( $wp_query->query_vars['course_results'] ) ) && $view_link_courses ) {
+			$is_viewable = true;
+		} elseif( isset( $wp_query->query_vars['learner_profile'] ) && $view_link_profile ) {
+			$is_viewable = true;
+		} // End If Statement
+		if ( $is_viewable ) {
+			// Get User Meta
+			get_currentuserinfo();
+			$certificate_url = $this->get_certificate_url( $course->ID, $current_user->ID );
+			if ( '' != $certificate_url ) {
+				$classes = '';
+				if ( is_page( $my_account_page_id ) || isset( $wp_query->query_vars['learner_profile'] ) ) {
+					$classes = 'button ';
+				} // End If Statement
+				$message = $message . '<a href="' . $certificate_url . '" class="' . $classes . 'sensei-certificate-link" title="' . esc_attr( __( 'View Certificate', 'woothemes-sensei-certificates' ) ) . '">View Certificate</a>';
 			} // End If Statement
-			$message = $message . '<a href="' . $certificate_url . '" class="' . $classes . 'sensei-certificate-link" title="' . esc_attr( __( 'View Certificate', 'woothemes-sensei-certificates' ) ) . '">View Certificate</a>';
 		} // End If Statement
 		return $message;
 	} // End certificate_link()
@@ -633,7 +643,7 @@ class WooThemes_Sensei_Certificates {
 		$certificate_url = $this->get_certificate_url( $course_id, $user_id );
 		$output = '';
 		if ( '' != $certificate_url ) {
-			$output = '<a href="' . $certificate_url . '" class="sensei-certificate-link" title="' . esc_attr( __( 'View Certificate', 'woothemes-sensei-certificates' ) ) . '">View Certificate</>';
+			$output = '<a href="' . $certificate_url . '" class="sensei-certificate-link" title="' . esc_attr( __( 'View Certificate', 'woothemes-sensei-certificates' ) ) . '">View Certificate</a>';
 		} // End If Statement
 		$content['certificates_link'] = $output;
 		return $content;
