@@ -85,6 +85,8 @@ class WooThemes_Sensei_Certificates {
 
 		// Generate certificate hash when course is completed.
 		add_action( 'sensei_log_activity_after', array( $this, 'generate_certificate_number' ), 10, 2 );
+		// Background Image to display on certificate
+		add_action( 'sensei_certificates_set_background_image', array( $this, 'certificate_background' ), 10, 2 );
 		// Text to display on certificate
 		add_action( 'sensei_certificates_before_pdf_output', array( $this, 'certificate_text' ), 10, 2 );
 		// Generate certificates for past completed courses upon installation
@@ -357,9 +359,6 @@ class WooThemes_Sensei_Certificates {
 
 		$start_position = 200;
 
-		// Logo image
-		$pdf_certificate->image_field( $fpdf, esc_url( apply_filters( 'woothemes_sensei_certificates_logo_url', $this->plugin_path . '/assets/images/certificate-logo.png' ) ), $show_border, array( 490, 75, 75, 75 ) );
-
 		$args = array(
 			'post_type' => 'certificate',
 			'meta_key' => 'certificate_hash',
@@ -402,11 +401,6 @@ class WooThemes_Sensei_Certificates {
 			$this->$key = ( isset( $certificate_template_custom_fields[ '_' . $key ][0] ) && '' !== $certificate_template_custom_fields[ '_' . $key ][0] ) ? ( is_array( $default ) ? maybe_unserialize( $certificate_template_custom_fields[ '_' . $key ][0] ) : $certificate_template_custom_fields[ '_' . $key ][0] ) : $default;
 		}
 
-		// set the certificate main template image, if any
-		if ( count( $this->image_ids ) > 0 ) {
-			$this->image_id = $this->image_ids[0];
-		}
-
 		$certificate_heading = __( 'Certificate of Completion', 'woothemes-sensei-certificates' ); // Certificate of Completion
 		if ( isset( $this->certificate_template_fields['certificate_heading']['text'] ) && '' != $this->certificate_template_fields['certificate_heading']['text'] ) {
 			$certificate_heading = $this->certificate_template_fields['certificate_heading']['text'];
@@ -442,12 +436,75 @@ class WooThemes_Sensei_Certificates {
 
 		foreach ( $output_fields as $meta_key => $function_name ) {
 
-			$font_settings = $this->get_certificate_font_settings( $meta_key );
-			call_user_func_array(array($pdf_certificate, $function_name), array( $fpdf, $$meta_key, $show_border, array( $this->certificate_template_fields[$meta_key]['position']['x1'], $this->certificate_template_fields[$meta_key]['position']['y1'], $this->certificate_template_fields[$meta_key]['position']['width'], $this->certificate_template_fields[$meta_key]['position']['height'] ), $font_settings ));
+			// Check if the field has a set position
+			if ( isset( $this->certificate_template_fields[$meta_key]['position']['x1'] ) ) {
+
+				$font_settings = $this->get_certificate_font_settings( $meta_key );
+
+				call_user_func_array(array($pdf_certificate, $function_name), array( $fpdf, $$meta_key, $show_border, array( $this->certificate_template_fields[$meta_key]['position']['x1'], $this->certificate_template_fields[$meta_key]['position']['y1'], $this->certificate_template_fields[$meta_key]['position']['width'], $this->certificate_template_fields[$meta_key]['position']['height'] ), $font_settings ));
+
+			} // End If Statement
 
 		} // End For Loop
 
 	} // End certificate_text
+
+	/**
+	 * Add background to the certificate
+	 * @access public
+	 * @since  1.0.0
+	 * @return void
+	 */
+	public function certificate_background( $pdf_certificate, $fpdf ) {
+		global $woothemes_sensei;
+
+		$start_position = 200;
+
+		$args = array(
+			'post_type' => 'certificate',
+			'meta_key' => 'certificate_hash',
+			'meta_value' => $pdf_certificate->hash
+		);
+
+		// Find certificate based on hash
+		$query = new WP_Query( $args );
+		if ( $query->have_posts() ) {
+			$query->the_post();
+			$certificate_id = $query->posts[0]->ID;
+		}
+		wp_reset_query();
+
+		// Get Course Data
+		$course_id = get_post_meta( $certificate_id, 'course_id', true );
+
+		// Get the certificate template
+		$certificate_template_id = get_post_meta( $course_id, '_course_certificate_template', true );
+
+		$certificate_template_custom_fields = get_post_custom( $certificate_template_id );
+
+		// Define the data we're going to load: Key => Default value
+		$load_data = array(
+			'image_ids'            => array(),
+		);
+
+		// Load the data from the custom fields
+		foreach ( $load_data as $key => $default ) {
+			// set value from db (unserialized if needed) or use default
+			$this->$key = ( isset( $certificate_template_custom_fields[ '_' . $key ][0] ) && '' !== $certificate_template_custom_fields[ '_' . $key ][0] ) ? ( is_array( $default ) ? maybe_unserialize( $certificate_template_custom_fields[ '_' . $key ][0] ) : $certificate_template_custom_fields[ '_' . $key ][0] ) : $default;
+		}
+
+		// set the certificate main template image, if any
+		if ( count( $this->image_ids ) > 0 ) {
+			$this->image_id = $this->image_ids[0];
+		}
+
+		// Logo image
+		if ( isset( $this->image_id ) && 0 < intval( $this->image_id ) ) {
+			$image_src = wp_get_attachment_url( $this->image_id );
+			$pdf_certificate->bg_image_src = $image_src;
+		}
+
+	} // End certificate_background
 
 	/**
 	 * Returns font settings for the certificate template

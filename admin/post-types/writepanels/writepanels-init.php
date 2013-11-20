@@ -110,7 +110,7 @@ function certificate_templates_meta_boxes_save( $post_id, $post ) {
 	if ( ! current_user_can( 'edit_post', $post_id ) ) return;
 	if ( 'certificate_template' != $post->post_type ) return;
 
-	do_action( 'woocommerce_process_certificate_template_meta', $post_id, $post );
+	do_action( 'sensei_process_certificate_template_meta', $post_id, $post );
 
 	woocommerce_meta_boxes_save_errors();
 }

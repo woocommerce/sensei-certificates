@@ -248,7 +248,7 @@ function certificate_template_data_meta_box( $post ) {
 }
 
 
-add_action( 'woocommerce_process_certificate_template_meta', 'certificate_templates_process_meta', 10, 2 );
+add_action( 'sensei_process_certificate_template_meta', 'certificate_templates_process_meta', 10, 2 );
 
 /**
  * Voucher Data Save

@@ -52,3 +52,31 @@ function certificate_template_image_meta_box() {
 	</p>
 	<?php
 }
+
+add_action( 'sensei_process_certificate_template_meta', 'certificate_template_process_images_meta', 10, 2 );
+
+/**
+ * Certificate Templates Images Data Save
+ *
+ * Function for processing and storing certificate template images
+ *
+ * @since 1.0
+ * @param int $post_id the certificate template id
+ * @param object $post the certificate template post object
+ */
+function certificate_template_process_images_meta( $post_id, $post ) {
+
+	// handle the image_ids meta, which will always have at least an index 0 for the main template image, even if the value is empty
+	$image_ids = array();
+	foreach ( $_POST['upload_image_id'] as $i => $image_id ) {
+		if ( 0 == $i || $image_id ) {
+			$image_ids[] = $image_id;
+		}
+	}
+	update_post_meta( $post_id, '_image_ids', $image_ids );
+
+	if ( $image_ids[0] )
+		set_post_thumbnail( $post_id, $image_ids[0] );
+	else
+		delete_post_thumbnail( $post_id );
+}
