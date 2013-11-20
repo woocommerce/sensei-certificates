@@ -232,7 +232,7 @@ class WooThemes_Sensei_Certificate_Templates {
 			$this->$key = ( isset( $this->certificate_template_custom_fields[ '_' . $key ][0] ) && '' !== $this->certificate_template_custom_fields[ '_' . $key ][0] ) ? ( is_array( $default ) ? maybe_unserialize( $this->certificate_template_custom_fields[ '_' . $key ][0] ) : $this->certificate_template_custom_fields[ '_' . $key ][0] ) : $default;
 		}
 
-		// set the voucher main template image, if any
+		// set the main template image, if any
 		if ( count( $this->image_ids ) > 0 ) {
 			$this->image_id = $this->image_ids[0];
 		}
@@ -568,7 +568,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	 * @return array with optional members 'family', 'size', 'style', 'color'
 	 */
 	public function get_field_font( $field_name ) {
-		$default_font = array( 'family' => $this->voucher_font_family, 'size' => $this->voucher_font_size, 'color' => $this->voucher_font_color );
+		$default_font = array( 'family' => $this->certificate_font_family, 'size' => $this->certificate_font_family, 'color' => $this->certificate_font_family );
 
 		// only use the default font style if there is no specific font family set
 		if ( ! isset( $this->certificate_template_fields[ $field_name ]['font']['family'] ) || ! $this->certificate_template_fields[ $field_name ]['font']['family'] ) {

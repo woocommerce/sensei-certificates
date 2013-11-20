@@ -33,7 +33,7 @@ function certificate_template_data_meta_box( $post ) {
 	wp_nonce_field( 'woocommerce_save_data', 'woocommerce_meta_nonce' );
 
 	$woothemes_sensei_certificate_templates->populate_object( $post->ID );
-// echo '<pre>';print_r( $woothemes_sensei_certificate_templates );echo '</pre>';
+
 	$default_fonts = array(
 		'Helvetica' => 'Helvetica',
 		'Courier'   => 'Courier',
@@ -260,8 +260,8 @@ add_action( 'sensei_process_certificate_template_meta', 'certificate_templates_p
  * @param object $post the voucher post object
  */
 function certificate_templates_process_meta( $post_id, $post ) {
-// echo '<pre>';print_r( $_POST );echo '</pre>';die();
-	// voucher font defaults
+
+	// certificate template font defaults
 	update_post_meta( $post_id, '_certificate_font_color',  $_POST['_certificate_font_color'] ? $_POST['_certificate_font_color'] : '#000000' );  // provide a default
 	update_post_meta( $post_id, '_certificate_font_size',   $_POST['_certificate_font_size'] ? $_POST['_certificate_font_size'] : 11 );  // provide a default
 	update_post_meta( $post_id, '_certificate_font_family', $_POST['_certificate_font_family']  );
@@ -269,7 +269,7 @@ function certificate_templates_process_meta( $post_id, $post ) {
 	                                                    ( isset( $_POST['_certificate_font_style_i'] ) && 'yes' == $_POST['_certificate_font_style_i'] ? 'I' : '' ) );
 
 	// original sizes: default 11, product name 16, sku 8
-	// create the voucher fields data structure
+	// create the certificate template fields data structure
 	$fields = array();
 	foreach ( array( '_certificate_heading', '_certificate_message', '_certificate_course', '_certificate_completion', '_certificate_place' ) as $i => $field_name ) {
 		// set the field defaults

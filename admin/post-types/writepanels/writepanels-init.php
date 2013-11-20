@@ -173,7 +173,8 @@ function certificate_templates_wp_font_select( $field ) {
 		$font_style_value  = get_post_meta( $thepostid, $field['id'] . '_font_style',  true );
 	} else {
 		// field-specific overrides
-		$certificate_fields = get_post_meta( $thepostid, '_certificate_fields', true );
+		$certificate_fields = get_post_meta( $thepostid, '_certificate_template_fields', true );
+
 		$field_name = ltrim( $field['id'], '_' );
 
 		if ( is_array( $certificate_fields ) ) {
