@@ -39,7 +39,7 @@ function certificate_template_data_meta_box( $post ) {
 		'Courier'   => 'Courier',
 		'Times'     => 'Times',
 	);
-	$available_fonts = array_merge( array( '' => '' ), $default_fonts );
+	$available_fonts = $default_fonts;
 
 	// since this little snippet of css applies only to the voucher post page, it's easier to have inline here
 	?>
@@ -266,7 +266,9 @@ function certificate_templates_process_meta( $post_id, $post ) {
 	update_post_meta( $post_id, '_certificate_font_size',   $_POST['_certificate_font_size'] ? $_POST['_certificate_font_size'] : 11 );  // provide a default
 	update_post_meta( $post_id, '_certificate_font_family', $_POST['_certificate_font_family']  );
 	update_post_meta( $post_id, '_certificate_font_style',  ( isset( $_POST['_certificate_font_style_b'] ) && 'yes' == $_POST['_certificate_font_style_b'] ? 'B' : '' ) .
-	                                                    ( isset( $_POST['_certificate_font_style_i'] ) && 'yes' == $_POST['_certificate_font_style_i'] ? 'I' : '' ) );
+	                                                    ( isset( $_POST['_certificate_font_style_i'] ) && 'yes' == $_POST['_certificate_font_style_i'] ? 'I' : '' ) .
+	                                                    ( isset( $_POST['_certificate_font_style_c'] ) && 'yes' == $_POST['_certificate_font_style_c'] ? 'C' : '' ) .
+	                                                    ( isset( $_POST['_certificate_font_style_o'] ) && 'yes' == $_POST['_certificate_font_style_o'] ? 'O' : '' ) );
 
 	// original sizes: default 11, product name 16, sku 8
 	// create the certificate template fields data structure
@@ -295,6 +297,8 @@ function certificate_templates_process_meta( $post_id, $post ) {
 		if ( $_POST[ $field_name . '_font_size' ] )    $field['font']['size']   = $_POST[ $field_name . '_font_size' ];
 		if ( isset( $_POST[ $field_name . '_font_style_b' ] ) && $_POST[ $field_name . '_font_style_b' ] ) $field['font']['style']  = 'B';
 		if ( isset( $_POST[ $field_name . '_font_style_i' ] ) && $_POST[ $field_name . '_font_style_i' ] ) $field['font']['style'] .= 'I';
+		if ( isset( $_POST[ $field_name . '_font_style_c' ] ) && $_POST[ $field_name . '_font_style_c' ] ) $field['font']['style'] .= 'C';
+		if ( isset( $_POST[ $field_name . '_font_style_o' ] ) && $_POST[ $field_name . '_font_style_o' ] ) $field['font']['style'] .= 'O';
 		if ( $_POST[ $field_name . '_font_color' ] )   $field['font']['color']  = $_POST[ $field_name . '_font_color' ];
 
 		// cut off the leading '_' to create the field name

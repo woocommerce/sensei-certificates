@@ -207,6 +207,18 @@ function certificate_templates_wp_font_select( $field ) {
 	checked( false !== strpos( $font_style_value, 'I' ), true );
 	echo ' /> ';
 
+	if ( '_certificate' != $field['id'] ) {
+
+		echo '<label for="' . $field['id'] . '_font_style_c" style="width:auto;margin:0 5px 0 10px;">' . __( 'Center Align', 'woothemes-sensei' ) . '</label><input type="checkbox" class="checkbox" style="margin-top:4px;" name="' . $field['id'] . '_font_style_c" id="' . $field['id'] . '_font_style_c" value="yes" ';
+		checked( false !== strpos( $font_style_value, 'C' ), true );
+		echo ' /> ';
+
+		echo '<label for="' . $field['id'] . '_font_style_o" style="width:auto;margin:0 5px 0 10px;">' . __( 'Border', 'woothemes-sensei' ) . '</label><input type="checkbox" class="checkbox" style="margin-top:4px;" name="' . $field['id'] . '_font_style_o" id="' . $field['id'] . '_font_style_o" value="yes" ';
+		checked( false !== strpos( $font_style_value, 'O' ), true );
+		echo ' /> ';
+
+	} // End If Statement
+
 	echo '</p>';
 }
 

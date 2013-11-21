@@ -191,13 +191,29 @@ class WooThemes_Sensei_PDF_Certificate {
 			$font_color = $this->hex2rgb( $font['font_color'] );
 			$fpdf->SetTextColor( $font_color[0], $font_color[1], $font_color[2] );
 
+			// Check for Border and Center align
+			$border = 0;
+			$center = 'J';
+			if ( false !== strpos( $font['font_style'], 'C' ) ) {
+				$center = 'C';
+				$font['font_style'] = str_replace( 'C', '', $font['font_style']);
+			} // End If Statement
+			if ( false !== strpos( $font['font_style'], 'O' ) ) {
+				$border = 1;
+				$font['font_style'] = str_replace( 'O', '', $font['font_style']);
+			} // End If Statement
+
 			// set the field text styling
 			$fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] );
 
 			$fpdf->setXY( $x, $y );
 
+			if ( 0 < $border ) {
+				$show_border = 1;
+			}
+
 			// and write out the value
-			$fpdf->Multicell( $w, $font['font_size'], utf8_decode( $value ), $show_border );
+			$fpdf->Multicell( $w, $font['font_size'], utf8_decode( $value ), $show_border, $center );
 		}
 	}
 
@@ -252,6 +268,18 @@ class WooThemes_Sensei_PDF_Certificate {
 			$font_color = $this->hex2rgb( $font['font_color'] );
 			$fpdf->SetTextColor( $font_color[0], $font_color[1], $font_color[2] );
 
+			// Check for Border and Center align
+			$border = 0;
+			$center = 'J';
+			if ( false !== strpos( $font['font_style'], 'C' ) ) {
+				$center = 'C';
+				$font['font_style'] = str_replace( 'C', '', $font['font_style']);
+			} // End If Statement
+			if ( false !== strpos( $font['font_style'], 'O' ) ) {
+				$border = 1;
+				$font['font_style'] = str_replace( 'O', '', $font['font_style']);
+			} // End If Statement
+
 			// set the field text styling
 			$fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] );
 
@@ -261,12 +289,16 @@ class WooThemes_Sensei_PDF_Certificate {
 				$fpdf->Cell( $w, $h, '', 1 );
 			}
 
+			if ( 0 < $border ) {
+				$show_border = 1;
+			}
+
 			// align the text to the bottom edge of the cell by translating as needed
 			$y =$font['font_size'] > $h ? $y - ( $font['font_size'] - $h ) / 2 : $y + ( $h - $font['font_size'] ) / 2;
 			$fpdf->setXY( $x, $y );
 
 			// and write out the value
-			$fpdf->Cell( $w, $h, utf8_decode( $value ) );  // can try iconv('UTF-8', 'windows-1252', $content); if this doesn't work correctly for accents
+			$fpdf->Cell( $w, $h, utf8_decode( $value ), $show_border, $postition, $center  );  // can try iconv('UTF-8', 'windows-1252', $content); if this doesn't work correctly for accents
 		}
 	}
 
