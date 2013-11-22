@@ -313,7 +313,7 @@ class WooThemes_Sensei_PDF_Certificate {
 			$fpdf->setXY( $x, $y );
 
 			// and write out the value
-			$fpdf->Cell( $w, $h, utf8_decode( $value ), $show_border, $postition, $center  );  // can try iconv('UTF-8', 'windows-1252', $content); if this doesn't work correctly for accents
+			$fpdf->Cell( $w, $h, utf8_decode( $value ), $show_border, $position, $center  );  // can try iconv('UTF-8', 'windows-1252', $content); if this doesn't work correctly for accents
 		}
 	}
 
