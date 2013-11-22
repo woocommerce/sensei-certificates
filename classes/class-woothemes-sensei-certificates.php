@@ -391,6 +391,10 @@ class WooThemes_Sensei_Certificates {
 
 		// Define the data we're going to load: Key => Default value
 		$load_data = array(
+			'certificate_font_style'	=> array(),
+			'certificate_font_color'	=> array(),
+			'certificate_font_size'	=> array(),
+			'certificate_font_family'	=> array(),
 			'image_ids'            => array(),
 			'certificate_template_fields'       => array(),
 		);
@@ -400,6 +404,12 @@ class WooThemes_Sensei_Certificates {
 			// set value from db (unserialized if needed) or use default
 			$this->$key = ( isset( $certificate_template_custom_fields[ '_' . $key ][0] ) && '' !== $certificate_template_custom_fields[ '_' . $key ][0] ) ? ( is_array( $default ) ? maybe_unserialize( $certificate_template_custom_fields[ '_' . $key ][0] ) : $certificate_template_custom_fields[ '_' . $key ][0] ) : $default;
 		}
+
+		// Set default fonts
+		if ( isset( $this->certificate_font_color ) && '' != $this->certificate_font_color ) { $pdf_certificate->certificate_pdf_data['font_color'] = $this->certificate_font_color; }
+		if ( isset( $this->certificate_font_size ) && '' != $this->certificate_font_size ) { $pdf_certificate->certificate_pdf_data['font_size'] = $this->certificate_font_size; }
+		if ( isset( $this->certificate_font_family ) && '' != $this->certificate_font_family ) { $pdf_certificate->certificate_pdf_data['font_family'] = $this->certificate_font_family; }
+		if ( isset( $this->certificate_font_style ) && '' != $this->certificate_font_style ) { $pdf_certificate->certificate_pdf_data['font_style'] = $this->certificate_font_style; }
 
 		$certificate_heading = __( 'Certificate of Completion', 'woothemes-sensei-certificates' ); // Certificate of Completion
 		if ( isset( $this->certificate_template_fields['certificate_heading']['text'] ) && '' != $this->certificate_template_fields['certificate_heading']['text'] ) {

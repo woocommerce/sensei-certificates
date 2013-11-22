@@ -184,6 +184,12 @@ class WooThemes_Sensei_PDF_Certificate {
 				);
 			}
 
+			// Test each font element
+			if ( empty( $font['font_color'] ) ) { $font['font_color'] = $this->certificate_pdf_data['font_color']; }
+			if ( empty( $font['font_family'] ) ) { $font['font_family'] = $this->certificate_pdf_data['font_family']; }
+			if ( empty( $font['font_style'] ) ) { $font['font_style'] = $this->certificate_pdf_data['font_style']; }
+			if ( empty( $font['font_size'] ) ) { $font['font_size'] = $this->certificate_pdf_data['font_size']; }
+
 			// get the field position
 			list( $x, $y, $w, $h ) = $position;
 
@@ -261,6 +267,13 @@ class WooThemes_Sensei_PDF_Certificate {
 					'font_size' => $this->certificate_pdf_data['font_size']
 				);
 			}
+
+			// Test each font element
+			if ( empty( $font['font_color'] ) ) { $font['font_color'] = $this->certificate_pdf_data['font_color']; }
+			if ( empty( $font['font_family'] ) ) { $font['font_family'] = $this->certificate_pdf_data['font_family']; }
+			if ( empty( $font['font_style'] ) ) { $font['font_style'] = $this->certificate_pdf_data['font_style']; }
+			if ( empty( $font['font_size'] ) ) { $font['font_size'] = $this->certificate_pdf_data['font_size']; }
+
 			// get the field position
 			list( $x, $y, $w, $h ) = $position;
 

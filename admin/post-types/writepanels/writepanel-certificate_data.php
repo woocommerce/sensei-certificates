@@ -39,7 +39,7 @@ function certificate_template_data_meta_box( $post ) {
 		'Courier'   => 'Courier',
 		'Times'     => 'Times',
 	);
-	$available_fonts = $default_fonts;
+	$available_fonts = array_merge( array( '' => '' ), $default_fonts );
 
 	// since this little snippet of css applies only to the voucher post page, it's easier to have inline here
 	?>
@@ -58,7 +58,7 @@ function certificate_template_data_meta_box( $post ) {
 						'id'                => '_certificate',
 						'label'             => __( 'Default Font', 'woothemes-sensei' ),
 						'options'           => $default_fonts,
-						'font_size_default' => 11,
+						'font_size_default' => 12,
 					) );
 					woocommerce_wp_text_input( array(
 						'id'          => '_certificate_font_color',
