@@ -199,7 +199,7 @@ jQuery( function($){
 		// scroll into viewport if needed
 		if ($(document).scrollTop() > $("img#certificate_image_0").offset().top + $("img#certificate_image_0").height() * (2/3)) {
 			$('html, body').animate({
-				scrollTop: $("#set-certificate-image").offset().top
+				scrollTop: $("#title").offset().top
 			}, 500);
 		}
 	}
