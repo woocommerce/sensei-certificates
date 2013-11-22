@@ -93,12 +93,13 @@ add_action( 'manage_certificate_template_posts_custom_column', 'certificate_temp
 function certificate_template_custom_voucher_columns( $column ) {
 	global $post, $woocommerce;
 
-	$voucher = new WC_Voucher( $post->ID );
-
 	switch ( $column ) {
 		case 'thumb':
 			$edit_link = get_edit_post_link( $post->ID );
-			echo '<a href="' . $edit_link . '">' . $voucher->get_image() . '</a>';
+			if ( has_post_thumbnail( $post->ID ) ) {
+				$image = get_the_post_thumbnail( $post->ID, 'thumb' );
+				echo '<a href="' . $edit_link . '">' . $image . '</a>';
+			}
 		break;
 
 		case 'name':
@@ -130,8 +131,6 @@ function certificate_template_custom_voucher_columns( $column ) {
 				if ( 'trash' == $post->post_status || ! EMPTY_TRASH_DAYS )
 					$actions['delete'] = "<a class='submitdelete' title='" . esc_attr( __( 'Delete this item permanently', 'woothemes-sensei' ) ) . "' href='" . get_delete_post_link( $post->ID, '', true ) . "'>" . __( 'Delete Permanently', 'woothemes-sensei' ) . "</a>";
 			}
-
-			// TODO: add a duplicate voucher action?
 
 			$actions = apply_filters( 'post_row_actions', $actions, $post );
 
