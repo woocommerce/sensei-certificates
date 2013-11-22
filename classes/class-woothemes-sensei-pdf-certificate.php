@@ -216,6 +216,7 @@ class WooThemes_Sensei_PDF_Certificate {
 
 			if ( 0 < $border ) {
 				$show_border = 1;
+				$fpdf->SetDrawColor( $font_color[0], $font_color[1], $font_color[2] );
 			}
 
 			// and write out the value
@@ -304,6 +305,7 @@ class WooThemes_Sensei_PDF_Certificate {
 
 			if ( 0 < $border ) {
 				$show_border = 1;
+				$fpdf->SetDrawColor( $font_color[0], $font_color[1], $font_color[2] );
 			}
 
 			// align the text to the bottom edge of the cell by translating as needed
