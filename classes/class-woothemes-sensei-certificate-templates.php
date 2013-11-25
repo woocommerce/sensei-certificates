@@ -697,7 +697,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	 * @return mixed nothing if a $path is supplied, otherwise a PDF download
 	 */
 	public function generate_pdf( $path = '' ) {
-
+		global $current_user, $post;
 		// include the pdf library
 		$root_dir = dirname( __FILE__ ) . DIRECTORY_SEPARATOR;
 		require_once( $root_dir . '/../lib/fpdf/fpdf.php' );
@@ -729,8 +729,6 @@ class WooThemes_Sensei_Certificate_Templates {
 		$show_border = 0;
 
 		// Get Student Data
-		global $current_user;
-		// Get User Meta
 		get_currentuserinfo();
 		$student_name = $current_user->display_name;
 
@@ -810,7 +808,7 @@ class WooThemes_Sensei_Certificate_Templates {
 			$fpdf->Output( $path . '/' . $this->get_voucher_path() . '/' . $this->get_voucher_filename(), 'F' );
 		} else {
 			// download file
-			$fpdf->Output( 'voucher-preview-' . $this->id . '.pdf', 'D' );
+			$fpdf->Output( 'certificate-preview-' . $post->ID . '.pdf', 'D' );
 		}
 	}
 
