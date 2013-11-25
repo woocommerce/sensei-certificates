@@ -205,11 +205,11 @@ class WooThemes_Sensei_PDF_Certificate {
 			// Check for Border and Center align
 			$border = 0;
 			$center = 'J';
-			if ( false !== strpos( $font['font_style'], 'C' ) ) {
+			if ( isset( $font['font_style'] ) && !empty( $font['font_style'] ) && false !== strpos( $font['font_style'], 'C' ) ) {
 				$center = 'C';
 				$font['font_style'] = str_replace( 'C', '', $font['font_style']);
 			} // End If Statement
-			if ( false !== strpos( $font['font_style'], 'O' ) ) {
+			if ( isset( $font['font_style'] ) && !empty( $font['font_style'] ) && false !== strpos( $font['font_style'], 'O' ) ) {
 				$border = 1;
 				$font['font_style'] = str_replace( 'O', '', $font['font_style']);
 			} // End If Statement
@@ -290,11 +290,11 @@ class WooThemes_Sensei_PDF_Certificate {
 			// Check for Border and Center align
 			$border = 0;
 			$center = 'J';
-			if ( false !== strpos( $font['font_style'], 'C' ) ) {
+			if ( isset( $font['font_style'] ) && !empty( $font['font_style'] ) && false !== strpos( $font['font_style'], 'C' ) ) {
 				$center = 'C';
 				$font['font_style'] = str_replace( 'C', '', $font['font_style']);
 			} // End If Statement
-			if ( false !== strpos( $font['font_style'], 'O' ) ) {
+			if ( isset( $font['font_style'] ) && !empty( $font['font_style'] ) && false !== strpos( $font['font_style'], 'O' ) ) {
 				$border = 1;
 				$font['font_style'] = str_replace( 'O', '', $font['font_style']);
 			} // End If Statement
