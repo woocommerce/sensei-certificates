@@ -91,7 +91,7 @@ add_action( 'manage_certificate_template_posts_custom_column', 'certificate_temp
  * @param string $column column identifier
  */
 function certificate_template_custom_voucher_columns( $column ) {
-	global $post, $woocommerce;
+	global $post;
 
 	switch ( $column ) {
 		case 'thumb':

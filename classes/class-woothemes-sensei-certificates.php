@@ -81,6 +81,7 @@ class WooThemes_Sensei_Certificates {
 			//add_action( 'certificates_wrapper_container', array( $this, 'wrapper_container'  ) );
 			add_action( 'sensei_analysis_course_user_columns', array( $this, 'create_columns' ), 10, 1 );
 			add_action( 'sensei_analysis_course_user_column_data', array( $this, 'populate_columns' ), 10, 3 );
+			add_action( 'admin_footer', array( $this, 'output_inline_js' ), 25 );
 		}
 
 		// Generate certificate hash when course is completed.
@@ -658,5 +659,41 @@ class WooThemes_Sensei_Certificates {
 		$content['certificates_link'] = $output;
 		return $content;
 	} // End populate_columns()
+
+	/**
+	 * Add some JavaScript inline to be output in the footer.
+	 *
+	 * @access public
+	 * @param string $code
+	 * @return void
+	 */
+	public function add_inline_js( $code ) {
+		$this->_inline_js .= "\n" . $code . "\n";
+	}
+
+	/**
+	 * Output any queued inline JS.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function output_inline_js() {
+		if ( $this->_inline_js ) {
+
+			echo "<!-- Sensei Certificates JavaScript-->\n<script type=\"text/javascript\">\njQuery(document).ready(function($) {";
+
+			// Sanitize
+			$this->_inline_js = wp_check_invalid_utf8( $this->_inline_js );
+			$this->_inline_js = preg_replace( '/&#(x)?0*(?(1)27|39);?/i', "'", $this->_inline_js );
+			$this->_inline_js = str_replace( "\r", '', $this->_inline_js );
+
+			// Output
+			echo $this->_inline_js;
+
+			echo "});\n</script>\n";
+
+			$this->_inline_js = '';
+		}
+	}
 
 } // End Class

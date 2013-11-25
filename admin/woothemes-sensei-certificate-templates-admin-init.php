@@ -146,7 +146,7 @@ add_action( 'admin_enqueue_scripts', 'sensei_certificate_template_admin_enqueue_
  * @since 1.0
  */
 function sensei_certificate_template_admin_enqueue_scripts() {
-	global $woocommerce, $post, $woothemes_sensei_certificates, $wp_version;
+	global $post, $woothemes_sensei_certificates, $wp_version;
 
 	// Get admin screen id
 	$screen = get_current_screen();
@@ -169,7 +169,7 @@ function sensei_certificate_template_admin_enqueue_scripts() {
 		// wp_enqueue_script( 'woocommerce_writepanel' );
 
 		// make sure the woocommerce admin styles are available for both the voucher edit page, and list page
-		wp_enqueue_style( 'woocommerce_admin_styles', $woocommerce->plugin_url() . '/assets/css/admin.css' );
+		// wp_enqueue_style( 'woocommerce_admin_styles', $woocommerce->plugin_url() . '/assets/css/admin.css' );
 	}
 
 	if ( in_array( $screen->id, array( 'certificate_template' ) ) ) {
