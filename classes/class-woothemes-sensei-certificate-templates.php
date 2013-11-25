@@ -75,6 +75,8 @@ class WooThemes_Sensei_Certificate_Templates {
 			add_action( 'manage_posts_custom_column', array( $this, 'add_column_data' ), 11, 2 );
 		}
 
+		add_filter( 'single_template', array( $this, 'certificate_templates_locate_preview_template' ) );
+
 		// Generate certificates for past completed courses upon installation
 		register_activation_hook( $file, array( $this, 'install' ) );
 
@@ -92,6 +94,26 @@ class WooThemes_Sensei_Certificate_Templates {
 		return $this->plugin_path = untrailingslashit( plugin_dir_path( dirname( __FILE__ ) ) );
 
 	} // End plugin_path()
+
+	/**
+	 * Locate the voucher preview template file, in this plugin's templates directory
+	 *
+	 * @since 1.0
+	 * @param string $locate locate path
+	 *
+	 * @return string the location path for the voucher preview file
+	 */
+	function certificate_templates_locate_preview_template( $locate ) {
+
+		$post_type = get_query_var( 'post_type' );
+
+		if ( 'certificate_template' == $post_type && strpos( $locate, 'single.php' ) ) {
+			$locate = $this->plugin_path() . '/templates/single-certificate_template.php';
+		}
+
+		return $locate;
+	}
+
 
 	/**
 	 * certificate_templates_admin_menu_items function.
@@ -421,11 +443,17 @@ class WooThemes_Sensei_Certificate_Templates {
 	 * @return int voucher image id
 	 */
 	public function get_image_id() {
-		// if this is a voucher product, return the selected image id
-		if ( isset( $this->item['voucher_image_id'] ) ) return $this->item['voucher_image_id'];
+		global $post;
+
+		if ( isset( $post->ID ) && 0 < $post->ID ) {
+			$image_ids = get_post_meta( $post->ID, '_image_ids', true );
+			$image_id = $image_ids[0];
+		} else {
+			return false;
+		} // End If Statement
 
 		// otherwise return the template primary image id
-		return $this->image_id;
+		return $image_id;
 	}
 
 
@@ -690,7 +718,7 @@ class WooThemes_Sensei_Certificate_Templates {
 		$fpdf->AddPage();
 		$fpdf->SetAutoPageBreak( false );
 
-		// set the voucher image
+		// set the certificate image
 		$upload_dir = wp_upload_dir();
 		$fpdf->Image( $upload_dir['basedir'] . '/' . $image['file'], 0, 0, $image['width'], $image['height'] );
 
@@ -700,34 +728,82 @@ class WooThemes_Sensei_Certificate_Templates {
 		//  display that prior to the translation
 		$show_border = 0;
 
-		// voucher message text, this is multi-line, so it's handled specially
-		$this->textarea_field( $fpdf, 'message', $this->get_message(), $show_border );
+		// Get Student Data
+		global $current_user;
+		// Get User Meta
+		get_currentuserinfo();
+		$student_name = $current_user->display_name;
 
-		// product name
-		$this->text_field( $fpdf, 'product_name', $this->get_product_name(), $show_border );
+		// Get Course Data
+		$course->post_title = __( 'Course Title', 'woothemes-sensei' );
+		$course_end_date = date('Y-m-d');
 
-		// product sku
-		$this->text_field( $fpdf, 'product_sku', $this->get_product_sku(), $show_border );
+		// Get the certificate template
+		$certificate_template_custom_fields = get_post_custom( $post->ID );
 
-		// recepient name
-		$this->text_field( $fpdf, 'recipient_name', $this->get_recipient_name(), $show_border );
+		// Define the data we're going to load: Key => Default value
+		$load_data = array(
+			'certificate_font_style'	=> array(),
+			'certificate_font_color'	=> array(),
+			'certificate_font_size'	=> array(),
+			'certificate_font_family'	=> array(),
+			'image_ids'            => array(),
+			'certificate_template_fields'       => array(),
+		);
 
-		// expiry date
-		$this->text_field( $fpdf, 'expiration_date', $this->get_formatted_expiration_date(), $show_border );
-
-		// voucher number
-		$this->text_field( $fpdf, 'voucher_number', $this->get_voucher_number(), $show_border );
-
-		// has additional pages?
-		foreach ( $this->additional_image_ids as $additional_image_id ) {
-			$fpdf->AddPage();
-			$additional_image = wp_get_attachment_metadata( $additional_image_id );
-			$fpdf->Image( $upload_dir['basedir'] . '/' . $additional_image['file'],
-			              0,
-			              0,
-			              $additional_image['width']  < $image['width']  ? $additional_image['width']  : $image['width'],
-			              $additional_image['height'] < $image['height'] ? $additional_image['height'] : $image['height'] );
+		// Load the data from the custom fields
+		foreach ( $load_data as $key => $default ) {
+			// set value from db (unserialized if needed) or use default
+			$this->$key = ( isset( $certificate_template_custom_fields[ '_' . $key ][0] ) && '' !== $certificate_template_custom_fields[ '_' . $key ][0] ) ? ( is_array( $default ) ? maybe_unserialize( $certificate_template_custom_fields[ '_' . $key ][0] ) : $certificate_template_custom_fields[ '_' . $key ][0] ) : $default;
 		}
+
+		// Set default fonts
+
+		$certificate_heading = __( 'Certificate of Completion', 'woothemes-sensei-certificates' ); // Certificate of Completion
+		if ( isset( $this->certificate_template_fields['certificate_heading']['text'] ) && '' != $this->certificate_template_fields['certificate_heading']['text'] ) {
+			$certificate_heading = $this->certificate_template_fields['certificate_heading']['text'];
+			$certificate_heading = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course->post_title, date( 'jS F Y', strtotime( $course_end_date ) ), get_bloginfo( 'name' ) ) , $certificate_heading );
+		}
+		$certificate_message = __( 'This is to certify that', 'woothemes-sensei-certificates' ) . " \r\n\r\n" . $student_name . " \r\n\r\n" . __( 'has completed the course', 'woothemes-sensei-certificates' ); // This is to certify that {{learner}} has completed the course
+		if ( isset( $this->certificate_template_fields['certificate_message']['text'] ) && '' != $this->certificate_template_fields['certificate_message']['text'] ) {
+			$certificate_message = $this->certificate_template_fields['certificate_message']['text'];
+			$certificate_message = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course->post_title, date( 'jS F Y', strtotime( $course_end_date ) ), get_bloginfo( 'name' ) ) , $certificate_message );
+		}
+		$certificate_course = $course->post_title; // {{course_title}}
+		if ( isset( $this->certificate_template_fields['certificate_course']['text'] ) && '' != $this->certificate_template_fields['certificate_course']['text'] ) {
+			$certificate_course = $this->certificate_template_fields['certificate_course']['text'];
+			$certificate_course = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course->post_title, date( 'jS F Y', strtotime( $course_end_date ) ), get_bloginfo( 'name' ) ) , $certificate_course );
+		}
+		$certificate_completion = date( 'jS F Y', strtotime( $course_end_date ) ); // {{completion_date}}
+		if ( isset( $this->certificate_template_fields['certificate_completion']['text'] ) && '' != $this->certificate_template_fields['certificate_completion']['text'] ) {
+			$certificate_completion = $this->certificate_template_fields['certificate_completion']['text'];
+			$certificate_completion = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course->post_title, date( 'jS F Y', strtotime( $course_end_date ) ), get_bloginfo( 'name' ) ) , $certificate_completion );
+		}
+		$certificate_place = sprintf( __( 'At %s', 'woothemes-sensei-certificates' ), get_bloginfo( 'name' ) ); // At {{course_place}}
+		if ( isset( $this->certificate_template_fields['certificate_place']['text'] ) && '' != $this->certificate_template_fields['certificate_place']['text'] ) {
+			$certificate_place = $this->certificate_template_fields['certificate_place']['text'];
+			$certificate_place = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course->post_title, date( 'jS F Y', strtotime( $course_end_date ) ), get_bloginfo( 'name' ) ) , $certificate_place );
+		}
+
+		$output_fields = array(	'certificate_heading' 		=> 'text_field',
+								'certificate_message' 		=> 'textarea_field',
+								'certificate_course'		=> 'text_field',
+								'certificate_completion' 	=> 'text_field',
+								'certificate_place' 		=> 'text_field',
+							 );
+
+		foreach ( $output_fields as $meta_key => $function_name ) {
+
+			// Check if the field has a set position
+			if ( isset( $this->certificate_template_fields[$meta_key]['position']['x1'] ) ) {
+
+				$font_settings = $this->get_certificate_font_settings( $meta_key );
+
+				call_user_func_array(array($this, $function_name), array( $fpdf, $$meta_key, $show_border, array( $this->certificate_template_fields[$meta_key]['position']['x1'], $this->certificate_template_fields[$meta_key]['position']['y1'], $this->certificate_template_fields[$meta_key]['position']['width'], $this->certificate_template_fields[$meta_key]['position']['height'] ), $font_settings ));
+
+			} // End If Statement
+
+		} // End For Loop
 
 		if ( $path ) {
 			// save the pdf as a file
@@ -736,6 +812,32 @@ class WooThemes_Sensei_Certificate_Templates {
 			// download file
 			$fpdf->Output( 'voucher-preview-' . $this->id . '.pdf', 'D' );
 		}
+	}
+
+	/**
+	 * Returns font settings for the certificate template
+	 * @access public
+	 * @since  1.0.0
+	 * @return void
+	 */
+	public function get_certificate_font_settings( $field_key = '' ) {
+
+		$return_array = array();
+
+		if ( isset( $this->certificate_template_fields[$field_key]['font']['color'] ) && '' != $this->certificate_template_fields[$field_key]['font']['color'] ) {
+			$return_array['font_color'] = $this->certificate_template_fields[$field_key]['font']['color'];
+		}
+		if ( isset( $this->certificate_template_fields[$field_key]['font']['family'] ) && '' != $this->certificate_template_fields[$field_key]['font']['family'] ) {
+			$return_array['font_family'] = $this->certificate_template_fields[$field_key]['font']['family'];
+		}
+		if ( isset( $this->certificate_template_fields[$field_key]['font']['style'] ) && '' != $this->certificate_template_fields[$field_key]['font']['style'] ) {
+			$return_array['font_style'] = $this->certificate_template_fields[$field_key]['font']['style'];
+		}
+		if ( isset( $this->certificate_template_fields[$field_key]['font']['size'] ) && '' != $this->certificate_template_fields[$field_key]['font']['size'] ) {
+			$return_array['font_size'] = $this->certificate_template_fields[$field_key]['font']['size'];
+		}
+
+		return $return_array;
 	}
 
 
@@ -749,25 +851,55 @@ class WooThemes_Sensei_Certificate_Templates {
 	 * @param int $show_border a debugging/helper option to display a border
 	 *        around the position for this field
 	 */
-	private function textarea_field( $fpdf, $field_name, $value, $show_border ) {
-		if ( $this->get_field_position( $field_name ) && $value ) {
+	public function textarea_field( $fpdf, $value, $show_border, $position, $font = array() ) {
+		if ( $value ) {
 
-			$font = $this->get_field_font( $field_name );
+			if ( empty( $font ) ) {
+				$font = array(
+					'font_color' => $this->certificate_pdf_data['font_color'],
+					'font_family' => $this->certificate_pdf_data['font_family'],
+					'font_style' => $this->certificate_pdf_data['font_style'],
+					'font_size' => $this->certificate_pdf_data['font_size']
+				);
+			}
+
+			// Test each font element
+			if ( empty( $font['font_color'] ) ) { $font['font_color'] = $this->certificate_pdf_data['font_color']; }
+			if ( empty( $font['font_family'] ) ) { $font['font_family'] = $this->certificate_pdf_data['font_family']; }
+			if ( empty( $font['font_style'] ) ) { $font['font_style'] = $this->certificate_pdf_data['font_style']; }
+			if ( empty( $font['font_size'] ) ) { $font['font_size'] = $this->certificate_pdf_data['font_size']; }
 
 			// get the field position
-			list( $x, $y, $w, $h ) = array_values( $this->get_field_position( $field_name ) );
+			list( $x, $y, $w, $h ) = $position;
 
 			// font color
-			$font['color'] = $this->hex2rgb( $font['color'] );
-			$fpdf->SetTextColor( $font['color'][0], $font['color'][1], $font['color'][2] );
+			$font_color = $this->hex2rgb( $font['font_color'] );
+			$fpdf->SetTextColor( $font_color[0], $font_color[1], $font_color[2] );
+
+			// Check for Border and Center align
+			$border = 0;
+			$center = 'J';
+			if ( false !== strpos( $font['font_style'], 'C' ) ) {
+				$center = 'C';
+				$font['font_style'] = str_replace( 'C', '', $font['font_style']);
+			} // End If Statement
+			if ( false !== strpos( $font['font_style'], 'O' ) ) {
+				$border = 1;
+				$font['font_style'] = str_replace( 'O', '', $font['font_style']);
+			} // End If Statement
 
 			// set the field text styling
-			$fpdf->SetFont( $font['family'], $font['style'], $font['size'] );
+			$fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] );
 
 			$fpdf->setXY( $x, $y );
 
+			if ( 0 < $border ) {
+				$show_border = 1;
+				$fpdf->SetDrawColor( $font_color[0], $font_color[1], $font_color[2] );
+			}
+
 			// and write out the value
-			$fpdf->Multicell( $w, $font['size'], utf8_decode( $value ), $show_border );
+			$fpdf->Multicell( $w, $font['font_size'], utf8_decode( $value ), $show_border, $center );
 		}
 	}
 
@@ -782,21 +914,46 @@ class WooThemes_Sensei_Certificate_Templates {
 	 * @param int $show_border a debugging/helper option to display a border
 	 *        around the position for this field
 	 */
-	private function text_field( $fpdf, $field_name, $value, $show_border ) {
+	private function text_field( $fpdf, $value, $show_border, $position, $font = array()) {
 
-		if ( $this->get_field_position( $field_name ) && $value ) {
+		if ( $value ) {
 
-			$font = $this->get_field_font( $field_name );
+			if ( empty( $font ) ) {
+				$font = array(
+					'font_color' => $this->certificate_pdf_data['font_color'],
+					'font_family' => $this->certificate_pdf_data['font_family'],
+					'font_style' => $this->certificate_pdf_data['font_style'],
+					'font_size' => $this->certificate_pdf_data['font_size']
+				);
+			}
+
+			// Test each font element
+			if ( empty( $font['font_color'] ) ) { $font['font_color'] = $this->certificate_pdf_data['font_color']; }
+			if ( empty( $font['font_family'] ) ) { $font['font_family'] = $this->certificate_pdf_data['font_family']; }
+			if ( empty( $font['font_style'] ) ) { $font['font_style'] = $this->certificate_pdf_data['font_style']; }
+			if ( empty( $font['font_size'] ) ) { $font['font_size'] = $this->certificate_pdf_data['font_size']; }
 
 			// get the field position
-			list( $x, $y, $w, $h ) = array_values( $this->get_field_position( $field_name ) );
+			list( $x, $y, $w, $h ) = $position;
 
 			// font color
-			$font['color'] = $this->hex2rgb( $font['color'] );
-			$fpdf->SetTextColor( $font['color'][0], $font['color'][1], $font['color'][2] );
+			$font_color = $this->hex2rgb( $font['font_color'] );
+			$fpdf->SetTextColor( $font_color[0], $font_color[1], $font_color[2] );
+
+			// Check for Border and Center align
+			$border = 0;
+			$center = 'J';
+			if ( false !== strpos( $font['font_style'], 'C' ) ) {
+				$center = 'C';
+				$font['font_style'] = str_replace( 'C', '', $font['font_style']);
+			} // End If Statement
+			if ( false !== strpos( $font['font_style'], 'O' ) ) {
+				$border = 1;
+				$font['font_style'] = str_replace( 'O', '', $font['font_style']);
+			} // End If Statement
 
 			// set the field text styling
-			$fpdf->SetFont( $font['family'], $font['style'], $font['size'] );
+			$fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] );
 
 			// show a border for debugging purposes
 			if ( $show_border ) {
@@ -804,12 +961,17 @@ class WooThemes_Sensei_Certificate_Templates {
 				$fpdf->Cell( $w, $h, '', 1 );
 			}
 
+			if ( 0 < $border ) {
+				$show_border = 1;
+				$fpdf->SetDrawColor( $font_color[0], $font_color[1], $font_color[2] );
+			}
+
 			// align the text to the bottom edge of the cell by translating as needed
-			$y = $font['size'] > $h ? $y - ( $font['size'] - $h ) / 2 : $y + ( $h - $font['size'] ) / 2;
+			$y =$font['font_size'] > $h ? $y - ( $font['font_size'] - $h ) / 2 : $y + ( $h - $font['font_size'] ) / 2;
 			$fpdf->setXY( $x, $y );
 
 			// and write out the value
-			$fpdf->Cell( $w, $h, utf8_decode( $value ) );  // can try iconv('UTF-8', 'windows-1252', $content); if this doesn't work correctly for accents
+			$fpdf->Cell( $w, $h, utf8_decode( $value ), $show_border, $position, $center  );  // can try iconv('UTF-8', 'windows-1252', $content); if this doesn't work correctly for accents
 		}
 	}
 

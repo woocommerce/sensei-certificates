@@ -23,6 +23,11 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 class WooThemes_Sensei_PDF_Certificate {
 
 	/**
+	 * @var int preview post id
+	 */
+	public $preview_id;
+
+	/**
 	 * @var int certificate hash
 	 */
 	public $hash;
