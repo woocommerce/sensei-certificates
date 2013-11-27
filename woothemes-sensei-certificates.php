@@ -52,16 +52,56 @@ add_action( 'plugins_loaded', 'init_sensei_certificates', 0 );
  */
 function sensei_certificates_install() {
 	global $woothemes_sensei;
+
+	// Check if the installer has already been run
+	$sensei_certificates_user_data_installed = get_option( 'sensei_certificate_user_data_installer', false );
+	$sensei_certificate_templates_installed = get_option( 'sensei_certificate_templates_installer', false );
+	$user_data_installed = false;
+	$template_installed = false;
+
+	if ( !$sensei_certificates_user_data_installed ) {
+
+		// Create the example Certificate Template
+		$user_data_installed = sensei_update_users_certificate_data();
+		update_option( 'sensei_certificate_user_data_installer', $user_data_installed );
+
+	} // End If Statement
+
+	if ( !$sensei_certificate_templates_installed ) {
+
+		// Create the example Certificate Template
+		$template_installed = sensei_create_master_certificate_template();
+		update_option( 'sensei_certificate_templates_installer', $template_installed );
+
+	} // End If Statement
+
+} // End sensei_certificates_install()
+
+/**
+ * sensei_update_users_certificate_data install user certificate data
+ * @since  1.0.0
+ * @return boolean
+ */
+function sensei_update_users_certificate_data() {
+	global $woothemes_sensei;
+
+	$loop_ran = false;
+
 	$users = get_users();
 	foreach ( $users as $user_key => $user_item ) {
+
 		$course_ids = WooThemes_Sensei_Utils::sensei_activity_ids( array( 'user_id' => $user_item->ID, 'type' => 'sensei_course_start' ) );
 		$posts_array = array();
 		if ( 0 < intval( count( $course_ids ) ) ) {
 			$posts_array = $woothemes_sensei->post_types->course->course_query( -1, 'usercourses', $course_ids );
 		} // End If Statement
+
 		foreach ( $posts_array as $course_item ) {
+
 			$course_end_date = WooThemes_Sensei_Utils::sensei_get_activity_value( array( 'post_id' => $course_item->ID, 'user_id' => $user_item->ID, 'type' => 'sensei_course_end', 'field' => 'comment_date' ) );
+
 			if ( isset( $course_end_date ) && '' != $course_end_date ) {
+
 				$args = array(
 					'post_type' => 'certificate',
 					'author' => $user_item->ID,
@@ -69,7 +109,9 @@ function sensei_certificates_install() {
 					'meta_value' => $course_item->ID
 				);
 				$query = new WP_Query( $args );
+
 				if ( ! $query->have_posts() ) {
+
 					// Insert custom post type
 					$cert_args = array(
 						'post_author' => intval( $user_item->ID ),
@@ -79,26 +121,32 @@ function sensei_certificates_install() {
 						'post_status'   => 'publish'
 					);
 					$post_id = wp_insert_post( $cert_args, $wp_error = false );
+
 					if ( ! is_wp_error( $post_id ) ) {
 						add_post_meta( $post_id, 'course_id', intval( $course_item->ID ) );
 						add_post_meta( $post_id, 'learner_id', intval( $user_item->ID ) );
 						add_post_meta( $post_id, 'certificate_hash',esc_html( substr( md5( $course_item->ID . $user_item->ID ), -8 ) ) );
-					}
-				}
+						$loop_ran = true;
+					} // End If Statement
+
+				} // End If Statement
+
 				wp_reset_query();
-			}
-		}
-	}
 
-	// Create the example Certificate Template
-	sensei_create_master_certificate_template();
+			} // End If Statement
 
-} // End sensei_certificates_install()
+		} // End For Loop
+
+	} // End For Loop
+
+	return $loop_ran;
+
+} // End sensei_update_users_certificate_data()
 
 /**
  * sensei_create_master_certificate_template Creates the example Certificate Template and assigns to every Course
  * @since  1.0.0
- * @return void
+ * @return boolean
  */
 function sensei_create_master_certificate_template() {
 
@@ -130,7 +178,7 @@ function sensei_create_master_certificate_template() {
 		@unlink($file_array['tmp_name']);
 		$file_array['tmp_name'] = '';
 		error_log('An error occurred while uploading the image');
-	}
+	} // End If Statement
 
 	// do the validation and storage stuff
 	$image_id = media_handle_sideload( $file_array, $post_id, $desc );
@@ -139,7 +187,7 @@ function sensei_create_master_certificate_template() {
 	if ( is_wp_error($image_id) ) {
 		@unlink($file_array['tmp_name']);
 		error_log('An error occurred while uploading the image');
-	}
+	} // End If Statement
 
 	$src = wp_get_attachment_url( $image_id );
 
@@ -220,7 +268,7 @@ function sensei_create_master_certificate_template() {
 
 		// cut off the leading '_' to create the field name
 		$fields[ ltrim( $field_name, '_' ) ] = $field;
-	}
+	} // End For Loop
 
 	update_post_meta( $post_id, '_certificate_template_fields', $fields );
 
@@ -254,6 +302,12 @@ function sensei_create_master_certificate_template() {
 	} // End If Statement
 
 	wp_reset_postdata();
+
+	if ( 0 < $post_id ) {
+		return true;
+	} else {
+		return false;
+	} // End If Statement
 
 } // End sensei_create_master_certificate_template()
 

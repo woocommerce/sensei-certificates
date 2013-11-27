@@ -130,7 +130,7 @@ class WooThemes_Sensei_PDF_Certificate {
 		$root_dir = dirname( __FILE__ ) . DIRECTORY_SEPARATOR;
 		require_once( $root_dir . '../lib/fpdf/fpdf.php' );
 
-		do_action( 'sensei_certificates_set_background_image', $this, $fpdf );
+		do_action( 'sensei_certificates_set_background_image', $this );
 
 		if (isset( $this->bg_image_src ) && '' != $this->bg_image_src ) {
 			$image = $this->bg_image_src;

@@ -25,6 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 class WooThemes_Sensei_Certificates {
 	public $plugin_url;
 	public $plugin_path;
+	public $_inline_js;
 	/**
 	 * __construct function.
 	 *
@@ -87,7 +88,7 @@ class WooThemes_Sensei_Certificates {
 		// Generate certificate hash when course is completed.
 		add_action( 'sensei_log_activity_after', array( $this, 'generate_certificate_number' ), 10, 2 );
 		// Background Image to display on certificate
-		add_action( 'sensei_certificates_set_background_image', array( $this, 'certificate_background' ), 10, 2 );
+		add_action( 'sensei_certificates_set_background_image', array( $this, 'certificate_background' ), 10, 1 );
 		// Text to display on certificate
 		add_action( 'sensei_certificates_before_pdf_output', array( $this, 'certificate_text' ), 10, 2 );
 		// Generate certificates for past completed courses upon installation
@@ -466,7 +467,7 @@ class WooThemes_Sensei_Certificates {
 	 * @since  1.0.0
 	 * @return void
 	 */
-	public function certificate_background( $pdf_certificate, $fpdf ) {
+	public function certificate_background( $pdf_certificate ) {
 		global $woothemes_sensei;
 
 		$start_position = 200;
@@ -587,7 +588,7 @@ class WooThemes_Sensei_Certificates {
 	 * @return string $message html
 	 */
 	public function certificate_link( $message ) {
-		global $current_user, $course, $woothemes_sensei, $wp_query;
+		global $current_user, $course, $woothemes_sensei, $wp_query, $post;
 		$my_account_page_id = intval( $woothemes_sensei->settings->settings[ 'my_course_page' ] );
 		$view_link_courses = $woothemes_sensei->settings->settings[ 'certificates_view_courses' ];
 		$view_link_profile = $woothemes_sensei->settings->settings[ 'certificates_view_profile' ];
@@ -600,7 +601,11 @@ class WooThemes_Sensei_Certificates {
 		if ( $is_viewable ) {
 			// Get User Meta
 			get_currentuserinfo();
-			$certificate_url = $this->get_certificate_url( $course->ID, $current_user->ID );
+			if ( is_singular( 'course' ) ) {
+				$certificate_url = $this->get_certificate_url( $post->ID, $current_user->ID );
+			} else {
+				$certificate_url = $this->get_certificate_url( $course->ID, $current_user->ID );
+			} // End If Statement
 			if ( '' != $certificate_url ) {
 				$classes = '';
 				if ( is_page( $my_account_page_id ) || isset( $wp_query->query_vars['learner_profile'] ) ) {
