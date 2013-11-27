@@ -733,7 +733,8 @@ class WooThemes_Sensei_Certificate_Templates {
 		$student_name = $current_user->display_name;
 
 		// Get Course Data
-		$course->post_title = __( 'Course Title', 'woothemes-sensei' );
+		$course = array();
+		$course['post_title'] = __( 'Course Title', 'woothemes-sensei' );
 		$course_end_date = date('Y-m-d');
 
 		// Get the certificate template
@@ -760,27 +761,27 @@ class WooThemes_Sensei_Certificate_Templates {
 		$certificate_heading = __( 'Certificate of Completion', 'woothemes-sensei-certificates' ); // Certificate of Completion
 		if ( isset( $this->certificate_template_fields['certificate_heading']['text'] ) && '' != $this->certificate_template_fields['certificate_heading']['text'] ) {
 			$certificate_heading = $this->certificate_template_fields['certificate_heading']['text'];
-			$certificate_heading = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course->post_title, date( 'jS F Y', strtotime( $course_end_date ) ), get_bloginfo( 'name' ) ) , $certificate_heading );
+			$certificate_heading = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course['post_title'], date( 'jS F Y', strtotime( $course_end_date ) ), get_bloginfo( 'name' ) ) , $certificate_heading );
 		}
 		$certificate_message = __( 'This is to certify that', 'woothemes-sensei-certificates' ) . " \r\n\r\n" . $student_name . " \r\n\r\n" . __( 'has completed the course', 'woothemes-sensei-certificates' ); // This is to certify that {{learner}} has completed the course
 		if ( isset( $this->certificate_template_fields['certificate_message']['text'] ) && '' != $this->certificate_template_fields['certificate_message']['text'] ) {
 			$certificate_message = $this->certificate_template_fields['certificate_message']['text'];
-			$certificate_message = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course->post_title, date( 'jS F Y', strtotime( $course_end_date ) ), get_bloginfo( 'name' ) ) , $certificate_message );
+			$certificate_message = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course['post_title'], date( 'jS F Y', strtotime( $course_end_date ) ), get_bloginfo( 'name' ) ) , $certificate_message );
 		}
-		$certificate_course = $course->post_title; // {{course_title}}
+		$certificate_course = $course['post_title']; // {{course_title}}
 		if ( isset( $this->certificate_template_fields['certificate_course']['text'] ) && '' != $this->certificate_template_fields['certificate_course']['text'] ) {
 			$certificate_course = $this->certificate_template_fields['certificate_course']['text'];
-			$certificate_course = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course->post_title, date( 'jS F Y', strtotime( $course_end_date ) ), get_bloginfo( 'name' ) ) , $certificate_course );
+			$certificate_course = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course['post_title'], date( 'jS F Y', strtotime( $course_end_date ) ), get_bloginfo( 'name' ) ) , $certificate_course );
 		}
 		$certificate_completion = date( 'jS F Y', strtotime( $course_end_date ) ); // {{completion_date}}
 		if ( isset( $this->certificate_template_fields['certificate_completion']['text'] ) && '' != $this->certificate_template_fields['certificate_completion']['text'] ) {
 			$certificate_completion = $this->certificate_template_fields['certificate_completion']['text'];
-			$certificate_completion = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course->post_title, date( 'jS F Y', strtotime( $course_end_date ) ), get_bloginfo( 'name' ) ) , $certificate_completion );
+			$certificate_completion = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course['post_title'], date( 'jS F Y', strtotime( $course_end_date ) ), get_bloginfo( 'name' ) ) , $certificate_completion );
 		}
 		$certificate_place = sprintf( __( 'At %s', 'woothemes-sensei-certificates' ), get_bloginfo( 'name' ) ); // At {{course_place}}
 		if ( isset( $this->certificate_template_fields['certificate_place']['text'] ) && '' != $this->certificate_template_fields['certificate_place']['text'] ) {
 			$certificate_place = $this->certificate_template_fields['certificate_place']['text'];
-			$certificate_place = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course->post_title, date( 'jS F Y', strtotime( $course_end_date ) ), get_bloginfo( 'name' ) ) , $certificate_place );
+			$certificate_place = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course['post_title'], date( 'jS F Y', strtotime( $course_end_date ) ), get_bloginfo( 'name' ) ) , $certificate_place );
 		}
 
 		$output_fields = array(	'certificate_heading' 		=> 'text_field',
@@ -808,7 +809,7 @@ class WooThemes_Sensei_Certificate_Templates {
 			$fpdf->Output( $path . '/' . $this->get_voucher_path() . '/' . $this->get_voucher_filename(), 'F' );
 		} else {
 			// download file
-			$fpdf->Output( 'certificate-preview-' . $post->ID . '.pdf', 'D' );
+			$fpdf->Output( 'certificate-preview-' . $post->ID . '.pdf', 'I' );
 		}
 	}
 
@@ -854,18 +855,18 @@ class WooThemes_Sensei_Certificate_Templates {
 
 			if ( empty( $font ) ) {
 				$font = array(
-					'font_color' => $this->certificate_pdf_data['font_color'],
-					'font_family' => $this->certificate_pdf_data['font_family'],
-					'font_style' => $this->certificate_pdf_data['font_style'],
-					'font_size' => $this->certificate_pdf_data['font_size']
+					'font_color' => $this->certificate_font_color,
+					'font_family' => $this->certificate_font_family,
+					'font_style' => $this->certificate_font_style,
+					'font_size' => $this->certificate_font_size
 				);
 			}
 
 			// Test each font element
-			if ( empty( $font['font_color'] ) ) { $font['font_color'] = $this->certificate_pdf_data['font_color']; }
-			if ( empty( $font['font_family'] ) ) { $font['font_family'] = $this->certificate_pdf_data['font_family']; }
-			if ( empty( $font['font_style'] ) ) { $font['font_style'] = $this->certificate_pdf_data['font_style']; }
-			if ( empty( $font['font_size'] ) ) { $font['font_size'] = $this->certificate_pdf_data['font_size']; }
+			if ( empty( $font['font_color'] ) ) { $font['font_color'] = $this->certificate_font_color; }
+			if ( empty( $font['font_family'] ) ) { $font['font_family'] = $this->certificate_font_family; }
+			if ( empty( $font['font_style'] ) ) { $font['font_style'] = $this->certificate_font_style; }
+			if ( empty( $font['font_size'] ) ) { $font['font_size'] = $this->certificate_font_size; }
 
 			// get the field position
 			list( $x, $y, $w, $h ) = $position;
@@ -877,11 +878,11 @@ class WooThemes_Sensei_Certificate_Templates {
 			// Check for Border and Center align
 			$border = 0;
 			$center = 'J';
-			if ( false !== strpos( $font['font_style'], 'C' ) ) {
+			if ( isset( $font['font_style'] ) && !empty( $font['font_style'] ) && false !== strpos( $font['font_style'], 'C' ) ) {
 				$center = 'C';
 				$font['font_style'] = str_replace( 'C', '', $font['font_style']);
 			} // End If Statement
-			if ( false !== strpos( $font['font_style'], 'O' ) ) {
+			if ( isset( $font['font_style'] ) && !empty( $font['font_style'] ) && false !== strpos( $font['font_style'], 'O' ) ) {
 				$border = 1;
 				$font['font_style'] = str_replace( 'O', '', $font['font_style']);
 			} // End If Statement
@@ -918,18 +919,18 @@ class WooThemes_Sensei_Certificate_Templates {
 
 			if ( empty( $font ) ) {
 				$font = array(
-					'font_color' => $this->certificate_pdf_data['font_color'],
-					'font_family' => $this->certificate_pdf_data['font_family'],
-					'font_style' => $this->certificate_pdf_data['font_style'],
-					'font_size' => $this->certificate_pdf_data['font_size']
+					'font_color' => $this->certificate_font_color,
+					'font_family' => $this->certificate_font_family,
+					'font_style' => $this->certificate_font_style,
+					'font_size' => $this->certificate_font_size
 				);
 			}
 
 			// Test each font element
-			if ( empty( $font['font_color'] ) ) { $font['font_color'] = $this->certificate_pdf_data['font_color']; }
-			if ( empty( $font['font_family'] ) ) { $font['font_family'] = $this->certificate_pdf_data['font_family']; }
-			if ( empty( $font['font_style'] ) ) { $font['font_style'] = $this->certificate_pdf_data['font_style']; }
-			if ( empty( $font['font_size'] ) ) { $font['font_size'] = $this->certificate_pdf_data['font_size']; }
+			if ( empty( $font['font_color'] ) ) { $font['font_color'] = $this->certificate_font_color; }
+			if ( empty( $font['font_family'] ) ) { $font['font_family'] = $this->certificate_font_family; }
+			if ( empty( $font['font_style'] ) ) { $font['font_style'] = $this->certificate_font_style; }
+			if ( empty( $font['font_size'] ) ) { $font['font_size'] = $this->certificate_font_size; }
 
 			// get the field position
 			list( $x, $y, $w, $h ) = $position;
@@ -941,11 +942,11 @@ class WooThemes_Sensei_Certificate_Templates {
 			// Check for Border and Center align
 			$border = 0;
 			$center = 'J';
-			if ( false !== strpos( $font['font_style'], 'C' ) ) {
+			if ( isset( $font['font_style'] ) && !empty( $font['font_style'] ) && false !== strpos( $font['font_style'], 'C' ) ) {
 				$center = 'C';
 				$font['font_style'] = str_replace( 'C', '', $font['font_style']);
 			} // End If Statement
-			if ( false !== strpos( $font['font_style'], 'O' ) ) {
+			if ( isset( $font['font_style'] ) && !empty( $font['font_style'] ) && false !== strpos( $font['font_style'], 'O' ) ) {
 				$border = 1;
 				$font['font_style'] = str_replace( 'O', '', $font['font_style']);
 			} // End If Statement
