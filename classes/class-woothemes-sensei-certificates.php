@@ -44,9 +44,8 @@ class WooThemes_Sensei_Certificates {
 
 		// Setup post type
 		add_action( 'init', array( $this, 'setup_certificates_post_type' ), 110 );
-		add_filter('manage_edit-certificate_columns', array( $this, 'post_type_custom_column_headings' ) );
-		add_action('manage_certificate_posts_custom_column', array( $this, 'post_type_custom_column_content' ), 10, 2 );
-
+		add_filter( 'manage_edit-certificate_columns', array( $this, 'post_type_custom_column_headings' ) );
+		add_action( 'manage_certificate_posts_custom_column', array( $this, 'post_type_custom_column_content' ), 10, 2 );
 
 		/**
 		 * FRONTEND
@@ -83,6 +82,7 @@ class WooThemes_Sensei_Certificates {
 			add_action( 'sensei_analysis_course_user_columns', array( $this, 'create_columns' ), 10, 1 );
 			add_action( 'sensei_analysis_course_user_column_data', array( $this, 'populate_columns' ), 10, 3 );
 			add_action( 'admin_footer', array( $this, 'output_inline_js' ), 25 );
+			add_filter( 'sensei_scripts_allowed_post_types', array( $this, 'include_sensei_scripts' ), 10, 1 );
 		}
 
 		// Generate certificate hash when course is completed.
@@ -700,5 +700,20 @@ class WooThemes_Sensei_Certificates {
 			$this->_inline_js = '';
 		}
 	}
+
+	/**
+	 * include_sensei_scripts includes Sensei scripts and styles on Certificates pages
+	 * @since  1.0.0
+	 * @param  array $allowed_post_types array of existing post types
+	 * @return array $allowed_post_types array of additional post types
+	 */
+	public function include_sensei_scripts( $allowed_post_types ) {
+
+		array_push( $allowed_post_types, 'certificate' );
+		array_push( $allowed_post_types, 'certificate_template' );
+
+		return $allowed_post_types;
+
+	} // End include_sensei_scripts()
 
 } // End Class
