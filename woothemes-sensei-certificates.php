@@ -18,7 +18,7 @@ if ( ! function_exists( 'woothemes_queue_update' ) )
 /**
  * Plugin updates
  */
-woothemes_queue_update( plugin_basename( __FILE__ ), '112372c44b002fea2640bd6bfafbca27', '18740' );
+woothemes_queue_update( plugin_basename( __FILE__ ), '625ee5fe1bf36b4c741ab07507ba2ffd', '247548' );
 
 /**
  * Localisation
