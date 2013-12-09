@@ -250,7 +250,7 @@ class WooThemes_Sensei_Certificates {
 				echo $course_end_date;
 				break;
 			case "actions" :
-				echo '<a href="' . add_query_arg( array( 'certificate' => '1', 'hash' => $certificate_hash ), site_url() ) . '" target="_blank">'. __( 'View Certificate', 'woothemes-sensei-certificates' ) . '</a>';
+				echo '<a href="' . get_permalink( $post_ID ) . '" target="_blank">'. __( 'View Certificate', 'woothemes-sensei-certificates' ) . '</a>';
 				break;
 		}
 	} // End post_type_custom_column_content()
