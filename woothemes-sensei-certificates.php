@@ -59,10 +59,13 @@ function sensei_certificates_install() {
 	$user_data_installed = false;
 	$template_installed = false;
 
-	if ( !$sensei_certificates_user_data_installed ) {
+	$user_count = count_users();
+	$total_users = intval( $user_count['total_users'] );
+
+	if ( !$sensei_certificates_user_data_installed && 1000 >= $total_users ) {
 
 		// Create the example Certificate Template
-		$user_data_installed = sensei_update_users_certificate_data();
+		$user_data_installed = sensei_update_users_certificate_data( $total_users, 0 );
 		update_option( 'sensei_certificate_user_data_installer', $user_data_installed );
 
 	} // End If Statement
@@ -77,17 +80,58 @@ function sensei_certificates_install() {
 
 } // End sensei_certificates_install()
 
+add_filter( 'sensei_upgrade_functions', 'sensei_certificates_updates_list', 10, 1);
+
+function sensei_certificates_updates_list( $updates ) {
+	$updates['1.0.0'] = array( 	'auto'	=> array(),
+								'manual' => array( 'sensei_update_users_certificate_data' => array( 
+																								'title' => 'Create Certificates', 
+																								'desc' => 'Creates certificates for learners who have already completed Courses.', 
+																								'product' => 'Sensei Certificates' ), 
+													'sensei_create_master_certificate_template' => array(
+																								'title' => 'Create Master Certificate Template', 
+																								'desc' => 'Creates the master Certificate Template for all Courses.', 
+																								'product' => 'Sensei Certificates'
+																									) )
+												);
+
+	return $updates;
+} // End sensei_certificates_updates_list()
+
 /**
  * sensei_update_users_certificate_data install user certificate data
  * @since  1.0.0
  * @return boolean
  */
-function sensei_update_users_certificate_data() {
+function sensei_update_users_certificate_data( $n = 5, $offset = 0 ) {
 	global $woothemes_sensei;
 
 	$loop_ran = false;
 
-	$users = get_users();
+	// Calculate if this is the last page
+	if ( 0 == $offset ) {
+		$current_page = 1;
+	} else {
+		$current_page = intval( $offset / $n );
+	} // End If Statement
+
+	$args_array = array(
+			'number' => $n,
+			'offset' => $offset,
+			'orderby' => 'ID',
+			'order' => 'DESC',
+			'fields' => 'all_with_meta'
+		);
+	$wp_user_update = new WP_User_Query( $args_array );
+	$users = $wp_user_update->get_results();
+
+	$user_count = count_users();
+	$total_items = $user_count['total_users'];
+
+	$query_total = $wp_user_update->get_total();
+
+	$total_pages = intval( $total_items / $n );
+
 	foreach ( $users as $user_key => $user_item ) {
 
 		$course_ids = WooThemes_Sensei_Utils::sensei_activity_ids( array( 'user_id' => $user_item->ID, 'type' => 'sensei_course_start' ) );
@@ -139,7 +183,11 @@ function sensei_update_users_certificate_data() {
 
 	} // End For Loop
 
-	return $loop_ran;
+	if ( $current_page >= $total_pages ) {
+		return true;
+	} else {
+		return false;
+	} // End If Statement
 
 } // End sensei_update_users_certificate_data()
 
@@ -171,7 +219,6 @@ function sensei_create_master_certificate_template() {
 	preg_match('/[^\?]+\.(jpg|JPG|jpe|JPE|jpeg|JPEG|gif|GIF|png|PNG)/', $url, $matches);
 	$file_array['name'] = basename($matches[0]);
 	$file_array['tmp_name'] = $tmp;
-	// $file_array['type'] = 'image/png';
 
 	// If error storing temporarily, unlink
 	if ( is_wp_error( $tmp ) ) {

@@ -37,7 +37,6 @@ class WooThemes_Sensei_Certificates {
 		$this->plugin_url = trailingslashit( plugins_url( '', $file ) );
 		$this->plugin_path = plugin_dir_path( $file );
 
-
 		// Hook onto Sensei settings and load a new tab with settings for extension
 		add_filter( 'sensei_settings_tabs', array( $this, 'certificates_settings_tabs' ) );
 		add_filter( 'sensei_settings_fields', array( $this, 'certificates_settings_fields' ) );
@@ -50,20 +49,8 @@ class WooThemes_Sensei_Certificates {
 		/**
 		 * FRONTEND
 		 */
-		// // Add View certificate link on Learner Profile.
-		// add_action( 'sensei_course_after_profile', array( $this, 'function_to_add' ) );
-		// // Add View certificate link to My Courses
-		// add_action( 'sensei_item_after_my_courses_completed', array( $this, 'function_to_add' ) );
-		// // Add View Ceritificate link to Single Course page
-		// add_action( 'sensei_after_main_content', array( $this, 'function_to_add' ), 9 );
-		// // Add View Ceritificate link to Course Completed page
-		// add_action( 'sensei_after_course_completed', array( $this, 'function_to_add' ) );
-
-		// add_action( '', array( $this, 'certificate_link' ) );
-
 		add_filter( 'sensei_user_course_status_passed', array( $this, 'certificate_link' ), 10, 1 );
 		add_filter( 'sensei_view_results_text', array( $this, 'certificate_link' ), 10, 1 );
-
 		add_action( 'sensei_additional_styles', array( $this, 'enqueue_styles' ) );
 
 		// Create certificate endpoint and handle generation of pdf certificate
@@ -76,9 +63,6 @@ class WooThemes_Sensei_Certificates {
 		 */
 		if ( is_admin() ) {
 			// Add Certificates Menu
-			//add_action( 'admin_menu', array( $this, 'certificates_admin_menu' ) );
-			//add_action( 'admin_print_styles', array( $this, 'enqueue_styles' ) );
-			//add_action( 'certificates_wrapper_container', array( $this, 'wrapper_container'  ) );
 			add_action( 'sensei_analysis_course_user_columns', array( $this, 'create_columns' ), 10, 1 );
 			add_action( 'sensei_analysis_course_user_column_data', array( $this, 'populate_columns' ), 10, 3 );
 			add_action( 'admin_footer', array( $this, 'output_inline_js' ), 25 );
