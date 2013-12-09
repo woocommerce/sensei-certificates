@@ -23,7 +23,12 @@ woothemes_queue_update( plugin_basename( __FILE__ ), '625ee5fe1bf36b4c741ab07507
 /**
  * Localisation
  **/
-load_plugin_textdomain( 'woothemes-sensei-certificates', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+add_action('plugins_loaded', 'init_certificates_textdomain');
+
+function init_certificates_textdomain() {
+	load_plugin_textdomain( 'woothemes-sensei-certificates', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
+} // End init_certificates_textdomain()
+
 
 
 /**
@@ -84,13 +89,13 @@ add_filter( 'sensei_upgrade_functions', 'sensei_certificates_updates_list', 10, 
 
 function sensei_certificates_updates_list( $updates ) {
 	$updates['1.0.0'] = array( 	'auto'	=> array(),
-								'manual' => array( 'sensei_update_users_certificate_data' => array( 
-																								'title' => 'Create Certificates', 
-																								'desc' => 'Creates certificates for learners who have already completed Courses.', 
-																								'product' => 'Sensei Certificates' ), 
+								'manual' => array( 'sensei_update_users_certificate_data' => array(
+																								'title' => 'Create Certificates',
+																								'desc' => 'Creates certificates for learners who have already completed Courses.',
+																								'product' => 'Sensei Certificates' ),
 													'sensei_create_master_certificate_template' => array(
-																								'title' => 'Create Master Certificate Template', 
-																								'desc' => 'Creates the master Certificate Template for all Courses.', 
+																								'title' => 'Create Master Certificate Template',
+																								'desc' => 'Creates the master Certificate Template for all Courses.',
 																								'product' => 'Sensei Certificates'
 																									) )
 												);
