@@ -127,14 +127,14 @@ class WooThemes_Sensei_Certificates {
 		// );
 		$fields['certificates_view_courses'] = array(
 			'name' 			=> __( 'View in Courses', 'woothemes-sensei-certificates' ),
-			'description' 	=> __( 'Show a view certificate link in the single Course page and the My Courses page.', 'woothemes-sensei-certificates' ),
+			'description' 	=> __( 'Show a View Certificate link in the single Course page and the My Courses page.', 'woothemes-sensei-certificates' ),
 			'type' 			=> 'checkbox',
 			'default' 		=> true,
 			'section' 		=> 'certificate-settings'
 		);
 		$fields['certificates_view_profile'] = array(
 			'name' 			=> __( 'View in Learner Profile', 'woothemes-sensei-certificates' ),
-			'description' 	=> __( 'Show a list of all the Learner Certificates in their Learner Profile page.', 'woothemes-sensei-certificates' ),
+			'description' 	=> __( 'Show a View Certificate link in the Learner Profile page.', 'woothemes-sensei-certificates' ),
 			'type' 			=> 'checkbox',
 			'default' 		=> true,
 			'section' 		=> 'certificate-settings'
