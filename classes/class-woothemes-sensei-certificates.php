@@ -60,6 +60,11 @@ class WooThemes_Sensei_Certificates {
 		add_action( 'parse_request', array( $this, 'sniff_requests' ), 0 );
 		add_action( 'init', array( $this, 'add_endpoint' ), 0 );
 
+		// User settings output and save handling
+		add_action( 'sensei_learner_profile_info', array( $this, 'certificates_user_settings_form' ), 10, 1 );
+		add_action( 'sensei_complete_course', array( $this, 'certificates_user_settings_save' ), 10 );
+		add_action( 'sensei_frontend_messages', array( $this, 'certificates_user_settings_messages' ), 10 );
+
 		/**
 		 * BACKEND
 		 */
@@ -304,6 +309,24 @@ class WooThemes_Sensei_Certificates {
 
 		// Check if student can only view certificate
 		$grant_access = $woothemes_sensei->settings->settings['certificates_public_viewable'];
+
+		// Check public access settings for the individual user
+		$args = array(
+			'post_type' => 'certificate',
+			'meta_key' => 'certificate_hash',
+			'meta_value' => $wp->query_vars['hash']
+		);
+
+		// Find certificate based on hash
+		$query = new WP_Query( $args );
+		if ( $query->have_posts() ) {
+			$query->the_post();
+			$certificate_id = $query->posts[0]->ID;
+			$learner_id = get_post_meta( $certificate_id, 'learner_id', true );
+			$grant_access = get_user_option( 'sensei_certificates_view_by_public', $learner_id );
+		}
+		wp_reset_query();
+
 		if ( ! $grant_access ) {
 			$grant_access = current_user_can( 'manage_options' ) ? true : false;
 		}
@@ -332,6 +355,8 @@ class WooThemes_Sensei_Certificates {
 			require_once( 'class-woothemes-sensei-pdf-certificate.php' );
 			$pdf = new WooThemes_Sensei_PDF_Certificate( $wp->query_vars['hash'] );
 			$pdf->generate_pdf();
+		} else {
+			wp_die( __( 'You are not allowed to view this Certificate.', 'woothemes-sensei' ), __( 'Certificate Error', 'woothemes-sensei' ) );
 		}
 	} // End generate_certificate
 
@@ -450,7 +475,7 @@ class WooThemes_Sensei_Certificates {
 
 		} else {
 
-			wp_die( __( 'The certificate you are searching for does not exist.', 'woothemes-sensei' ), __( 'Certificate Error.', 'woothemes-sensei' ) );
+			wp_die( __( 'The certificate you are searching for does not exist.', 'woothemes-sensei' ), __( 'Certificate Error', 'woothemes-sensei' ) );
 
 		} // End If Statement
 
@@ -760,5 +785,74 @@ class WooThemes_Sensei_Certificates {
 		} // End If Statement
 
 	} // End reset_course_certificate()
+
+	/**
+	 * certificates_user_settings_form form output
+	 * @since  1.0.0
+	 * @param  Object $user WordPress User object
+	 * @return html
+	 */
+	public function certificates_user_settings_form( $user ) {
+
+		if ( is_user_logged_in() ) {
+
+			$view_setting = get_user_option( 'sensei_certificates_view_by_public', $user->ID );
+			?>
+			<div id="certificates_user_settings">
+				<form class="certificates_user_meta" method="POST" action="">
+		            <input type="hidden" name="<?php echo esc_attr( 'woothemes_sensei_certificates_user_meta_save_noonce' ); ?>" id="<?php echo esc_attr( 'woothemes_sensei_certificates_user_meta_save_noonce' ); ?>" value="<?php echo esc_attr( wp_create_nonce( 'woothemes_sensei_certificates_user_meta_save_noonce' ) ); ?>" />
+		            <p>
+		            	 <input type="checkbox" value="yes" name="certificates_user_public_view" <?php checked( $view_setting, true ); ?>/> <?php _e( 'Allow my Certificates to be publicly viewed', 'woothemes-sensei' ); ?> <input type="submit" name="certificates_user_meta_save" class="certificates-submit complete" value="<?php echo apply_filters( 'sensei_certificates_save_meta_button', __( 'Save', 'woothemes-sensei' ) ); ?>"/>
+		            </p>
+		        </form>
+	    	</div>
+		<?php } // End If Statement
+
+	} // End certificates_user_settings_form()
+
+	/**
+	 * certificates_user_settings_save handles the save from the user meta form
+	 * @since  1.0.0
+	 * @return void
+	 */
+	public function certificates_user_settings_save() {
+
+		global $current_user;
+
+		if ( is_user_logged_in() && isset( $_POST['certificates_user_meta_save'] ) && wp_verify_nonce( $_POST[ 'woothemes_sensei_certificates_user_meta_save_noonce' ], 'woothemes_sensei_certificates_user_meta_save_noonce' ) ) {
+
+			// Update the user meta with the setting
+			$current_user = wp_get_current_user();
+			$current_user_id = intval( $current_user->ID );
+
+			if ( 0  < $current_user_id ) {
+
+				$view_setting = false;
+				if ( isset( $_POST['certificates_user_public_view'] ) && 'yes' == esc_html( $_POST['certificates_user_public_view'] ) ) {
+					$view_setting = true;
+				} // End If Statement
+
+				$update_success = update_user_option( $current_user_id, 'sensei_certificates_view_by_public', $view_setting );
+
+				$this->messages = '<div class="sensei-message tick">' . apply_filters( 'sensei_certificates_user_settings_save', __( 'Your Certificates Public View Settings Saved Successfully.', 'woothemes-sensei' ) ) . '</div>';
+
+			} // End If Statement
+
+		} // End If Statement
+
+	} // End certificates_user_settings_save()
+
+	/**
+	 * certificates_user_settings_messages frontend notification messages
+	 * @since  1.0.0
+	 * @return void
+	 */
+	public function certificates_user_settings_messages() {
+
+		if ( isset( $this->messages ) && '' != $this->messages ) {
+			echo $this->messages;
+		} // End If Statement
+
+	} // End certificates_user_settings_message()
 
 } // End Class
