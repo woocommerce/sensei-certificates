@@ -295,7 +295,7 @@ function sensei_create_master_certificate_template() {
 						'_certificate_message_font_size' => '36',
 						'_certificate_message_font_family' => 'Helvetica',
 						'_certificate_message_font_style' => 'BC',
-						'_certificate_message_text' => __( 'This is to certify that', 'woothemes-sensei-certificates' ) . " \r\n\r\n" . '{{learner}}' . " \r\n\r\n" . __( 'has completed the course', 'woothemes-sensei-certificates' ),
+						'_certificate_message_text' => __( 'This is to certify that', 'sensei-certificates' ) . " \r\n\r\n" . '{{learner}}' . " \r\n\r\n" . __( 'has completed the course', 'sensei-certificates' ),
 						'_certificate_course' => '',
 						'_certificate_course_pos' => '186,88,838,116',
 						'_certificate_course_font_color' => '#000000',

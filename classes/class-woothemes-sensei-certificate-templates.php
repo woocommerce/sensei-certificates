@@ -205,10 +205,10 @@ class WooThemes_Sensei_Certificate_Templates {
 	public function post_type_custom_column_headings( $defaults ) {
 
 		unset( $defaults['date'] );
-		$defaults['learner'] = __( 'Learner', 'woothemes-sensei-certificates' );
-		$defaults['course'] = __( 'Course', 'woothemes-sensei-certificates' );
-		$defaults['date_completed'] = __( 'Date Completed', 'woothemes-sensei-certificates' );
-		$defaults['actions'] = __( 'Actions', 'woothemes-sensei-certificates' );
+		$defaults['learner'] = __( 'Learner', 'sensei-certificates' );
+		$defaults['course'] = __( 'Course', 'sensei-certificates' );
+		$defaults['date_completed'] = __( 'Date Completed', 'sensei-certificates' );
+		$defaults['actions'] = __( 'Actions', 'sensei-certificates' );
 
     	return $defaults;
 
@@ -242,7 +242,7 @@ class WooThemes_Sensei_Certificate_Templates {
 				echo $course_end_date;
 				break;
 			case "actions" :
-				echo '<a href="' . add_query_arg( array( 'certificate' => '1', 'hash' => $certificate_hash ), site_url() ) . '" target="_blank">'. __( 'View Certificate', 'woothemes-sensei-certificates' ) . '</a>';
+				echo '<a href="' . add_query_arg( array( 'certificate' => '1', 'hash' => $certificate_hash ), site_url() ) . '" target="_blank">'. __( 'View Certificate', 'sensei-certificates' ) . '</a>';
 				break;
 		} // End Switch Statement
 
@@ -446,7 +446,7 @@ class WooThemes_Sensei_Certificate_Templates {
 		} // End For Loop
 
 		// Set default fonts
-		$certificate_heading = __( 'Certificate of Completion', 'woothemes-sensei-certificates' ); // Certificate of Completion
+		$certificate_heading = __( 'Certificate of Completion', 'sensei-certificates' ); // Certificate of Completion
 		if ( isset( $this->certificate_template_fields['certificate_heading']['text'] ) && '' != $this->certificate_template_fields['certificate_heading']['text'] ) {
 
 			$certificate_heading = $this->certificate_template_fields['certificate_heading']['text'];
@@ -454,7 +454,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		} // End If Statement
 
-		$certificate_message = __( 'This is to certify that', 'woothemes-sensei-certificates' ) . " \r\n\r\n" . $student_name . " \r\n\r\n" . __( 'has completed the course', 'woothemes-sensei-certificates' ); // This is to certify that {{learner}} has completed the course
+		$certificate_message = __( 'This is to certify that', 'sensei-certificates' ) . " \r\n\r\n" . $student_name . " \r\n\r\n" . __( 'has completed the course', 'sensei-certificates' ); // This is to certify that {{learner}} has completed the course
 		if ( isset( $this->certificate_template_fields['certificate_message']['text'] ) && '' != $this->certificate_template_fields['certificate_message']['text'] ) {
 
 			$certificate_message = $this->certificate_template_fields['certificate_message']['text'];
@@ -478,7 +478,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		} // End If Statement
 
-		$certificate_place = sprintf( __( 'At %s', 'woothemes-sensei-certificates' ), get_bloginfo( 'name' ) ); // At {{course_place}}
+		$certificate_place = sprintf( __( 'At %s', 'sensei-certificates' ), get_bloginfo( 'name' ) ); // At {{course_place}}
 		if ( isset( $this->certificate_template_fields['certificate_place']['text'] ) && '' != $this->certificate_template_fields['certificate_place']['text'] ) {
 
 			$certificate_place = $this->certificate_template_fields['certificate_place']['text'];
