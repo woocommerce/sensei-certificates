@@ -305,8 +305,8 @@ class WooThemes_Sensei_Certificates {
 	 * @return void
 	 */
 	public function can_view_certificate() {
-		global $woothemes_sensei, $wp;
-
+		global $woothemes_sensei, $wp, $current_user;
+		get_currentuserinfo();
 		// Check if student can only view certificate
 		$grant_access = $woothemes_sensei->settings->settings['certificates_public_viewable'];
 
@@ -323,7 +323,11 @@ class WooThemes_Sensei_Certificates {
 			$query->the_post();
 			$certificate_id = $query->posts[0]->ID;
 			$learner_id = get_post_meta( $certificate_id, 'learner_id', true );
-			$grant_access = get_user_option( 'sensei_certificates_view_by_public', $learner_id );
+			if ( isset( $current_user->ID ) && ( intval( $current_user->ID ) === intval( $learner_id ) ) )  {
+				$grant_access = true;
+			} else {
+				$grant_access = get_user_option( 'sensei_certificates_view_by_public', $learner_id );
+			} // End If Statement
 		}
 		wp_reset_query();
 
