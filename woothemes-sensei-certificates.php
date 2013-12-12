@@ -52,7 +52,7 @@ register_activation_hook( __FILE__, 'sensei_certificates_install' );
  * @return void
  */
 function init_certificates_textdomain() {
-	load_plugin_textdomain( 'woothemes-sensei-certificates', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
+	load_plugin_textdomain( 'sensei-certificates', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
 } // End init_certificates_textdomain()
 
 
