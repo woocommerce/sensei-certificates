@@ -107,6 +107,8 @@ function sensei_certificates_install() {
 
 	} // End If Statement
 
+	flush_rewrite_rules();
+
 } // End sensei_certificates_install()
 
 
