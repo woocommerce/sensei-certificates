@@ -1,4 +1,9 @@
 *** Sensei Certificates Changelog ***
 
+2013.12.12 - version 1.0.1
+* /classes/class-woothemes-sensei-certificate-templates.php - Localization fix
+* /classes/class-woothemes-sensei-certificates.php - Localization fix
+* /woothemes-sensei-certificates.php - Localization fix
+
 2013.12.12 - version 1.0.0
 * First release
