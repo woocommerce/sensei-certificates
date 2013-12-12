@@ -13,19 +13,33 @@
  */
 
 /**
+ * TABLE OF CONTENTS
+ *
+ * - Requires
+ * - Actions and Filters
+ * - course_certificate_template_data_meta_box()
+ * - course_certificate_templates_process_meta()
+ */
+
+/**
  * Functions for displaying the course certificates templates data meta box
  *
- * @since 1.0
+ * @since 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+/**
+ * Actions and Filters
+ */
+add_action( 'sensei_process_course_certificate_template_meta', 'course_certificate_templates_process_meta', 10, 2 );
 
 /**
  * Certificates data meta box
  *
  * Displays the meta box
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function course_certificate_template_data_meta_box( $post ) {
 
@@ -60,28 +74,27 @@ function course_certificate_template_data_meta_box( $post ) {
 
 		echo $html;
 
-}
+} // End course_certificate_templates_data_meta_box()
 
-
-add_action( 'sensei_process_course_certificate_template_meta', 'course_certificate_templates_process_meta', 10, 2 );
 
 /**
  * Course Certificate Template Data Save
  *
  * Function for processing and storing all course certificate data.
  *
- * @since 1.0
+ * @since 1.0.0
  * @param int $post_id the certificate id
  * @param object $post the certificate post object
  */
 function course_certificate_templates_process_meta( $post_id ) {
+
 	global $woothemes_sensei_certificate_templates;
 
 	/* Verify the nonce before proceeding. */
 	if ( ( get_post_type() != 'course' ) ) {
 		return $post_id;
-	}
+	} // End If Statement
 
 	$woothemes_sensei_certificate_templates->save_post_meta( 'course_certificate_template', $post_id );
 
-}
+} // End course_certificate_templates_process_meta()

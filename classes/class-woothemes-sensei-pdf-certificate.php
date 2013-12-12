@@ -11,6 +11,19 @@
  * @since 1.0.0
  */
 
+/**
+ * TABLE OF CONTENTS
+ *
+ * - __construct()
+ * - get_certificate_filename()
+ * - generate_pdf()
+ * - textarea_field()
+ * - image_field()
+ * - text_field()
+ * - text_field_userdata()
+ * - hex2rgb()
+ */
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
@@ -41,40 +54,48 @@ class WooThemes_Sensei_PDF_Certificate {
 	/**
 	 * Construct certificate with $hash
 	 *
-	 * @since 1.0
+	 * @access public
+	 * @since 1.0.0
 	 * @param int $certificate_hash Certificate hash
 	 */
 	public function __construct( $certificate_hash ) {
+
 		$this->hash  = $certificate_hash;
+
 		$this->certificate_pdf_data = apply_filters( 'woothemes_sensei_certificates_pdf_data', array(
 			'font_color'   => '#000000',
 			'font_size'    => '50',
 			'font_style'   => 'B',
 			'font_family'  => 'Helvetica'
 		) );
+
 		$this->certificate_pdf_data_userdata = apply_filters( 'woothemes_sensei_certificates_pdf_data_userdata', array(
 			'font_color'   => '#666666',
 			'font_size'    => '50',
 			'font_style'   => 'I',
 			'font_family'  => 'Times'
 		) );
-	}
+
+	} // End __construct()
 
 
 	/**
 	 * Returns the file name for this certificate
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 * @return string certificate pdf file name
 	 */
 	public function get_certificate_filename() {
+
 		return 'certificate-' . $this->hash . '.pdf';
-	}
+
+	} // End get_certificate_filename()
 
 	/**
 	 * Generate and save or stream a PDF file for this certificate
 	 *
-	 * @since 1.0
+	 * @access public
+	 * @since 1.0.0
 	 * @param string $path optional absolute path to the certificate directory, if
 	 *        not supplied the PDF will be streamed as a downloadable file
 	 *
@@ -93,12 +114,13 @@ class WooThemes_Sensei_PDF_Certificate {
 		} else {
 			$image = apply_filters( 'woothemes_sensei_certificates_background', $GLOBALS['woothemes_sensei_certificates']->plugin_path . 'assets/images/certificate_template.png' );
 		} // End If Statement
+
 		$image_attr = getimagesize( $image );
 		if ( $image_attr[0] > $image[1] ) {
 			$orientation = 'L';
 		} else {
 			$orientation = 'P';
-		}
+		} // End If Statement
 
 		// Create the pdf
 		// TODO: we're assuming a standard DPI here of where 1 point = 1/72 inch = 1 pixel
@@ -119,14 +141,16 @@ class WooThemes_Sensei_PDF_Certificate {
 		} else {
 			// download file
 			$fpdf->Output( 'certificate-preview-' . $this->hash . '.pdf', 'I' );
-		}
-	}
+		} // End If Statement
+
+	} // End generate_pdf()
 
 
 	/**
 	 * Render a multi-line text field to the PDF
 	 *
-	 * @since 1.0
+	 * @access public
+	 * @since 1.0.0
 	 * @param FPDF $fpdf fpdf library object
 	 * @param string $field_name the field name
 	 * @param mixed $value string or int value to display
@@ -134,16 +158,19 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *        around the position for this field
 	 */
 	public function textarea_field( $fpdf, $value, $show_border, $position, $font = array() ) {
+
 		if ( $value ) {
 
 			if ( empty( $font ) ) {
+
 				$font = array(
 					'font_color' => $this->certificate_pdf_data['font_color'],
 					'font_family' => $this->certificate_pdf_data['font_family'],
 					'font_style' => $this->certificate_pdf_data['font_style'],
 					'font_size' => $this->certificate_pdf_data['font_size']
 				);
-			}
+
+			} // End If Statement
 
 			// Test each font element
 			if ( empty( $font['font_color'] ) ) { $font['font_color'] = $this->certificate_pdf_data['font_color']; }
@@ -182,13 +209,16 @@ class WooThemes_Sensei_PDF_Certificate {
 
 			// and write out the value
 			$fpdf->Multicell( $w, $font['font_size'], utf8_decode( $value ), $show_border, $center );
-		}
-	}
+
+		} // End If Statement
+
+	} // End textarea_field()
 
 	/**
 	 * Render an image field to the PDF
 	 *
-	 * @since 1.0
+	 * @access public
+	 * @since 1.0.0
 	 * @param FPDF $fpdf fpdf library object
 	 * @param string $field_name the field name
 	 * @param mixed $value string or int value to display
@@ -196,7 +226,9 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *        around the position for this field
 	 */
 	public function image_field( $fpdf, $value, $show_border, $position ) {
+
 		if ( $value ) {
+
 			// get the field position
 			list( $x, $y, $w, $h ) = $position;
 
@@ -204,14 +236,17 @@ class WooThemes_Sensei_PDF_Certificate {
 
 			// and write out the value
 			$fpdf->Image( esc_url( utf8_decode( $value ) ), $x, $y, $w, $h );
-		}
-	}
+
+		} // End If Statement
+
+	} // End image_field()
 
 
 	/**
 	 * Render a single-line text field to the PDF
 	 *
-	 * @since 1.0
+	 * @access public
+	 * @since 1.0.0
 	 * @param FPDF $fpdf fpdf library object
 	 * @param string $field_name the field name
 	 * @param mixed $value string or int value to display
@@ -219,16 +254,19 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *        around the position for this field
 	 */
 	public function text_field( $fpdf, $value, $show_border, $position, $font = array() ) {
+
 		if ( $value ) {
 
 			if ( empty( $font ) ) {
+
 				$font = array(
 					'font_color' => $this->certificate_pdf_data['font_color'],
 					'font_family' => $this->certificate_pdf_data['font_family'],
 					'font_style' => $this->certificate_pdf_data['font_style'],
 					'font_size' => $this->certificate_pdf_data['font_size']
 				);
-			}
+
+			} // End If Statement
 
 			// Test each font element
 			if ( empty( $font['font_color'] ) ) { $font['font_color'] = $this->certificate_pdf_data['font_color']; }
@@ -262,12 +300,12 @@ class WooThemes_Sensei_PDF_Certificate {
 			if ( $show_border ) {
 				$fpdf->setXY( $x, $y );
 				$fpdf->Cell( $w, $h, '', 1 );
-			}
+			} // End If Statement
 
 			if ( 0 < $border ) {
 				$show_border = 1;
 				$fpdf->SetDrawColor( $font_color[0], $font_color[1], $font_color[2] );
-			}
+			} // End If Statement
 
 			// align the text to the bottom edge of the cell by translating as needed
 			$y =$font['font_size'] > $h ? $y - ( $font['font_size'] - $h ) / 2 : $y + ( $h - $font['font_size'] ) / 2;
@@ -275,13 +313,16 @@ class WooThemes_Sensei_PDF_Certificate {
 
 			// and write out the value
 			$fpdf->Cell( $w, $h, utf8_decode( $value ), $show_border, $position, $center  );  // can try iconv('UTF-8', 'windows-1252', $content); if this doesn't work correctly for accents
-		}
-	}
+
+		} // End If Statement
+
+	} // End text_field()
 
 	/**
 	 * Render a single-line text field to the PDF, with custom styling for the user data
 	 *
-	 * @since 1.0
+	 * @access public
+	 * @since 1.0.0
 	 * @param FPDF $fpdf fpdf library object
 	 * @param string $field_name the field name
 	 * @param mixed $value string or int value to display
@@ -289,16 +330,20 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *        around the position for this field
 	 */
 	public function text_field_userdata( $fpdf, $value, $show_border, $position, $font = array() ) {
+
 		if ( $value ) {
 
 			if ( empty( $font ) ) {
+
 				$font = array(
 					'font_color' => $this->certificate_pdf_data_userdata['font_color'],
 					'font_family' => $this->certificate_pdf_data_userdata['font_family'],
 					'font_style' => $this->certificate_pdf_data_userdata['font_style'],
 					'font_size' => $this->certificate_pdf_data_userdata['font_size']
 				);
-			}
+
+			} // End If Statement
+
 			// get the field position
 			list( $x, $y, $w, $h ) = $position;
 
@@ -313,7 +358,7 @@ class WooThemes_Sensei_PDF_Certificate {
 			if ( $show_border ) {
 				$fpdf->setXY( $x, $y );
 				$fpdf->Cell( $w, $h, '', 1 );
-			}
+			} // End If Statement
 
 			// align the text to the bottom edge of the cell by translating as needed
 			$y =$font['font_size'] > $h ? $y - ( $font['font_size'] - $h ) / 2 : $y + ( $h - $font['font_size'] ) / 2;
@@ -321,16 +366,18 @@ class WooThemes_Sensei_PDF_Certificate {
 
 			// and write out the value
 			$fpdf->Cell( $w, $h, utf8_decode( $value ) );  // can try iconv('UTF-8', 'windows-1252', $content); if this doesn't work correctly for accents
-		}
-	}
+
+		} // End If Statement
+
+	} // End text_field_userdata()
 
 
 	/**
 	 * Taxes a hex color code and returns the RGB components in an array
 	 *
-	 * @since 1.0
+	 * @access private
+	 * @since 1.0.0
 	 * @param string $hex hex color code, ie #EEEEEE
-	 *
 	 * @return array rgb components, ie array( 'EE', 'EE', 'EE' )
 	 */
 	private function hex2rgb( $hex ) {
@@ -347,9 +394,10 @@ class WooThemes_Sensei_PDF_Certificate {
 			$r = hexdec( substr( $hex, 0, 2 ) );
 			$g = hexdec( substr( $hex, 2, 2 ) );
 			$b = hexdec( substr( $hex, 4, 2 ) );
-		}
+		} // End If Statement}
 
 		return array( $r, $g, $b );
-	}
 
-}
+	} // End hex2rgb()
+
+} // End Class

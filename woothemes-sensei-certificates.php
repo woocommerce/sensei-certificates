@@ -10,31 +10,54 @@
  */
 
 /**
+ * TABLE OF CONTENTS
+ *
+ * - Required functions
+ * - Plugin Updates
+ * - Actions and Filters
+ * - init_certificates_textdomain()
+ * - init_sensei_certificates()
+ * - sensei_certificates_install()
+ * - sensei_certificates_updates_list()
+ * - sensei_update_users_certificate_data()
+ * - sensei_create_master_certificate_template()
+ * - is_sensei_active()
+ */
+
+/**
  * Required functions
  */
 if ( ! function_exists( 'woothemes_queue_update' ) )
 	require_once( 'woo-includes/woo-functions.php' );
+
 
 /**
  * Plugin updates
  */
 woothemes_queue_update( plugin_basename( __FILE__ ), '625ee5fe1bf36b4c741ab07507ba2ffd', '247548' );
 
-/**
- * Localisation
- **/
-add_action('plugins_loaded', 'init_certificates_textdomain');
 
+/**
+ * Actions and Filters
+ */
+add_action('plugins_loaded', 'init_certificates_textdomain');
+add_action( 'plugins_loaded', 'init_sensei_certificates', 0 );
+add_filter( 'sensei_upgrade_functions', 'sensei_certificates_updates_list', 10, 1);
+register_activation_hook( __FILE__, 'sensei_certificates_install' );
+
+
+/**
+ * init_certificates_textdomain localization
+ * @since  1.0.0
+ * @return void
+ */
 function init_certificates_textdomain() {
 	load_plugin_textdomain( 'woothemes-sensei-certificates', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
 } // End init_certificates_textdomain()
 
 
-
 /**
  * init_sensei_certificates function.
- *
- * @access public
  * @since  1.0.0
  * @return void
  */
@@ -48,7 +71,7 @@ function init_sensei_certificates() {
 	}
 
 } // End init_sensei_extension()
-add_action( 'plugins_loaded', 'init_sensei_certificates', 0 );
+
 
 /**
  * install function to generate cert hashes
@@ -56,6 +79,7 @@ add_action( 'plugins_loaded', 'init_sensei_certificates', 0 );
  * @return string
  */
 function sensei_certificates_install() {
+
 	global $woothemes_sensei;
 
 	// Check if the installer has already been run
@@ -85,9 +109,15 @@ function sensei_certificates_install() {
 
 } // End sensei_certificates_install()
 
-add_filter( 'sensei_upgrade_functions', 'sensei_certificates_updates_list', 10, 1);
 
+/**
+ * sensei_certificates_updates_list add sensei certificates updates to sensei list
+ * @since  1.0.0
+ * @param  array $updates list of existing updates
+ * @return array $updates list of existing and new updates
+ */
 function sensei_certificates_updates_list( $updates ) {
+
 	$updates['1.0.0'] = array( 	'auto'	=> array(),
 								'manual' => array( 'sensei_update_users_certificate_data' => array(
 																								'title' => 'Create Certificates',
@@ -101,14 +131,18 @@ function sensei_certificates_updates_list( $updates ) {
 												);
 
 	return $updates;
+
 } // End sensei_certificates_updates_list()
 
 /**
  * sensei_update_users_certificate_data install user certificate data
  * @since  1.0.0
+ * @param  int $n number of items to iterate through
+ * @param  int $offeset number to offset iteration by
  * @return boolean
  */
 function sensei_update_users_certificate_data( $n = 5, $offset = 0 ) {
+
 	global $woothemes_sensei;
 
 	$loop_ran = false;
@@ -195,6 +229,7 @@ function sensei_update_users_certificate_data( $n = 5, $offset = 0 ) {
 	} // End If Statement
 
 } // End sensei_update_users_certificate_data()
+
 
 /**
  * sensei_create_master_certificate_template Creates the example Certificate Template and assigns to every Course
@@ -363,7 +398,6 @@ function sensei_create_master_certificate_template() {
 
 } // End sensei_create_master_certificate_template()
 
-register_activation_hook( __FILE__, 'sensei_certificates_install' );
 
 /**
  * Functions used by plugins
@@ -371,11 +405,12 @@ register_activation_hook( __FILE__, 'sensei_certificates_install' );
 if ( ! class_exists( 'WooThemes_Sensei_Dependencies' ) )
   require_once 'woo-includes/class-woothemes-sensei-dependencies.php';
 
+
 /**
  * Sensei Detection
  */
 if ( ! function_exists( 'is_sensei_active' ) ) {
   function is_sensei_active() {
     return WooThemes_Sensei_Dependencies::sensei_active_check();
-  }
-}
+  } // End is_sensei_active()
+} // End If Statement

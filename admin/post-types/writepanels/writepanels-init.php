@@ -13,25 +13,56 @@
  */
 
 /**
+ * TABLE OF CONTENTS
+ *
+ * - Requires
+ * - Actions and Filters
+ * - certificate_templates_meta_boxes()
+ * - certificate_templates_enter_title_here()
+ * - certificate_templates_meta_boxes_save()
+ * - course_certificate_templates_meta_boxes_save()
+ * - certificate_template_private()
+ * - certificate_template_wp_font_select()
+ * - certificate_template_wp_color_picker_js()
+ * - certificate_template_wp_position_picker()
+ * - certificates_wp_text_input()
+ * - certificates_wp_hidden_input()
+ * - certificates_wp_checkbox()
+ * - certificates_wp_select()
+ * - certificates_wp_radio()
+ */
+
+/**
  * Sets up the write panels used by certificates (custom post types)
  *
- * @since 1.0
+ * @since 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+
+/**
+ * Requires
+ */
 include_once( 'writepanel-certificate_image.php' );
 include_once( 'writepanel-certificate_data.php' );
 include_once( 'writepanel-course_data.php' );
 
 
+/**
+ * Actions and Filters
+ */
 add_action( 'add_meta_boxes', 'certificate_templates_meta_boxes' );
+add_filter( 'enter_title_here', 'certificate_templates_enter_title_here', 1, 2 );
+add_action( 'save_post', 'certificate_templates_meta_boxes_save', 1, 2 );
+add_action( 'save_post', 'course_certificate_templates_meta_boxes_save', 1, 2 );
+add_action( 'publish_certificate_template', 'certificate_template_private', 10, 2 );
 
 
 /**
  * Add and remove meta boxes from the certificates edit page and Order edit page
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function certificate_templates_meta_boxes() {
 
@@ -70,37 +101,37 @@ function certificate_templates_meta_boxes() {
 	remove_meta_box( 'woothemes-settings', 'certificate_template', 'normal' );
 	remove_meta_box( 'commentstatusdiv',   'certificate_template', 'normal' );
 	remove_meta_box( 'slugdiv',            'certificate_template', 'normal' );
-}
 
+} // End certificate_templates_meta_boxes()
 
-add_filter( 'enter_title_here', 'certificate_templates_enter_title_here', 1, 2 );
 
 /**
  * Set a more appropriate placeholder text for the New Certificate title field
  *
- * @since 1.0
+ * @since 1.0.0
  * @param string $text "Enter Title Here" string
  * @param object $post post object
  *
  * @return string "Certificate Template Name" when the post type is certificate_template
  */
 function certificate_templates_enter_title_here( $text, $post ) {
+
 	if ( 'certificate_template' == $post->post_type ) return __( 'Certificate Template', 'sensei-certificates' );
+
 	return $text;
-}
 
+} // End certificate_templates_enter_title_here()
 
-add_action( 'save_post', 'certificate_templates_meta_boxes_save', 1, 2 );
-add_action( 'save_post', 'course_certificate_templates_meta_boxes_save', 1, 2 );
 
 /**
  * Runs when a post is saved and does an action which the write panel save scripts can hook into.
  *
- * @since 1.0
+ * @since 1.0.0
  * @param int $post_id post identifier
  * @param object $post post object
  */
 function certificate_templates_meta_boxes_save( $post_id, $post ) {
+
 	if ( empty( $post_id ) || empty( $post ) || empty( $_POST ) ) return;
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
 	if ( is_int( wp_is_post_revision( $post ) ) ) return;
@@ -111,27 +142,29 @@ function certificate_templates_meta_boxes_save( $post_id, $post ) {
 
 	do_action( 'sensei_process_certificate_template_meta', $post_id, $post );
 
-}
+} // End certificate_templates_meta_boxes_save()
+
 
 /**
  * Runs when a post is saved and does an action which the write panel save scripts can hook into.
  *
- * @since 1.0
+ * @since 1.0.0
  * @param int $post_id post identifier
  * @param object $post post object
  */
 function course_certificate_templates_meta_boxes_save( $post_id, $post ) {
+
 	if ( empty( $post_id ) || empty( $post ) || empty( $_POST ) ) return;
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
 	if ( is_int( wp_is_post_revision( $post ) ) ) return;
 	if ( is_int( wp_is_post_autosave( $post ) ) ) return;
 	if ( ! current_user_can( 'edit_post', $post_id ) ) return;
 	if ( 'course' != $post->post_type ) return;
+
 	do_action( 'sensei_process_course_certificate_template_meta', $post_id, $post );
-}
 
+} // End course_certificate_templates_meta_boxes_save()
 
-add_action( 'publish_certificate_template', 'certificate_template_private', 10, 2 );
 
 /**
  * Automatically make the certificate posts private when they are published.
@@ -139,24 +172,27 @@ add_action( 'publish_certificate_template', 'certificate_template_private', 10, 
  * generating a preview pdf for the admin user, while having them always
  * hidden on the frontend (draft posts are not visible by definition)
  *
- * @since 1.0
+ * @since 1.0.0
  * @param int $post_id the certificate identifier
  * @param object $post the certificate object
  */
 function certificate_template_private( $post_id, $post ) {
+
 	global $wpdb;
 
 	$wpdb->update( $wpdb->posts, array( 'post_status' => 'private' ), array( 'ID' => $post_id ) );
-}
+
+} // End certificate_template_private()
 
 
 /**
  * Rendres a custom admin input field to select a font which includes font
  * family, size and style (bold/italic)
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function certificate_templates_wp_font_select( $field ) {
+
 	global $thepostid, $post, $woothemes_sensei_certificates;
 
 	if ( ! $thepostid ) $thepostid = $post->ID;
@@ -165,11 +201,14 @@ function certificate_templates_wp_font_select( $field ) {
 	$font_family_value = $font_size_value = $font_style_value = '';
 
 	if ( '_certificate' == $field['id'] ) {
+
 		// certificate defaults
 		$font_family_value = get_post_meta( $thepostid, $field['id'] . '_font_family', true );
 		$font_size_value   = get_post_meta( $thepostid, $field['id'] . '_font_size',   true );
 		$font_style_value  = get_post_meta( $thepostid, $field['id'] . '_font_style',  true );
+
 	} else {
+
 		// field-specific overrides
 		$certificate_fields = get_post_meta( $thepostid, '_certificate_template_fields', true );
 
@@ -179,8 +218,9 @@ function certificate_templates_wp_font_select( $field ) {
 			if ( isset( $certificate_fields[ $field_name ]['font']['family'] ) ) $font_family_value = $certificate_fields[ $field_name ]['font']['family'];
 			if ( isset( $certificate_fields[ $field_name ]['font']['size'] ) )   $font_size_value   = $certificate_fields[ $field_name ]['font']['size'];
 			if ( isset( $certificate_fields[ $field_name ]['font']['style'] ) )  $font_style_value  = $certificate_fields[ $field_name ]['font']['style'];
-		}
-	}
+		} // End If Statement
+
+	} // End If Statement
 
 	// defaults
 	if ( ! $font_size_value && isset( $field['font_size_default'] ) ) $font_size_value = $field['font_size_default'];
@@ -188,10 +228,12 @@ function certificate_templates_wp_font_select( $field ) {
 	echo '<p class="form-field ' . $field['id'] . '_font_family_field"><label for="' . $field['id'] . '_font_family">' . $field['label'] . '</label><select id="' . $field['id'] . '_font_family" name="' . $field['id'] . '_font_family" class="select short">';
 
 	foreach ( $field['options'] as $key => $value ) {
+
 		echo '<option value="' . $key . '" ';
 		selected( $font_family_value, $key );
 		echo '>' . $value . '</option>';
-	}
+
+	} // End For Loop
 
 	echo '</select> ';
 
@@ -218,16 +260,18 @@ function certificate_templates_wp_font_select( $field ) {
 	} // End If Statement
 
 	echo '</p>';
-}
+
+} // End certificate_templates_wp_font_select()
 
 
 /**
  * Add inline javascript to activate the farbtastic color picker element.
  * Must be called in order to use the certificate_templates_wp_color_picker() method
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function certificate_templates_wp_color_picker_js() {
+
 	global $woothemes_sensei_certificates;
 
 	ob_start();
@@ -245,17 +289,20 @@ function certificate_templates_wp_color_picker_js() {
 	});
 	<?php
 	$javascript = ob_get_clean();
+
 	$woothemes_sensei_certificates->add_inline_js( $javascript );
-}
+
+} // End certificate_templates_wp_color_picker_js()
 
 
 /**
  * Renders a custom admin control used on the certificate edit page to Set/Remove
  * the position via two buttons
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function certificate_templates_wp_position_picker( $field ) {
+
 	global $woothemes_sensei_certificates;
 
 	if ( ! isset( $field['value'] ) ) $field['value'] = '';
@@ -265,22 +312,32 @@ function certificate_templates_wp_position_picker( $field ) {
 	if ( isset( $field['description'] ) && $field['description'] ) {
 
 		if ( isset( $field['desc_tip'] ) ) {
+
 			echo '<img class="help_tip" data-tip="' . esc_attr( $field['description'] ) . '" src="' . $woothemes_sensei_certificates->plugin_url() . '/assets/images/help.png" />';
+
 		} else {
+
 			echo '<span class="description">' . $field['description'] . '</span>';
-		}
-	}
+
+		} // End If Statement
+
+	} // End If Statement
+
 	echo '</p>';
-}
+
+} // End certificate_templates_wp_position_picker()
+
 
 /**
  * Output a text input box.
  *
  * @access public
+ * @since  1.0.0
  * @param array $field
  * @return void
  */
 function certificates_wp_text_input( $field ) {
+
 	global $thepostid, $post, $woothemes_sensei_certificates;
 
 	$thepostid 				= empty( $thepostid ) ? $post->ID : $thepostid;
@@ -303,24 +360,32 @@ function certificates_wp_text_input( $field ) {
 	if ( ! empty( $field['description'] ) ) {
 
 		if ( isset( $field['desc_tip'] ) ) {
-			echo '<img class="help_tip" data-tip="' . esc_attr( $field['description'] ) . '" src="' . $woothemes_sensei_certificates->plugin_url() . '/assets/images/help.png" height="16" width="16" />';
-		} else {
-			echo '<span class="description">' . wp_kses_post( $field['description'] ) . '</span>';
-		}
 
-	}
+			echo '<img class="help_tip" data-tip="' . esc_attr( $field['description'] ) . '" src="' . $woothemes_sensei_certificates->plugin_url() . '/assets/images/help.png" height="16" width="16" />';
+
+		} else {
+
+			echo '<span class="description">' . wp_kses_post( $field['description'] ) . '</span>';
+
+		} // End If Statement
+
+	} // End If Statement
+
 	echo '</p>';
-}
+
+} // End certificates_wp_text_input()
 
 
 /**
  * Output a hidden input box.
  *
  * @access public
+ * @since  1.0.0
  * @param array $field
  * @return void
  */
 function certificates_wp_hidden_input( $field ) {
+
 	global $thepostid, $post;
 
 	$thepostid = empty( $thepostid ) ? $post->ID : $thepostid;
@@ -328,17 +393,20 @@ function certificates_wp_hidden_input( $field ) {
 	$field['class'] = isset( $field['class'] ) ? $field['class'] : '';
 
 	echo '<input type="hidden" class="' . esc_attr( $field['class'] ) . '" name="' . esc_attr( $field['id'] ) . '" id="' . esc_attr( $field['id'] ) . '" value="' . esc_attr( $field['value'] ) .  '" /> ';
-}
+
+} // End certificates_wp_hidden_input()
 
 
 /**
  * Output a textarea input box.
  *
  * @access public
+ * @since  1.0.0
  * @param array $field
  * @return void
  */
 function certificates_wp_textarea_input( $field ) {
+
 	global $thepostid, $post, $woothemes_sensei_certificates;
 
 	$thepostid 				= empty( $thepostid ) ? $post->ID : $thepostid;
@@ -352,24 +420,32 @@ function certificates_wp_textarea_input( $field ) {
 	if ( ! empty( $field['description'] ) ) {
 
 		if ( isset( $field['desc_tip'] ) ) {
-			echo '<img class="help_tip" data-tip="' . esc_attr( $field['description'] ) . '" src="' . $woothemes_sensei_certificates->plugin_url() . '/assets/images/help.png" height="16" width="16" />';
-		} else {
-			echo '<span class="description">' . wp_kses_post( $field['description'] ) . '</span>';
-		}
 
-	}
+			echo '<img class="help_tip" data-tip="' . esc_attr( $field['description'] ) . '" src="' . $woothemes_sensei_certificates->plugin_url() . '/assets/images/help.png" height="16" width="16" />';
+
+		} else {
+
+			echo '<span class="description">' . wp_kses_post( $field['description'] ) . '</span>';
+
+		} // End If Statement
+
+	} // End If Statement
+
 	echo '</p>';
-}
+
+} // End certificates_wp_textarea_input()
 
 
 /**
  * Output a checkbox input box.
  *
  * @access public
+ * @since  1.0.0
  * @param array $field
  * @return void
  */
 function certificates_wp_checkbox( $field ) {
+
 	global $thepostid, $post;
 
 	$thepostid 				= empty( $thepostid ) ? $post->ID : $thepostid;
@@ -383,17 +459,20 @@ function certificates_wp_checkbox( $field ) {
 	if ( ! empty( $field['description'] ) ) echo '<span class="description">' . wp_kses_post( $field['description'] ) . '</span>';
 
 	echo '</p>';
-}
+
+} // End certificates_wp_checkbox()
 
 
 /**
  * Output a select input box.
  *
  * @access public
+ * @since  1.0.0
  * @param array $field
  * @return void
  */
 function certificates_wp_select( $field ) {
+
 	global $thepostid, $post, $woothemes_sensei_certificates;
 
 	$thepostid 				= empty( $thepostid ) ? $post->ID : $thepostid;
@@ -414,23 +493,31 @@ function certificates_wp_select( $field ) {
 	if ( ! empty( $field['description'] ) ) {
 
 		if ( isset( $field['desc_tip'] ) ) {
-			echo '<img class="help_tip" data-tip="' . esc_attr( $field['description'] ) . '" src="' . $woothemes_sensei_certificates->plugin_url() . '/assets/images/help.png" height="16" width="16" />';
-		} else {
-			echo '<span class="description">' . wp_kses_post( $field['description'] ) . '</span>';
-		}
 
-	}
+			echo '<img class="help_tip" data-tip="' . esc_attr( $field['description'] ) . '" src="' . $woothemes_sensei_certificates->plugin_url() . '/assets/images/help.png" height="16" width="16" />';
+
+		} else {
+
+			echo '<span class="description">' . wp_kses_post( $field['description'] ) . '</span>';
+
+		} // End If Statement
+
+	} // End If Statement
+
 	echo '</p>';
-}
+
+} // End certificates_wp_select()
 
 /**
  * Output a radio input box.
  *
  * @access public
+ * @since  1.0.0
  * @param array $field
  * @return void
  */
 function certificates_wp_radio( $field ) {
+
 	global $thepostid, $post, $woothemes_sensei_certificates;
 
 	$thepostid 				= empty( $thepostid ) ? $post->ID : $thepostid;
@@ -441,8 +528,10 @@ function certificates_wp_radio( $field ) {
 	echo '<fieldset class="form-field ' . esc_attr( $field['id'] ) . '_field ' . esc_attr( $field['wrapper_class'] ) . '"><legend>' . wp_kses_post( $field['label'] ) . '</legend><ul>';
 
 	if ( ! empty( $field['description'] ) ) {
+
 		echo '<li class="description">' . wp_kses_post( $field['description'] ) . '</li>';
-	}
+
+	} // End If Statement
 
     foreach ( $field['options'] as $key => $value ) {
 
@@ -454,6 +543,9 @@ function certificates_wp_radio( $field ) {
         		' . checked( esc_attr( $field['value'] ), esc_attr( $key ), false ) . '
         		/> ' . esc_html( $value ) . '</label>
     	</li>';
-	}
+
+	} // End For Loop
+
     echo '</ul></fieldset>';
-}
+
+} // End certificates_wp_radio()

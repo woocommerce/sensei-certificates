@@ -15,7 +15,7 @@
 /**
  * The template for displaying certificate template previews.  This isn't a page template in
  * the regular sense, instead it streams the certificate template PDF to the client.  The
- * certificate is created with default field data.  The primary image at least must be set.
+ * certificate is created with default field data.  The background image at least must be set.
  *
  * @since 1.0
  */

@@ -1,6 +1,6 @@
 <?php
 /**
- * Sensei Certificates Templates 
+ * Sensei Certificates Templates
  *
  * All functionality pertaining to the Certificate Templates functionality in Sensei.
  *
@@ -9,25 +9,41 @@
  * @category Extension
  * @author WooThemes
  * @since 1.0.0
- * 
+ *
+ */
+
+/**
+ * TABLE OF CONTENTS
+ *
+ * - Requires
+ * - Actions and Filters
+ * - certificate_template_data_meta_box()
+ * - certificate_templates_process_meta()
  */
 
 /**
  * Functions for displaying the certificates data meta box
  *
- * @since 1.0
+ * @since 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+/**
+ * Actions and Filters
+ */
+add_action( 'sensei_process_certificate_template_meta', 'certificate_templates_process_meta', 10, 2 );
+
 
 /**
  * Certificates data meta box
  *
  * Displays the meta box
  *
- * @since 1.0
+ * @since 1.0.0
  */
 function certificate_template_data_meta_box( $post ) {
+
 	global $woocommerce, $woothemes_sensei_certificate_templates;
 
 	wp_nonce_field( 'certificates_save_data', 'certificates_meta_nonce' );
@@ -245,17 +261,16 @@ function certificate_template_data_meta_box( $post ) {
 	<?php
 
 	certificate_templates_wp_color_picker_js();
-}
 
+} // End certificate_template_data_meta_box()
 
-add_action( 'sensei_process_certificate_template_meta', 'certificate_templates_process_meta', 10, 2 );
 
 /**
  * Certificate Data Save
  *
  * Function for processing and storing all certificate data.
  *
- * @since 1.0
+ * @since 1.0.0
  * @param int $post_id the certificate id
  * @param object $post the certificate post object
  */
@@ -274,6 +289,7 @@ function certificate_templates_process_meta( $post_id, $post ) {
 	// create the certificate template fields data structure
 	$fields = array();
 	foreach ( array( '_certificate_heading', '_certificate_message', '_certificate_course', '_certificate_completion', '_certificate_place' ) as $i => $field_name ) {
+
 		// set the field defaults
 		$field = array(
 			'type'      => 'property',
@@ -286,11 +302,11 @@ function certificate_templates_process_meta( $post_id, $post ) {
 		if ( $_POST[ $field_name . '_pos' ] ) {
 			$position = explode( ',', $_POST[ $field_name . '_pos' ] );
 			$field['position'] = array( 'x1' => $position[0], 'y1' => $position[1], 'width' => $position[2], 'height' => $position[3] );
-		}
+		} // End If Statement
 
 		if ( $_POST[ $field_name . '_text' ] ) {
 			$field['text'] = $_POST[ $field_name . '_text' ] ? $_POST[ $field_name . '_text' ] : '';
-		}
+		} // End If Statement
 
 		// get the field font settings (if any)
 		if ( $_POST[ $field_name . '_font_family' ] )  $field['font']['family'] = $_POST[ $field_name . '_font_family' ];
@@ -303,7 +319,9 @@ function certificate_templates_process_meta( $post_id, $post ) {
 
 		// cut off the leading '_' to create the field name
 		$fields[ ltrim( $field_name, '_' ) ] = $field;
-	}
+
+	} // End For Loop
 
 	update_post_meta( $post_id, '_certificate_template_fields', $fields );
-}
+
+} // End certificate_templates_process_meta()
