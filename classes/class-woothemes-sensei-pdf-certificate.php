@@ -62,50 +62,6 @@ class WooThemes_Sensei_PDF_Certificate {
 
 
 	/**
-	 * Get the expiration date (if any) in the user-defined WordPress format,
-	 * or the empty string.  Product voucher method.
-	 *
-	 * @since 1.0
-	 * @return string formatted expiration date, if any, otherwise the empty string
-	 */
-	public function get_formatted_expiration_date() {
-		if ( $this->expiration_date ) {
-			if ( is_int( $this->expiration_date ) ) return date_i18n( get_option( 'date_format' ), $this->expiration_date );
-			else return $this->expiration_date;
-		}
-		return '';
-	}
-
-	/**
-	 * Get the student name for the certificate
-	 *
-	 * @since 1.0
-	 * @return string student name, surname
-	 */
-	public function get_student_name() {
-		if ( ! isset( $this->student_name ) ) {
-			global $woothemes_sensei;
-			$this->student_name = '';
-		}
-
-		return $this->student_name;
-	}
-
-	/**
-	 * Get the course name
-	 *
-	 * @since 1.0
-	 * @return string course name
-	 */
-	public function get_course_name() {
-		if ( ! isset( $this->course_name ) ) {
-			$this->course_name = '';
-		}
-
-		return $this->course_name;
-	}
-
-	/**
 	 * Returns the file name for this certificate
 	 *
 	 * @since 1.0
@@ -159,7 +115,7 @@ class WooThemes_Sensei_PDF_Certificate {
 
 		if ( $path ) {
 			// save the pdf as a file
-			$fpdf->Output( $path . '/' . $this->get_voucher_path() . '/' . $this->get_voucher_filename(), 'F' );
+			$fpdf->Output( $path . '/' . $this->get_certificate_template_path() . '/' . $this->get_certificate_filename(), 'F' );
 		} else {
 			// download file
 			$fpdf->Output( 'certificate-preview-' . $this->hash . '.pdf', 'I' );

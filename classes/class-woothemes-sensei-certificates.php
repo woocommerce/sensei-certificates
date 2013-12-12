@@ -170,19 +170,19 @@ class WooThemes_Sensei_Certificates {
 
 		$args = array(
 		    'labels' => array(
-			    'name' => sprintf( _x( '%s', 'post type general name', 'woothemes-sensei' ), 'Certificates' ),
-			    'singular_name' => sprintf( _x( '%s', 'post type singular name', 'woothemes-sensei' ), 'Certificate' ),
-			    'add_new' => sprintf( _x( 'Add New %s', 'post type add_new', 'woothemes-sensei' ), 'Certificate' ),
-			    'add_new_item' => sprintf( __( 'Add New %s', 'woothemes-sensei' ), 'Certificate' ),
-			    'edit_item' => sprintf( __( 'Edit %s', 'woothemes-sensei' ), 'Certificate' ),
-			    'new_item' => sprintf( __( 'New %s', 'woothemes-sensei' ), 'Certificate' ),
-			    'all_items' => sprintf( __( '%s', 'woothemes-sensei' ), 'Certificates' ),
-			    'view_item' => sprintf( __( 'View %s', 'woothemes-sensei' ), 'Certificate' ),
-			    'search_items' => sprintf( __( 'Search %s', 'woothemes-sensei' ), 'Certificates' ),
-			    'not_found' =>  sprintf( __( 'No %s found', 'woothemes-sensei' ), strtolower( 'Certificates' ) ),
-			    'not_found_in_trash' => sprintf( __( 'No %s found in Trash', 'woothemes-sensei' ), strtolower( 'Certificates' ) ),
+			    'name' => sprintf( _x( '%s', 'post type general name', 'sensei-certificates' ), 'Certificates' ),
+			    'singular_name' => sprintf( _x( '%s', 'post type singular name', 'sensei-certificates' ), 'Certificate' ),
+			    'add_new' => sprintf( _x( 'Add New %s', 'post type add_new', 'sensei-certificates' ), 'Certificate' ),
+			    'add_new_item' => sprintf( __( 'Add New %s', 'sensei-certificates' ), 'Certificate' ),
+			    'edit_item' => sprintf( __( 'Edit %s', 'sensei-certificates' ), 'Certificate' ),
+			    'new_item' => sprintf( __( 'New %s', 'sensei-certificates' ), 'Certificate' ),
+			    'all_items' => sprintf( __( '%s', 'sensei-certificates' ), 'Certificates' ),
+			    'view_item' => sprintf( __( 'View %s', 'sensei-certificates' ), 'Certificate' ),
+			    'search_items' => sprintf( __( 'Search %s', 'sensei-certificates' ), 'Certificates' ),
+			    'not_found' =>  sprintf( __( 'No %s found', 'sensei-certificates' ), strtolower( 'Certificates' ) ),
+			    'not_found_in_trash' => sprintf( __( 'No %s found in Trash', 'sensei-certificates' ), strtolower( 'Certificates' ) ),
 			    'parent_item_colon' => '',
-			    'menu_name' => sprintf( __( '%s', 'woothemes-sensei' ), 'Certificates' )
+			    'menu_name' => sprintf( __( '%s', 'sensei-certificates' ), 'Certificates' )
 			),
 		    'public' => true,
 		    'publicly_queryable' => true,
@@ -360,7 +360,7 @@ class WooThemes_Sensei_Certificates {
 			$pdf = new WooThemes_Sensei_PDF_Certificate( $wp->query_vars['hash'] );
 			$pdf->generate_pdf();
 		} else {
-			wp_die( __( 'You are not allowed to view this Certificate.', 'woothemes-sensei' ), __( 'Certificate Error', 'woothemes-sensei' ) );
+			wp_die( __( 'You are not allowed to view this Certificate.', 'sensei-certificates' ), __( 'Certificate Error', 'sensei-certificates' ) );
 		}
 	} // End generate_certificate
 
@@ -479,7 +479,7 @@ class WooThemes_Sensei_Certificates {
 
 		} else {
 
-			wp_die( __( 'The certificate you are searching for does not exist.', 'woothemes-sensei' ), __( 'Certificate Error', 'woothemes-sensei' ) );
+			wp_die( __( 'The certificate you are searching for does not exist.', 'sensei-certificates' ), __( 'Certificate Error', 'sensei-certificates' ) );
 
 		} // End If Statement
 
@@ -675,7 +675,7 @@ class WooThemes_Sensei_Certificates {
 	} // End enqueue_styles()
 
 	public function create_columns( $columns ) {
-		$columns['certificates_link'] = __( 'Certificate', 'woothemes-sensei' );
+		$columns['certificates_link'] = __( 'Certificate', 'sensei-certificates' );
 		return $columns;
 	} // End create_columns()
 
@@ -806,7 +806,7 @@ class WooThemes_Sensei_Certificates {
 				<form class="certificates_user_meta" method="POST" action="">
 		            <input type="hidden" name="<?php echo esc_attr( 'woothemes_sensei_certificates_user_meta_save_noonce' ); ?>" id="<?php echo esc_attr( 'woothemes_sensei_certificates_user_meta_save_noonce' ); ?>" value="<?php echo esc_attr( wp_create_nonce( 'woothemes_sensei_certificates_user_meta_save_noonce' ) ); ?>" />
 		            <p>
-		            	 <input type="checkbox" value="yes" name="certificates_user_public_view" <?php checked( $view_setting, true ); ?>/> <?php _e( 'Allow my Certificates to be publicly viewed', 'woothemes-sensei' ); ?> <input type="submit" name="certificates_user_meta_save" class="certificates-submit complete" value="<?php echo apply_filters( 'sensei_certificates_save_meta_button', __( 'Save', 'woothemes-sensei' ) ); ?>"/>
+		            	 <input type="checkbox" value="yes" name="certificates_user_public_view" <?php checked( $view_setting, true ); ?>/> <?php _e( 'Allow my Certificates to be publicly viewed', 'sensei-certificates' ); ?> <input type="submit" name="certificates_user_meta_save" class="certificates-submit complete" value="<?php echo apply_filters( 'sensei_certificates_save_meta_button', __( 'Save', 'sensei-certificates' ) ); ?>"/>
 		            </p>
 		        </form>
 	    	</div>
@@ -838,7 +838,7 @@ class WooThemes_Sensei_Certificates {
 
 				$update_success = update_user_option( $current_user_id, 'sensei_certificates_view_by_public', $view_setting );
 
-				$this->messages = '<div class="sensei-message tick">' . apply_filters( 'sensei_certificates_user_settings_save', __( 'Your Certificates Public View Settings Saved Successfully.', 'woothemes-sensei' ) ) . '</div>';
+				$this->messages = '<div class="sensei-message tick">' . apply_filters( 'sensei_certificates_user_settings_save', __( 'Your Certificates Public View Settings Saved Successfully.', 'sensei-certificates' ) ) . '</div>';
 
 			} // End If Statement
 

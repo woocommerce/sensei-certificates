@@ -20,17 +20,17 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-add_filter( 'bulk_actions-edit-certificate_template', 'certificate_template_edit_voucher_bulk_actions' );
+add_filter( 'bulk_actions-edit-certificate_template', 'certificate_template_edit_certificate_bulk_actions' );
 
 /**
- * Remove the bulk edit action for vouchers, it really isn't useful
+ * Remove the bulk edit action for certificate templates
  *
  * @since 1.0
  * @param array $actions associative array of action identifier to name
  *
  * @return array associative array of action identifier to name
  */
-function certificate_template_edit_voucher_bulk_actions( $actions ) {
+function certificate_template_edit_certificate_bulk_actions( $actions ) {
 
 	unset( $actions['edit'] );
 
@@ -38,59 +38,59 @@ function certificate_template_edit_voucher_bulk_actions( $actions ) {
 }
 
 
-add_filter( 'views_edit-certificate_template', 'certificate_template_edit_voucher_views' );
+add_filter( 'views_edit-certificate_template', 'certificate_template_edit_certificate_views' );
 
 /**
  * Modify the 'views' links, ie All (3) | Publish (1) | Draft (1) | Private (2) | Trash (3)
- * shown above the vouchers list table, to hide the publish/private states,
- * which are not important and confusing for voucher objects.
+ * shown above the certificate templates list table, to hide the publish/private states,
+ * which are not important and confusing for certificate objects.
  *
  * @since 1.0
  * @param array $views associative-array of view state name to link
  *
  * @return array associative array of view state name to link
  */
-function certificate_template_edit_voucher_views( $views ) {
+function certificate_template_edit_certificate_views( $views ) {
 
-	// publish and private are not important distinctions for vouchers
+	// publish and private are not important distinctions for certificate templates
 	unset( $views['publish'], $views['private'] );
 
 	return $views;
 }
 
 
-add_filter( 'manage_edit-certificate_template_columns', 'certificate_template_edit_voucher_columns' );
+add_filter( 'manage_edit-certificate_template_columns', 'certificate_template_edit_certificate_columns' );
 
 /**
- * Columns for Vouchers page
+ * Columns for certificate templates page
  *
  * @since 1.0
  * @param array $columns associative-array of column identifier to header names
  *
- * @return array associative-array of column identifier to header names for the vouchers page
+ * @return array associative-array of column identifier to header names for the certificate tempaltes page
  */
-function certificate_template_edit_voucher_columns( $columns ){
+function certificate_template_edit_certificate_columns( $columns ){
 
 	$columns = array();
 
 	$columns['cb']             = '<input type="checkbox" />';
-	$columns['name']           = __( 'Name', 'woothemes-sensei' );
-	$columns['thumb']          = __( 'Image', 'woothemes-sensei' );
+	$columns['name']           = __( 'Name', 'sensei-certificates' );
+	$columns['thumb']          = __( 'Image', 'sensei-certificates' );
 
 	return $columns;
 }
 
 
-add_action( 'manage_certificate_template_posts_custom_column', 'certificate_template_custom_voucher_columns', 2 );
+add_action( 'manage_certificate_template_posts_custom_column', 'certificate_template_custom_certificate_columns', 2 );
 
 
 /**
- * Custom Column values for Vouchers page
+ * Custom Column values for certificate templates page
  *
  * @since 1.0
  * @param string $column column identifier
  */
-function certificate_template_custom_voucher_columns( $column ) {
+function certificate_template_custom_certificate_columns( $column ) {
 	global $post;
 
 	switch ( $column ) {
@@ -113,7 +113,7 @@ function certificate_template_custom_voucher_columns( $column ) {
 
 			// display post states a little more selectively than _post_states( $post );
 			if ( 'draft' == $post->post_status ) {
-				echo " - <span class='post-state'>" . __( 'Draft', 'woothemes-sensei' ) . '</span>';
+				echo " - <span class='post-state'>" . __( 'Draft', 'sensei-certificates' ) . '</span>';
 			}
 
 			echo '</strong>';
@@ -125,11 +125,11 @@ function certificate_template_custom_voucher_columns( $column ) {
 
 			if ( current_user_can( $post_type_object->cap->delete_post, $post->ID ) ) {
 				if ( 'trash' == $post->post_status )
-					$actions['untrash'] = "<a title='" . esc_attr( __( 'Restore this item from the Trash', 'woothemes-sensei' ) ) . "' href='" . wp_nonce_url( admin_url( sprintf( $post_type_object->_edit_link . '&amp;action=untrash', $post->ID ) ), 'untrash-' . $post->post_type . '_' . $post->ID ) . "'>" . __( 'Restore', 'woothemes-sensei' ) . "</a>";
+					$actions['untrash'] = "<a title='" . esc_attr( __( 'Restore this item from the Trash', 'sensei-certificates' ) ) . "' href='" . wp_nonce_url( admin_url( sprintf( $post_type_object->_edit_link . '&amp;action=untrash', $post->ID ) ), 'untrash-' . $post->post_type . '_' . $post->ID ) . "'>" . __( 'Restore', 'sensei-certificates' ) . "</a>";
 				elseif ( EMPTY_TRASH_DAYS )
-					$actions['trash'] = "<a class='submitdelete' title='" . esc_attr( __( 'Move this item to the Trash', 'woothemes-sensei' ) ) . "' href='" . get_delete_post_link( $post->ID ) . "'>" . __( 'Trash', 'woothemes-sensei' ) . "</a>";
+					$actions['trash'] = "<a class='submitdelete' title='" . esc_attr( __( 'Move this item to the Trash', 'sensei-certificates' ) ) . "' href='" . get_delete_post_link( $post->ID ) . "'>" . __( 'Trash', 'sensei-certificates' ) . "</a>";
 				if ( 'trash' == $post->post_status || ! EMPTY_TRASH_DAYS )
-					$actions['delete'] = "<a class='submitdelete' title='" . esc_attr( __( 'Delete this item permanently', 'woothemes-sensei' ) ) . "' href='" . get_delete_post_link( $post->ID, '', true ) . "'>" . __( 'Delete Permanently', 'woothemes-sensei' ) . "</a>";
+					$actions['delete'] = "<a class='submitdelete' title='" . esc_attr( __( 'Delete this item permanently', 'sensei-certificates' ) ) . "' href='" . get_delete_post_link( $post->ID, '', true ) . "'>" . __( 'Delete Permanently', 'sensei-certificates' ) . "</a>";
 			}
 
 			$actions = apply_filters( 'post_row_actions', $actions, $post );

@@ -49,13 +49,13 @@ function course_certificate_template_data_meta_box( $post ) {
 
 		if ( count( $posts_array ) > 0 ) {
 			$html .= '<select id="course-certificate-template-options" name="course_certificate_template" class="widefat">' . "\n";
-			$html .= '<option value="">' . __( 'None', 'woothemes-sensei' ) . '</option>';
+			$html .= '<option value="">' . __( 'None', 'sensei-certificates' ) . '</option>';
 				foreach ($posts_array as $post_item){
 					$html .= '<option value="' . esc_attr( absint( $post_item->ID ) ) . '"' . selected( $post_item->ID, $select_certificate_template, false ) . '>' . esc_html( $post_item->post_title ) . '</option>' . "\n";
 				} // End For Loop
 			$html .= '</select>' . "\n";
 		} else {
-			$html .= '<p>' . esc_html( __( 'No certificate template exist yet. Please add some first.', 'woothemes-sensei' ) ) . '</p>';
+			$html .= '<p>' . esc_html( __( 'No certificate template exist yet. Please add some first.', 'sensei-certificates' ) ) . '</p>';
 		} // End If Statement
 
 		echo $html;
@@ -71,8 +71,8 @@ add_action( 'sensei_process_course_certificate_template_meta', 'course_certifica
  * Function for processing and storing all course certificate data.
  *
  * @since 1.0
- * @param int $post_id the voucher id
- * @param object $post the voucher post object
+ * @param int $post_id the certificate id
+ * @param object $post the certificate post object
  */
 function course_certificate_templates_process_meta( $post_id ) {
 	global $woothemes_sensei_certificate_templates;

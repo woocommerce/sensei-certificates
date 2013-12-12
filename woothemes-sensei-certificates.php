@@ -207,7 +207,7 @@ function sensei_create_master_certificate_template() {
 	$post = array();
 	$post['post_status']   = 'private';
 	$post['post_type']     = 'certificate_template';
-	$post['post_title']    = __( 'Example Template', 'woothemes-sensei' );
+	$post['post_title']    = __( 'Example Template', 'sensei-certificates' );
 	$post['post_content']  = '';
 
 	// Create Post
@@ -217,7 +217,7 @@ function sensei_create_master_certificate_template() {
 
 	$tmp = download_url( $url );
 	$post_id = $post_id;
-	$desc = __( 'Sensei Certificate Template Example', 'woothemes-sensei' );
+	$desc = __( 'Sensei Certificate Template Example', 'sensei-certificates' );
 
 	// Set variables for storage
 	// fix file filename for query strings
@@ -253,7 +253,7 @@ function sensei_create_master_certificate_template() {
 						'_certificate_heading_font_size' => '25',
 						'_certificate_heading_font_family' => 'Helvetica',
 						'_certificate_heading_font_style' => 'C',
-						'_certificate_heading_text' => __( 'Certificate of Completion', 'woothemes-sensei' ),
+						'_certificate_heading_text' => __( 'Certificate of Completion', 'sensei-certificates' ),
 						'_certificate_message' => '',
 						'_certificate_message_pos' => '110,306,996,167',
 						'_certificate_message_font_color' => '#000000',
@@ -267,21 +267,21 @@ function sensei_create_master_certificate_template() {
 						'_certificate_course_font_size' => '48',
 						'_certificate_course_font_family' => 'Helvetica',
 						'_certificate_course_font_style' => 'BCO',
-						'_certificate_course_text' => __( '{{course_title}}', 'woothemes-sensei' ),
+						'_certificate_course_text' => __( '{{course_title}}', 'sensei-certificates' ),
 						'_certificate_completion' => '',
 						'_certificate_completion_pos' => '108,599,998,48',
 						'_certificate_completion_font_color' => '#9e9e9e',
 						'_certificate_completion_font_size' => '20',
 						'_certificate_completion_font_family' => 'Helvetica',
 						'_certificate_completion_font_style' => 'C',
-						'_certificate_completion_text' => __( '{{completion_date}} at {{course_place}}', 'woothemes-sensei' ),
+						'_certificate_completion_text' => __( '{{completion_date}} at {{course_place}}', 'sensei-certificates' ),
 						'_certificate_place' => '',
 						'_certificate_place_pos' => '',
 						'_certificate_place_font_color' => '#9e9e9e',
 						'_certificate_place_font_size' => '20',
 						'_certificate_place_font_family' => 'Helvetica',
 						'_certificate_place_font_style' => '',
-						'_certificate_place_text' => __( '{{course_place}}', 'woothemes-sensei' )
+						'_certificate_place_text' => __( '{{course_place}}', 'sensei-certificates' )
 						);
 
 

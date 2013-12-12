@@ -13,7 +13,7 @@
  */
 
 /**
- * Sets up the write panels used by vouchers (custom post types)
+ * Sets up the write panels used by certificates (custom post types)
  *
  * @since 1.0
  */
@@ -29,37 +29,36 @@ add_action( 'add_meta_boxes', 'certificate_templates_meta_boxes' );
 
 
 /**
- * Add and remove meta boxes from the Voucher edit page and Order edit page
+ * Add and remove meta boxes from the certificates edit page and Order edit page
  *
  * @since 1.0
- * @see woocommerce_woocommerce-order-vouchers()
  */
 function certificate_templates_meta_boxes() {
 
-	// Voucher Primary Image box
+	// Certificate Primary Image box
 	add_meta_box(
 		'sensei-certificate-image',
-		__( 'Certificate Background Image <small>&ndash; Used to lay out the certificate fields found in the Certificate Data box.</small>', 'woothemes-sensei' ),
+		__( 'Certificate Background Image <small>&ndash; Used to lay out the certificate fields found in the Certificate Data box.</small>', 'sensei-certificates' ),
 		'certificate_template_image_meta_box',
 		'certificate_template',
 		'normal',
 		'high'
 	);
 
-	// Voucher Data box
+	// Certificate Data box
 	add_meta_box(
 		'sensei-certificate-data',
-		__( 'Certificate Data', 'woothemes-sensei' ),
+		__( 'Certificate Data', 'sensei-certificates' ),
 		'certificate_template_data_meta_box',
 		'certificate_template',
 		'normal',
 		'high'
 	);
 
-	// Voucher Data box
+	// Certificate Data box
 	add_meta_box(
 		'sensei-course-certificate-data',
-		__( 'Certificate Template', 'woothemes-sensei' ),
+		__( 'Certificate Template', 'sensei-certificates' ),
 		'course_certificate_template_data_meta_box',
 		'course',
 		'side',
@@ -77,7 +76,7 @@ function certificate_templates_meta_boxes() {
 add_filter( 'enter_title_here', 'certificate_templates_enter_title_here', 1, 2 );
 
 /**
- * Set a more appropriate placeholder text for the New Voucher title field
+ * Set a more appropriate placeholder text for the New Certificate title field
  *
  * @since 1.0
  * @param string $text "Enter Title Here" string
@@ -86,7 +85,7 @@ add_filter( 'enter_title_here', 'certificate_templates_enter_title_here', 1, 2 )
  * @return string "Certificate Template Name" when the post type is certificate_template
  */
 function certificate_templates_enter_title_here( $text, $post ) {
-	if ( 'certificate_template' == $post->post_type ) return __( 'Certificate Template', 'woothemes-sensei' );
+	if ( 'certificate_template' == $post->post_type ) return __( 'Certificate Template', 'sensei-certificates' );
 	return $text;
 }
 
@@ -135,14 +134,14 @@ function course_certificate_templates_meta_boxes_save( $post_id, $post ) {
 add_action( 'publish_certificate_template', 'certificate_template_private', 10, 2 );
 
 /**
- * Automatically make the voucher posts private when they are published.
+ * Automatically make the certificate posts private when they are published.
  * That way we can have them be publicly_queryable for the purposes of
  * generating a preview pdf for the admin user, while having them always
  * hidden on the frontend (draft posts are not visible by definition)
  *
  * @since 1.0
- * @param int $post_id the voucher identifier
- * @param object $post the voucher object
+ * @param int $post_id the certificate identifier
+ * @param object $post the certificate object
  */
 function certificate_template_private( $post_id, $post ) {
 	global $wpdb;
@@ -166,7 +165,7 @@ function certificate_templates_wp_font_select( $field ) {
 	$font_family_value = $font_size_value = $font_style_value = '';
 
 	if ( '_certificate' == $field['id'] ) {
-		// voucher defaults
+		// certificate defaults
 		$font_family_value = get_post_meta( $thepostid, $field['id'] . '_font_family', true );
 		$font_size_value   = get_post_meta( $thepostid, $field['id'] . '_font_size',   true );
 		$font_style_value  = get_post_meta( $thepostid, $field['id'] . '_font_style',  true );
@@ -196,23 +195,23 @@ function certificate_templates_wp_font_select( $field ) {
 
 	echo '</select> ';
 
-	echo '<input type="text" style="width:auto;margin-left:10px;" size="2" name="' . $field['id'] . '_font_size" id="' . $field['id'] . '_font_size" value="' . esc_attr( $font_size_value ) . '" placeholder="' . __( 'Size', 'woothemes-sensei' ) . '" /> ';
+	echo '<input type="text" style="width:auto;margin-left:10px;" size="2" name="' . $field['id'] . '_font_size" id="' . $field['id'] . '_font_size" value="' . esc_attr( $font_size_value ) . '" placeholder="' . __( 'Size', 'sensei-certificates' ) . '" /> ';
 
-	echo '<label for="' . $field['id'] . '_font_style_b" style="width:auto;margin:0 5px 0 10px;">' . __( 'Bold', 'woothemes-sensei' ) . '</label><input type="checkbox" class="checkbox" style="margin-top:4px;" name="' . $field['id'] . '_font_style_b" id="' . $field['id'] . '_font_style_b" value="yes" ';
+	echo '<label for="' . $field['id'] . '_font_style_b" style="width:auto;margin:0 5px 0 10px;">' . __( 'Bold', 'sensei-certificates' ) . '</label><input type="checkbox" class="checkbox" style="margin-top:4px;" name="' . $field['id'] . '_font_style_b" id="' . $field['id'] . '_font_style_b" value="yes" ';
 	checked( false !== strpos( $font_style_value, 'B' ), true );
 	echo ' /> ';
 
-	echo '<label for="' . $field['id'] . '_font_style_i" style="width:auto;margin:0 5px 0 10px;">' . __( 'Italic', 'woothemes-sensei' ) . '</label><input type="checkbox" class="checkbox" style="margin-top:4px;" name="' . $field['id'] . '_font_style_i" id="' . $field['id'] . '_font_style_i" value="yes" ';
+	echo '<label for="' . $field['id'] . '_font_style_i" style="width:auto;margin:0 5px 0 10px;">' . __( 'Italic', 'sensei-certificates' ) . '</label><input type="checkbox" class="checkbox" style="margin-top:4px;" name="' . $field['id'] . '_font_style_i" id="' . $field['id'] . '_font_style_i" value="yes" ';
 	checked( false !== strpos( $font_style_value, 'I' ), true );
 	echo ' /> ';
 
 	if ( '_certificate' != $field['id'] ) {
 
-		echo '<label for="' . $field['id'] . '_font_style_c" style="width:auto;margin:0 5px 0 10px;">' . __( 'Center Align', 'woothemes-sensei' ) . '</label><input type="checkbox" class="checkbox" style="margin-top:4px;" name="' . $field['id'] . '_font_style_c" id="' . $field['id'] . '_font_style_c" value="yes" ';
+		echo '<label for="' . $field['id'] . '_font_style_c" style="width:auto;margin:0 5px 0 10px;">' . __( 'Center Align', 'sensei-certificates' ) . '</label><input type="checkbox" class="checkbox" style="margin-top:4px;" name="' . $field['id'] . '_font_style_c" id="' . $field['id'] . '_font_style_c" value="yes" ';
 		checked( false !== strpos( $font_style_value, 'C' ), true );
 		echo ' /> ';
 
-		echo '<label for="' . $field['id'] . '_font_style_o" style="width:auto;margin:0 5px 0 10px;">' . __( 'Border', 'woothemes-sensei' ) . '</label><input type="checkbox" class="checkbox" style="margin-top:4px;" name="' . $field['id'] . '_font_style_o" id="' . $field['id'] . '_font_style_o" value="yes" ';
+		echo '<label for="' . $field['id'] . '_font_style_o" style="width:auto;margin:0 5px 0 10px;">' . __( 'Border', 'sensei-certificates' ) . '</label><input type="checkbox" class="checkbox" style="margin-top:4px;" name="' . $field['id'] . '_font_style_o" id="' . $field['id'] . '_font_style_o" value="yes" ';
 		checked( false !== strpos( $font_style_value, 'O' ), true );
 		echo ' /> ';
 
@@ -251,7 +250,7 @@ function certificate_templates_wp_color_picker_js() {
 
 
 /**
- * Renders a custom admin control used on the voucher edit page to Set/Remove
+ * Renders a custom admin control used on the certificate edit page to Set/Remove
  * the position via two buttons
  *
  * @since 1.0
@@ -261,7 +260,7 @@ function certificate_templates_wp_position_picker( $field ) {
 
 	if ( ! isset( $field['value'] ) ) $field['value'] = '';
 
-	echo '<p class="form-field"><label>' . $field['label'] . '</label><input type="button" id="' . $field['id'] . '" class="set_position button" value="' . esc_attr__( 'Set Position', 'woothemes-sensei' ) . '" style="width:auto;" /> <input type="button" id="remove_' . $field['id'] . '" class="remove_position button" value="' . esc_attr__( 'Remove Position', 'woothemes-sensei' ) . '" style="width:auto;' . ( $field['value'] ? '' : 'display:none' ) . ';margin-left:7px;" />';
+	echo '<p class="form-field"><label>' . $field['label'] . '</label><input type="button" id="' . $field['id'] . '" class="set_position button" value="' . esc_attr__( 'Set Position', 'sensei-certificates' ) . '" style="width:auto;" /> <input type="button" id="remove_' . $field['id'] . '" class="remove_position button" value="' . esc_attr__( 'Remove Position', 'sensei-certificates' ) . '" style="width:auto;' . ( $field['value'] ? '' : 'display:none' ) . ';margin-left:7px;" />';
 
 	if ( isset( $field['description'] ) && $field['description'] ) {
 

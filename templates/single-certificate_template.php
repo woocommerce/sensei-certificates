@@ -25,9 +25,9 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 global $post, $woothemes_sensei_certificate_templates;
 
 if ( $woothemes_sensei_certificate_templates->get_image_id() ) {
-	// stream the example voucher pdf
+	// stream the example certificate pdf
 	$woothemes_sensei_certificate_templates->generate_pdf();
 	exit;
 } else {
-	wp_die( __( 'You must set a certificate_template primary image before you can preview', 'woothemes-sensei' ) );
+	wp_die( __( 'You must set a certificate_template primary image before you can preview', 'sensei-certificates' ) );
 }

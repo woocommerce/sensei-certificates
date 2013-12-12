@@ -76,7 +76,7 @@ jQuery( function($){
 		file_frame.open();
 	});
 
-	// remove the primary certificate image
+	// remove the Certificate Background Image
 	$('#remove-certificate-image').click(function() {
 
 		$('#upload_image_id_0').val('');
@@ -158,7 +158,7 @@ jQuery( function($){
 		certificate_field_area_select(this.id);
 	});
 
-	// display the imgAreaSelect tool on top of the primary certificate image so that the field_name position can be defined
+	// display the imgAreaSelect tool on top of the Certificate Background Image so that the field_name position can be defined
 	// field_name: ie 'product_name_post'
 	function certificate_field_area_select(field_name) {
 		// no certificate image
