@@ -831,7 +831,7 @@ class WooThemes_Sensei_Certificates {
 
 		} // End If Statement
 
-		wp_reset_query();
+		wp_reset_postdata();
 
 		return $certificate_url;
 
