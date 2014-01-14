@@ -420,6 +420,8 @@ class WooThemes_Sensei_Certificates {
 
 		global $woothemes_sensei, $post;
 
+		if ( ! is_singular() || 'certificate' != get_post_type() ) return;
+
 		if ( $this->can_view_certificate() ) {
 
 			$hash = $post->post_slug;
@@ -430,6 +432,7 @@ class WooThemes_Sensei_Certificates {
 			require_once( 'class-woothemes-sensei-pdf-certificate.php' );
 			$pdf = new WooThemes_Sensei_PDF_Certificate( $hash );
 			$pdf->generate_pdf();
+			exit;
 
 		} else {
 
