@@ -107,6 +107,27 @@ function sensei_certificates_install() {
 
 	} // End If Statement
 
+	// Register post types, so we can flush the rewrite rules. This should be refactored to all happen in the main class, at a later stage.
+	$args = array(
+	    'public' => true,
+	    'publicly_queryable' => true,
+	    'query_var' => true,
+	    'rewrite' => array( 'slug' => esc_attr( apply_filters( 'sensei_certificates_slug', 'certificate' ) ) , 'with_front' => true, 'feeds' => true, 'pages' => true ),
+	    'has_archive' => false
+	);
+
+	register_post_type( 'certificate', $args );
+
+	$args = array(
+	    'public' => true,
+	    'publicly_queryable' => true,
+	    'query_var' => true,
+	    'rewrite' => array( 'slug' => esc_attr( apply_filters( 'sensei_certificate_templates_slug', 'certificate-template' ) ) , 'with_front' => true, 'feeds' => true, 'pages' => true ),
+	    'has_archive' => false
+	);
+
+	register_post_type( 'certificate_template', $args );
+
 	flush_rewrite_rules();
 
 } // End sensei_certificates_install()
