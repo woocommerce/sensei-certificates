@@ -396,7 +396,7 @@ class WooThemes_Sensei_Certificates {
 
 		} // End If Statement
 
-		wp_reset_query();
+		wp_reset_postdata();
 
 		if ( ! $grant_access ) {
 			$grant_access = current_user_can( 'manage_options' ) ? true : false;
