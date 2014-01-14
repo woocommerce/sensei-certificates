@@ -3,7 +3,7 @@
  * Plugin Name: Sensei Certificates
  * Plugin URI: http://www.woothemes.com/products/sensei-certifcates
  * Description: Add certificates support to Sensei
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: WooThemes
  * Author URI: http://www.woothemes.com
  * License: GPLv3

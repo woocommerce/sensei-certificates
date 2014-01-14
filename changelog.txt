@@ -1,9 +1,20 @@
 *** Sensei Certificates Changelog ***
 
+2014.01.14 - version 1.0.2
+ * Fix - Removes unnecessary rewrite endpoints, in favour of template_redirect.
+   /classes/class-woothemes-sensei-certificates.php
+
+ * Fix - Optimise the functionality to control access to, and to generate the certificate.
+   /classes/class-woothemes-sensei-certificates.php
+
+ * Fix - Ensure the extension doesn't break if a WooCommerce extension is activated.
+   /woo-includes/woo-functions.php
+   /woo-includes/class-wc-dependencies.php
+
 2013.12.12 - version 1.0.1
-* /classes/class-woothemes-sensei-certificate-templates.php - Localization fix
-* /classes/class-woothemes-sensei-certificates.php - Localization fix
-* /woothemes-sensei-certificates.php - Localization fix
+ * /classes/class-woothemes-sensei-certificate-templates.php - Localization fix
+ * /classes/class-woothemes-sensei-certificates.php - Localization fix
+ * /woothemes-sensei-certificates.php - Localization fix
 
 2013.12.12 - version 1.0.0
-* First release
+ * First release
