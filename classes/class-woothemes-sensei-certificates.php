@@ -104,6 +104,9 @@ class WooThemes_Sensei_Certificates {
 			add_action( 'sensei_analysis_course_user_column_data', array( $this, 'populate_columns' ), 10, 3 );
 			add_action( 'admin_footer', array( $this, 'output_inline_js' ), 25 );
 			add_filter( 'sensei_scripts_allowed_post_types', array( $this, 'include_sensei_scripts' ), 10, 1 );
+
+			// We don't need a WordPress SEO meta box for certificates and certificate templates. Hide it.
+			add_filter( 'option_wpseo_titles', array( $this, 'force_hide_wpseo_meta_box' ) );
 		}
 
 		// Generate certificate hash when course is completed.
@@ -115,6 +118,21 @@ class WooThemes_Sensei_Certificates {
 
 	} // End __construct()
 
+	/**
+	 * Force the WordPress SEO meta box to be turned off for the "certificate" and "certificate_template" post types.
+	 * @access  public
+	 * @since   1.0.1
+	 * @param   array $value WordPress SEO wpseo_titles option.
+	 * @return  array        Modified array.
+	 */
+	public function force_hide_wpseo_meta_box ( $value ) {
+		if ( is_array( $value ) ) {
+			$value['hideeditbox-certificate'] = 'on';
+			$value['hideeditbox-certificate_template'] = 'on';
+		}
+
+		return $value;
+	} // End force_hide_wpseo_meta_box()
 
 	/**
 	 * plugin_path function
