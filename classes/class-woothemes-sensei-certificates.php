@@ -27,9 +27,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  * - certificate_text()
  * - certificate_backgroudn()
  * - get_certificate_font_settings()
- * - add_query_vars()
- * - add_endpoint()
- * - sniff_requests()
  * - certificate_link()
  * - enqueue_styles()
  * - create_columns()
@@ -91,9 +88,7 @@ class WooThemes_Sensei_Certificates {
 		add_action( 'sensei_user_course_reset', array( $this, 'reset_course_certificate' ), 10, 2 );
 
 		// Create certificate endpoint and handle generation of pdf certificate
-		add_filter( 'query_vars', array( $this, 'add_query_vars' ), 0 );
-		add_action( 'parse_request', array( $this, 'sniff_requests' ), 0 );
-		add_action( 'init', array( $this, 'add_endpoint' ), 0 );
+		add_action( 'template_redirect', array( $this, 'download_certificate' ) );
 
 		// User settings output and save handling
 		add_action( 'sensei_learner_profile_info', array( $this, 'certificates_user_settings_form' ), 10, 1 );
@@ -368,17 +363,22 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function can_view_certificate() {
 
-		global $woothemes_sensei, $wp, $current_user;
+		global $woothemes_sensei, $post, $current_user;
 		get_currentuserinfo();
+
+		$response = false;
 
 		// Check if student can only view certificate
 		$grant_access = $woothemes_sensei->settings->settings['certificates_public_viewable'];
+
+		// If we can view certificates, get out.
+		if ( true == (bool)$grant_access || current_user_can( 'manage_options' ) ) return true;
 
 		// Check public access settings for the individual user
 		$args = array(
 			'post_type' => 'certificate',
 			'meta_key' => 'certificate_hash',
-			'meta_value' => $wp->query_vars['hash']
+			'meta_value' => $post->post_slug
 		);
 
 		// Find certificate based on hash
@@ -386,7 +386,7 @@ class WooThemes_Sensei_Certificates {
 		if ( $query->have_posts() ) {
 
 			$query->the_post();
-			$certificate_id = $query->posts[0]->ID;
+			$certificate_id = get_the_ID();
 			$learner_id = get_post_meta( $certificate_id, 'learner_id', true );
 			if ( isset( $current_user->ID ) && ( intval( $current_user->ID ) === intval( $learner_id ) ) )  {
 				$grant_access = true;
@@ -398,19 +398,13 @@ class WooThemes_Sensei_Certificates {
 
 		wp_reset_postdata();
 
-		if ( ! $grant_access ) {
-			$grant_access = current_user_can( 'manage_options' ) ? true : false;
-		} // End If Statement
-
-		// TODO - check if user has permissions to view this certificate, ie if it is his certificate
-
 		if ( ! $grant_access )
-			return false;
+			$response = false;
 
-		if ( strlen( $wp->query_vars['hash'] ) <> 8 )
-			return false;
+		if ( strlen( $post->post_slug ) != 8 )
+			$response = false;
 
-		return true;
+		return $response;
 
 	} // End can_view_certificate()
 
@@ -424,13 +418,17 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function download_certificate() {
 
-		global $woothemes_sensei, $wp;
+		global $woothemes_sensei, $post;
 
 		if ( $this->can_view_certificate() ) {
 
+			$hash = $post->post_slug;
+			$hash_meta = get_post_meta( get_the_ID(), 'certificate_hash', true );
+			if ( ! empty( $hash_meta ) && 8 >= strlen( $hash_meta ) ) $hash = $hash_meta;
+
 			// Generate the certificate here
 			require_once( 'class-woothemes-sensei-pdf-certificate.php' );
-			$pdf = new WooThemes_Sensei_PDF_Certificate( $wp->query_vars['hash'] );
+			$pdf = new WooThemes_Sensei_PDF_Certificate( $hash );
 			$pdf->generate_pdf();
 
 		} else {
@@ -681,59 +679,6 @@ class WooThemes_Sensei_Certificates {
 		return $return_array;
 
 	} // End get_certificate_font_settings()
-
-
-	/**
-	 * Add public Query Vars
-	 *
-	 * @access public
-	 * @since  1.0.0
-	 * @param  array $vars
-	 * @return array $vars
-	 */
-	public function add_query_vars( $vars ) {
-
-		$vars[] = 'certificate';
-		$vars[] = 'hash';
-
-		return apply_filters( 'woothemes_sensei_certificates_query_vars', $vars );
-
-	} // End add_query_vars()
-
-
-	/**
-	 * Add endpoint
-	 *
-	 * @access public
-	 * @since  1.0.0
-	 * @return void
-	 */
-	public function add_endpoint() {
-
-		add_rewrite_rule('^certificate/([^/]*)/?','index.php?certificate=1&hash=$matches[1]','top');
-
-	} // End add_endpoint()
-
-
-	/**
-	 * Listen for certificate request
-	 *
-	 * @access public
-	 * @since  1.0.0
-	 * @return void
-	 */
-	public function sniff_requests() {
-
-		global $wp;
-		if ( isset( $wp->query_vars['certificate'] ) && isset( $wp->query_vars['hash'] ) ) {
-
-			$this->download_certificate();
-			exit;
-
-		} // End If Statement
-
-	} // End sniff_requests()
-
 
 	/**
 	 * certificate_link frontend output function for certificate link
