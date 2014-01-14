@@ -386,9 +386,9 @@ class WooThemes_Sensei_Certificates {
 
 		$response = false;
 
-		if ( 0 < intval( $certificate_id ) ) return false; // We require a certificate ID value.
+		if ( 0 >= intval( $certificate_id ) ) return false; // We require a certificate ID value.
 
-		$learner_id = get_post_meta( intval( $certificate_id ), 'learner_id', true );
+		$learner_d = get_post_meta( intval( $certificate_id ), 'learner_id', true );
 
 		// Check if student can only view certificate
 		$grant_access = $woothemes_sensei->settings->settings['certificates_public_viewable'];
