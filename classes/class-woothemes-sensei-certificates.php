@@ -379,48 +379,27 @@ class WooThemes_Sensei_Certificates {
 	 * @since  1.0.0
 	 * @return boolean
 	 */
-	public function can_view_certificate() {
+	public function can_view_certificate( $certificate_id = 0 ) {
 
 		global $woothemes_sensei, $post, $current_user;
 		get_currentuserinfo();
 
 		$response = false;
 
+		if ( 0 < intval( $certificate_id ) ) return false; // We require a certificate ID value.
+
+		$learner_id = get_post_meta( intval( $certificate_id ), 'learner_id', true );
+
 		// Check if student can only view certificate
 		$grant_access = $woothemes_sensei->settings->settings['certificates_public_viewable'];
+		$grant_access_user = get_user_option( 'sensei_certificates_view_by_public', $learner_id );
 
 		// If we can view certificates, get out.
-		if ( true == (bool)$grant_access || current_user_can( 'manage_options' ) ) return true;
+		if ( true == (bool)$grant_access_user || ( false == (bool)$grant_access && true == (bool)$grant_access_user ) || current_user_can( 'manage_options' ) ) return true;
 
-		// Check public access settings for the individual user
-		$args = array(
-			'post_type' => 'certificate',
-			'meta_key' => 'certificate_hash',
-			'meta_value' => $post->post_slug
-		);
-
-		// Find certificate based on hash
-		$query = new WP_Query( $args );
-		if ( $query->have_posts() ) {
-
-			$query->the_post();
-			$certificate_id = get_the_ID();
-			$learner_id = get_post_meta( $certificate_id, 'learner_id', true );
-			if ( isset( $current_user->ID ) && ( intval( $current_user->ID ) === intval( $learner_id ) ) )  {
-				$grant_access = true;
-			} else {
-				$grant_access = get_user_option( 'sensei_certificates_view_by_public', $learner_id );
-			} // End If Statement
-
-		} // End If Statement
-
-		wp_reset_postdata();
-
-		if ( ! $grant_access )
-			$response = false;
-
-		if ( strlen( $post->post_slug ) != 8 )
-			$response = false;
+		if ( isset( $current_user->ID ) && ( intval( $current_user->ID ) === intval( $learner_id ) ) )  {
+			$response = true;
+		}
 
 		return $response;
 
@@ -440,7 +419,7 @@ class WooThemes_Sensei_Certificates {
 
 		if ( ! is_singular() || 'certificate' != get_post_type() ) return;
 
-		if ( $this->can_view_certificate() ) {
+		if ( $this->can_view_certificate( get_the_ID() ) ) {
 
 			$hash = $post->post_slug;
 			$hash_meta = get_post_meta( get_the_ID(), 'certificate_hash', true );
