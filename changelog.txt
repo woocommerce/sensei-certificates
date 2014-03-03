@@ -1,5 +1,9 @@
 *** Sensei Certificates Changelog ***
 
+2014.03.04 - version 1.0.3
+ * Fix - Switching background image to use path instead of URL
+   /classes/class-woothemes-sensei-certificates.php
+
 2014.01.14 - version 1.0.2
  * Fix - Removes unnecessary rewrite endpoints, in favour of template_redirect.
    /classes/class-woothemes-sensei-certificates.php
