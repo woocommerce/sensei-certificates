@@ -105,7 +105,7 @@ class WooThemes_Sensei_PDF_Certificate {
 
 		// include the pdf library
 		$root_dir = dirname( __FILE__ ) . DIRECTORY_SEPARATOR;
-		require_once( $root_dir . '../lib/fpdf/fpdf.php' );
+		require_once( $root_dir . '../lib/tfpdf/tfpdf.php' );
 
 		do_action( 'sensei_certificates_set_background_image', $this );
 
@@ -125,10 +125,13 @@ class WooThemes_Sensei_PDF_Certificate {
 		// Create the pdf
 		// TODO: we're assuming a standard DPI here of where 1 point = 1/72 inch = 1 pixel
 		// When writing text to a Cell, the text is vertically-aligned in the middle
-		$fpdf = new FPDF( $orientation, 'pt', array( $image_attr[0], $image_attr[1] ) );
+		$fpdf = new tFPDF( $orientation, 'pt', array( $image_attr[0], $image_attr[1] ) );
 
 		$fpdf->AddPage();
 		$fpdf->SetAutoPageBreak( false );
+
+		// Add multibyte font
+		$fpdf->AddFont( 'DejaVu', '', 'DejaVuSansCondensed.ttf', true );
 
 		// Set the border image as the background
 		$fpdf->Image( $image, 0, 0, $image_attr[0], $image_attr[1] );
@@ -160,6 +163,11 @@ class WooThemes_Sensei_PDF_Certificate {
 	public function textarea_field( $fpdf, $value, $show_border, $position, $font = array() ) {
 
 		if ( $value ) {
+
+			$mb_str = false;
+			if( $this->is_multibyte( $value ) ) {
+				$mb_str = true;
+			}
 
 			if ( empty( $font ) ) {
 
@@ -198,7 +206,11 @@ class WooThemes_Sensei_PDF_Certificate {
 			} // End If Statement
 
 			// set the field text styling
-			$fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] );
+			if( $mb_str ) {
+				$fpdf->SetFont('DejaVu','', $font['font_size']);
+			} else {
+				$fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] );
+			}
 
 			$fpdf->setXY( $x, $y );
 
@@ -207,8 +219,12 @@ class WooThemes_Sensei_PDF_Certificate {
 				$fpdf->SetDrawColor( $font_color[0], $font_color[1], $font_color[2] );
 			}
 
+			if( ! $mb_str ) {
+				$value = utf8_decode( $value );
+			}
+
 			// and write out the value
-			$fpdf->Multicell( $w, $font['font_size'], utf8_decode( $value ), $show_border, $center );
+			$fpdf->Multicell( $w, $font['font_size'], $value, $show_border, $center );
 
 		} // End If Statement
 
@@ -257,6 +273,11 @@ class WooThemes_Sensei_PDF_Certificate {
 
 		if ( $value ) {
 
+			$mb_str = false;
+			if( $this->is_multibyte( $value ) ) {
+				$mb_str = true;
+			}
+
 			if ( empty( $font ) ) {
 
 				$font = array(
@@ -294,7 +315,11 @@ class WooThemes_Sensei_PDF_Certificate {
 			} // End If Statement
 
 			// set the field text styling
-			$fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] );
+			if( $mb_str ) {
+				$fpdf->SetFont('DejaVu','', $font['font_size']);
+			} else {
+				$fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] );
+			}
 
 			// show a border for debugging purposes
 			if ( $show_border ) {
@@ -311,8 +336,12 @@ class WooThemes_Sensei_PDF_Certificate {
 			$y =$font['font_size'] > $h ? $y - ( $font['font_size'] - $h ) / 2 : $y + ( $h - $font['font_size'] ) / 2;
 			$fpdf->setXY( $x, $y );
 
+			if( ! $mb_str ) {
+				$value = utf8_decode( $value );
+			}
+
 			// and write out the value
-			$fpdf->Cell( $w, $h, utf8_decode( $value ), $show_border, $position, $center  );  // can try iconv('UTF-8', 'windows-1252', $content); if this doesn't work correctly for accents
+			$fpdf->Cell( $w, $h, $value, $show_border, $position, $center  );
 
 		} // End If Statement
 
@@ -333,6 +362,11 @@ class WooThemes_Sensei_PDF_Certificate {
 
 		if ( $value ) {
 
+			$mb_str = false;
+			if( $this->is_multibyte( $value ) ) {
+				$mb_str = true;
+			}
+
 			if ( empty( $font ) ) {
 
 				$font = array(
@@ -352,7 +386,11 @@ class WooThemes_Sensei_PDF_Certificate {
 			$fpdf->SetTextColor( $font_color[0], $font_color[1], $font_color[2] );
 
 			// set the field text styling
-			$fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] );
+			if( $mb_str ) {
+				$fpdf->SetFont('DejaVu','', $font['font_size']);
+			} else {
+				$fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] );
+			}
 
 			// show a border for debugging purposes
 			if ( $show_border ) {
@@ -364,8 +402,12 @@ class WooThemes_Sensei_PDF_Certificate {
 			$y =$font['font_size'] > $h ? $y - ( $font['font_size'] - $h ) / 2 : $y + ( $h - $font['font_size'] ) / 2;
 			$fpdf->setXY( $x, $y );
 
+			if( ! $mb_str ) {
+				$value = utf8_decode( $value );
+			}
+
 			// and write out the value
-			$fpdf->Cell( $w, $h, utf8_decode( $value ) );  // can try iconv('UTF-8', 'windows-1252', $content); if this doesn't work correctly for accents
+			$fpdf->Cell( $w, $h, $value );
 
 		} // End If Statement
 
@@ -399,5 +441,24 @@ class WooThemes_Sensei_PDF_Certificate {
 		return array( $r, $g, $b );
 
 	} // End hex2rgb()
+
+	/**
+	 * Checks if string contains multibyte characters
+	 *
+	 * @access private
+	 * @since  1.0.4
+	 * @param  string  $string String to check
+	 * @return boolean
+	 */
+	private function is_multibyte( $string = '' ) {
+
+		if( ! $string ) return false;
+
+		if( mb_strlen( $string ) != strlen( $string ) ) {
+			return true;
+		}
+
+		return false;
+	} // End is_multibyte ()
 
 } // End Class
