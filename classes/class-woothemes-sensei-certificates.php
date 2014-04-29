@@ -696,7 +696,13 @@ class WooThemes_Sensei_Certificates {
 	public function certificate_link( $message ) {
 		global $current_user, $course, $woothemes_sensei, $wp_query, $post;
 
-		$certificate_template_id = get_post_meta( $post->ID, '_course_certificate_template', true );
+		if( isset( $course->ID ) ) {
+			$course_id = $course->ID;
+		} else {
+			$course_id = $post->ID;
+		}
+
+		$certificate_template_id = get_post_meta( $course_id, '_course_certificate_template', true );
 
 		if( ! $certificate_template_id ) return $message;
 
