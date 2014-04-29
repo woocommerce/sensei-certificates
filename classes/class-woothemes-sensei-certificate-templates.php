@@ -402,8 +402,12 @@ class WooThemes_Sensei_Certificate_Templates {
 		// TODO: we're assuming a standard DPI here of where 1 point = 1/72 inch = 1 pixel
 		// When writing text to a Cell, the text is vertically-aligned in the middle
 		$fpdf = new tFPDF( $orientation, 'pt', array( $image['width'], $image['height'] ) );
+
 		$fpdf->AddPage();
 		$fpdf->SetAutoPageBreak( false );
+
+		// Add multibyte font
+		$fpdf->AddFont( 'DejaVu', '', 'DejaVuSansCondensed.ttf', true );
 
 		// set the certificate image
 		$upload_dir = wp_upload_dir();
