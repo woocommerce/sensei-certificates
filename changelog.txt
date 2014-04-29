@@ -1,5 +1,8 @@
 *** Sensei Certificates Changelog ***
 
+2014.04.28 - version 1.0.4
+ * Fix - making 'View Certificate' link text available for localization
+
 2014.03.04 - version 1.0.3
  * Fix - Switching background image to use path instead of URL
    /classes/class-woothemes-sensei-certificates.php
