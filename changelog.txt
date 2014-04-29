@@ -1,9 +1,10 @@
 *** Sensei Certificates Changelog ***
 
 2014.04.28 - version 1.0.4
+ * Update - Adding support for user-defined custom fonts
+ * Fix - Switching to tFPDF library for PDF generation to handle multibyte character sets (Greek, Arabic, etc.)
  * Fix - Making 'View Certificate' link text available for localization
- * Fix - Switching to tFPDF library for PDF generation to handle multibyte characters
- * Fix - Hiding 'view certificate' link if no certificate template it selected for the course
+ * Fix - Hiding 'View Certificate' link if no certificate template is selected for the course
 
 2014.03.04 - version 1.0.3
  * Fix - Switching background image to use path instead of URL
