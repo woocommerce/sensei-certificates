@@ -793,15 +793,15 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		if( $custom_font ) {
 
-			if( ! $custom_font['family'] ) {
+			if( ! isset( $custom_font['family'] ) || ! $custom_font['family'] ) {
 				$custom_font['family'] = $default_font['font_family'];
 			}
 
-			if( ! $custom_font['size'] ) {
+			if( ! isset( $custom_font['size'] ) || ! $custom_font['size'] ) {
 				$custom_font['size'] = $default_font['font_size'];
 			}
 
-			$fpdf->SetFont( $fontdata['family'], '', $fontdata['size'] );
+			$fpdf->SetFont( $custom_font['family'], '', $custom_font['size'] );
 
 			return true;
 		}
