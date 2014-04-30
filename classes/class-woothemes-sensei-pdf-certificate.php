@@ -105,7 +105,7 @@ class WooThemes_Sensei_PDF_Certificate {
 
 		// include the pdf library
 		$root_dir = dirname( __FILE__ ) . DIRECTORY_SEPARATOR;
-		require_once( $root_dir . '../lib/fpdf/fpdf.php' );
+		require_once( $root_dir . '../lib/tfpdf/tfpdf.php' );
 
 		do_action( 'sensei_certificates_set_background_image', $this );
 
@@ -125,10 +125,21 @@ class WooThemes_Sensei_PDF_Certificate {
 		// Create the pdf
 		// TODO: we're assuming a standard DPI here of where 1 point = 1/72 inch = 1 pixel
 		// When writing text to a Cell, the text is vertically-aligned in the middle
-		$fpdf = new FPDF( $orientation, 'pt', array( $image_attr[0], $image_attr[1] ) );
+		$fpdf = new tFPDF( $orientation, 'pt', array( $image_attr[0], $image_attr[1] ) );
 
 		$fpdf->AddPage();
 		$fpdf->SetAutoPageBreak( false );
+
+		// Add custom font
+		$custom_font = apply_filters( 'sensei_certificates_custom_font', false );
+		if( $custom_font ) {
+			if( isset( $custom_font['family'] ) && isset( $custom_font['file'] ) ) {
+				$fpdf->AddFont( $custom_font['family'], '', $custom_font['file'], true );
+			}
+		} else {
+			// Add multibyte font
+			$fpdf->AddFont( 'DejaVu', '', 'DejaVuSansCondensed.ttf', true );
+		}
 
 		// Set the border image as the background
 		$fpdf->Image( $image, 0, 0, $image_attr[0], $image_attr[1] );
@@ -197,8 +208,18 @@ class WooThemes_Sensei_PDF_Certificate {
 				$font['font_style'] = str_replace( 'O', '', $font['font_style']);
 			} // End If Statement
 
-			// set the field text styling
-			$fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] );
+			$custom_font = $this->set_custom_font( $fpdf, $font );
+
+			// Set the field text styling based on the font type
+			$fonttype = '';
+			if( ! $custom_font ) {
+				$fonttype = $this->get_font_type( $value );
+				switch( $fonttype ) {
+					case 'mb': $fpdf->SetFont('DejaVu','', $font['font_size']); break;
+					case 'latin': $fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] ); break;
+					default: $fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] ); break;
+				}
+			}
 
 			$fpdf->setXY( $x, $y );
 
@@ -207,8 +228,13 @@ class WooThemes_Sensei_PDF_Certificate {
 				$fpdf->SetDrawColor( $font_color[0], $font_color[1], $font_color[2] );
 			}
 
+			// Decode string based on font type
+			if( 'latin' == $fonttype ) {
+				$value = utf8_decode( $value );
+			}
+
 			// and write out the value
-			$fpdf->Multicell( $w, $font['font_size'], utf8_decode( $value ), $show_border, $center );
+			$fpdf->Multicell( $w, $font['font_size'], $value, $show_border, $center );
 
 		} // End If Statement
 
@@ -293,8 +319,18 @@ class WooThemes_Sensei_PDF_Certificate {
 				$font['font_style'] = str_replace( 'O', '', $font['font_style']);
 			} // End If Statement
 
-			// set the field text styling
-			$fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] );
+			$custom_font = $this->set_custom_font( $fpdf, $font );
+
+			// Set the field text styling based on the font type
+			$fonttype = '';
+			if( ! $custom_font ) {
+				$fonttype = $this->get_font_type( $value );
+				switch( $fonttype ) {
+					case 'mb': $fpdf->SetFont('DejaVu','', $font['font_size']); break;
+					case 'latin': $fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] ); break;
+					default: $fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] ); break;
+				}
+			}
 
 			// show a border for debugging purposes
 			if ( $show_border ) {
@@ -311,8 +347,13 @@ class WooThemes_Sensei_PDF_Certificate {
 			$y =$font['font_size'] > $h ? $y - ( $font['font_size'] - $h ) / 2 : $y + ( $h - $font['font_size'] ) / 2;
 			$fpdf->setXY( $x, $y );
 
+			// Decode string based on font type
+			if( 'latin' == $fonttype ) {
+				$value = utf8_decode( $value );
+			}
+
 			// and write out the value
-			$fpdf->Cell( $w, $h, utf8_decode( $value ), $show_border, $position, $center  );  // can try iconv('UTF-8', 'windows-1252', $content); if this doesn't work correctly for accents
+			$fpdf->Cell( $w, $h, $value, $show_border, $position, $center  );
 
 		} // End If Statement
 
@@ -351,8 +392,18 @@ class WooThemes_Sensei_PDF_Certificate {
 			$font_color = $this->hex2rgb( $font['font_color'] );
 			$fpdf->SetTextColor( $font_color[0], $font_color[1], $font_color[2] );
 
-			// set the field text styling
-			$fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] );
+			$custom_font = $this->set_custom_font( $fpdf, $font );
+
+			// Set the field text styling based on the font type
+			$fonttype = '';
+			if( ! $custom_font ) {
+				$fonttype = $this->get_font_type( $value );
+				switch( $fonttype ) {
+					case 'mb': $fpdf->SetFont('DejaVu','', $font['font_size']); break;
+					case 'latin': $fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] ); break;
+					default: $fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] ); break;
+				}
+			}
 
 			// show a border for debugging purposes
 			if ( $show_border ) {
@@ -364,8 +415,13 @@ class WooThemes_Sensei_PDF_Certificate {
 			$y =$font['font_size'] > $h ? $y - ( $font['font_size'] - $h ) / 2 : $y + ( $h - $font['font_size'] ) / 2;
 			$fpdf->setXY( $x, $y );
 
+			// Decode string based on font type
+			if( 'latin' == $fonttype ) {
+				$value = utf8_decode( $value );
+			}
+
 			// and write out the value
-			$fpdf->Cell( $w, $h, utf8_decode( $value ) );  // can try iconv('UTF-8', 'windows-1252', $content); if this doesn't work correctly for accents
+			$fpdf->Cell( $w, $h, $value );
 
 		} // End If Statement
 
@@ -399,5 +455,56 @@ class WooThemes_Sensei_PDF_Certificate {
 		return array( $r, $g, $b );
 
 	} // End hex2rgb()
+
+	/**
+	 * Gets the font type (character set) of a string
+	 *
+	 * @access private
+	 * @since  1.0.4
+	 * @param  string $string String to check
+	 * @return string         Font type
+	 */
+	public function get_font_type( $string = '' ) {
+
+		if( ! $string ) return 'latin';
+
+		if( mb_strlen( $string ) != strlen( $string ) ) {
+			return 'mb';
+		}
+
+		return 'latin';
+
+	}
+
+	/**
+	 * Set custom font
+	 *
+	 * @access private
+	 * @since  1.0.4
+	 * @param  object $fpdf         The FPDF object
+	 * @param  array  $default_font The default font
+	 * @return boolean 				True if the custom font was set
+	 */
+	public function set_custom_font( $fpdf, $default_font ) {
+
+		$custom_font = apply_filters( 'sensei_certificates_custom_font', false );
+
+		if( $custom_font ) {
+
+			if( ! isset( $custom_font['family'] ) || ! $custom_font['family'] ) {
+				$custom_font['family'] = $default_font['font_family'];
+			}
+
+			if( ! isset( $custom_font['size'] ) || ! $custom_font['size'] ) {
+				$custom_font['size'] = $default_font['font_size'];
+			}
+
+			$fpdf->SetFont( $custom_font['family'], '', $custom_font['size'] );
+
+			return true;
+		}
+
+		return false;
+	} // End set_custom_font()
 
 } // End Class

@@ -694,8 +694,17 @@ class WooThemes_Sensei_Certificates {
 	 * @return string $message html
 	 */
 	public function certificate_link( $message ) {
-
 		global $current_user, $course, $woothemes_sensei, $wp_query, $post;
+
+		if( isset( $course->ID ) ) {
+			$course_id = $course->ID;
+		} else {
+			$course_id = $post->ID;
+		}
+
+		$certificate_template_id = get_post_meta( $course_id, '_course_certificate_template', true );
+
+		if( ! $certificate_template_id ) return $message;
 
 		$my_account_page_id = intval( $woothemes_sensei->settings->settings[ 'my_course_page' ] );
 		$view_link_courses = $woothemes_sensei->settings->settings[ 'certificates_view_courses' ];
@@ -737,7 +746,7 @@ class WooThemes_Sensei_Certificates {
 
 				} // End If Statement
 
-				$message = $message . '<a href="' . $certificate_url . '" class="' . $classes . 'sensei-certificate-link" title="' . esc_attr( __( 'View Certificate', 'sensei-certificates' ) ) . '">View Certificate</a>';
+				$message = $message . '<a href="' . $certificate_url . '" class="' . $classes . 'sensei-certificate-link" title="' . esc_attr( __( 'View Certificate', 'sensei-certificates' ) ) . '">'. __( 'View Certificate', 'sensei-certificates' ) . '</a>';
 
 			} // End If Statement
 
@@ -838,7 +847,7 @@ class WooThemes_Sensei_Certificates {
 
 		if ( '' != $certificate_url ) {
 
-			$output = '<a href="' . $certificate_url . '" class="sensei-certificate-link" title="' . esc_attr( __( 'View Certificate', 'sensei-certificates' ) ) . '">View Certificate</a>';
+			$output = '<a href="' . $certificate_url . '" class="sensei-certificate-link" title="' . esc_attr( __( 'View Certificate', 'sensei-certificates' ) ) . '">'. __( 'View Certificate', 'sensei-certificates' ) . '</a>';
 
 		} // End If Statement
 
