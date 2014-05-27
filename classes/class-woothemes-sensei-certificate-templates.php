@@ -458,11 +458,19 @@ class WooThemes_Sensei_Certificate_Templates {
 		} // End For Loop
 
 		// Set default fonts
+		setlocale(LC_TIME, get_locale() );
+
+		if( false !== strpos( get_locale(), 'en' ) ) {
+			$date = date( 'jS F Y', strtotime( $course_end_date ) );
+		} else {
+			$date = strftime ( '%e %B %Y', strtotime( $course_end_date ) );
+		}
+		
 		$certificate_heading = __( 'Certificate of Completion', 'sensei-certificates' ); // Certificate of Completion
 		if ( isset( $this->certificate_template_fields['certificate_heading']['text'] ) && '' != $this->certificate_template_fields['certificate_heading']['text'] ) {
 
 			$certificate_heading = $this->certificate_template_fields['certificate_heading']['text'];
-			$certificate_heading = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course['post_title'], date( 'jS F Y', strtotime( $course_end_date ) ), get_bloginfo( 'name' ) ) , $certificate_heading );
+			$certificate_heading = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course['post_title'], $date, get_bloginfo( 'name' ) ) , $certificate_heading );
 
 		} // End If Statement
 
@@ -470,7 +478,7 @@ class WooThemes_Sensei_Certificate_Templates {
 		if ( isset( $this->certificate_template_fields['certificate_message']['text'] ) && '' != $this->certificate_template_fields['certificate_message']['text'] ) {
 
 			$certificate_message = $this->certificate_template_fields['certificate_message']['text'];
-			$certificate_message = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course['post_title'], date( 'jS F Y', strtotime( $course_end_date ) ), get_bloginfo( 'name' ) ) , $certificate_message );
+			$certificate_message = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course['post_title'], $date, get_bloginfo( 'name' ) ) , $certificate_message );
 
 		} // End If Statement
 
@@ -478,15 +486,15 @@ class WooThemes_Sensei_Certificate_Templates {
 		if ( isset( $this->certificate_template_fields['certificate_course']['text'] ) && '' != $this->certificate_template_fields['certificate_course']['text'] ) {
 
 			$certificate_course = $this->certificate_template_fields['certificate_course']['text'];
-			$certificate_course = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course['post_title'], date( 'jS F Y', strtotime( $course_end_date ) ), get_bloginfo( 'name' ) ) , $certificate_course );
+			$certificate_course = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course['post_title'], $date, get_bloginfo( 'name' ) ) , $certificate_course );
 
 		} // End If Statement
 
-		$certificate_completion = date( 'jS F Y', strtotime( $course_end_date ) ); // {{completion_date}}
+		$certificate_completion = $date; // {{completion_date}}
 		if ( isset( $this->certificate_template_fields['certificate_completion']['text'] ) && '' != $this->certificate_template_fields['certificate_completion']['text'] ) {
 
 			$certificate_completion = $this->certificate_template_fields['certificate_completion']['text'];
-			$certificate_completion = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course['post_title'], date( 'jS F Y', strtotime( $course_end_date ) ), get_bloginfo( 'name' ) ) , $certificate_completion );
+			$certificate_completion = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course['post_title'], $date, get_bloginfo( 'name' ) ) , $certificate_completion );
 
 		} // End If Statement
 
@@ -494,7 +502,7 @@ class WooThemes_Sensei_Certificate_Templates {
 		if ( isset( $this->certificate_template_fields['certificate_place']['text'] ) && '' != $this->certificate_template_fields['certificate_place']['text'] ) {
 
 			$certificate_place = $this->certificate_template_fields['certificate_place']['text'];
-			$certificate_place = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course['post_title'], date( 'jS F Y', strtotime( $course_end_date ) ), get_bloginfo( 'name' ) ) , $certificate_place );
+			$certificate_place = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course['post_title'], $date, get_bloginfo( 'name' ) ) , $certificate_place );
 
 		} // End If Statement
 

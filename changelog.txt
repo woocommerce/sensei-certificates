@@ -1,5 +1,8 @@
 *** Sensei Certificates Changelog ***
 
+2014.04.28 - version 1.0.5
+ * Fix - Localizes completion date string to use correct language for month names.
+
 2014.04.28 - version 1.0.4
  * Update - Adding support for user-defined custom fonts
  * Fix - Switching to tFPDF library for PDF generation to handle multibyte character sets (Greek, Arabic, etc.)
