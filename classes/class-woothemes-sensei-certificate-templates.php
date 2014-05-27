@@ -461,9 +461,11 @@ class WooThemes_Sensei_Certificate_Templates {
 		setlocale(LC_TIME, get_locale() );
 
 		if( false !== strpos( get_locale(), 'en' ) ) {
-			$date = date( 'jS F Y', strtotime( $course_end_date ) );
+			$date_format = apply_filters( 'sensei_certificate_date_format', 'jS F Y' );
+			$date = date( $date_format, strtotime( $course_end_date ) );
 		} else {
-			$date = strftime ( '%e %B %Y', strtotime( $course_end_date ) );
+			$date_format = apply_filters( 'sensei_certificate_date_format', '%Y %B %e' );
+			$date = strftime ( $date_format, strtotime( $course_end_date ) );
 		}
 		
 		$certificate_heading = __( 'Certificate of Completion', 'sensei-certificates' ); // Certificate of Completion
