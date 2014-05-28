@@ -2,6 +2,7 @@
 
 2014.04.28 - version 1.0.5
  * Fix - Localizes completion date string to use correct language for month names.
+ * Fix - Fixes PHP warning when a certificate template has no styles selected.
 
 2014.04.28 - version 1.0.4
  * Update - Adding support for user-defined custom fonts
