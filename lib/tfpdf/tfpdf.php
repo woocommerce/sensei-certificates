@@ -591,6 +591,9 @@ function SetFont($family, $style='', $size=0)
 		$family = $this->FontFamily;
 	else
 		$family = strtolower($family);
+	if( is_array($style) && empty($style) ) {
+		$style = '';
+	}
 	$style = strtoupper($style);
 	if(strpos($style,'U')!==false)
 	{
