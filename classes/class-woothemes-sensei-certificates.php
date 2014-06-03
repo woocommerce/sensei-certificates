@@ -66,6 +66,8 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function __construct( $file ) {
 
+		global $woothemes_sensei;
+
 		// Defaults
 		$this->plugin_url = trailingslashit( plugins_url( '', $file ) );
 		$this->plugin_path = plugin_dir_path( $file );
@@ -83,7 +85,12 @@ class WooThemes_Sensei_Certificates {
 		 * FRONTEND
 		 */
 		add_filter( 'sensei_user_course_status_passed', array( $this, 'certificate_link' ), 10, 1 );
-		add_filter( 'sensei_view_results_text', array( $this, 'certificate_link' ), 10, 1 );
+
+		// Remove in future version
+		if( version_compare( $woothemes_sensei->version, '1.6', '<' ) ) {
+		    add_filter( 'sensei_view_results_text', array( $this, 'certificate_link' ), 10, 1 );
+		}
+		add_filter( 'sensei_results_links', array( $this, 'certificate_link' ), 10, 1 );
 		add_action( 'sensei_additional_styles', array( $this, 'enqueue_styles' ) );
 		add_action( 'sensei_user_course_reset', array( $this, 'reset_course_certificate' ), 10, 2 );
 
