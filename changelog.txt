@@ -1,5 +1,10 @@
 *** Sensei Certificates Changelog ***
 
+2014.06.23 - version 1.0.5
+ * Fix - Localizes completion date string to use correct language for month names.
+ * Fix - Fixes PHP warning when a certificate template has no styles selected.
+ * Fix - Ensures certificate link displays even if the course has no quizzes (requires Sensei v1.6)
+
 2014.04.28 - version 1.0.4
  * Update - Adding support for user-defined custom fonts
  * Fix - Switching to tFPDF library for PDF generation to handle multibyte character sets (Greek, Arabic, etc.)
