@@ -1,5 +1,9 @@
 *** Sensei Certificates Changelog ***
 
+2014.09.16 - version 1.0.6
+ * Fix - Ensures sensei_certificate_date_format filter applies to all certificates, not just previews.
+ * Fix - Fixed coding standards warnings.
+
 2014.06.23 - version 1.0.5
  * Fix - Localizes completion date string to use correct language for month names.
  * Fix - Fixes PHP warning when a certificate template has no styles selected.
