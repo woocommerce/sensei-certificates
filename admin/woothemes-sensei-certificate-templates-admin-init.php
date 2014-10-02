@@ -51,7 +51,6 @@ add_filter( 'post_updated_messages', 'sensei_certificate_template_item_updated_m
  * @since 1.0.0
  */
 function sensei_certificate_template_admin_menu_highlight() {
-
 	global $menu, $submenu, $parent_file, $submenu_file, $self, $post_type, $taxonomy;
 
 	if ( isset( $post_type ) && 'certificate_template' == $post_type ) {
@@ -227,7 +226,7 @@ function sensei_certificate_template_admin_enqueue_scripts() {
 
 	if ( in_array( $screen->id, array( 'course' ) ) ) {
 
-		wp_enqueue_script( 'sensei_course_certificate_templates_admin', $woothemes_sensei_certificates->plugin_url . 'assets/js/course.js', array( 'jquery', 'woosensei-lesson-metadata', 'woosensei-lesson-chosen' ) );
+		wp_enqueue_script( 'sensei_course_certificate_templates_admin', $woothemes_sensei_certificates->plugin_url . 'assets/js/course.js', array( 'jquery' ) );
 
 	} // End If Statement
 
