@@ -2,6 +2,7 @@
 
 2014.09.23 - version 1.0.7
  * Fix - Visit plugin site link in admin dashboard 404.
+ * Tweak - If first and last name are added, they will be displayed on the certificate instead of the display name.
 
 2014.09.16 - version 1.0.6
  * Fix - Ensures sensei_certificate_date_format filter applies to all certificates, not just previews.
