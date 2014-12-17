@@ -429,7 +429,13 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		// Get Student Data
 		get_currentuserinfo();
+		$fname = $current_user->first_name;
+		$lname = $current_user->last_name;
 		$student_name = $current_user->display_name;
+
+		if ( '' != $fname && '' != $lname ) {
+			$student_name = $fname . ' ' . $lname;
+		}
 
 		// Get Course Data
 		$course = array();
