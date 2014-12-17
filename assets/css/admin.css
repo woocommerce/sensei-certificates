@@ -73,7 +73,7 @@
 .certificate_templates_options_panel .short {
 	width: 20%;
 }
-.certificate_templates_options_panel .medium {
+.certificate_templates_options_panel .form-field input.medium, .certificate_templates_options_panel .form-field textarea.medium {
 	width: 40%;
 }
 .certificate_templates_options_panel .threequarter {
