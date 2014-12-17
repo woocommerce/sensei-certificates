@@ -116,7 +116,7 @@ class WooThemes_Sensei_PDF_Certificate {
 		} // End If Statement
 
 		$image_attr = getimagesize( $image );
-		if ( $image_attr[0] > $image[1] ) {
+		if ( $image_attr[0] > $image_attr[1] ) {
 			$orientation = 'L';
 		} else {
 			$orientation = 'P';
