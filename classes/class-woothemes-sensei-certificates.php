@@ -92,6 +92,7 @@ class WooThemes_Sensei_Certificates {
 		}
 		add_filter( 'sensei_results_links', array( $this, 'certificate_link' ), 10, 1 );
 		add_action( 'sensei_additional_styles', array( $this, 'enqueue_styles' ) );
+		add_action( 'sensei_user_lesson_reset', array( $this, 'reset_lesson_course_certificate' ), 10, 2 );
 		add_action( 'sensei_user_course_reset', array( $this, 'reset_course_certificate' ), 10, 2 );
 
 		// Create certificate endpoint and handle generation of pdf certificate
@@ -107,8 +108,8 @@ class WooThemes_Sensei_Certificates {
 		 */
 		if ( is_admin() ) {
 			// Add Certificates Menu
-			add_action( 'sensei_analysis_course_user_columns', array( $this, 'create_columns' ), 10, 1 );
-			add_action( 'sensei_analysis_course_user_column_data', array( $this, 'populate_columns' ), 10, 3 );
+			add_action( 'sensei_analysis_course_columns', array( $this, 'create_columns' ), 10, 2 );
+			add_action( 'sensei_analysis_course_column_data', array( $this, 'populate_columns' ), 10, 3 );
 			add_action( 'admin_footer', array( $this, 'output_inline_js' ), 25 );
 			add_filter( 'sensei_scripts_allowed_post_types', array( $this, 'include_sensei_scripts' ), 10, 1 );
 
@@ -845,9 +846,11 @@ class WooThemes_Sensei_Certificates {
 	 * @param  array $columns existing columns
 	 * @return array $columns existing and new columns
 	 */
-	public function create_columns( $columns ) {
+	public function create_columns( $columns, $analysis ) {
 
-		$columns['certificates_link'] = __( 'Certificate', 'sensei-certificates' );
+		if ( 'user' == $analysis->view ) {
+			$columns['certificates_link'] = __( 'Certificate', 'sensei-certificates' );
+		}
 
 		return $columns;
 
@@ -864,19 +867,20 @@ class WooThemes_Sensei_Certificates {
 	 * @param  int $user_id  course learner user id
 	 * @return array $content modified output
 	 */
-	public function populate_columns( $content, $course_id, $user_id ) {
+	public function populate_columns( $content, $item, $analysis ) {
 
-		$certificate_url = $this->get_certificate_url( $course_id, $user_id );
-		$output = '';
+		if ( 'user' == $analysis->view ) {
+			$certificate_url = $this->get_certificate_url( $analysis->course_id, $item->user_id );
+			$output = '';
 
-		if ( '' != $certificate_url ) {
+			if ( '' != $certificate_url ) {
 
-			$output = '<a href="' . $certificate_url . '" class="sensei-certificate-link" title="' . esc_attr( __( 'View Certificate', 'sensei-certificates' ) ) . '">'. __( 'View Certificate', 'sensei-certificates' ) . '</a>';
+				$output = '<a href="' . $certificate_url . '" class="sensei-certificate-link" title="' . esc_attr( __( 'View Certificate', 'sensei-certificates' ) ) . '">'. __( 'View Certificate', 'sensei-certificates' ) . '</a>';
 
-		} // End If Statement
+			} // End If Statement
 
-		$content['certificates_link'] = $output;
-
+			$content['certificates_link'] = $output;
+		}
 		return $content;
 
 	} // End populate_columns()
@@ -944,6 +948,25 @@ class WooThemes_Sensei_Certificates {
 
 	} // End include_sensei_scripts()
 
+
+	/**
+	 * reset_course_certificate deletes existing course certificate when the user resets a lesson
+	 *
+	 * @access public
+	 * @since  1.0.7
+	 * @param  int $user_id   User ID
+	 * @param  int $lesson_id Lesson Post ID
+	 * @return void
+	 */
+	public function reset_lesson_course_certificate( $user_id = 0, $lesson_id = 0 ) {
+
+		if ( 0 < $user_id && 0 < $lesson_id ) {
+			$course_id = get_post_meta( $lesson_id, '_lesson_course' ,true );
+			if ( $course_id ) {
+				return $this->reset_course_certificate( $user_id, $course_id );
+			}
+		}
+	}
 
 	/**
 	 * reset_course_certificate deletes existing course certificate when the user resets the course

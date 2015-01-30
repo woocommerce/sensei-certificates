@@ -2,11 +2,11 @@
 /**
  * Plugin Name: Sensei Certificates
  * Plugin URI: http://www.woothemes.com/products/sensei-certificates/
- * Description: Sensei extension that allows students to download PDF certificates after they complete courses
- * Version: 1.0.7
+ * Description: Reward your students by providing them with printable PDF certificates upon course completion.
+ * Version: 1.0.8
  * Author: WooThemes
  * Author URI: http://www.woothemes.com
- * License: GPLv3
+ * License: GPLv2+
  */
 
 /**
