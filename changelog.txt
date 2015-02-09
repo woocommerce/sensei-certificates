@@ -1,5 +1,8 @@
 *** Sensei Certificates Changelog ***
 
+2015.02.10 - version 1.0.9
+ * Fix - Fixing certificate generation
+
 2015.02.01 - version 1.0.8
  * Tweak - Updating code for Sensei 1.7 compatibility
 

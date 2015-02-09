@@ -228,7 +228,7 @@ class WooThemes_Sensei_Certificate_Templates {
 		$course_id = get_post_meta( $post_ID, $key = 'course_id', true );
 		$user = get_userdata( $user_id );
 		$course = get_post( $course_id );
-		$course_end_date = WooThemes_Sensei_Utils::sensei_get_activity_value( array( 'post_id' => intval( $course_id ), 'user_id' => intval( $user_id ), 'type' => 'sensei_course_end', 'field' => 'comment_date' ) );
+		$course_end_date = WooThemes_Sensei_Utils::sensei_get_activity_value( array( 'post_id' => $course_id, 'user_id' => $user_id, 'type' => 'sensei_course_status', 'field' => 'comment_date' ) );
 		$certificate_hash = esc_html( substr( md5( $course_id . $user_id ), -8 ) );
 
 		switch ( $column_name ) {

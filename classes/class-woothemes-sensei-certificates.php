@@ -118,7 +118,7 @@ class WooThemes_Sensei_Certificates {
 		}
 
 		// Generate certificate hash when course is completed.
-		add_action( 'sensei_log_activity_after', array( $this, 'generate_certificate_number' ), 10, 2 );
+		add_action( 'sensei_user_course_end', array( $this, 'generate_certificate_number' ), 10, 2 );
 		// Background Image to display on certificate
 		add_action( 'sensei_certificates_set_background_image', array( $this, 'certificate_background' ), 10, 1 );
 		// Text to display on certificate
@@ -293,11 +293,11 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function post_type_custom_column_content( $column_name, $post_ID ) {
 
-		$user_id = get_post_meta( $post_ID, $key = 'learner_id', true );
-		$course_id = get_post_meta( $post_ID, $key = 'course_id', true );
+		$user_id = get_post_meta( $post_ID, 'learner_id', true );
+		$course_id = get_post_meta( $post_ID, 'course_id', true );
 		$user = get_userdata( $user_id );
 		$course = get_post( $course_id );
-		$course_end_date = WooThemes_Sensei_Utils::sensei_get_activity_value( array( 'post_id' => intval( $course_id ), 'user_id' => intval( $user_id ), 'type' => 'sensei_course_end', 'field' => 'comment_date' ) );
+		$course_end_date = WooThemes_Sensei_Utils::sensei_get_activity_value( array( 'post_id' => $course_id, 'user_id' => $user_id, 'type' => 'sensei_course_status', 'field' => 'comment_date' ) );
 		$certificate_hash = esc_html( substr( md5( $course_id . $user_id ), -8 ) );
 
 		switch ( $column_name ) {
@@ -327,55 +327,62 @@ class WooThemes_Sensei_Certificates {
 	 * @param  array $data data to post
 	 * @return void
 	 */
-	public function generate_certificate_number( $args, $data ) {
+	public function generate_certificate_number( $user_id = 0, $course_id = 0 ) {
 
-		if ( isset( $args['type'] ) && $args['type'] == 'sensei_course_end' ) {
-			$cert_args = array(
-				'post_id' => $args['post_id'],
-				'username' => $args['username'],
-				'user_email' => $args['user_email'],
-				'user_url' => $args['user_url'],
-				'data' => substr( md5( $args['post_id'] . $args['user_id'] ), -8 ), // Use last 8 chars of hash only
-				'type' => 'sensei_certificate', /* FIELD SIZE 20 */
-				'parent' => 0,
-				'user_id' => $args['user_id'],
-				'action' => 'update'
-			);
+		if( ! $user_id || ! $course_id ) {
+			return;
+		}
+
+		$cert_args = array(
+			'post_author' => intval( $user_id ),
+			'post_title' => esc_html( substr( md5( $course_id . $user_id ), -8 ) ),
+			'post_name' => esc_html( substr( md5( $course_id . $user_id ), -8 ) ),
+			'post_type' => 'certificate',
+			'post_status'   => 'publish'
+		);
+		$post_id = wp_insert_post( $cert_args, $wp_error = false );
+
+		if ( ! is_wp_error( $post_id ) ) {
+
+			add_post_meta( $post_id, 'course_id', intval( $course_id ) );
+			add_post_meta( $post_id, 'learner_id', intval( $user_id ) );
+			add_post_meta( $post_id, 'certificate_hash', esc_html( substr( md5( $course_id . $user_id ), -8 ) ) );
 
 			$time = current_time('mysql');
+
 			$data = array(
-				'comment_post_ID' => intval( $args['post_id'] ),
-				'comment_author' => sanitize_user( $args['username'] ),
-				'comment_author_email' => sanitize_email( $args['user_email'] ),
-				'comment_author_url' => esc_url( $args['user_url'] ),
-				'comment_content' => esc_html( substr( md5( $args['post_id'] . $args['user_id'] ), -8 ) ),
+				'comment_post_ID' => intval( $post_id ),
+				'comment_content' => esc_html( substr( md5( $course_id . $user_id ), -8 ) ),
 				'comment_type' => 'sensei_certificate',
 				'comment_parent' => 0,
-				'user_id' => intval( $args['user_id'] ),
+				'user_id' => intval( $user_id ),
 				'comment_date' => $time,
-				'comment_approved' => 1,
+				'comment_approved' => 'log',
 			);
-			//$activity_logged = WooThemes_Sensei_Utils::sensei_log_activity( $cert_args );
+			$activity_logged = WooThemes_Sensei_Utils::sensei_log_activity( $cert_args );
 
-			// custom post type
-			$cert_args = array(
-				'post_author' => intval( $args['user_id'] ),
-				'post_title' => esc_html( substr( md5( $args['post_id'] . $args['user_id'] ), -8 ) ),
-				'post_name' => esc_html( substr( md5( $args['post_id'] . $args['user_id'] ), -8 ) ),
-				'post_type' => 'certificate',
-				'post_status'   => 'publish'
-			);
-			$post_id = wp_insert_post( $cert_args, $wp_error = false );
+		}
 
-			if ( ! is_wp_error( $post_id ) ) {
+		// if ( isset( $args['type'] ) && $args['type'] == 'sensei_course_end' ) {
+		// 	$cert_args = array(
+		// 		'post_id' => $args['post_id'],
+		// 		'username' => $args['username'],
+		// 		'user_email' => $args['user_email'],
+		// 		'user_url' => $args['user_url'],
+		// 		'data' => substr( md5( $args['post_id'] . $args['user_id'] ), -8 ), // Use last 8 chars of hash only
+		// 		'type' => 'sensei_certificate', /* FIELD SIZE 20 */
+		// 		'parent' => 0,
+		// 		'user_id' => $args['user_id'],
+		// 		'action' => 'update'
+		// 	);
 
-				add_post_meta( $post_id, 'course_id', intval( $args['post_id'] ) );
-				add_post_meta( $post_id, 'learner_id', intval( $args['user_id'] ) );
-				add_post_meta( $post_id, 'certificate_hash', esc_html( substr( md5( $args['post_id'] . $args['user_id'] ), -8 ) ) );
+			
+			
 
-			} // End If Statement
+		// 	// custom post type
+		// 	 // End If Statement
 
-		} // End If Statement
+		// } // End If Statement
 
 	} // End generate_certificate_number()
 
@@ -498,7 +505,8 @@ class WooThemes_Sensei_Certificates {
 			$course_id = get_post_meta( $certificate_id, 'course_id', true );
 			$course = $woothemes_sensei->post_types->course->course_query( -1, 'usercourses', $course_id );
 			$course = $course[0];
-			$course_end_date = $course_end_date = WooThemes_Sensei_Utils::sensei_get_activity_value( array( 'post_id' => $course_id, 'user_id' => $user_id, 'type' => 'sensei_course_end', 'field' => 'comment_date' ) );
+			$course_end = WooThemes_Sensei_Utils::sensei_check_for_activity( array( 'post_id' => intval( $course_id ), 'user_id' => intval( $user_id ), 'type' => 'sensei_course_status' ), true );
+			$course_end_date = $course_end->comment_date;
 
 			// Get the certificate template
 			$certificate_template_id = get_post_meta( $course_id, '_course_certificate_template', true );
