@@ -137,7 +137,7 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function admin_menu_order( $menu_order ) {
 		$new_order = array();
-		$item_before = 'edit.php?post_type=question';
+		$item_before = 'edit.php?post_type=lesson';
 		$item_to_move = 'edit.php?post_type=certificate';
 
 		if ( isset( $menu_order[$item_to_move] ) ) {
