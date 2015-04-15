@@ -82,8 +82,6 @@ class WooThemes_Sensei_Certificate_Templates {
 
 			// Admin section
 			include( $this->plugin_path . 'admin/woothemes-sensei-certificate-templates-admin-init.php' );
-			// Add Menu
-			add_action('admin_menu', array( $this, 'certificate_templates_admin_menu_items' ), 10);
 			// Custom Write Panel Columns
 			add_filter( 'manage_edit-course_columns', array( $this, 'add_column_headings' ), 11, 1 );
 			add_action( 'manage_posts_custom_column', array( $this, 'add_column_data' ), 11, 2 );
@@ -134,24 +132,6 @@ class WooThemes_Sensei_Certificate_Templates {
 
 
 	/**
-	 * certificate_templates_admin_menu_items function.
-	 *
-	 * @access public
-	 * @since  1.0.0
-	 * @return void
-	 */
-	public function certificate_templates_admin_menu_items() {
-
-	    global $menu;
-
-	    if ( current_user_can( 'manage_options' ) ) {
-	    	$certificate_templates = add_submenu_page('sensei', __('Certificate Templates', 'sensei-certificates'),  __('Certificate Templates', 'sensei-certificates') , 'manage_options', 'edit.php?post_type=certificate_template' );
-	    } // End If Statement
-
-	} // End sensei_admin_menu_items()
-
-
-	/**
 	 * Setup the certificate post type, it's admin menu item and the appropriate labels and permissions.
 	 *
 	 * @access public
@@ -181,7 +161,7 @@ class WooThemes_Sensei_Certificate_Templates {
 		    'public' => true,
 		    'publicly_queryable' => true,
 		    'show_ui' => true,
-		    'show_in_menu' => 'admin.php?page=sensei',
+		    'show_in_menu' => 'edit.php?post_type=certificate',
 		    'query_var' => true,
 		    'rewrite' => array( 'slug' => esc_attr( apply_filters( 'sensei_certificate_templates_slug', 'certificate-template' ) ) , 'with_front' => true, 'feeds' => true, 'pages' => true ),
 		    'map_meta_cap' => true,
