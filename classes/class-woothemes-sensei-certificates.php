@@ -246,13 +246,13 @@ class WooThemes_Sensei_Certificates {
 		    'public' => true,
 		    'publicly_queryable' => true,
 		    'show_ui' => true,
-		    'show_in_menu' => 'edit.php?post_type=lesson',
 		    'query_var' => true,
 		    'rewrite' => array( 'slug' => esc_attr( apply_filters( 'sensei_certificates_slug', 'certificate' ) ) , 'with_front' => true, 'feeds' => true, 'pages' => true ),
 		    'map_meta_cap' => true,
 		    'has_archive' => false,
 		    'hierarchical' => false,
-		    'menu_icon' => esc_url( $woothemes_sensei->plugin_url . 'assets/images/certificate.png' ),
+		    'menu_icon' => 'dashicons-awards',
+		    'menu-position' => 21,
 		    'supports' => array( 'title', 'custom-fields' )
 		);
 
