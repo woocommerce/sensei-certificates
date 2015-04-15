@@ -115,6 +115,9 @@ class WooThemes_Sensei_Certificates {
 
 			// We don't need a WordPress SEO meta box for certificates and certificate templates. Hide it.
 			add_filter( 'option_wpseo_titles', array( $this, 'force_hide_wpseo_meta_box' ) );
+
+			// Reorder the admin menus to display Certificates below Lessons.
+			add_action( 'menu_order', array( $this, 'admin_menu_order' ) );
 		}
 
 		// Generate certificate hash when course is completed.
@@ -125,6 +128,35 @@ class WooThemes_Sensei_Certificates {
 		add_action( 'sensei_certificates_before_pdf_output', array( $this, 'certificate_text' ), 10, 2 );
 
 	} // End __construct()
+
+	/**
+	 * [admin_menu_order description]
+	 * @since  1.4.0
+	 * @param  array $menu_order Existing menu order
+	 * @return array 			 Modified menu order for Sensei
+	 */
+	public function admin_menu_order( $menu_order ) {
+		$new_order = array();
+		$item_before = 'edit.php?post_type=question';
+		$item_to_move = 'edit.php?post_type=certificate';
+
+		if ( isset( $menu_order[$item_to_move] ) ) {
+			unset( $menu_order[$item_to_move] );
+		}
+
+		// Loop through menu order and do some rearranging
+		foreach ( $menu_order as $k => $v ) {
+			if ( $v == $item_before ) {
+				$new_order[] = $v;
+				$new_order[] = $item_to_move;
+			} else {
+				$new_order[] = $v;
+			}
+		}
+
+		// Return order
+		return $new_order;
+	}
 
 	/**
 	 * Force the WordPress SEO meta box to be turned off for the "certificate" and "certificate_template" post types.
