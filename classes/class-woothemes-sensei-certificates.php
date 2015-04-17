@@ -1039,7 +1039,9 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function certificates_user_settings_form( $user ) {
 
-		if ( is_user_logged_in() ) {
+		// Restrict to current logged in user only
+		$current_user_id = get_current_user_id();
+		if ( $user->ID == $current_user_id && is_user_logged_in() ) {
 
 			$view_setting = get_user_option( 'sensei_certificates_view_by_public', $user->ID );
 			?>
