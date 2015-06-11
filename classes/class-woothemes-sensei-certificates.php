@@ -323,8 +323,8 @@ class WooThemes_Sensei_Certificates {
 	 *
 	 * @access public
 	 * @since  1.0.0
-	 * @param  array $args arguments for queries
-	 * @param  array $data data to post
+	 * @param  int $user_id arguments for queries
+	 * @param  int $course_id data to post
 	 * @return void
 	 */
 	public function generate_certificate_number( $user_id = 0, $course_id = 0 ) {
@@ -344,46 +344,19 @@ class WooThemes_Sensei_Certificates {
 
 		if ( ! is_wp_error( $post_id ) ) {
 
-			add_post_meta( $post_id, 'course_id', intval( $course_id ) );
-			add_post_meta( $post_id, 'learner_id', intval( $user_id ) );
-			add_post_meta( $post_id, 'certificate_hash', esc_html( substr( md5( $course_id . $user_id ), -8 ) ) );
+            add_post_meta($post_id, 'course_id', intval($course_id));
+            add_post_meta($post_id, 'learner_id', intval($user_id));
+            add_post_meta($post_id, 'certificate_hash', esc_html(substr(md5($course_id . $user_id), -8)));
 
-			$time = current_time('mysql');
+            $data = array(
+                'post_id' => intval($post_id),
+                'data' => esc_html(substr(md5($course_id . $user_id), -8)),
+                'type' => 'sensei_certificate',
+                'user_id' => intval($user_id)
+            );
 
-			$data = array(
-				'comment_post_ID' => intval( $post_id ),
-				'comment_content' => esc_html( substr( md5( $course_id . $user_id ), -8 ) ),
-				'comment_type' => 'sensei_certificate',
-				'comment_parent' => 0,
-				'user_id' => intval( $user_id ),
-				'comment_date' => $time,
-				'comment_approved' => 'log',
-			);
-			$activity_logged = WooThemes_Sensei_Utils::sensei_log_activity( $cert_args );
-
-		}
-
-		// if ( isset( $args['type'] ) && $args['type'] == 'sensei_course_end' ) {
-		// 	$cert_args = array(
-		// 		'post_id' => $args['post_id'],
-		// 		'username' => $args['username'],
-		// 		'user_email' => $args['user_email'],
-		// 		'user_url' => $args['user_url'],
-		// 		'data' => substr( md5( $args['post_id'] . $args['user_id'] ), -8 ), // Use last 8 chars of hash only
-		// 		'type' => 'sensei_certificate', /* FIELD SIZE 20 */
-		// 		'parent' => 0,
-		// 		'user_id' => $args['user_id'],
-		// 		'action' => 'update'
-		// 	);
-
-			
-			
-
-		// 	// custom post type
-		// 	 // End If Statement
-
-		// } // End If Statement
-
+            WooThemes_Sensei_Utils::sensei_log_activity( $data );
+        }
 	} // End generate_certificate_number()
 
 
