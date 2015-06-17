@@ -117,6 +117,7 @@ class WooThemes_Sensei_Certificates {
 			add_filter( 'option_wpseo_titles', array( $this, 'force_hide_wpseo_meta_box' ) );
 
 			// Reorder the admin menus to display Certificates below Lessons.
+			add_filter( 'custom_menu_order' , '__return_true');
 			add_action( 'menu_order', array( $this, 'admin_menu_order' ) );
 		}
 
