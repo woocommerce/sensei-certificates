@@ -1,5 +1,9 @@
 *** Sensei Certificates Changelog ***
 
+2015.06.18 - version 1.0.11
+ * Fix - Ensure that the certificate view setting can only be seen by the current logged in user
+ * Tweak - Moved the certificates menu items to their own top level menu
+
 2015.06.11 - version 1.0.10
  * Fix - Fix the certificate error that occurred when doing manual grading
 

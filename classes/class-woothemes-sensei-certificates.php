@@ -115,6 +115,10 @@ class WooThemes_Sensei_Certificates {
 
 			// We don't need a WordPress SEO meta box for certificates and certificate templates. Hide it.
 			add_filter( 'option_wpseo_titles', array( $this, 'force_hide_wpseo_meta_box' ) );
+
+			// Reorder the admin menus to display Certificates below Lessons.
+			add_filter( 'custom_menu_order' , '__return_true');
+			add_action( 'menu_order', array( $this, 'admin_menu_order' ) );
 		}
 
 		// Generate certificate hash when course is completed.
@@ -125,6 +129,35 @@ class WooThemes_Sensei_Certificates {
 		add_action( 'sensei_certificates_before_pdf_output', array( $this, 'certificate_text' ), 10, 2 );
 
 	} // End __construct()
+
+	/**
+	 * [admin_menu_order description]
+	 * @since  1.4.0
+	 * @param  array $menu_order Existing menu order
+	 * @return array 			 Modified menu order for Sensei
+	 */
+	public function admin_menu_order( $menu_order ) {
+		$new_order = array();
+		$item_before = 'edit.php?post_type=lesson';
+		$item_to_move = 'edit.php?post_type=certificate';
+
+		if ( isset( $menu_order[$item_to_move] ) ) {
+			unset( $menu_order[$item_to_move] );
+		}
+
+		// Loop through menu order and do some rearranging
+		foreach ( $menu_order as $k => $v ) {
+			if ( $v == $item_before ) {
+				$new_order[] = $v;
+				$new_order[] = $item_to_move;
+			} else {
+				$new_order[] = $v;
+			}
+		}
+
+		// Return order
+		return $new_order;
+	}
 
 	/**
 	 * Force the WordPress SEO meta box to be turned off for the "certificate" and "certificate_template" post types.
@@ -246,13 +279,13 @@ class WooThemes_Sensei_Certificates {
 		    'public' => true,
 		    'publicly_queryable' => true,
 		    'show_ui' => true,
-		    'show_in_menu' => 'edit.php?post_type=lesson',
 		    'query_var' => true,
 		    'rewrite' => array( 'slug' => esc_attr( apply_filters( 'sensei_certificates_slug', 'certificate' ) ) , 'with_front' => true, 'feeds' => true, 'pages' => true ),
 		    'map_meta_cap' => true,
 		    'has_archive' => false,
 		    'hierarchical' => false,
-		    'menu_icon' => esc_url( $woothemes_sensei->plugin_url . 'assets/images/certificate.png' ),
+		    'menu_icon' => 'dashicons-awards',
+		    'menu-position' => 21,
 		    'supports' => array( 'title', 'custom-fields' )
 		);
 
@@ -1012,7 +1045,9 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function certificates_user_settings_form( $user ) {
 
-		if ( is_user_logged_in() ) {
+		// Restrict to current logged in user only
+		$current_user_id = get_current_user_id();
+		if ( $user->ID == $current_user_id && is_user_logged_in() ) {
 
 			$view_setting = get_user_option( 'sensei_certificates_view_by_public', $user->ID );
 			?>
