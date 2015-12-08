@@ -80,8 +80,6 @@ function init_sensei_certificates() {
  */
 function sensei_certificates_install() {
 
-	global $woothemes_sensei;
-
 	// Check if the installer has already been run
 	$sensei_certificates_user_data_installed = get_option( 'sensei_certificate_user_data_installer', false );
 	$sensei_certificate_templates_installed = get_option( 'sensei_certificate_templates_installer', false );
@@ -166,8 +164,6 @@ function sensei_certificates_updates_list( $updates ) {
  */
 function sensei_update_users_certificate_data( $n = 5, $offset = 0 ) {
 
-	global $woothemes_sensei;
-
 	$loop_ran = false;
 
 	// Calculate if this is the last page
@@ -199,7 +195,7 @@ function sensei_update_users_certificate_data( $n = 5, $offset = 0 ) {
 		$course_ids = WooThemes_Sensei_Utils::sensei_activity_ids( array( 'user_id' => $user_item->ID, 'type' => 'sensei_course_start' ) );
 		$posts_array = array();
 		if ( 0 < intval( count( $course_ids ) ) ) {
-			$posts_array = $woothemes_sensei->post_types->course->course_query( -1, 'usercourses', $course_ids );
+			$posts_array = Sensei()->course->course_query( -1, 'usercourses', $course_ids );
 		} // End If Statement
 
 		foreach ( $posts_array as $course_item ) {

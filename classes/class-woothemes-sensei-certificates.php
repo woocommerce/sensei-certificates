@@ -66,8 +66,6 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function __construct( $file ) {
 
-		global $woothemes_sensei;
-
 		// Defaults
 		$this->plugin_url = trailingslashit( plugins_url( '', $file ) );
 		$this->plugin_path = plugin_dir_path( $file );
@@ -87,7 +85,7 @@ class WooThemes_Sensei_Certificates {
 		add_filter( 'sensei_user_course_status_passed', array( $this, 'certificate_link' ), 10, 1 );
 
 		// Remove in future version
-		if( version_compare( $woothemes_sensei->version, '1.6', '<' ) ) {
+		if( version_compare( Sensei()->version, '1.6', '<' ) ) {
 		    add_filter( 'sensei_view_results_text', array( $this, 'certificate_link' ), 10, 1 );
 		}
 		add_filter( 'sensei_results_links', array( $this, 'certificate_link' ), 10, 1 );
@@ -258,8 +256,6 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function setup_certificates_post_type () {
 
-		global $woothemes_sensei;
-
 		$args = array(
 		    'labels' => array(
 			    'name' => sprintf( _x( '%s', 'post type general name', 'sensei-certificates' ), 'Certificates' ),
@@ -402,7 +398,7 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function can_view_certificate( $certificate_id = 0 ) {
 
-		global $woothemes_sensei, $post, $current_user;
+		global $post, $current_user;
 		get_currentuserinfo();
 
 		$response = false;
@@ -412,7 +408,7 @@ class WooThemes_Sensei_Certificates {
 		$learner_id = get_post_meta( intval( $certificate_id ), 'learner_id', true );
 
 		// Check if student can only view certificate
-		$grant_access = $woothemes_sensei->settings->settings['certificates_public_viewable'];
+		$grant_access = Sensei()->settings->settings['certificates_public_viewable'];
 		$grant_access_user = get_user_option( 'sensei_certificates_view_by_public', $learner_id );
 
         /**
@@ -445,7 +441,7 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function download_certificate() {
 
-		global $woothemes_sensei, $post;
+		global $post;
 
 		if ( ! is_singular() || 'certificate' != get_post_type() ) return;
 
@@ -478,8 +474,6 @@ class WooThemes_Sensei_Certificates {
 	 * @return void
 	 */
 	public function certificate_text( $pdf_certificate, $fpdf ) {
-
-		global $woothemes_sensei;
 
 		$show_border = apply_filters( 'woothemes_sensei_certificates_show_border', 0 );
 		$start_position = 200;
@@ -518,9 +512,9 @@ class WooThemes_Sensei_Certificates {
 
 			// Get Course Data
 			$course_id = get_post_meta( $certificate_id, 'course_id', true );
-			$course = $woothemes_sensei->post_types->course->course_query( -1, 'usercourses', $course_id );
+			$course = Sensei()->course->course_query( -1, 'usercourses', $course_id );
 			$course = $course[0];
-			$course_end = WooThemes_Sensei_Utils::sensei_check_for_activity( array( 'post_id' => intval( $course_id ), 'user_id' => intval( $user_id ), 'type' => 'sensei_course_status' ), true );
+			$course_end = Sensei_Utils::sensei_check_for_activity( array( 'post_id' => intval( $course_id ), 'user_id' => intval( $user_id ), 'type' => 'sensei_course_status' ), true );
 			$course_end_date = $course_end->comment_date;
 
 			// Get the certificate template
@@ -640,8 +634,6 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function certificate_background( $pdf_certificate ) {
 
-		global $woothemes_sensei;
-
 		$start_position = 200;
 
 		// Find certificate based on hash
@@ -742,7 +734,7 @@ class WooThemes_Sensei_Certificates {
 	 * @return string $message html
 	 */
 	public function certificate_link( $message ) {
-		global $current_user, $course, $woothemes_sensei, $wp_query, $post;
+		global $current_user, $course, $wp_query, $post;
 
 		if( isset( $course->ID ) ) {
 			$course_id = $course->ID;
@@ -754,9 +746,9 @@ class WooThemes_Sensei_Certificates {
 
 		if( ! $certificate_template_id ) return $message;
 
-		$my_account_page_id = intval( $woothemes_sensei->settings->settings[ 'my_course_page' ] );
-		$view_link_courses = $woothemes_sensei->settings->settings[ 'certificates_view_courses' ];
-		$view_link_profile = $woothemes_sensei->settings->settings[ 'certificates_view_profile' ];
+		$my_account_page_id = intval( Sensei()->settings->settings[ 'my_course_page' ] );
+		$view_link_courses = Sensei()->settings->settings[ 'certificates_view_courses' ];
+		$view_link_profile = Sensei()->settings->settings[ 'certificates_view_profile' ];
 		$is_viewable = false;
 
 		if ( ( is_page( $my_account_page_id ) || is_singular( 'course' ) || isset( $wp_query->query_vars['course_results'] ) ) && $view_link_courses ) {
@@ -1053,10 +1045,9 @@ class WooThemes_Sensei_Certificates {
 	 * @return html
 	 */
 	public function certificates_user_settings_form( $user ) {
-        global $woothemes_sensei;
 
         // Check if certificates can be made public on this site
-        $grant_access = $woothemes_sensei->settings->settings['certificates_public_viewable'];
+        $grant_access = Sensei()->settings->settings['certificates_public_viewable'];
 
         // Restrict to current logged in user only
 		$current_user_id = get_current_user_id();

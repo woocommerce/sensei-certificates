@@ -140,8 +140,6 @@ class WooThemes_Sensei_Certificate_Templates {
 	 */
 	public function setup_certificate_templates_post_type () {
 
-		global $woothemes_sensei;
-
 		$args = array(
 		    'labels' => array(
 			    'name' => sprintf( _x( '%s', 'post type general name', 'sensei-certificates' ), 'Certificate Templates' ),
@@ -167,7 +165,7 @@ class WooThemes_Sensei_Certificate_Templates {
 		    'map_meta_cap' => true,
 		    'has_archive' => false,
 		    'hierarchical' => false,
-		    'menu_icon' => esc_url( $woothemes_sensei->plugin_url . 'assets/images/certificate.png' ),
+		    'menu_icon' => esc_url( Sensei()->plugin_url . 'assets/images/certificate.png' ),
 		    'supports' => array( 'title' )
 		);
 
