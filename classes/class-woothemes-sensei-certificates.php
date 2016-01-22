@@ -238,7 +238,7 @@ class WooThemes_Sensei_Certificates {
 
 		$fields['certificates_public_viewable'] = array(
 			'name' 			=> __( 'Public Certificate', 'sensei-certificates' ),
-			'description' 	=> __( 'Allow the Learner to share their Certificate with the public.', 'sensei-certificates' ),
+			'description' 	=> __( 'Allow the Learner to share their Certificate with the public. (The learner will have to enable this in their profile by going to mysite.com/learner/{learner_username})', 'sensei-certificates' ),
 			'type' 			=> 'checkbox',
 			'default' 		=> true,
 			'section' 		=> 'certificate-settings'
@@ -415,8 +415,17 @@ class WooThemes_Sensei_Certificates {
 		$grant_access = $woothemes_sensei->settings->settings['certificates_public_viewable'];
 		$grant_access_user = get_user_option( 'sensei_certificates_view_by_public', $learner_id );
 
+        /**
+         * Filter to force all certificates to be public.
+         *
+         * @since 1.9.0
+         * @param bool $force_public_access default false
+         */
+
+        $force_public_access = apply_filters('sensei_certificates_force_public_certs', false);
+
 		// If we can view certificates, get out.
-		if ( true == (bool)$grant_access_user || ( false == (bool)$grant_access && true == (bool)$grant_access_user ) || current_user_can( 'manage_options' ) ) return true;
+		if ( true == (bool)$grant_access_user && true == (bool)$grant_access || $force_public_access || current_user_can( 'manage_options' ) ) return true;
 
 		if ( isset( $current_user->ID ) && ( intval( $current_user->ID ) === intval( $learner_id ) ) )  {
 			$response = true;
@@ -1044,10 +1053,14 @@ class WooThemes_Sensei_Certificates {
 	 * @return html
 	 */
 	public function certificates_user_settings_form( $user ) {
+        global $woothemes_sensei;
 
-		// Restrict to current logged in user only
+        // Check if certificates can be made public on this site
+        $grant_access = $woothemes_sensei->settings->settings['certificates_public_viewable'];
+
+        // Restrict to current logged in user only
 		$current_user_id = get_current_user_id();
-		if ( $user->ID == $current_user_id && is_user_logged_in() ) {
+		if ( $user->ID == $current_user_id && is_user_logged_in() && true == (bool)$grant_access) {
 
 			$view_setting = get_user_option( 'sensei_certificates_view_by_public', $user->ID );
 			?>
