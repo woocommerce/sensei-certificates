@@ -238,7 +238,7 @@ class WooThemes_Sensei_Certificates {
 
 		$fields['certificates_public_viewable'] = array(
 			'name' 			=> __( 'Public Certificate', 'sensei-certificates' ),
-			'description' 	=> __( 'Allow the Learner to share their Certificate with the public.', 'sensei-certificates' ),
+			'description' 	=> __( 'Allow the Learner to share their Certificate with the public. (The learner will have to enable this in their profile by going to mysite.com/learner/{learner_username})', 'sensei-certificates' ),
 			'type' 			=> 'checkbox',
 			'default' 		=> true,
 			'section' 		=> 'certificate-settings'
