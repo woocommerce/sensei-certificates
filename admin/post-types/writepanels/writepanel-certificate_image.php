@@ -46,15 +46,21 @@ function certificate_template_image_meta_box() {
 
 	$image_src = '';
 	$image_id  = '';
+    $image_id = '';
 
 	$image_ids = get_post_meta( $post->ID, '_image_ids', true );
 
-	if ( is_array( $image_ids ) && count( $image_ids ) > 0 ) {
-		$image_id = $image_ids[0];
-		$image_src = wp_get_attachment_url( $image_id );
-	} // End If Statement
+    if ( is_array( $image_ids ) && count( $image_ids ) > 0 ) {
 
-	$attachment = wp_get_attachment_metadata( $image_id );
+        if( is_numeric( $image_ids[0] ) ){
+
+            $image_src = wp_get_attachment_url( $image_id );
+            $attachment = wp_get_attachment_metadata( $image_id );
+            $image_id = $image_ids[0];
+
+        }
+
+    } // End If Statement
 
 	?>
 	<div id="certificate_image_wrapper" style="position:relative;">

@@ -88,7 +88,7 @@ class WooThemes_Sensei_Certificates {
 		if( version_compare( Sensei()->version, '1.6', '<' ) ) {
 		    add_filter( 'sensei_view_results_text', array( $this, 'certificate_link' ), 10, 1 );
 		}
-		add_filter( 'sensei_results_links', array( $this, 'certificate_link' ), 10, 1 );
+		add_filter( 'sensei_results_links', array( $this, 'certificate_link' ), 10, 2 );
 		add_action( 'sensei_additional_styles', array( $this, 'enqueue_styles' ) );
 		add_action( 'sensei_user_lesson_reset', array( $this, 'reset_lesson_course_certificate' ), 10, 2 );
 		add_action( 'sensei_user_course_reset', array( $this, 'reset_course_certificate' ), 10, 2 );
@@ -399,7 +399,6 @@ class WooThemes_Sensei_Certificates {
 	public function can_view_certificate( $certificate_id = 0 ) {
 
 		global $post, $current_user;
-		get_currentuserinfo();
 
 		$response = false;
 
@@ -731,16 +730,27 @@ class WooThemes_Sensei_Certificates {
 	 * @access public
 	 * @since  1.0.0
 	 * @param  string $message html
+     * @param integer $course_id
 	 * @return string $message html
 	 */
-	public function certificate_link( $message ) {
-		global $current_user, $course, $wp_query, $post;
+	public function certificate_link( $message, $course_id = 0 ) {
+		global $wp_query, $post;
 
-		if( isset( $course->ID ) ) {
-			$course_id = $course->ID;
-		} else {
-			$course_id = $post->ID;
-		}
+        if( empty(  $course_id  ) ){
+
+            global $course;
+
+            if( isset( $course->ID ) ) {
+
+                $course_id = $course->ID;
+
+            } else {
+
+                $course_id = $post->ID;
+
+            }
+
+        }
 
 		$certificate_template_id = get_post_meta( $course_id, '_course_certificate_template', true );
 
@@ -751,46 +761,46 @@ class WooThemes_Sensei_Certificates {
 		$view_link_profile = Sensei()->settings->settings[ 'certificates_view_profile' ];
 		$is_viewable = false;
 
-		if ( ( is_page( $my_account_page_id ) || is_singular( 'course' ) || isset( $wp_query->query_vars['course_results'] ) ) && $view_link_courses ) {
+		if ( (     'page' == get_post_type( $my_account_page_id )
+                || is_singular( 'course' )
+                || isset( $wp_query->query_vars['course_results'] ) ) && $view_link_courses
+                || isset( $wp_query->query_vars['learner_profile'] ) && $view_link_profile ) {
 
-			$is_viewable = true;
-
-		} elseif( isset( $wp_query->query_vars['learner_profile'] ) && $view_link_profile ) {
-
-			$is_viewable = true;
-
-		} // End If Statement
-
-		if ( $is_viewable ) {
-
-			// Get User Meta
-			get_currentuserinfo();
-
-			if ( is_singular( 'course' ) ) {
-
-				$certificate_url = $this->get_certificate_url( $post->ID, $current_user->ID );
-
-			} else {
-
-				$certificate_url = $this->get_certificate_url( $course->ID, $current_user->ID );
-
-			} // End If Statement
-
-			if ( '' != $certificate_url ) {
-
-				$classes = '';
-
-				if ( is_page( $my_account_page_id ) || isset( $wp_query->query_vars['learner_profile'] ) ) {
-
-					$classes = 'button ';
-
-				} // End If Statement
-
-				$message = $message . '<a href="' . $certificate_url . '" class="' . $classes . 'sensei-certificate-link" title="' . esc_attr( __( 'View Certificate', 'sensei-certificates' ) ) . '">'. __( 'View Certificate', 'sensei-certificates' ) . '</a>';
-
-			} // End If Statement
+            $is_viewable = true;
 
 		} // End If Statement
+
+		if ( ! $is_viewable ) {
+
+            return $message;
+
+        }
+
+        if ( is_singular( 'course' ) ) {
+
+            $certificate_url = $this->get_certificate_url( $post->ID, get_current_user_id() );
+
+        } else {
+
+            $certificate_url = $this->get_certificate_url( $course_id, get_current_user_id() );
+
+        } // End If Statement
+
+        if ( '' != $certificate_url ) {
+
+            $classes = '';
+
+            if ( 'page' == get_post_type( $my_account_page_id ) || isset( $wp_query->query_vars['learner_profile'] ) ) {
+
+                $classes = 'button ';
+
+            } // End If Statement
+
+            $message = $message . '<a href="' . $certificate_url . '" class="' . $classes . 'sensei-certificate-link" title="' . esc_attr( __( 'View Certificate', 'sensei-certificates' ) ) . '">'. __( 'View Certificate', 'sensei-certificates' ) . '</a>';
+
+        } // End If Statement
+
+
 
 		return $message;
 

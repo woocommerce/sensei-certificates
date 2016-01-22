@@ -203,7 +203,9 @@ function sensei_certificate_template_admin_enqueue_scripts() {
 			$image_ids = get_post_meta( $post->ID, '_image_ids', true );
 
 			if ( is_array( $image_ids ) && isset( $image_ids[0] ) && $image_ids[0] ) {
-				$attachment = wp_get_attachment_metadata( $image_ids[0] );
+                if( is_numeric(  $image_ids[0]  ) ) {
+                    $attachment = wp_get_attachment_metadata($image_ids[0]);
+                }
 			} // End If Statement
 
 			// pass parameters into the javascript file
