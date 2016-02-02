@@ -1,5 +1,11 @@
 *** Sensei Certificates Changelog ***
 
+2016.02.02 - version 1.0.12
+ * Fix - Ensures certificates can be viewed when set to public
+ * Fix - Fixed a notice on certificates where background image id was not found
+ * Fix - Fixed a display issue with the certificate template dropdown
+ * Tweak - Ensure compatibility with Sensei 1.9
+
 2015.06.18 - version 1.0.11
  * Fix - Ensure that the certificate view setting can only be seen by the current logged in user
  * Tweak - Moved the certificates menu items to their own top level menu
