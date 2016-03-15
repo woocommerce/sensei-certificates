@@ -406,7 +406,7 @@ class WooThemes_Sensei_Certificate_Templates {
 		$show_border = 0;
 
 		// Get Student Data
-		get_currentuserinfo();
+		wp_get_current_user();
 		$fname = $current_user->first_name;
 		$lname = $current_user->last_name;
 		$student_name = $current_user->display_name;
