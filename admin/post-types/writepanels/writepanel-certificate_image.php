@@ -46,7 +46,6 @@ function certificate_template_image_meta_box() {
 
 	$image_src = '';
 	$image_id  = '';
-    $image_id = '';
 
 	$image_ids = get_post_meta( $post->ID, '_image_ids', true );
 
