@@ -258,19 +258,19 @@ class WooThemes_Sensei_Certificates {
 
 		$args = array(
 		    'labels' => array(
-			    'name' => sprintf( _x( '%s', 'post type general name', 'sensei-certificates' ), 'Certificates' ),
-			    'singular_name' => sprintf( _x( '%s', 'post type singular name', 'sensei-certificates' ), 'Certificate' ),
-			    'add_new' => sprintf( _x( 'Add New %s', 'post type add_new', 'sensei-certificates' ), 'Certificate' ),
-			    'add_new_item' => sprintf( __( 'Add New %s', 'sensei-certificates' ), 'Certificate' ),
-			    'edit_item' => sprintf( __( 'Edit %s', 'sensei-certificates' ), 'Certificate' ),
-			    'new_item' => sprintf( __( 'New %s', 'sensei-certificates' ), 'Certificate' ),
-			    'all_items' => sprintf( __( '%s', 'sensei-certificates' ), 'Certificates' ),
-			    'view_item' => sprintf( __( 'View %s', 'sensei-certificates' ), 'Certificate' ),
-			    'search_items' => sprintf( __( 'Search %s', 'sensei-certificates' ), 'Certificates' ),
-			    'not_found' =>  sprintf( __( 'No %s found', 'sensei-certificates' ), strtolower( 'Certificates' ) ),
-			    'not_found_in_trash' => sprintf( __( 'No %s found in Trash', 'sensei-certificates' ), strtolower( 'Certificates' ) ),
+			    'name' => _x( 'Certificates', 'post type general name', 'sensei-certificates' ),
+			    'singular_name' => _x( 'Certificate', 'post type singular name', 'sensei-certificates' ),
+			    'add_new' => _x( 'Add New Certificate', 'post type add_new', 'sensei-certificates' ),
+			    'add_new_item' => __( 'Add New Certificate', 'sensei-certificates' ),
+			    'edit_item' => __( 'Edit Certificate', 'sensei-certificates' ),
+			    'new_item' => __( 'New Certificate', 'sensei-certificates' ),
+			    'all_items' => __( 'Certificates', 'sensei-certificates' ),
+			    'view_item' => __( 'View Certificate', 'sensei-certificates' ),
+			    'search_items' => __( 'Search Certificates', 'sensei-certificates' ),
+			    'not_found' =>  __( 'No certificates found', 'sensei-certificates' ),
+			    'not_found_in_trash' => __( 'No certificates found in Trash', 'sensei-certificates' ),
 			    'parent_item_colon' => '',
-			    'menu_name' => sprintf( __( '%s', 'sensei-certificates' ), 'Certificates' )
+			    'menu_name' => __( 'Certificates', 'sensei-certificates' )
 			),
 		    'public' => true,
 		    'publicly_queryable' => true,
