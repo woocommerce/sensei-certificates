@@ -39,26 +39,9 @@ include_once( 'post-types/certificate_templates.php' );
 /**
  * Actions and Filters
  */
-add_action( 'admin_head', 'sensei_certificate_template_admin_menu_highlight' );
 add_action( 'admin_init', 'sensei_certificate_template_admin_init' );
 add_action( 'admin_enqueue_scripts', 'sensei_certificate_template_admin_enqueue_scripts' );
 add_filter( 'post_updated_messages', 'sensei_certificate_template_item_updated_messages' );
-
-
-/**
- * Highlight the correct top level admin menu item for the certificate post type add screen
- *
- * @since 1.0.0
- */
-function sensei_certificate_template_admin_menu_highlight() {
-	global $menu, $submenu, $parent_file, $submenu_file, $self, $post_type, $taxonomy;
-
-	if ( isset( $post_type ) && 'certificate_template' == $post_type ) {
-		$submenu_file = 'edit.php?post_type=' . $post_type;
-		$parent_file  = 'sensei';
-	} // End If Statement
-
-} // End sensei_certificate_template_admin_menu_highlight()
 
 
 /**
