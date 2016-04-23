@@ -361,7 +361,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	 */
 	public function generate_pdf( $path = '' ) {
 
-		global $current_user, $post;
+		global $post;
 
 		// include the pdf library
 		$root_dir = dirname( __FILE__ ) . DIRECTORY_SEPARATOR;
@@ -405,21 +405,6 @@ class WooThemes_Sensei_Certificate_Templates {
 		//  display that prior to the translation
 		$show_border = 0;
 
-		// Get Student Data
-		wp_get_current_user();
-		$fname = $current_user->first_name;
-		$lname = $current_user->last_name;
-		$student_name = $current_user->display_name;
-
-		if ( '' != $fname && '' != $lname ) {
-			$student_name = $fname . ' ' . $lname;
-		}
-
-		// Get Course Data
-		$course = array();
-		$course['post_title'] = __( 'Course Title', 'sensei-certificates' );
-		$course_end_date = date('Y-m-d');
-
 		// Get the certificate template
 		$certificate_template_custom_fields = get_post_custom( $post->ID );
 
@@ -441,17 +426,6 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		} // End For Loop
 
-		// Set default fonts
-		setlocale(LC_TIME, get_locale() );
-
-		if( false !== strpos( get_locale(), 'en' ) ) {
-			$date_format = apply_filters( 'sensei_certificate_date_format', 'jS F Y' );
-			$date = date( $date_format, strtotime( $course_end_date ) );
-		} else {
-			$date_format = apply_filters( 'sensei_certificate_date_format', '%Y %B %e' );
-			$date = strftime ( $date_format, strtotime( $course_end_date ) );
-		}
-
 		// Data fields
 		$data_fields = sensei_get_certificate_data_fields();
 		foreach ( $data_fields as $field_key => $field_info ) {
@@ -465,7 +439,7 @@ class WooThemes_Sensei_Certificate_Templates {
 			} // End If Statement
 
 			// Replace the template tags
-			$field_value = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}'  ), array( $student_name, $course['post_title'], $date, get_bloginfo( 'name' ) ) , $field_value );
+			$field_value = apply_filters( 'sensei_certificate_data_field_value', $field_value, $field_key, true, null, null );
 
 			// Check if the field has a set position
 			if ( isset( $this->certificate_template_fields[$meta_key]['position']['x1'] ) ) {
