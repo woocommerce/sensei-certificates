@@ -85,176 +85,45 @@ function certificate_template_data_meta_box( $post ) {
 					) );
 				echo '</div>';
 
-				// Heading
-				echo '<div class="options_group">';
-					certificate_templates_wp_position_picker( array(
-						'id'          => 'certificate_heading_pos',
-						'label'       => __( 'Heading Position', 'sensei-certificates' ),
-						'value'       => implode( ',', $woothemes_sensei_certificate_templates->get_field_position( 'certificate_heading' ) ),
-						'description' => __( 'Optional position of the Certificate Heading', 'sensei-certificates' ),
-					) );
-					certificates_wp_hidden_input( array(
-						'id'    => '_certificate_heading_pos',
-						'class' => 'field_pos',
-						'value' => implode( ',', $woothemes_sensei_certificate_templates->get_field_position( 'certificate_heading' ) ),
-					) );
-					certificate_templates_wp_font_select( array(
-						'id'      => '_certificate_heading',
-						'label'   => __( 'Font', 'sensei-certificates' ),
-						'options' => $available_fonts,
-					) );
-					certificates_wp_text_input( array(
-						'id'    => '_certificate_heading_font_color',
-						'label' => __( 'Font color', 'sensei-certificates' ),
-						'value' => isset( $woothemes_sensei_certificate_templates->certificate_template_fields['certificate_heading']['font']['color'] ) ? $woothemes_sensei_certificate_templates->certificate_template_fields['certificate_heading']['font']['color'] : '',
-						'class' => 'colorpick',
-					) );
-					certificates_wp_text_input( array(
-						'class'       => 'medium',
-						'id'          => '_certificate_heading_text',
-						'label'       => __( 'Heading Text', 'sensei-certificates' ),
-						'description' => __( 'Text to display in the heading.', 'sensei-certificates' ),
-						'placeholder' => __( 'Certificate of Completion', 'sensei-certificates' ),
-						'value'       => isset( $woothemes_sensei_certificate_templates->certificate_template_fields['certificate_heading']['text'] ) ? $woothemes_sensei_certificate_templates->certificate_template_fields['certificate_heading']['text'] : '',
-					) );
-				echo '</div>';
+				// Data fields
+				$data_fields = sensei_get_certificate_data_fields();
+				foreach ( $data_fields as $field_key => $field_info ) {
 
-				// Message
-				echo '<div class="options_group">';
-					certificate_templates_wp_position_picker( array(
-						'id'          => 'certificate_message_pos',
-						'label'       => __( 'Message Position', 'sensei-certificates' ),
-						'value'       => implode( ',', $woothemes_sensei_certificate_templates->get_field_position( 'certificate_message' ) ),
-						'description' => __( 'Optional position of the Certificate Message', 'sensei-certificates' ),
-					) );
-					certificates_wp_hidden_input( array(
-						'id'    => '_certificate_message_pos',
-						'class' => 'field_pos',
-						'value' => implode( ',', $woothemes_sensei_certificate_templates->get_field_position( 'certificate_message' ) )
-					) );
-					certificate_templates_wp_font_select( array(
-						'id'      => '_certificate_message',
-						'label'   => __( 'Font', 'sensei-certificates' ),
-						'options' => $available_fonts,
-					) );
-					certificates_wp_text_input( array(
-						'id'    => '_certificate_message_font_color',
-						'label' => __( 'Font color', 'sensei-certificates' ),
-						'value' => isset( $woothemes_sensei_certificate_templates->certificate_template_fields['certificate_message']['font']['color'] ) ? $woothemes_sensei_certificate_templates->certificate_template_fields['certificate_message']['font']['color'] : '',
-						'class' => 'colorpick',
-					) );
-					certificates_wp_textarea_input( array(
-						'class'       => 'medium',
-						'id'          => '_certificate_message_text',
-						'label'       => __( 'Message Text', 'sensei-certificates' ),
-						'description' => __( 'Text to display in the message area.', 'sensei-certificates' ),
-						'placeholder' => __( 'This is to certify that {{learner}} has completed the course', 'sensei-certificates' ),
-						'value'       => isset( $woothemes_sensei_certificate_templates->certificate_template_fields['certificate_message']['text'] ) ? $woothemes_sensei_certificate_templates->certificate_template_fields['certificate_message']['text'] : '',
-					) );
-				echo '</div>';
+					echo '<div class="options_group">';
+						certificate_templates_wp_position_picker( array(
+							'id'          => "certificate_{$field_key}_pos",
+							'label'       => $field_info['position_label'],
+							'value'       => implode( ',', $woothemes_sensei_certificate_templates->get_field_position( "certificate_$field_key" ) ),
+							'description' => $field_info['position_description'],
+						) );
+						certificates_wp_hidden_input( array(
+							'id'    => "_certificate_{$field_key}_pos",
+							'class' => 'field_pos',
+							'value' => implode( ',', $woothemes_sensei_certificate_templates->get_field_position( "certificate_$field_key" ) ),
+						) );
+						certificate_templates_wp_font_select( array(
+							'id'      => "_certificate_$field_key",
+							'label'   => __( 'Font', 'sensei-certificates' ),
+							'options' => $available_fonts,
+						) );
+						certificates_wp_text_input( array(
+							'id'    => "_certificate_{$field_key}_font_color",
+							'label' => __( 'Font color', 'sensei-certificates' ),
+							'value' => isset( $woothemes_sensei_certificate_templates->certificate_template_fields["certificate_$field_key"]['font']['color'] ) ? $woothemes_sensei_certificate_templates->certificate_template_fields["certificate_$field_key"]['font']['color'] : '',
+							'class' => 'colorpick',
+						) );
 
-				// Certificate course position
-				echo '<div class="options_group">';
-					certificate_templates_wp_position_picker( array(
-						'id'          => 'certificate_course_pos',
-						'label'       => __( 'Course Position', 'sensei-certificates' ),
-						'value'       => implode( ',', $woothemes_sensei_certificate_templates->get_field_position( 'certificate_course' ) ),
-						'description' => __( 'Optional position of the Course Name', 'sensei-certificates' ),
-					) );
-					certificates_wp_hidden_input( array(
-						'id'    => '_certificate_course_pos',
-						'class' => 'field_pos',
-						'value' => implode( ',', $woothemes_sensei_certificate_templates->get_field_position( 'certificate_course' ) ),
-					) );
-					certificate_templates_wp_font_select( array(
-						'id'      => '_certificate_course',
-						'label'   => __( 'Font', 'sensei-certificates' ),
-						'options' => $available_fonts,
-					) );
-					certificates_wp_text_input( array(
-						'id'    => '_certificate_course_font_color',
-						'label' => __( 'Font color', 'sensei-certificates' ),
-						'value' => isset( $woothemes_sensei_certificate_templates->certificate_template_fields['certificate_course']['font']['color'] ) ? $woothemes_sensei_certificate_templates->certificate_template_fields['certificate_course']['font']['color'] : '',
-						'class' => 'colorpick',
-					) );
-					certificates_wp_text_input( array(
-						'class'       => 'medium',
-						'id'          => '_certificate_course_text',
-						'label'       => __( 'Course Text', 'sensei-certificates' ),
-						'description' => __( 'Text to display in the course area.', 'sensei-certificates' ),
-						'placeholder' => __( '{{course_title}}', 'sensei-certificates' ),
-						'value'       => isset( $woothemes_sensei_certificate_templates->certificate_template_fields['certificate_course']['text'] ) ? $woothemes_sensei_certificate_templates->certificate_template_fields['certificate_course']['text'] : '',
-					) );
-				echo '</div>';
-
-				// Certificate complete position
-				echo '<div class="options_group">';
-					certificate_templates_wp_position_picker( array(
-						'id'          => 'certificate_completion_pos',
-						'label'       => __( 'Completion Date Position', 'sensei-certificates' ),
-						'value'       => implode( ',', $woothemes_sensei_certificate_templates->get_field_position( 'certificate_completion' ) ),
-						'description' => __( 'Optional position of the Course Completion date', 'sensei-certificates' ),
-					) );
-					certificates_wp_hidden_input( array(
-						'id' => '_certificate_completion_pos',
-						'class' => 'field_pos',
-						'value' => implode( ',', $woothemes_sensei_certificate_templates->get_field_position( 'certificate_completion' ) ),
-					) );
-					certificate_templates_wp_font_select( array(
-						'id'      => '_certificate_completion',
-						'label'   => __( 'Font', 'sensei-certificates' ),
-						'options' => $available_fonts,
-					) );
-					certificates_wp_text_input( array(
-						'id'    => '_certificate_completion_font_color',
-						'label' => __( 'Font color', 'sensei-certificates' ),
-						'value' => isset( $woothemes_sensei_certificate_templates->certificate_template_fields['certificate_completion']['font']['color'] ) ? $woothemes_sensei_certificate_templates->certificate_template_fields['certificate_completion']['font']['color'] : '',
-						'class' => 'colorpick',
-					) );
-					certificates_wp_text_input( array(
-						'class'       => 'medium',
-						'id'          => '_certificate_completion_text',
-						'label'       => __( 'Completion Date Text', 'sensei-certificates' ),
-						'description' => __( 'Text to display in the course completion date area.', 'sensei-certificates' ),
-						'placeholder' => __( '{{completion_date}}', 'sensei-certificates' ),
-						'value'       => isset( $woothemes_sensei_certificate_templates->certificate_template_fields['certificate_completion']['text'] ) ? $woothemes_sensei_certificate_templates->certificate_template_fields['certificate_completion']['text'] : '',
-					) );
-				echo '</div>';
-
-				// Certificate place position
-				echo '<div class="options_group">';
-					certificate_templates_wp_position_picker( array(
-						'id'          => 'certificate_place_pos',
-						'label'       => __( 'Place Position', 'sensei-certificates' ),
-						'value'       => implode( ',', $woothemes_sensei_certificate_templates->get_field_position( 'certificate_place' ) ),
-						'description' => __( 'Optional position of the place of Certification.', 'sensei-certificates' ),
-					) );
-					certificates_wp_hidden_input( array(
-						'id'    => '_certificate_place_pos',
-						'class' => 'field_pos',
-						'value' => implode( ',', $woothemes_sensei_certificate_templates->get_field_position( 'certificate_place' ) ),
-					) );
-					certificate_templates_wp_font_select( array(
-						'id'      => '_certificate_place',
-						'label'   => __( 'Font', 'sensei-certificates' ),
-						'options' => $available_fonts,
-					) );
-					certificates_wp_text_input( array(
-						'id'    => '_certificate_place_font_color',
-						'label' => __( 'Font color', 'sensei-certificates' ),
-						'value' => isset( $woothemes_sensei_certificate_templates->certificate_template_fields['certificate_place']['font']['color'] ) ? $woothemes_sensei_certificate_templates->certificate_template_fields['certificate_place']['font']['color'] : '',
-						'class' => 'colorpick',
-					) );
-					certificates_wp_text_input( array(
-						'class'       => 'medium',
-						'id'          => '_certificate_place_text',
-						'label'       => __( 'Course Place Text', 'sensei-certificates' ),
-						'description' => __( 'Text to display in the course place area.', 'sensei-certificates' ),
-						'placeholder' => __( '{{course_place}}', 'sensei-certificates' ),
-						'value'       => isset( $woothemes_sensei_certificate_templates->certificate_template_fields['certificate_place']['text'] ) ? $woothemes_sensei_certificate_templates->certificate_template_fields['certificate_place']['text'] : '',
-					) );
-				echo '</div>';
-
+						$text_function = ( $field_info['type'] == 'textarea' ) ? 'certificates_wp_textarea_input' : 'certificates_wp_text_input';
+						$text_function( array(
+							'class'       => 'medium',
+							'id'          => "_certificate_{$field_key}_text",
+							'label'       => $field_info['text_label'],
+							'description' => $field_info['text_description'],
+							'placeholder' => $field_info['text_placeholder'],
+							'value'       => isset( $woothemes_sensei_certificate_templates->certificate_template_fields["certificate_$field_key"]['text'] ) ? $woothemes_sensei_certificate_templates->certificate_template_fields["certificate_$field_key"]['text'] : '',
+						) );
+					echo '</div>';
+				}
 			?>
 		</div>
 	</div>
@@ -288,7 +157,10 @@ function certificate_templates_process_meta( $post_id, $post ) {
 	// original sizes: default 11, product name 16, sku 8
 	// create the certificate template fields data structure
 	$fields = array();
-	foreach ( array( '_certificate_heading', '_certificate_message', '_certificate_course', '_certificate_completion', '_certificate_place' ) as $i => $field_name ) {
+	$data_fields = sensei_get_certificate_data_fields();
+	foreach ( array_keys($data_fields) as $i => $field_key ) {
+
+		$field_name = '_certificate_' . $field_key;
 
 		// set the field defaults
 		$field = array(
