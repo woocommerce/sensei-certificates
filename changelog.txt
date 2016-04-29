@@ -1,6 +1,6 @@
 *** Sensei Certificates Changelog ***
 
-2016.04.04 - version 1.0.13
+2016.04.29 - version 1.0.13
  * Fix - Fixed a deprecated function notice
  * Fix - Ensures the certificate background image displays after saving template
 
