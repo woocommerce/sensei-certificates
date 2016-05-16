@@ -6,8 +6,7 @@ gulp.task( 'pot', function() {
         return gulp.src( [ '**/**.php', '!node_modules/**'] )
                 .pipe( sort() )
                 .pipe( wpPot({
-                        domain: 'sensei-certificates',
-                        bugReport: 'https://www.transifex.com/woothemes/sensei-by-woothemes/'
+                        domain: 'sensei-certificates'
                 }) )
                 .pipe( gulp.dest( 'lang' ) );
 });
