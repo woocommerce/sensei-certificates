@@ -331,10 +331,10 @@ class WooThemes_Sensei_Certificates {
 
 		switch ( $column_name ) {
 			case "learner" :
-				echo '<a href="' . add_query_arg( array( 'page' => 'sensei_analysis', 'user' => intval( $user_id ), 'course_id' => intval( $course_id ) ), admin_url( 'edit.php?post_type=lesson' ) ) . '">'.$user->user_login.'</a>';
+				echo '<a href="' . add_query_arg( array( 'page' => 'sensei_analysis', 'user_id' => intval( $user_id ), 'course_id' => intval( $course_id ) ), admin_url( 'admin.php' ) ) . '">'.$user->user_login.'</a>';
 				break;
 			case "course" :
-				echo '<a href="' . add_query_arg( array( 'page' => 'sensei_analysis', 'course_id' => intval( $course_id ) ), admin_url( 'edit.php?post_type=lesson' ) ) . '">'.$course->post_title.'</a>';
+				echo '<a href="' . add_query_arg( array( 'page' => 'sensei_analysis', 'course_id' => intval( $course_id ) ), admin_url( 'admin.php' ) ) . '">'.$course->post_title.'</a>';
 				break;
 			case "date_completed" :
 				echo $course_end_date;
