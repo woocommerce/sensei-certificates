@@ -1,0 +1,19 @@
+{
+  "name": "sensei-certificates",
+  "version": "1.0.13",
+  "description": "Certificates extension for Sensei",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/woothemes/sensei-certificates.git"
+  },
+  "author": "Automattic, Inc.",
+  "license": "GPL-2.0+",
+  "bugs": {
+    "url": "https://github.com/woothemes/sensei-certificates/issues"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-sort": "^2.0.0",
+    "gulp-wp-pot": "^1.2.2"
+  }
+}
