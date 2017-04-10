@@ -69,6 +69,9 @@ function course_certificate_template_data_meta_box( $post ) {
 				} // End For Loop
 			$html .= '</select>' . "\n";
 		} else {
+			if ( !empty( $select_certificate_template ) ) {
+				$html .= '<input type="hidden" name="course_certificate_template" value="'. absint( $select_certificate_template ) . '">';
+			}
 			$html .= '<p>' . esc_html( __( 'No certificate template exist yet. Please add some first.', 'sensei-certificates' ) ) . '</p>';
 		} // End If Statement
 
