@@ -327,7 +327,6 @@ class WooThemes_Sensei_Certificates {
 		$user = get_userdata( $user_id );
 		$course = get_post( $course_id );
 		$course_end_date = WooThemes_Sensei_Utils::sensei_get_activity_value( array( 'post_id' => $course_id, 'user_id' => $user_id, 'type' => 'sensei_course_status', 'field' => 'comment_date' ) );
-		$certificate_hash = esc_html( substr( md5( $course_id . $user_id ), -8 ) );
 
 		switch ( $column_name ) {
 			case "learner" :
