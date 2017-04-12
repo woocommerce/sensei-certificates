@@ -681,7 +681,7 @@ class WooThemes_Sensei_Certificates {
 		} // End If Statement
 
 		// Logo image
-		if ( is_numeric( $this->image_id  ) && isset( $this->image_id ) && 0 < intval( $this->image_id ) ) {
+		if ( isset( $this->image_id ) && is_numeric( $this->image_id  ) && 0 < intval( $this->image_id ) ) {
 			$image_src = wp_get_attachment_url( $this->image_id );
 
 			// Use image path instead of URL
