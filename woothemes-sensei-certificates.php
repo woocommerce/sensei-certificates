@@ -64,12 +64,10 @@ function init_certificates_textdomain() {
 function init_sensei_certificates() {
 
 	if ( is_sensei_active() ) {
-		require_once 'classes/class-woothemes-sensei-certificates-utils.php';
 		require_once( 'classes/class-woothemes-sensei-certificates.php' );
 		$GLOBALS['woothemes_sensei_certificates'] = new WooThemes_Sensei_Certificates( __FILE__ );
 		require_once( 'classes/class-woothemes-sensei-certificate-templates.php' );
 		$GLOBALS['woothemes_sensei_certificate_templates'] = new WooThemes_Sensei_Certificate_Templates( __FILE__ );
-		require_once( 'classes/class-woothemes-sensei-certificates-data-store.php' );
 	}
 
 } // End init_sensei_extension()
@@ -158,17 +156,6 @@ function sensei_certificates_updates_list( $updates ) {
 } // End sensei_certificates_updates_list()
 
 /**
- * @param array $permitted_functions
- * @return array
- */
-function sensei_certificates_add_update_functions_to_whitelist( $permitted_functions ) {
-	return array_merge( $permitted_functions, array(
-		'sensei_update_users_certificate_data'
-	) );
-}
-add_filter( 'sensei_updates_function_whitelist', 'sensei_certificates_add_update_functions_to_whitelist', 1 );
-
-/**
  * sensei_update_users_certificate_data install user certificate data
  * @since  1.0.0
  * @param  int $n number of items to iterate through
@@ -176,6 +163,9 @@ add_filter( 'sensei_updates_function_whitelist', 'sensei_certificates_add_update
  * @return boolean
  */
 function sensei_update_users_certificate_data( $n = 5, $offset = 0 ) {
+
+	$loop_ran = false;
+
 	// Calculate if this is the last page
 	if ( 0 == $offset ) {
 		$current_page = 1;
@@ -194,41 +184,54 @@ function sensei_update_users_certificate_data( $n = 5, $offset = 0 ) {
 	$users = $wp_user_update->get_results();
 
 	$user_count = count_users();
-	$total_items = $user_count[ 'total_users' ];
+	$total_items = $user_count['total_users'];
 
-	$total_pages = intval( ceil($total_items / $n ) );
-	$data_store = new Woothemes_Sensei_Certificate_Data_Store();
+	$query_total = $wp_user_update->get_total();
+
+	$total_pages = intval( $total_items / $n );
 
 	foreach ( $users as $user_key => $user_item ) {
-		$user_id = absint( $user_item->ID );
-		$user_course_statuses = Sensei_Utils::sensei_check_for_activity( array(
-			'user_id' => $user_item->ID,
-			'type'    => 'sensei_course_status',
-			'status'  => 'complete',
-		), true );
-		if ( ! is_array( $user_course_statuses ) ) {
-			$user_course_statuses = array( $user_course_statuses );
-		}
 
-		if ( empty( $user_course_statuses ) ) {
-			continue;
-		}
+		$course_ids = WooThemes_Sensei_Utils::sensei_activity_ids( array( 'user_id' => $user_item->ID, 'type' => 'sensei_course_start' ) );
+		$posts_array = array();
+		if ( 0 < intval( count( $course_ids ) ) ) {
+			$posts_array = Sensei()->course->course_query( -1, 'usercourses', $course_ids );
+		} // End If Statement
 
-		foreach ( $user_course_statuses as $user_course_status ) {
-			$course_id = absint( $user_course_status->comment_post_ID );
-			$user_did_complete_course = Sensei_Utils::user_completed_course( $course_id, $user_id );
-			if ( true === $user_did_complete_course ) {
+		foreach ( $posts_array as $course_item ) {
+
+			$course_end_date = WooThemes_Sensei_Utils::sensei_get_activity_value( array( 'post_id' => $course_item->ID, 'user_id' => $user_item->ID, 'type' => 'sensei_course_end', 'field' => 'comment_date' ) );
+
+			if ( isset( $course_end_date ) && '' != $course_end_date ) {
+
 				$args = array(
 					'post_type' => 'certificate',
 					'author' => $user_item->ID,
 					'meta_key' => 'course_id',
-					'meta_value' => $course_id
+					'meta_value' => $course_item->ID
 				);
 				$query = new WP_Query( $args );
 
 				if ( ! $query->have_posts() ) {
-					$data_store->insert( $user_id, $course_id );
-				}
+
+					// Insert custom post type
+					$cert_args = array(
+						'post_author' => intval( $user_item->ID ),
+						'post_title' => esc_html( substr( md5( $course_item->ID . $user_item->ID ), -8 ) ),
+						'post_name' => esc_html( substr( md5( $course_item->ID . $user_item->ID ), -8 ) ),
+						'post_type' => 'certificate',
+						'post_status'   => 'publish'
+					);
+					$post_id = wp_insert_post( $cert_args, $wp_error = false );
+
+					if ( ! is_wp_error( $post_id ) ) {
+						add_post_meta( $post_id, 'course_id', intval( $course_item->ID ) );
+						add_post_meta( $post_id, 'learner_id', intval( $user_item->ID ) );
+						add_post_meta( $post_id, 'certificate_hash',esc_html( substr( md5( $course_item->ID . $user_item->ID ), -8 ) ) );
+						$loop_ran = true;
+					} // End If Statement
+
+				} // End If Statement
 
 				wp_reset_query();
 
@@ -238,8 +241,14 @@ function sensei_update_users_certificate_data( $n = 5, $offset = 0 ) {
 
 	} // End For Loop
 
-	return ( $current_page >= $total_pages ) ? true : false;
+	if ( $current_page >= $total_pages ) {
+		return true;
+	} else {
+		return false;
+	} // End If Statement
+
 } // End sensei_update_users_certificate_data()
+
 
 /**
  * sensei_create_master_certificate_template Creates the example Certificate Template and assigns to every Course
