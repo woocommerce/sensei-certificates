@@ -1,5 +1,12 @@
 *** Sensei Certificates Changelog ***
 
+2017.04.13 - version 1.0.14
+* Add the Display Name to the admin list table for certificates enhancement
+* Fix Errors when previewing a certificate template bug
+* Fix the selected admin menu item when editing a certificate template
+* Fix Permissions error on certificate learner and course links bug
+* Fix PHP 7 Errors/Notices on tfpdf
+
 2016.04.29 - version 1.0.13
  * Fix - Fixed a deprecated function notice
  * Fix - Ensures the certificate background image displays after saving template
