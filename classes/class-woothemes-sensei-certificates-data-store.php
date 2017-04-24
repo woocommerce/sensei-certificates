@@ -15,7 +15,7 @@ class Woothemes_Sensei_Certificate_Data_Store {
      * @return int|WP_Error
      */
     function insert( $user_id, $course_id ) {
-        $certificate_hash = Woothemes_Sensei_Certificates_Utils::get_certificate_hash( $course_id, $user_id->ID );
+        $certificate_hash = Woothemes_Sensei_Certificates_Utils::get_certificate_hash( $course_id, $user_id );
         // Insert custom post type
         $cert_args = array(
             'post_author' => intval( $user_id ),
