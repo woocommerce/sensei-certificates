@@ -16,6 +16,12 @@ class Woothemes_Sensei_Certificate_Data_Store {
      */
     function insert( $user_id, $course_id ) {
         $certificate_hash = Woothemes_Sensei_Certificates_Utils::get_certificate_hash( $course_id, $user_id );
+        // check if user certificate already exists
+        $exists = get_page_by_title( $certificate_hash, OBJECT, 'certificate' );
+        if ( ! empty( $exists ) ) {
+            return new WP_Error( 'sensei_certificates_duplicate' );
+        }
+
         // Insert custom post type
         $cert_args = array(
             'post_author' => intval( $user_id ),
