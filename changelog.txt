@@ -1,6 +1,6 @@
 *** Sensei Certificates Changelog ***
 
-2017.04.13 - version 1.0.14
+2017.04.25 - version 1.0.14
 * Fix certificate data update
 * Add the Display Name to the admin list table for certificates enhancement
 * Fix Errors when previewing a certificate template bug
