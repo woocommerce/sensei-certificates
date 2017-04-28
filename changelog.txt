@@ -1,5 +1,9 @@
 *** Sensei Certificates Changelog ***
 
+2017.04.25 - version 1.0.15
+* Admin: Allow only teachers and administrators to view admin areas
+* Never bundle generated ttf specs from tfpdf
+
 2017.04.25 - version 1.0.14
 * Fix certificate data update
 * Add the Display Name to the admin list table for certificates enhancement
