@@ -1,6 +1,6 @@
 *** Sensei Certificates Changelog ***
 
-2017.04.25 - version 1.0.15
+2017.04.28 - version 1.0.15
 * Admin: Allow only teachers and administrators to view admin areas
 * Never bundle generated ttf specs from tfpdf
 
