@@ -40,9 +40,39 @@ include_once( 'post-types/certificate_templates.php' );
  * Actions and Filters
  */
 add_action( 'admin_init', 'sensei_certificate_template_admin_init' );
+add_action( 'admin_init','sensei_certificate_add_role_caps',9999);
 add_action( 'admin_enqueue_scripts', 'sensei_certificate_template_admin_enqueue_scripts' );
 add_filter( 'post_updated_messages', 'sensei_certificate_template_item_updated_messages' );
 
+/**
+ * Add editing capabilities for certificates and certificate templates
+ * Only teachers and administrators can access
+ */
+function sensei_certificate_add_role_caps() {
+	$custom_post_types = array( 'certificate', 'certificate_template' );
+	$roles = array( 'teacher', 'administrator' );
+
+	foreach ( $custom_post_types as $custom_post_type ) {
+		if ( ! isset( $GLOBALS['wp_post_types'][$custom_post_type] ) ) {
+			continue;
+		}
+		$post_type = $GLOBALS['wp_post_types'][$custom_post_type];
+		$post_type_caps = (array)$post_type->cap;
+
+		foreach ( $roles as $role_type ) {
+			$role = get_role( $role_type );
+			if ( empty( $role ) ) {
+				continue;
+			}
+			foreach ( $post_type_caps as $cap ) {
+				if ( ! $role->has_cap( $cap ) ) {
+					$role->add_cap( $cap, true );
+				}
+			}
+		}
+	}
+
+}
 
 /**
  * Initialize the admin, adding actions to properly display and handle
