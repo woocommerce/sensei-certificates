@@ -1,5 +1,8 @@
 *** Sensei Certificates Changelog ***
 
+2017.05.03 - version 1.0.16
+* Fix fatal when activating certificates for the first time
+
 2017.04.28 - version 1.0.15
 * Admin: Allow only teachers and administrators to view admin areas
 * Never bundle generated ttf specs from tfpdf
