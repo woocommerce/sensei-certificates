@@ -86,7 +86,7 @@ msgstr ""
 msgid "Text to display in the heading."
 msgstr ""
 
-#: admin/post-types/writepanels/writepanel-certificate_data.php:117, classes/class-woothemes-sensei-certificate-templates.php:456, classes/class-woothemes-sensei-certificates.php:561, woothemes-sensei-certificates.php:301
+#: admin/post-types/writepanels/writepanel-certificate_data.php:117, classes/class-woothemes-sensei-certificate-templates.php:456, classes/class-woothemes-sensei-certificates.php:561, woothemes-sensei-certificates.php:305
 msgid "Certificate of Completion"
 msgstr ""
 
@@ -126,7 +126,7 @@ msgstr ""
 msgid "Text to display in the course area."
 msgstr ""
 
-#: admin/post-types/writepanels/writepanel-certificate_data.php:185, woothemes-sensei-certificates.php:315
+#: admin/post-types/writepanels/writepanel-certificate_data.php:185, woothemes-sensei-certificates.php:319
 msgid "{{course_title}}"
 msgstr ""
 
@@ -166,7 +166,7 @@ msgstr ""
 msgid "Text to display in the course place area."
 msgstr ""
 
-#: admin/post-types/writepanels/writepanel-certificate_data.php:253, woothemes-sensei-certificates.php:329
+#: admin/post-types/writepanels/writepanel-certificate_data.php:253, woothemes-sensei-certificates.php:333
 msgid "{{course_place}}"
 msgstr ""
 
@@ -425,11 +425,11 @@ msgstr ""
 msgid "Course Title"
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificate-templates.php:464, classes/class-woothemes-sensei-certificates.php:568, woothemes-sensei-certificates.php:308
+#: classes/class-woothemes-sensei-certificate-templates.php:464, classes/class-woothemes-sensei-certificates.php:568, woothemes-sensei-certificates.php:312
 msgid "This is to certify that"
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificate-templates.php:464, classes/class-woothemes-sensei-certificates.php:568, woothemes-sensei-certificates.php:308
+#: classes/class-woothemes-sensei-certificate-templates.php:464, classes/class-woothemes-sensei-certificates.php:568, woothemes-sensei-certificates.php:312
 msgid "has completed the course"
 msgstr ""
 
@@ -510,14 +510,14 @@ msgstr ""
 msgid "You must set a certificate_template primary image before you can preview"
 msgstr ""
 
-#: woothemes-sensei-certificates.php:255
+#: woothemes-sensei-certificates.php:259
 msgid "Example Template"
 msgstr ""
 
-#: woothemes-sensei-certificates.php:265
+#: woothemes-sensei-certificates.php:269
 msgid "Sensei Certificate Template Example"
 msgstr ""
 
-#: woothemes-sensei-certificates.php:322
+#: woothemes-sensei-certificates.php:326
 msgid "{{completion_date}} at {{course_place}}"
 msgstr ""
