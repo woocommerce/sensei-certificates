@@ -15,6 +15,9 @@ class Woothemes_Sensei_Certificate_Data_Store {
      * @return int|WP_Error
      */
     function insert( $user_id, $course_id ) {
+		if ( ! class_exists( 'Woothemes_Sensei_Certificates_Utils' ) ) {
+			include_once 'class-woothemes-sensei-certificates-utils.php';
+		}
         $certificate_hash = Woothemes_Sensei_Certificates_Utils::get_certificate_hash( $course_id, $user_id );
         // check if user certificate already exists
         $exists = get_page_by_title( $certificate_hash, OBJECT, 'certificate' );
