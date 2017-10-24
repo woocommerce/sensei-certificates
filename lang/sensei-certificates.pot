@@ -354,51 +354,51 @@ msgstr ""
 msgid "Certificate Template draft updated."
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificate-templates.php:145, classes/class-woothemes-sensei-certificates.php:261
+#: classes/class-woothemes-sensei-certificate-templates.php:145
 msgctxt "post type general name"
-msgid "%s"
+msgid "Certificate Templates"
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificate-templates.php:146, classes/class-woothemes-sensei-certificates.php:262
+#: classes/class-woothemes-sensei-certificate-templates.php:146
 msgctxt "post type singular name"
-msgid "%s"
+msgid "Certificate Template"
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificate-templates.php:147, classes/class-woothemes-sensei-certificates.php:263
+#: classes/class-woothemes-sensei-certificate-templates.php:147
 msgctxt "post type add_new"
-msgid "Add New %s"
+msgid "Add New Certificate Template"
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificate-templates.php:148, classes/class-woothemes-sensei-certificates.php:264
-msgid "Add New %s"
+#: classes/class-woothemes-sensei-certificate-templates.php:148
+msgid "Add New Certificate Template"
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificate-templates.php:149, classes/class-woothemes-sensei-certificate-templates.php:907, classes/class-woothemes-sensei-certificates.php:265
-msgid "Edit %s"
+#: classes/class-woothemes-sensei-certificate-templates.php:149
+msgid "Edit Certificate Template"
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificate-templates.php:150, classes/class-woothemes-sensei-certificates.php:266
-msgid "New %s"
+#: classes/class-woothemes-sensei-certificate-templates.php:150
+msgid "New Certificate Template"
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificate-templates.php:151, classes/class-woothemes-sensei-certificate-templates.php:157, classes/class-woothemes-sensei-certificates.php:267, classes/class-woothemes-sensei-certificates.php:273
-msgid "%s"
+#: classes/class-woothemes-sensei-certificate-templates.php:151, classes/class-woothemes-sensei-certificate-templates.php:157
+msgid "Certificate Templates"
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificate-templates.php:152, classes/class-woothemes-sensei-certificates.php:268
-msgid "View %s"
+#: classes/class-woothemes-sensei-certificate-templates.php:152
+msgid "View Certificate Template"
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificate-templates.php:153, classes/class-woothemes-sensei-certificates.php:269
-msgid "Search %s"
+#: classes/class-woothemes-sensei-certificate-templates.php:153
+msgid "Search Certificate Templates"
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificate-templates.php:154, classes/class-woothemes-sensei-certificates.php:270
-msgid "No %s found"
+#: classes/class-woothemes-sensei-certificate-templates.php:154
+msgid "No certificate templates found"
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificate-templates.php:155, classes/class-woothemes-sensei-certificates.php:271
-msgid "No %s found in Trash"
+#: classes/class-woothemes-sensei-certificate-templates.php:155
+msgid "No certificate templates found in Trash"
 msgstr ""
 
 #: classes/class-woothemes-sensei-certificate-templates.php:187, classes/class-woothemes-sensei-certificates.php:305
@@ -417,7 +417,7 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificate-templates.php:224, classes/class-woothemes-sensei-certificates.php:346, classes/class-woothemes-sensei-certificates.php:801, classes/class-woothemes-sensei-certificates.php:801, classes/class-woothemes-sensei-certificates.php:905, classes/class-woothemes-sensei-certificates.php:905
+#: classes/class-woothemes-sensei-certificate-templates.php:224, classes/class-woothemes-sensei-certificates.php:268, classes/class-woothemes-sensei-certificates.php:346, classes/class-woothemes-sensei-certificates.php:801, classes/class-woothemes-sensei-certificates.php:801, classes/class-woothemes-sensei-certificates.php:905, classes/class-woothemes-sensei-certificates.php:905
 msgid "View Certificate"
 msgstr ""
 
@@ -444,6 +444,10 @@ msgstr ""
 #: classes/class-woothemes-sensei-certificate-templates.php:880
 msgctxt "column name"
 msgid "Certificate Template"
+msgstr ""
+
+#: classes/class-woothemes-sensei-certificate-templates.php:907
+msgid "Edit %s"
 msgstr ""
 
 #: classes/class-woothemes-sensei-certificates.php:203
@@ -476,6 +480,49 @@ msgstr ""
 
 #: classes/class-woothemes-sensei-certificates.php:239
 msgid "Allow the Learner to share their Certificate with the public. (The learner will have to enable this in their profile by going to mysite.com/learner/{learner_username})"
+msgstr ""
+
+#: classes/class-woothemes-sensei-certificates.php:261
+msgctxt "post type general name"
+msgid "Certificates"
+msgstr ""
+
+#: classes/class-woothemes-sensei-certificates.php:262
+msgctxt "post type singular name"
+msgid "Certificate"
+msgstr ""
+
+#: classes/class-woothemes-sensei-certificates.php:263
+msgctxt "post type add_new"
+msgid "Add New Certificate"
+msgstr ""
+
+#: classes/class-woothemes-sensei-certificates.php:264
+msgid "Add New Certificate"
+msgstr ""
+
+#: classes/class-woothemes-sensei-certificates.php:265
+msgid "Edit Certificate"
+msgstr ""
+
+#: classes/class-woothemes-sensei-certificates.php:266
+msgid "New Certificate"
+msgstr ""
+
+#: classes/class-woothemes-sensei-certificates.php:267, classes/class-woothemes-sensei-certificates.php:273
+msgid "Certificates"
+msgstr ""
+
+#: classes/class-woothemes-sensei-certificates.php:269
+msgid "Search Certificates"
+msgstr ""
+
+#: classes/class-woothemes-sensei-certificates.php:270
+msgid "No certificates found"
+msgstr ""
+
+#: classes/class-woothemes-sensei-certificates.php:271
+msgid "No certificates found in Trash"
 msgstr ""
 
 #: classes/class-woothemes-sensei-certificates.php:463
