@@ -1,6 +1,6 @@
 *** Sensei Certificates Changelog ***
 
-2017.10.? - version 1.0.17
+2017.11.01 - version 1.0.17
 * Fix fatal on plugin activation
 * Remove unnecessary .pot file
 * Make placeholders translatable in post_type_setup
