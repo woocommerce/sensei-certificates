@@ -564,7 +564,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	 */
 	public function textarea_field( $fpdf, $value, $show_border, $position, $font = array() ) {
 
-		if ( $value ) {
+		if ( ! empty( $value ) ) {
 
 			if ( empty( $font ) ) {
 
@@ -647,7 +647,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	 */
 	private function text_field( $fpdf, $value, $show_border, $position, $font = array()) {
 
-		if ( $value ) {
+		if ( ! empty( $value ) ) {
 
 			if ( empty( $font ) ) {
 
