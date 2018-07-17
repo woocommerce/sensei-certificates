@@ -70,6 +70,7 @@ function init_sensei_certificates() {
 		require_once( 'classes/class-woothemes-sensei-certificate-templates.php' );
 		$GLOBALS['woothemes_sensei_certificate_templates'] = new WooThemes_Sensei_Certificate_Templates( __FILE__ );
 		require_once( 'classes/class-woothemes-sensei-certificates-data-store.php' );
+		require_once( 'classes/class-woothemes-sensei-certificates-tfpdf.php' );
 	}
 
 } // End init_sensei_extension()
