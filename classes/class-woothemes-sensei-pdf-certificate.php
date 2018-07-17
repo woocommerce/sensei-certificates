@@ -96,8 +96,7 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param string $path optional absolute path to the certificate directory, if
-	 *        not supplied the PDF will be streamed as a downloadable file
+	 * @param string $path Unused. Left here for backwards compatibility.
 	 *
 	 * @return mixed nothing if a $path is supplied, otherwise a PDF download
 	 */
@@ -144,15 +143,10 @@ class WooThemes_Sensei_PDF_Certificate {
 
 		do_action( 'sensei_certificates_before_pdf_output', $this, $fpdf );
 
-		if ( $path ) {
-			// save the pdf as a file
-			$fpdf->Output( $path . '/' . $this->get_certificate_template_path() . '/' . $this->get_certificate_filename(), 'F' );
-		} else {
-			// download file
-			Woothemes_Sensei_Certificates_TFPDF::output_to_http(
-				$fpdf, 'certificate-preview-' . $this->hash . '.pdf'
-			);
-		} // End If Statement
+		// download file
+		Woothemes_Sensei_Certificates_TFPDF::output_to_http(
+			$fpdf, 'certificate-preview-' . $this->hash . '.pdf'
+		);
 
 	} // End generate_pdf()
 

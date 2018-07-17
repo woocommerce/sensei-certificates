@@ -354,9 +354,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param string $path optional absolute path to the directory, if
-	 *        not supplied the PDF will be streamed as a downloadable file (used
-	 *        for admin previewing of the PDF)
+	 * @param string $path Unused. Left here for backwards compatibility.
 	 *
 	 * @return mixed nothing if a $path is supplied, otherwise a PDF download
 	 */
