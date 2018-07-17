@@ -19,9 +19,10 @@ class Woothemes_Sensei_Certificates_TFPDF {
 	 */
 	public static function get_tfpdf_object( $orientation, $units, $size ) {
 		// Include the pdf library if needed.
-		require_once( dirname( __FILE__ ) . '/../lib/tfpdf/tfpdf.php' );
+		require_once( dirname( __FILE__ ) . '/../lib/tfpdf/src/tFPDF/PDF.php' );
+		require_once( dirname( __FILE__ ) . '/../lib/tfpdf/src/tFPDF/TTFontFile.php' );
 
-		return new tFPDF( $orientation, $units, $size );
+		return new tFPDF\PDF( $orientation, $units, $size );
 	}
 
 	/**
@@ -32,6 +33,11 @@ class Woothemes_Sensei_Certificates_TFPDF {
 	 * @param string $filename The filename to send in the HTTP headers.
 	 */
 	public static function output_to_http( $tfpdf, $filename ) {
-		$tfpdf->Output( $filename, 'I' );
+		header( 'Content-Type: application/pdf' );
+		header( "Content-Disposition: inline; filename=\"$filename\"" );
+		header( 'Cache-Control: private, max-age=0, must-revalidate' );
+		header( 'Pragma: public' );
+
+		echo $tfpdf->output();
 	}
 }
