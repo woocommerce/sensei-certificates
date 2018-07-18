@@ -547,16 +547,7 @@ class WooThemes_Sensei_Certificates {
 			if ( isset( $this->certificate_font_family ) && '' != $this->certificate_font_family ) { $pdf_certificate->certificate_pdf_data['font_family'] = $this->certificate_font_family; }
 			if ( isset( $this->certificate_font_style ) && '' != $this->certificate_font_style ) { $pdf_certificate->certificate_pdf_data['font_style'] = $this->certificate_font_style; }
 
-			// Set default fonts
-			setlocale(LC_TIME, get_locale() );
-
-			if( false !== strpos( get_locale(), 'en' ) ) {
-				$date_format = apply_filters( 'sensei_certificate_date_format', 'jS F Y' );
-				$date = date( $date_format, strtotime( $course_end_date ) );
-			} else {
-				$date_format = apply_filters( 'sensei_certificate_date_format', '%Y %B %e' );
-				$date = strftime ( $date_format, strtotime( $course_end_date ) );
-			}
+			$date = Woothemes_Sensei_Certificates_Utils::get_certificate_formatted_date( $course_end_date );
 
 			$certificate_heading = __( 'Certificate of Completion', 'sensei-certificates' ); // Certificate of Completion
 			if ( isset( $this->certificate_template_fields['certificate_heading']['text'] ) && '' != $this->certificate_template_fields['certificate_heading']['text'] ) {
