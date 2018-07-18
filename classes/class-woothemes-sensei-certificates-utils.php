@@ -27,6 +27,14 @@ class Woothemes_Sensei_Certificates_Utils {
 	 */
 	public static function get_certificate_formatted_date( $course_end_date ) {
 		$default_date_format = get_option( 'date_format' );
+
+		/**
+		 * Filter the date format to be used for certificates. The date format
+		 * syntax should be the format required by PHP's `date()` function.
+		 *
+		 * @param  string $default_date_format The default date format to be used.
+		 * @return string The date format to use.
+		 */
 		$date_format = apply_filters( 'sensei_certificate_date_format', $default_date_format );
 
 		/*
