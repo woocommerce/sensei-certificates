@@ -1,4 +1,4 @@
-# Copyright (C) 2017 sensei-certificates
+# Copyright (C) 2018 sensei-certificates
 # This file is distributed under the same license as the sensei-certificates package.
 msgid ""
 msgstr ""
@@ -6,14 +6,14 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-02-03 23:52+0500\n"
+"PO-Revision-Date: 2018-08-26 18:52+0500\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "POT-Creation-Date: \n"
-"Last-Translator: Airat Halitov <airat.halitov@gmail.com>\n"
-"Language-Team: Airat Halitov <airat.halitov@gmail.com>\n"
+"Last-Translator: Airat Halitov <translate@airat.biz>\n"
+"Language-Team: Airat Halitov <translate@airat.biz>\n"
 "Language: ru_RU\n"
 "X-Generator: Poedit 1.8.7.1\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -100,8 +100,8 @@ msgid "Text to display in the heading."
 msgstr "Тест для отображения в заголовке."
 
 #: admin/post-types/writepanels/writepanel-certificate_data.php:117,
-#: classes/class-woothemes-sensei-certificate-templates.php:456,
-#: classes/class-woothemes-sensei-certificates.php:561,
+#: classes/class-woothemes-sensei-certificate-templates.php:447,
+#: classes/class-woothemes-sensei-certificates.php:552,
 #: woothemes-sensei-certificates.php:305
 msgid "Certificate of Completion"
 msgstr "Сертификат об успешном завершении курса"
@@ -450,9 +450,9 @@ msgstr "Действия"
 #: classes/class-woothemes-sensei-certificate-templates.php:224,
 #: classes/class-woothemes-sensei-certificates.php:268,
 #: classes/class-woothemes-sensei-certificates.php:346,
-#: classes/class-woothemes-sensei-certificates.php:801,
-#: classes/class-woothemes-sensei-certificates.php:905,
-#: classes/class-woothemes-sensei-certificates.php:905
+#: classes/class-woothemes-sensei-certificates.php:792,
+#: classes/class-woothemes-sensei-certificates.php:896,
+#: classes/class-woothemes-sensei-certificates.php:896
 msgid "View Certificate"
 msgstr "Сертификат"
 
@@ -460,33 +460,33 @@ msgstr "Сертификат"
 msgid "Course Title"
 msgstr "Название курса"
 
-#: classes/class-woothemes-sensei-certificate-templates.php:464,
-#: classes/class-woothemes-sensei-certificates.php:568,
+#: classes/class-woothemes-sensei-certificate-templates.php:455,
+#: classes/class-woothemes-sensei-certificates.php:559,
 #: woothemes-sensei-certificates.php:312
 msgid "This is to certify that"
 msgstr "Этот сертификат подтверждает, что"
 
-#: classes/class-woothemes-sensei-certificate-templates.php:464,
-#: classes/class-woothemes-sensei-certificates.php:568,
+#: classes/class-woothemes-sensei-certificate-templates.php:455,
+#: classes/class-woothemes-sensei-certificates.php:559,
 #: woothemes-sensei-certificates.php:312
 msgid "has completed the course"
 msgstr "успешно завершил(а) курс"
 
-#: classes/class-woothemes-sensei-certificate-templates.php:488,
-#: classes/class-woothemes-sensei-certificates.php:592
+#: classes/class-woothemes-sensei-certificate-templates.php:479,
+#: classes/class-woothemes-sensei-certificates.php:583
 msgid "At %s"
 msgstr "%s"
 
-#: classes/class-woothemes-sensei-certificate-templates.php:824
+#: classes/class-woothemes-sensei-certificate-templates.php:815
 msgid "$meta_name"
 msgstr "$meta_name"
 
-#: classes/class-woothemes-sensei-certificate-templates.php:880
+#: classes/class-woothemes-sensei-certificate-templates.php:871
 msgctxt "column name"
 msgid "Certificate Template"
 msgstr "Шаблон сертификата"
 
-#: classes/class-woothemes-sensei-certificate-templates.php:907
+#: classes/class-woothemes-sensei-certificate-templates.php:898
 msgid "Edit %s"
 msgstr "Изменить %s"
 
@@ -571,27 +571,27 @@ msgid "You are not allowed to view this Certificate."
 msgstr "Вам не разрешено просматривать этот сертификат."
 
 #: classes/class-woothemes-sensei-certificates.php:463,
-#: classes/class-woothemes-sensei-certificates.php:622
+#: classes/class-woothemes-sensei-certificates.php:613
 msgid "Certificate Error"
 msgstr "Ошибка сертификата"
 
-#: classes/class-woothemes-sensei-certificates.php:622
+#: classes/class-woothemes-sensei-certificates.php:613
 msgid "The certificate you are searching for does not exist."
 msgstr "Сертификат, который вы ищете, не существует."
 
-#: classes/class-woothemes-sensei-certificates.php:879
+#: classes/class-woothemes-sensei-certificates.php:870
 msgid "Certificate"
 msgstr "Сертификат"
 
-#: classes/class-woothemes-sensei-certificates.php:1074
+#: classes/class-woothemes-sensei-certificates.php:1065
 msgid "Allow my Certificates to be publicly viewed"
 msgstr "Позволить просматривать публично мои сертификаты"
 
-#: classes/class-woothemes-sensei-certificates.php:1074
+#: classes/class-woothemes-sensei-certificates.php:1065
 msgid "Save"
 msgstr "Сохранить"
 
-#: classes/class-woothemes-sensei-certificates.php:1109
+#: classes/class-woothemes-sensei-certificates.php:1100
 msgid "Your Certificates Public View Settings Saved Successfully."
 msgstr "Настройки публичности сертификатов успешно сохранены."
 
