@@ -146,11 +146,11 @@ function sensei_certificate_template_admin_help_tab() {
 function sensei_certificate_template_certificate_help_tab_content() {
 	
 	?>
-	<p><strong><?php _e( 'Certificate Name', 'sensei-certificates' ) ?></strong> - <?php _e( 'All certificate templates must be given a name.  This will be used to identify the certificate within the admin.', 'sensei-certificates' ) ?></p>
-	<p><strong><?php _e( 'Certificate Background Image', 'sensei-certificates' ) ?></strong> - <?php _e( 'This is the main image for your certificate, and will be used to configure the layout of the various text fields defined in the Certificate Data panel.', 'sensei-certificates' ) ?></p>
-	<p><strong><?php _e( 'Certificate Data', 'sensei-certificates' ) ?></strong> - <?php _e( 'These configuration options allow you to specify exactly where various text fields will be displayed on your certificate, as well as the font used.  For instance, if you want the message displayed on your certificate, click the "Set Position" button next to "Message Position".  Then select the area of the Certificate Image where you want the message to be displayed.', 'sensei-certificates' ) ?></p>
-	<p><?php _e( 'You can define a default font, size, style and color to be used for the certificate text fields.  For each individual text field, you can override these defaults by setting a specific font/style, size or color.  Note that the default font style (Italic/Bold) will only be used if a font is not selected at the field level.', 'sensei-certificates' ) ?></p>
-	<p><strong><?php _e( 'Previewing', 'sensei-certificates' ) ?></strong> - <?php _e( 'You must update the certificate template to see any changes in the Preview.', 'sensei-certificates' ) ?></p>
+	<p><strong><?php esc_html_e( 'Certificate Name', 'sensei-certificates' ) ?></strong> - <?php esc_html_e( 'All certificate templates must be given a name.  This will be used to identify the certificate within the admin.', 'sensei-certificates' ) ?></p>
+	<p><strong><?php esc_html_e( 'Certificate Background Image', 'sensei-certificates' ) ?></strong> - <?php esc_html_e( 'This is the main image for your certificate, and will be used to configure the layout of the various text fields defined in the Certificate Data panel.', 'sensei-certificates' ) ?></p>
+	<p><strong><?php esc_html_e( 'Certificate Data', 'sensei-certificates' ) ?></strong> - <?php esc_html_e( 'These configuration options allow you to specify exactly where various text fields will be displayed on your certificate, as well as the font used.  For instance, if you want the message displayed on your certificate, click the "Set Position" button next to "Message Position".  Then select the area of the Certificate Image where you want the message to be displayed.', 'sensei-certificates' ) ?></p>
+	<p><?php esc_html_e( 'You can define a default font, size, style and color to be used for the certificate text fields.  For each individual text field, you can override these defaults by setting a specific font/style, size or color.  Note that the default font style (Italic/Bold) will only be used if a font is not selected at the field level.', 'sensei-certificates' ) ?></p>
+	<p><strong><?php esc_html_e( 'Previewing', 'sensei-certificates' ) ?></strong> - <?php esc_html_e( 'You must update the certificate template to see any changes in the Preview.', 'sensei-certificates' ) ?></p>
 	<?php
 
 } // End sensei_certificate_template_certificate_help_tab_content()
@@ -164,13 +164,13 @@ function sensei_certificate_template_certificate_help_tab_content() {
 function sensei_certificate_template_how_to_help_tab_content() {
 	
 	?>
-	<p><strong><?php _e( 'How to Create Your First Certificate Template ', 'sensei-certificates' ) ?></strong></p>
+	<p><strong><?php esc_html_e( 'How to Create Your First Certificate Template ', 'sensei-certificates' ) ?></strong></p>
 	<ol>
-		<li><?php _e( 'First go to Sensei &gt; Certificate Templates and click "Add Certificate Template" to add a template', 'sensei-certificates' ); ?></li>
-		<li><?php _e( 'Set a Certificate Name, and Certificate Background Image.  Optionally configure and add some Certificate Data fields (see the "Editing a Certificate" section for more details)', 'sensei-certificates' ); ?></li>
-		<li><?php _e( 'Next click "Publish" to save your certificate template.  You can also optionally "Preview" the certificate to check your work and field layout.', 'sensei-certificates' ); ?></li>
-		<li><?php _e( 'Next go to Sensei &gt; All Courses and either create a new course or edit an existing one, and assigning the template you created to the course.', 'sensei-certificates' ); ?></li>
-		<li><?php _e( 'Your learners can now earn a Certificate when they have completed a course! Your existing learners who have already completed a course will automatically have certificates generated for them when you installed the plugin.', 'sensei-certificates' ); ?></li>
+		<li><?php esc_html_e( 'First go to Sensei &gt; Certificate Templates and click "Add Certificate Template" to add a template', 'sensei-certificates' ); ?></li>
+		<li><?php esc_html_e( 'Set a Certificate Name, and Certificate Background Image.  Optionally configure and add some Certificate Data fields (see the "Editing a Certificate" section for more details)', 'sensei-certificates' ); ?></li>
+		<li><?php esc_html_e( 'Next click "Publish" to save your certificate template.  You can also optionally "Preview" the certificate to check your work and field layout.', 'sensei-certificates' ); ?></li>
+		<li><?php esc_html_e( 'Next go to Sensei &gt; All Courses and either create a new course or edit an existing one, and assigning the template you created to the course.', 'sensei-certificates' ); ?></li>
+		<li><?php esc_html_e( 'Your learners can now earn a Certificate when they have completed a course! Your existing learners who have already completed a course will automatically have certificates generated for them when you installed the plugin.', 'sensei-certificates' ); ?></li>
 	</ol>
 	<?php
 
