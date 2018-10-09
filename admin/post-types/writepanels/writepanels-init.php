@@ -180,7 +180,7 @@ function certificate_template_private( $post_id, $post ) {
 
 	global $wpdb;
 
-	$wpdb->update( $wpdb->posts, array( 'post_status' => 'private' ), array( 'ID' => $post_id ) );
+	$wpdb->update( $wpdb->posts, array( 'post_status' => 'private' ), array( 'ID' => (int) $post_id ) );
 
 } // End certificate_template_private()
 
@@ -225,35 +225,35 @@ function certificate_templates_wp_font_select( $field ) {
 	// defaults
 	if ( ! $font_size_value && isset( $field['font_size_default'] ) ) $font_size_value = $field['font_size_default'];
 
-	echo '<p class="form-field ' . $field['id'] . '_font_family_field"><label for="' . $field['id'] . '_font_family">' . $field['label'] . '</label><select id="' . $field['id'] . '_font_family" name="' . $field['id'] . '_font_family" class="select short">';
+	echo '<p class="form-field ' . esc_attr( $field['id'] ) . '_font_family_field"><label for="' . esc_attr( $field['id'] ) . '_font_family">' . esc_html( $field['label'] ) . '</label><select id="' . esc_attr( $field['id'] ) . '_font_family" name="' . esc_attr( $field['id'] ) . '_font_family" class="select short">';
 
 	foreach ( $field['options'] as $key => $value ) {
 
-		echo '<option value="' . $key . '" ';
+		echo '<option value="' . esc_attr( $key ) . '" ';
 		selected( $font_family_value, $key );
-		echo '>' . $value . '</option>';
+		echo '>' . esc_html( $value ) . '</option>';
 
 	} // End For Loop
 
 	echo '</select> ';
 
-	echo '<input type="text" style="width:auto;margin-left:10px;" size="2" name="' . $field['id'] . '_font_size" id="' . $field['id'] . '_font_size" value="' . esc_attr( $font_size_value ) . '" placeholder="' . __( 'Size', 'sensei-certificates' ) . '" /> ';
+	echo '<input type="text" style="width:auto;margin-left:10px;" size="2" name="' . esc_attr( $field['id'] ) . '_font_size" id="' . esc_attr( $field['id'] ) . '_font_size" value="' . esc_attr( $font_size_value ) . '" placeholder="' . esc_attr__( 'Size', 'sensei-certificates' ) . '" /> ';
 
-	echo '<label for="' . $field['id'] . '_font_style_b" style="width:auto;margin:0 5px 0 10px;">' . __( 'Bold', 'sensei-certificates' ) . '</label><input type="checkbox" class="checkbox" style="margin-top:4px;" name="' . $field['id'] . '_font_style_b" id="' . $field['id'] . '_font_style_b" value="yes" ';
+	echo '<label for="' . esc_attr( $field['id'] ) . '_font_style_b" style="width:auto;margin:0 5px 0 10px;">' . esc_html__( 'Bold', 'sensei-certificates' ) . '</label><input type="checkbox" class="checkbox" style="margin-top:4px;" name="' . esc_attr( $field['id'] ) . '_font_style_b" id="' . esc_attr( $field['id'] ) . '_font_style_b" value="yes" ';
 	checked( false !== strpos( $font_style_value, 'B' ), true );
 	echo ' /> ';
 
-	echo '<label for="' . $field['id'] . '_font_style_i" style="width:auto;margin:0 5px 0 10px;">' . __( 'Italic', 'sensei-certificates' ) . '</label><input type="checkbox" class="checkbox" style="margin-top:4px;" name="' . $field['id'] . '_font_style_i" id="' . $field['id'] . '_font_style_i" value="yes" ';
+	echo '<label for="' . esc_attr( $field['id'] ) . '_font_style_i" style="width:auto;margin:0 5px 0 10px;">' . esc_html__( 'Italic', 'sensei-certificates' ) . '</label><input type="checkbox" class="checkbox" style="margin-top:4px;" name="' . esc_attr( $field['id'] ) . '_font_style_i" id="' . esc_attr( $field['id'] ) . '_font_style_i" value="yes" ';
 	checked( false !== strpos( $font_style_value, 'I' ), true );
 	echo ' /> ';
 
 	if ( '_certificate' != $field['id'] ) {
 
-		echo '<label for="' . $field['id'] . '_font_style_c" style="width:auto;margin:0 5px 0 10px;">' . __( 'Center Align', 'sensei-certificates' ) . '</label><input type="checkbox" class="checkbox" style="margin-top:4px;" name="' . $field['id'] . '_font_style_c" id="' . $field['id'] . '_font_style_c" value="yes" ';
+		echo '<label for="' . esc_attr( $field['id'] ) . '_font_style_c" style="width:auto;margin:0 5px 0 10px;">' . esc_html__( 'Center Align', 'sensei-certificates' ) . '</label><input type="checkbox" class="checkbox" style="margin-top:4px;" name="' . esc_attr( $field['id'] ) . '_font_style_c" id="' . esc_attr( $field['id'] ) . '_font_style_c" value="yes" ';
 		checked( false !== strpos( $font_style_value, 'C' ), true );
 		echo ' /> ';
 
-		echo '<label for="' . $field['id'] . '_font_style_o" style="width:auto;margin:0 5px 0 10px;">' . __( 'Border', 'sensei-certificates' ) . '</label><input type="checkbox" class="checkbox" style="margin-top:4px;" name="' . $field['id'] . '_font_style_o" id="' . $field['id'] . '_font_style_o" value="yes" ';
+		echo '<label for="' . esc_attr( $field['id'] ) . '_font_style_o" style="width:auto;margin:0 5px 0 10px;">' . esc_html__( 'Border', 'sensei-certificates' ) . '</label><input type="checkbox" class="checkbox" style="margin-top:4px;" name="' . esc_attr( $field['id'] ) . '_font_style_o" id="' . esc_attr( $field['id'] ) . '_font_style_o" value="yes" ';
 		checked( false !== strpos( $font_style_value, 'O' ), true );
 		echo ' /> ';
 
@@ -307,17 +307,17 @@ function certificate_templates_wp_position_picker( $field ) {
 
 	if ( ! isset( $field['value'] ) ) $field['value'] = '';
 
-	echo '<p class="form-field"><label>' . $field['label'] . '</label><input type="button" id="' . $field['id'] . '" class="set_position button" value="' . esc_attr__( 'Set Position', 'sensei-certificates' ) . '" style="width:auto;" /> <input type="button" id="remove_' . $field['id'] . '" class="remove_position button" value="' . esc_attr__( 'Remove Position', 'sensei-certificates' ) . '" style="width:auto;' . ( $field['value'] ? '' : 'display:none' ) . ';margin-left:7px;" />';
+	echo '<p class="form-field"><label>' . esc_html( $field['label'] ) . '</label><input type="button" id="' . esc_attr( $field['id'] ) . '" class="set_position button" value="' . esc_attr__( 'Set Position', 'sensei-certificates' ) . '" style="width:auto;" /> <input type="button" id="remove_' . esc_attr( $field['id'] ) . '" class="remove_position button" value="' . esc_attr__( 'Remove Position', 'sensei-certificates' ) . '" style="width:auto;' . ( $field['value'] ? '' : 'display:none' ) . ';margin-left:7px;" />';
 
 	if ( isset( $field['description'] ) && $field['description'] ) {
 
 		if ( isset( $field['desc_tip'] ) ) {
 
-			echo '<img class="help_tip" data-tip="' . esc_attr( $field['description'] ) . '" src="' . $woothemes_sensei_certificates->plugin_url() . '/assets/images/help.png" />';
+			echo '<img class="help_tip" data-tip="' . esc_attr( $field['description'] ) . '" src="' . esc_url( $woothemes_sensei_certificates->plugin_url() . '/assets/images/help.png' ). '" />';
 
 		} else {
 
-			echo '<span class="description">' . $field['description'] . '</span>';
+			echo '<span class="description">' . esc_html( $field['description'] ) . '</span>';
 
 		} // End If Statement
 
@@ -355,13 +355,13 @@ function certificates_wp_text_input( $field ) {
 		foreach ( $field['custom_attributes'] as $attribute => $value )
 			$custom_attributes[] = esc_attr( $attribute ) . '="' . esc_attr( $value ) . '"';
 
-	echo '<p class="form-field ' . esc_attr( $field['id'] ) . '_field ' . esc_attr( $field['wrapper_class'] ) . '"><label for="' . esc_attr( $field['id'] ) . '">' . wp_kses_post( $field['label'] ) . '</label><input type="' . esc_attr( $field['type'] ) . '" class="' . esc_attr( $field['class'] ) . '" name="' . esc_attr( $field['name'] ) . '" id="' . esc_attr( $field['id'] ) . '" value="' . esc_attr( $field['value'] ) . '" placeholder="' . esc_attr( $field['placeholder'] ) . '" ' . implode( ' ', $custom_attributes ) . ' /> ';
+	echo '<p class="form-field ' . esc_attr( $field['id'] ) . '_field ' . esc_attr( $field['wrapper_class'] ) . '"><label for="' . esc_attr( $field['id'] ) . '">' . wp_kses_post( $field['label'] ) . '</label><input type="' . esc_attr( $field['type'] ) . '" class="' . esc_attr( $field['class'] ) . '" name="' . esc_attr( $field['name'] ) . '" id="' . esc_attr( $field['id'] ) . '" value="' . esc_attr( $field['value'] ) . '" placeholder="' . esc_attr( $field['placeholder'] ) . '" ' . esc_attr( implode( ' ', $custom_attributes ) ) . ' /> ';
 
 	if ( ! empty( $field['description'] ) ) {
 
 		if ( isset( $field['desc_tip'] ) ) {
 
-			echo '<img class="help_tip" data-tip="' . esc_attr( $field['description'] ) . '" src="' . $woothemes_sensei_certificates->plugin_url() . '/assets/images/help.png" height="16" width="16" />';
+			echo '<img class="help_tip" data-tip="' . esc_attr( $field['description'] ) . '" src="' . esc_url( $woothemes_sensei_certificates->plugin_url() . '/assets/images/help.png' ) . '" height="16" width="16" />';
 
 		} else {
 
@@ -421,7 +421,7 @@ function certificates_wp_textarea_input( $field ) {
 
 		if ( isset( $field['desc_tip'] ) ) {
 
-			echo '<img class="help_tip" data-tip="' . esc_attr( $field['description'] ) . '" src="' . $woothemes_sensei_certificates->plugin_url() . '/assets/images/help.png" height="16" width="16" />';
+			echo '<img class="help_tip" data-tip="' . esc_attr( $field['description'] ) . '" src="' . esc_url( $woothemes_sensei_certificates->plugin_url() . '/assets/images/help.png' ) . '" height="16" width="16" />';
 
 		} else {
 
@@ -494,7 +494,7 @@ function certificates_wp_select( $field ) {
 
 		if ( isset( $field['desc_tip'] ) ) {
 
-			echo '<img class="help_tip" data-tip="' . esc_attr( $field['description'] ) . '" src="' . $woothemes_sensei_certificates->plugin_url() . '/assets/images/help.png" height="16" width="16" />';
+			echo '<img class="help_tip" data-tip="' . esc_attr( $field['description'] ) . '" src="' . esc_url( $woothemes_sensei_certificates->plugin_url() . '/assets/images/help.png' ) . '" height="16" width="16" />';
 
 		} else {
 
