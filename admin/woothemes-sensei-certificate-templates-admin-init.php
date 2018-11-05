@@ -1,10 +1,9 @@
 <?php
 /**
- * WooThemes Sensei Certificates Templates Admin
+ * Sensei Certificates Templates Admin
  *
  * @package   woothemes-sensei-certificates/Admin
- * @author    WooThemes
- * @copyright Copyright (c) 2012-2013, WooThemes, Inc.
+ * @author    Automattic
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
@@ -144,7 +143,7 @@ function sensei_certificate_template_admin_help_tab() {
  * @since 1.0.0
  */
 function sensei_certificate_template_certificate_help_tab_content() {
-	
+
 	?>
 	<p><strong><?php _e( 'Certificate Name', 'sensei-certificates' ) ?></strong> - <?php _e( 'All certificate templates must be given a name.  This will be used to identify the certificate within the admin.', 'sensei-certificates' ) ?></p>
 	<p><strong><?php _e( 'Certificate Background Image', 'sensei-certificates' ) ?></strong> - <?php _e( 'This is the main image for your certificate, and will be used to configure the layout of the various text fields defined in the Certificate Data panel.', 'sensei-certificates' ) ?></p>
@@ -162,7 +161,7 @@ function sensei_certificate_template_certificate_help_tab_content() {
  * @since 1.0.0
  */
 function sensei_certificate_template_how_to_help_tab_content() {
-	
+
 	?>
 	<p><strong><?php _e( 'How to Create Your First Certificate Template ', 'sensei-certificates' ) ?></strong></p>
 	<ol>
@@ -210,7 +209,7 @@ function sensei_certificate_template_admin_enqueue_scripts() {
 		$sensei_certificate_templates_params = array( 'primary_image_width' => '', 'primary_image_height' => '' );
 
 		if ( 'certificate_template' == $screen->id ) {
-			
+
 			// get the primary image dimensions (if any) which are needed for the page script
 			$attachment = null;
 			$image_ids = get_post_meta( $post->ID, '_image_ids', true );

@@ -7,7 +7,7 @@
  * @package WordPress
  * @subpackage Sensei
  * @category Extension
- * @author WooThemes
+ * @author Automattic
  * @since 1.0.0
  *
  */
@@ -52,7 +52,7 @@ function certificate_template_image_meta_box() {
     if ( is_array( $image_ids ) && count( $image_ids ) > 0 ) {
 
         if( is_numeric( $image_ids[0] ) ){
-	
+
             $image_id = $image_ids[0];
             $image_src = wp_get_attachment_url( $image_id );
             $attachment = wp_get_attachment_metadata( $image_id );

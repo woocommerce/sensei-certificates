@@ -1,6 +1,6 @@
 <?php
 /**
- * WooThemes Sensei Dependency Checker
+ * Sensei Dependency Checker
  *
  * Checks if Sensei is enabled
  */
