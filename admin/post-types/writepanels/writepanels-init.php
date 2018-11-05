@@ -7,7 +7,7 @@
  * @package WordPress
  * @subpackage Sensei
  * @category Extension
- * @author WooThemes
+ * @author Automattic
  * @since 1.0.0
  *
  */

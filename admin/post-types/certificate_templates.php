@@ -7,7 +7,7 @@
  * @package WordPress
  * @subpackage Sensei
  * @category Extension
- * @author WooThemes
+ * @author Automattic
  * @since 1.0.0
  *
  */
@@ -107,7 +107,7 @@ function certificate_template_custom_certificate_columns( $column ) {
 
 	switch ( $column ) {
 		case 'thumb':
-			
+
 			$edit_link = get_edit_post_link( $post->ID );
 			if ( has_post_thumbnail( $post->ID ) ) {
 				$image = get_the_post_thumbnail( $post->ID, 'thumb' );
@@ -117,7 +117,7 @@ function certificate_template_custom_certificate_columns( $column ) {
 		break;
 
 		case 'name':
-			
+
 			$edit_link = get_edit_post_link( $post->ID );
 			$title = _draft_or_post_title();
 
