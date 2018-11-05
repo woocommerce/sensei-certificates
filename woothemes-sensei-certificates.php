@@ -5,7 +5,7 @@
  * Description: Reward your students by providing them with printable PDF certificates upon course completion.
  * Version: 1.1.0
  * Author: Automattic
- * Author URI: https://automattic.com/
+ * Author URI: https://automattic.com
  * License: GPLv2+
  */
 

@@ -131,7 +131,7 @@ function sensei_certificate_template_admin_help_tab() {
 
 	$screen->set_help_sidebar(
 		'<p><strong>' . __( 'For more information:', 'sensei-certificates' ) . '</strong></p>' .
-		'<p><a href="http://docs.woothemes.com/document/sensei-certificates/" target="_blank">' . __( 'Certificates Docs', 'sensei-certificates' ) . '</a></p>'
+		'<p><a href="https://senseilms.com/documentation/sensei-certificates/" target="_blank">' . __( 'Certificates Docs', 'sensei-certificates' ) . '</a></p>'
 	);
 
 } // End sensei_certificate_template_admin_help_tab()
