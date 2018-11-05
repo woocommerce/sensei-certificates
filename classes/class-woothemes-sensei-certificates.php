@@ -495,7 +495,7 @@ class WooThemes_Sensei_Certificates {
 			$certificate_id = $query->posts[0]->ID;
 
 		} // End If Statement
-
+		
 		wp_reset_query();
 
 		if ( 0 < intval( $certificate_id ) ) {

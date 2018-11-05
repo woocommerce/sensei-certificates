@@ -354,19 +354,17 @@ class WooThemes_Sensei_Certificate_Templates {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param string $path optional absolute path to the directory, if
-	 *        not supplied the PDF will be streamed as a downloadable file (used
-	 *        for admin previewing of the PDF)
-	 *
+	 * 
 	 * @return mixed nothing if a $path is supplied, otherwise a PDF download
 	 */
-	public function generate_pdf( $path = '' ) {
+	public function generate_pdf() {
 
 		global $current_user, $post;
 
 		// include the pdf library
 		$root_dir = dirname( __FILE__ ) . DIRECTORY_SEPARATOR;
 		require_once( $root_dir . '/../lib/tfpdf/tfpdf.php' );
+		require_once( $root_dir . '/../lib/tfpdf/wp-tfpdf.php' );
 
 		$image = wp_get_attachment_metadata( $this->get_image_id() );
 
@@ -380,7 +378,7 @@ class WooThemes_Sensei_Certificate_Templates {
 		// Create the pdf
 		// TODO: we're assuming a standard DPI here of where 1 point = 1/72 inch = 1 pixel
 		// When writing text to a Cell, the text is vertically-aligned in the middle
-		$fpdf = new tFPDF( $orientation, 'pt', array( $image['width'], $image['height'] ) );
+		$fpdf = new WP_tFPDF( $orientation, 'pt', array( $image['width'], $image['height'] ) );
 
 		$fpdf->AddPage();
 		$fpdf->SetAutoPageBreak( false );
