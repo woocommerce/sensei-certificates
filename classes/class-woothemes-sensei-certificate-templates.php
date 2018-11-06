@@ -359,7 +359,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	 */
 	public function generate_pdf() {
 
-		global $current_user, $post;
+		global $current_user, $post, $wp_filesystem;
 
 		// include the pdf library
 		$root_dir = dirname( __FILE__ ) . DIRECTORY_SEPARATOR;
@@ -396,7 +396,8 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		// set the certificate image
 		$upload_dir = wp_upload_dir();
-		$fpdf->Image( $upload_dir['basedir'] . '/' . $image['file'], 0, 0, $image['width'], $image['height'] );
+		$fpdf->ImageWrapper( $wp_filesystem->get_contents( $upload_dir['basedir'] . '/' . $image['file'] ), 0, 0, $image['width'], $image['height'],'', '', basename( $image['file'] ) );
+		
 
 		// this is useful for displaying the text cell borders when debugging the PDF layout,
 		//  though keep in mind that we translate the box position to align the text to bottom

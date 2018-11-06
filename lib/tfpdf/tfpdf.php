@@ -1,12 +1,14 @@
 <?php
 /*******************************************************************************
-* tFPDF (based on FPDF 1.7)                                                    *
-*                                                                              *
-* Version:  1.24                                                               *
-* Date:     2011-09-24                                                         *
-* Author:   Ian Back <ianb@bpm1.com>                                           *
-* License:  LGPL                                                               *
-*******************************************************************************/
+ * tFPDF (based on FPDF 1.7)                                                    *
+ *                                                                              *
+ * Version:  1.24                                                               *
+ * Date:     2011-09-24                                                         *
+ * Author:   Ian Back <ianb@bpm1.com>                                           *
+ * License:  LGPL                                                               *
+ *******************************************************************************/
+
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_read_fwrite, WordPress.WP.AlternativeFunctions.file_system_read_fread, WordPress.WP.AlternativeFunctions.file_system_read_fopen, WordPress.WP.AlternativeFunctions.file_system_read_fclose, WordPress.VIP.FileSystemWritesDisallow
 
 define('tFPDF_VERSION','1.24');
 

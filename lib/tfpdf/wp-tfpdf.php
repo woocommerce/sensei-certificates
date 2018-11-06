@@ -5,7 +5,7 @@
  * 
  * Parent's coding standards are preserved deliberately.
  */
-
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_read_fwrite, WordPress.WP.AlternativeFunctions.file_system_read_fread, WordPress.WP.AlternativeFunctions.file_system_read_fopen, WordPress.WP.AlternativeFunctions.file_system_read_fclose, WordPress.VIP.FileSystemWritesDisallow
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 require_once ABSPATH . '/wp-admin/includes/file.php';
@@ -99,5 +99,36 @@ class WP_tFPDF extends tFPDF {
 			$this->Error('Incorrect output destination: '.$dest);
 	}
 	return '';
-}
+	}
+
+	/**
+	 * This is a thin wrapper around tFPDF's Image method. 
+	 * In certain cases direct access to the uploads folder is prohibited,
+	 * or uploaded file might not be physically present (when using WP_Filesystem_SSH2, WP_Filesystem_ftpsockets, etc)
+	 * We get around that by creating the in the system's temporary folder, performing the necessary operations on that file, and then deleting it.
+	 * 
+	 *
+	 * @param string $filestring contens of the file as a string
+	 * @param [type] $x
+	 * @param [type] $y
+	 * @param integer $w
+	 * @param integer $h
+	 * @param string $type
+	 * @param string $link
+	 * @param string $filename
+	 * @return void
+	 */
+	function ImageWrapper( $filestring, $x = null, $y = null, $w = 0, $h = 0, $type='', $link='', $filename = '' ) {
+		if ( ! is_writable( sys_get_temp_dir() ) ) {
+			$this->Error( 'Unable to access the file system' );
+		}
+
+		$file = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $filename;
+		$fhandle = fopen( $file, 'wb');
+		fwrite( $fhandle, $filestring );
+		fclose( $fhandle );
+		$this->Image( $file, $x, $y, $w, $h, $type, $link );
+		unlink( $file );
+	}
+
 }
