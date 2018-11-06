@@ -1061,8 +1061,8 @@ class WooThemes_Sensei_Certificates {
 			<div id="certificates_user_settings">
 				<form class="certificates_user_meta" method="POST" action="">
 		            <input type="hidden" name="<?php echo esc_attr( 'woothemes_sensei_certificates_user_meta_save_noonce' ); ?>" id="<?php echo esc_attr( 'woothemes_sensei_certificates_user_meta_save_noonce' ); ?>" value="<?php echo esc_attr( wp_create_nonce( 'woothemes_sensei_certificates_user_meta_save_noonce' ) ); ?>" />
-		            <p>
-		            	 <input type="checkbox" value="yes" name="certificates_user_public_view" <?php checked( $view_setting, true ); ?>/> <?php esc_html_( 'Allow my Certificates to be publicly viewed', 'sensei-certificates' ); ?> <input type="submit" name="certificates_user_meta_save" class="certificates-submit complete" value="<?php echo esc_attr( apply_filters( 'sensei_certificates_save_meta_button', __( 'Save', 'sensei-certificates' ) ) ); ?>"/>
+								<p>
+									<input type="checkbox" value="yes" name="certificates_user_public_view" <?php checked( $view_setting, true ); ?>/> <?php esc_html_e( 'Allow my Certificates to be publicly viewed', 'sensei-certificates' ); ?> <input type="submit" name="certificates_user_meta_save" class="certificates-submit complete" value="<?php echo esc_attr( apply_filters( 'sensei_certificates_save_meta_button', __( 'Save', 'sensei-certificates' ) ) ); ?>"/>
 		            </p>
 		        </form>
 	    	</div>
