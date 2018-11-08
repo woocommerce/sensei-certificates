@@ -359,12 +359,12 @@ class WooThemes_Sensei_Certificate_Templates {
 	 */
 	public function generate_pdf() {
 
-		global $current_user, $post, $wp_filesystem;
+		global $current_user, $post;
 
 		// include the pdf library
 		$root_dir = dirname( __FILE__ ) . DIRECTORY_SEPARATOR;
 		require_once( $root_dir . '/../lib/tfpdf/tfpdf.php' );
-		require_once( $root_dir . '/../lib/tfpdf/wp-tfpdf.php' );
+		require_once( $root_dir . 'class-wp-tfpdf.php' );
 
 		$image = wp_get_attachment_metadata( $this->get_image_id() );
 

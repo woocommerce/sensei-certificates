@@ -31,9 +31,9 @@ class WP_tFPDF extends tFPDF {
 		if ( $this->state < 3 )
 			$this->Close();
 
-		$dest = strtoupper($dest);
+		$dest = strtoupper( $dest );
 		if ( $dest === '' ) {
-			if( $name === '') {
+			if ( $name === '' ) {
 				$name = 'doc.pdf';
 				$dest = 'I';
 			} else {

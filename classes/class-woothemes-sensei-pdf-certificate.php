@@ -106,7 +106,7 @@ class WooThemes_Sensei_PDF_Certificate {
 		// include the pdf library
 		$root_dir = dirname( __FILE__ ) . DIRECTORY_SEPARATOR;
 		require_once( $root_dir . '../lib/tfpdf/tfpdf.php' );
-		require_once( $root_dir . '../lib/tfpdf/wp-tfpdf.php' );
+		require_once( $root_dir . 'class-wp-tfpdf.php' );
 
 		do_action( 'sensei_certificates_set_background_image', $this );
 
@@ -115,7 +115,7 @@ class WooThemes_Sensei_PDF_Certificate {
 		} else {
 			$image = apply_filters( 'woothemes_sensei_certificates_background', $GLOBALS['woothemes_sensei_certificates']->plugin_path . 'assets/images/certificate_template.png' );
 		} // End If Statement
-		
+
 		$image_attr = getimagesize( $image );
 		if ( $image_attr[0] > $image_attr[1] ) {
 			$orientation = 'L';
