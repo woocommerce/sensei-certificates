@@ -83,7 +83,7 @@ if ( ! class_exists( 'WooThemes_Updater' ) && ! function_exists( 'woothemes_upda
 				$message = '<a href="' . esc_url( admin_url( $activate_url ) ) . '">Activate the WooThemes Updater plugin</a> to get updates for your WooThemes plugins.';
 			}
 		}
-		echo '<div class="updated fade"><p>' . $message . '</p></div>' . "\n";
+		echo '<div class="updated fade"><p>' . wp_kses_post( $message ) . '</p></div>' . "\n";
 	}
 
 	add_action( 'admin_notices', 'woothemes_updater_notice' );

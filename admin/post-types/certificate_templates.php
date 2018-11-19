@@ -111,7 +111,7 @@ function certificate_template_custom_certificate_columns( $column ) {
 			$edit_link = get_edit_post_link( $post->ID );
 			if ( has_post_thumbnail( $post->ID ) ) {
 				$image = get_the_post_thumbnail( $post->ID, 'thumb' );
-				echo '<a href="' . $edit_link . '">' . $image . '</a>';
+				echo '<a href="' . esc_url( $edit_link ) . '">' . wp_kses_post( $image ) . '</a>';
 			} // End If Statement
 
 		break;
@@ -124,11 +124,11 @@ function certificate_template_custom_certificate_columns( $column ) {
 			$post_type_object = get_post_type_object( $post->post_type );
 			$can_edit_post = current_user_can( $post_type_object->cap->edit_post, $post->ID );
 
-			echo '<strong><a class="row-title" href="' . $edit_link . '">' . $title . '</a>';
+			echo '<strong><a class="row-title" href="' . esc_url( $edit_link ) . '">' . esc_html( $title ) . '</a>';
 
 			// display post states a little more selectively than _post_states( $post );
 			if ( 'draft' == $post->post_status ) {
-				echo " - <span class='post-state'>" . __( 'Draft', 'sensei-certificates' ) . '</span>';
+				echo " - <span class='post-state'>" . esc_html__( 'Draft', 'sensei-certificates' ) . '</span>';
 			} // End If Statement
 
 			echo '</strong>';
@@ -156,7 +156,7 @@ function certificate_template_custom_certificate_columns( $column ) {
 
 			foreach ( $actions as $action => $link ) {
 				( $action_count - 1 == $i ) ? $sep = '' : $sep = ' | ';
-				echo '<span class="' . $action . '">' . $link . $sep . '</span>';
+				echo '<span class="' . esc_attr( $action ) . '">' . esc_html( $link . $sep ) . '</span>';
 				$i++;
 			} // End For Loop
 			echo '</div>';

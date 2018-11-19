@@ -212,16 +212,16 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		switch ( $column_name ) {
 			case "learner" :
-				echo '<a href="' . add_query_arg( array( 'page' => 'sensei_analysis', 'user' => intval( $user_id ), 'course_id' => intval( $course_id ) ), admin_url( 'edit.php?post_type=lesson' ) ) . '">'.$user->user_login.'</a>';
+				echo '<a href="' . esc_url( add_query_arg( array( 'page' => 'sensei_analysis', 'user' => intval( $user_id ), 'course_id' => intval( $course_id ) ), admin_url( 'edit.php?post_type=lesson' ) ) ) . '">' . esc_html( $user->user_login ) . '</a>';
 				break;
 			case "course" :
-				echo '<a href="' . add_query_arg( array( 'page' => 'sensei_analysis', 'course_id' => intval( $course_id ) ), admin_url( 'edit.php?post_type=lesson' ) ) . '">'.$course->post_title.'</a>';
+				echo '<a href="' . esc_url( add_query_arg( array( 'page' => 'sensei_analysis', 'course_id' => intval( $course_id ) ), admin_url( 'edit.php?post_type=lesson' ) ) ) . '">' . esc_html( $course->post_title ) . '</a>';
 				break;
 			case "date_completed" :
-				echo $course_end_date;
+				echo wp_kses_post( $course_end_date );
 				break;
 			case "actions" :
-				echo '<a href="' . add_query_arg( array( 'certificate' => '1', 'hash' => $certificate_hash ), site_url() ) . '" target="_blank">'. __( 'View Certificate', 'sensei-certificates' ) . '</a>';
+				echo '<a href="' . esc_url( add_query_arg( array( 'certificate' => '1', 'hash' => $certificate_hash ), site_url() ) ) . '" target="_blank">' . esc_html__( 'View Certificate', 'sensei-certificates' ) . '</a>';
 				break;
 		} // End Switch Statement
 
@@ -895,7 +895,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 				if ( 0 < absint( $course_certificate_template_id ) ) {
 
-					echo '<a href="' . esc_url( get_edit_post_link( absint( $course_certificate_template_id ) ) ) . '" title="' . esc_attr( sprintf( __( 'Edit %s', 'sensei-certificates' ), get_the_title( absint( $course_certificate_template_id ) ) ) ) . '">' . get_the_title( absint( $course_certificate_template_id ) ) . '</a>';
+					echo '<a href="' . esc_url( get_edit_post_link( absint( $course_certificate_template_id ) ) ) . '" title="' . esc_attr( sprintf( __( 'Edit %s', 'sensei-certificates' ), get_the_title( absint( $course_certificate_template_id ) ) ) ) . '">' . esc_html( get_the_title( absint( $course_certificate_template_id ) ) ) . '</a>';
 
 					} // End If Statement
 

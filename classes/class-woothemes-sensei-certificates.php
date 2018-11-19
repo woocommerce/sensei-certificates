@@ -334,16 +334,16 @@ class WooThemes_Sensei_Certificates {
 
 		switch ( $column_name ) {
 			case "learner" :
-				echo '<a href="' . add_query_arg( array( 'page' => 'sensei_analysis', 'user_id' => intval( $user_id ), 'course_id' => intval( $course_id ) ), admin_url( 'admin.php' ) ) . '">' . $user->display_name . ' (' . $user->user_login . ')</a>';
+				echo '<a href="' . esc_url( add_query_arg( array( 'page' => 'sensei_analysis', 'user_id' => intval( $user_id ), 'course_id' => intval( $course_id ) ), admin_url( 'admin.php' ) ) ) . '">' . esc_html( "{$user->display_name} ({$user->user_login})" ) . '</a>';
 				break;
 			case "course" :
-				echo '<a href="' . add_query_arg( array( 'page' => 'sensei_analysis', 'course_id' => intval( $course_id ) ), admin_url( 'admin.php' ) ) . '">' . $course->post_title . '</a>';
+				echo '<a href="' . esc_url( add_query_arg( array( 'page' => 'sensei_analysis', 'course_id' => intval( $course_id ) ), admin_url( 'admin.php' ) ) ) . '">' . esc_html( $course->post_title ) . '</a>';
 				break;
 			case "date_completed" :
-				echo $course_end_date;
+				echo wp_kses_post( $course_end_date );
 				break;
 			case "actions" :
-				echo '<a href="' . get_permalink( $post_ID ) . '" target="_blank">'. __( 'View Certificate', 'sensei-certificates' ) . '</a>';
+				echo '<a href="' . esc_url( get_permalink( $post_ID ) ) . '" target="_blank">'. esc_html__( 'View Certificate', 'sensei-certificates' ) . '</a>';
 				break;
 		} // End Switch Statement
 
@@ -460,7 +460,7 @@ class WooThemes_Sensei_Certificates {
 
 		} else {
 
-			wp_die( __( 'You are not allowed to view this Certificate.', 'sensei-certificates' ), __( 'Certificate Error', 'sensei-certificates' ) );
+			wp_die( esc_html__( 'You are not allowed to view this Certificate.', 'sensei-certificates' ), esc_html__( 'Certificate Error', 'sensei-certificates' ) );
 
 		} // End If Statement
 
@@ -610,7 +610,7 @@ class WooThemes_Sensei_Certificates {
 
 		} else {
 
-			wp_die( __( 'The certificate you are searching for does not exist.', 'sensei-certificates' ), __( 'Certificate Error', 'sensei-certificates' ) );
+			wp_die( esc_html__( 'The certificate you are searching for does not exist.', 'sensei-certificates' ), esc_html__( 'Certificate Error', 'sensei-certificates' ) );
 
 		} // End If Statement
 
@@ -1061,8 +1061,8 @@ class WooThemes_Sensei_Certificates {
 			<div id="certificates_user_settings">
 				<form class="certificates_user_meta" method="POST" action="">
 		            <input type="hidden" name="<?php echo esc_attr( 'woothemes_sensei_certificates_user_meta_save_noonce' ); ?>" id="<?php echo esc_attr( 'woothemes_sensei_certificates_user_meta_save_noonce' ); ?>" value="<?php echo esc_attr( wp_create_nonce( 'woothemes_sensei_certificates_user_meta_save_noonce' ) ); ?>" />
-		            <p>
-		            	 <input type="checkbox" value="yes" name="certificates_user_public_view" <?php checked( $view_setting, true ); ?>/> <?php _e( 'Allow my Certificates to be publicly viewed', 'sensei-certificates' ); ?> <input type="submit" name="certificates_user_meta_save" class="certificates-submit complete" value="<?php echo apply_filters( 'sensei_certificates_save_meta_button', __( 'Save', 'sensei-certificates' ) ); ?>"/>
+								<p>
+									<input type="checkbox" value="yes" name="certificates_user_public_view" <?php checked( $view_setting, true ); ?>/> <?php esc_html_e( 'Allow my Certificates to be publicly viewed', 'sensei-certificates' ); ?> <input type="submit" name="certificates_user_meta_save" class="certificates-submit complete" value="<?php echo esc_attr( apply_filters( 'sensei_certificates_save_meta_button', __( 'Save', 'sensei-certificates' ) ) ); ?>"/>
 		            </p>
 		        </form>
 	    	</div>
@@ -1079,9 +1079,8 @@ class WooThemes_Sensei_Certificates {
 	 * @return void
 	 */
 	public function certificates_user_settings_save() {
-
 		global $current_user;
-
+		// phpcs:ignore WordPress.VIP.ValidatedSanitizedInput.InputNotSanitized
 		if ( is_user_logged_in() && isset( $_POST['certificates_user_meta_save'] ) && wp_verify_nonce( $_POST[ 'woothemes_sensei_certificates_user_meta_save_noonce' ], 'woothemes_sensei_certificates_user_meta_save_noonce' ) ) {
 
 			// Update the user meta with the setting
@@ -1091,13 +1090,13 @@ class WooThemes_Sensei_Certificates {
 			if ( 0  < $current_user_id ) {
 
 				$view_setting = false;
-				if ( isset( $_POST['certificates_user_public_view'] ) && 'yes' == esc_html( $_POST['certificates_user_public_view'] ) ) {
+				if ( isset( $_POST['certificates_user_public_view'] ) && 'yes' === sanitize_key( $_POST['certificates_user_public_view'] ) ) {
 					$view_setting = true;
 				} // End If Statement
 
 				$update_success = update_user_option( $current_user_id, 'sensei_certificates_view_by_public', $view_setting );
 
-				$this->messages = '<div class="sensei-message tick">' . apply_filters( 'sensei_certificates_user_settings_save', __( 'Your Certificates Public View Settings Saved Successfully.', 'sensei-certificates' ) ) . '</div>';
+				$this->messages = '<div class="sensei-message tick">' . esc_html( apply_filters( 'sensei_certificates_user_settings_save', __( 'Your Certificates Public View Settings Saved Successfully.', 'sensei-certificates' ) ) ) . '</div>';
 
 			} // End If Statement
 
