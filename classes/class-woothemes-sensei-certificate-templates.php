@@ -378,7 +378,21 @@ class WooThemes_Sensei_Certificate_Templates {
 		// Create the pdf
 		// TODO: we're assuming a standard DPI here of where 1 point = 1/72 inch = 1 pixel
 		// When writing text to a Cell, the text is vertically-aligned in the middle
-		$fpdf = new WP_tFPDF( $orientation, 'pt', array( $image['width'], $image['height'] ) );
+		$fpdf = null;
+
+		/**
+		 * Enable or disable the use of `WP_Filesystem` (disabled by default).
+		 * Note that currently only direct filesystem access or stored FTP
+		 * credentials are supported. The FTP credentials request form is not
+		 * supported.
+		 *
+		 * @return bool
+		 */
+		if ( apply_filters( 'sensei_certificates_use_wp_filesystem', false ) ) {
+			$fpdf = new WP_tFPDF( $orientation, 'pt', array( $image['width'], $image['height'] ) );
+		} else {
+			$fpdf = new tFPDF( $orientation, 'pt', array( $image['width'], $image['height'] ) );
+		}
 
 		$fpdf->AddPage();
 		$fpdf->SetAutoPageBreak( false );
@@ -396,7 +410,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		// set the certificate image
 		$upload_dir = wp_upload_dir();
-		$fpdf->Image( ($upload_dir['basedir'] . '/' . $image['file']), 0, 0, $image['width'], $image['height'],'', '' );
+		$fpdf->Image( $upload_dir['basedir'] . '/' . $image['file'], 0, 0, $image['width'], $image['height'] );
 
 
 		// this is useful for displaying the text cell borders when debugging the PDF layout,

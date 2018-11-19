@@ -14,13 +14,19 @@ class WP_tFPDF extends tFPDF {
 		$this->init_wp_filesystem();
 	}
 
-	function init_wp_filesystem() {
+	private function init_wp_filesystem() {
 		global $wp_filesystem;
 
 		if ( ! is_a( $wp_filesystem, 'WP_Filesystem_Base' ) ) {
+			ob_start();
 			$creds = request_filesystem_credentials( site_url() );
-			$fs = wp_filesystem( $creds );
-			return $fs ?: new WP_Error( 'fs-init-error', "Couldn't initialize Filesystem" );
+			ob_end_clean();
+
+			if ( false === $creds ) {
+				return new WP_Error( 'fs-init-error', "Couldn't initialize Filesystem" );
+			} else {
+				return wp_filesystem( $creds );
+			}
 		}
 
 		return true;

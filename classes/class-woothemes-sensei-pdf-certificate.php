@@ -125,7 +125,14 @@ class WooThemes_Sensei_PDF_Certificate {
 		// Create the pdf
 		// TODO: we're assuming a standard DPI here of where 1 point = 1/72 inch = 1 pixel
 		// When writing text to a Cell, the text is vertically-aligned in the middle
-		$fpdf = new WP_tFPDF( $orientation, 'pt', array( $image_attr[0], $image_attr[1] ) );
+		$fpdf = null;
+
+		/* Filter is documented in classes/class-woothemes-sensei-certificate-templates.php */
+		if ( apply_filters( 'sensei_certificates_use_wp_filesystem', false ) ) {
+			$fpdf = new WP_tFPDF( $orientation, 'pt', array( $image_attr[0], $image_attr[1] ) );
+		} else {
+			$fpdf = new tFPDF( $orientation, 'pt', array( $image_attr[0], $image_attr[1] ) );
+		}
 
 		$fpdf->AddPage();
 		$fpdf->SetAutoPageBreak( false );
