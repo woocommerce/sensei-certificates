@@ -49,8 +49,8 @@ class WP_tFPDF extends tFPDF {
 
 		switch( $dest ) {
 			case 'F':
-				$parent_dir = dirname( $name );
 				global $wp_filesystem;
+
 				if ( ! is_a( $wp_filesystem, 'WP_Filesystem_Base' ) ) {
 					$this->Error( 'Unable to access the file system' );
 				}
@@ -63,9 +63,12 @@ class WP_tFPDF extends tFPDF {
 					$this->Error( 'To ensure portability all files must be created in uploads/ folder' );
 				}
 
+				$parent_dir = $wp_filesystem->find_folder( dirname( $name ) );
 				if ( ! $wp_filesystem->is_dir( $parent_dir ) && ! $wp_filesystem->mkdir( $parent_dir ) ) {
 					$this->Error( 'Unable to access the file system' );
 				}
+
+				$name = $parent_dir . DIRECTORY_SEPARATOR . basename( $name );
 
 				// Save the file using WP_Filesystem ensuring that different types of transfers are supported.
 				if( ! $wp_filesystem->put_contents( $name, $this->buffer ) ) {
@@ -101,14 +104,24 @@ class WP_tFPDF extends tFPDF {
 			$this->Error( 'Unable to access the file system' );
 		}
 
-		$filestring = $wp_filesystem->get_contents( $file );
+		$remote_dir = $wp_filesystem->find_folder( dirname( $file ) );
+		if ( ! $remote_dir ) {
+			$this->Error( 'Remote filesystem was not accessible or the folder was not found' );
+		}
 
-		$file = sys_get_temp_dir() . DIRECTORY_SEPARATOR . basename( $file );
-		$fhandle = fopen( $file, 'wb');
+		$remote_path = $remote_dir . DIRECTORY_SEPARATOR . basename( $file );
+		$filestring = $wp_filesystem->get_contents( $remote_path );
+
+		if ( ! $filestring ) {
+			$this->Error( 'Remote file was not found' );
+		}
+
+		$tmp_file = sys_get_temp_dir() . DIRECTORY_SEPARATOR . basename( $file );
+		$fhandle = fopen( $tmp_file, 'wb');
 		fwrite( $fhandle, $filestring );
 		fclose( $fhandle );
-		parent::Image( $file, $x, $y, $w, $h, $type, $link );
-		unlink( $file );
+		parent::Image( $tmp_file, $x, $y, $w, $h, $type, $link );
+		unlink( $tmp_file );
 	}
 
 }
