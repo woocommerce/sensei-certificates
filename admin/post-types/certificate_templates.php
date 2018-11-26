@@ -156,7 +156,7 @@ function certificate_template_custom_certificate_columns( $column ) {
 
 			foreach ( $actions as $action => $link ) {
 				( $action_count - 1 == $i ) ? $sep = '' : $sep = ' | ';
-				echo '<span class="' . esc_attr( $action ) . '">' . esc_html( $link . $sep ) . '</span>';
+				echo '<span class="' . esc_attr( $action ) . '">' . wp_kses_post( $link . $sep ) . '</span>';
 				$i++;
 			} // End For Loop
 			echo '</div>';
