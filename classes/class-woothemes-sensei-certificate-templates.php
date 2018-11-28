@@ -354,13 +354,10 @@ class WooThemes_Sensei_Certificate_Templates {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param string $path optional absolute path to the directory, if
-	 *        not supplied the PDF will be streamed as a downloadable file (used
-	 *        for admin previewing of the PDF)
 	 *
 	 * @return mixed nothing if a $path is supplied, otherwise a PDF download
 	 */
-	public function generate_pdf( $path = '' ) {
+	public function generate_pdf() {
 
 		global $current_user, $post;
 
@@ -380,7 +377,17 @@ class WooThemes_Sensei_Certificate_Templates {
 		// Create the pdf
 		// TODO: we're assuming a standard DPI here of where 1 point = 1/72 inch = 1 pixel
 		// When writing text to a Cell, the text is vertically-aligned in the middle
-		$fpdf = new tFPDF( $orientation, 'pt', array( $image['width'], $image['height'] ) );
+		$fpdf = null;
+
+		/**
+		 * For VIP Go we need to utilize WP_Filesystem to be able to preview/download certificate files.
+		 */
+		if ( defined( 'WPCOM_IS_VIP_ENV' ) && true === WPCOM_IS_VIP_ENV ) {
+			require_once( $root_dir . 'class-vip-tfpdf.php' );
+			$fpdf = new VIP_tFPDF( $orientation, 'pt', array( $image['width'], $image['height'] ) );
+		} else {
+			$fpdf = new tFPDF( $orientation, 'pt', array( $image['width'], $image['height'] ) );
+		}
 
 		$fpdf->AddPage();
 		$fpdf->SetAutoPageBreak( false );
@@ -399,6 +406,7 @@ class WooThemes_Sensei_Certificate_Templates {
 		// set the certificate image
 		$upload_dir = wp_upload_dir();
 		$fpdf->Image( $upload_dir['basedir'] . '/' . $image['file'], 0, 0, $image['width'], $image['height'] );
+
 
 		// this is useful for displaying the text cell borders when debugging the PDF layout,
 		//  though keep in mind that we translate the box position to align the text to bottom
