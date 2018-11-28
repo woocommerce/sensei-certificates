@@ -380,17 +380,9 @@ class WooThemes_Sensei_Certificate_Templates {
 		$fpdf = null;
 
 		/**
-		 * Enable or disable the use of `WP_Filesystem` (disabled by default).
-		 * Note that currently only direct filesystem access or stored FTP
-		 * credentials are supported. The FTP credentials request form is not
-		 * supported.
-		 *
-		 * This is called VIP_tFPDF to clearly signal this is a WordPress.com VIP compatibility related code,
-		 * However, it can be used in other scenarios where direct access to file system is restricted.
-		 *
-		 * @return bool
+		 * For VIP Go we need to utilize WP_Filesystem to be able to preview/download certificate files.
 		 */
-		if ( apply_filters( 'sensei_certificates_vip_compat', false ) ) {
+		if ( defined( 'WPCOM_IS_VIP_ENV' ) && true === WPCOM_IS_VIP_ENV ) {
 			require_once( $root_dir . 'class-vip-tfpdf.php' );
 			$fpdf = new VIP_tFPDF( $orientation, 'pt', array( $image['width'], $image['height'] ) );
 		} else {

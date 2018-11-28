@@ -126,8 +126,10 @@ class WooThemes_Sensei_PDF_Certificate {
 		// When writing text to a Cell, the text is vertically-aligned in the middle
 		$fpdf = null;
 
-		/* Filter is documented in classes/class-woothemes-sensei-certificate-templates.php */
-		if ( apply_filters( 'sensei_certificates_vip_compat', false ) ) {
+		/**
+		 * For VIP Go we need to utilize WP_Filesystem to be able to preview/download certificate files.
+		 */
+		if ( defined( 'WPCOM_IS_VIP_ENV' ) && true === WPCOM_IS_VIP_ENV ) {
 			require_once( $root_dir . 'class-vip-tfpdf.php' );
 			$fpdf = new VIP_tFPDF( $orientation, 'pt', array( $image_attr[0], $image_attr[1] ) );
 		} else {
