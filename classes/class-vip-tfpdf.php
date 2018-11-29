@@ -4,7 +4,9 @@
  * A thin wrapper around the parent class to utilize WP_Filesystem
  */
 // phpcs:disable WordPress.WP.AlternativeFunctions.file_system_read_fwrite, WordPress.WP.AlternativeFunctions.file_system_read_fread, WordPress.WP.AlternativeFunctions.file_system_read_fopen, WordPress.WP.AlternativeFunctions.file_system_read_fclose, WordPress.VIP.FileSystemWritesDisallow
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 require_once ABSPATH . '/wp-admin/includes/file.php';
 
@@ -32,10 +34,11 @@ class VIP_tFPDF extends tFPDF {
 		return true;
 	}
 
-	function Output( $name='', $dest='' ) {
+	function Output( $name = '', $dest = '' ) {
 		// Output PDF to some destination
-		if ( $this->state < 3 )
+		if ( $this->state < 3 ) {
 			$this->Close();
+		}
 
 		$dest = strtoupper( $dest );
 		if ( $dest === '' ) {
@@ -47,7 +50,7 @@ class VIP_tFPDF extends tFPDF {
 			}
 		}
 
-		switch( $dest ) {
+		switch ( $dest ) {
 			case 'F':
 				$parent_dir = dirname( $name );
 				global $wp_filesystem;
@@ -56,7 +59,7 @@ class VIP_tFPDF extends tFPDF {
 				}
 
 				if ( 0 !== validate_file( $name ) ) {
-					$this->Error( "Filename is invalid" );
+					$this->Error( 'Filename is invalid' );
 				}
 
 				if ( false === stristr( $name, wp_upload_dir()['basedir'] ) ) {
@@ -68,7 +71,7 @@ class VIP_tFPDF extends tFPDF {
 				}
 
 				// Save the file using WP_Filesystem ensuring that different types of transfers are supported.
-				if( ! $wp_filesystem->put_contents( $name, $this->buffer ) ) {
+				if ( ! $wp_filesystem->put_contents( $name, $this->buffer ) ) {
 					$this->Error( 'Unable to create output file: ' . basename( $name ) );
 				}
 				break;
@@ -85,14 +88,13 @@ class VIP_tFPDF extends tFPDF {
 	 * or uploaded file might not be physically present (when using WP_Filesystem_SSH2, WP_Filesystem_ftpsockets, etc)
 	 * We get around that by creating the in the system's temporary folder, performing the necessary operations on that file, and then deleting it.
 	 *
-	 *
-	 * @param string $file full path to the file
-	 * @param [type] $x
-	 * @param [type] $y
+	 * @param string  $file full path to the file
+	 * @param [type]  $x
+	 * @param [type]  $y
 	 * @param integer $w
 	 * @param integer $h
-	 * @param string $type
-	 * @param string $link
+	 * @param string  $type
+	 * @param string  $link
 	 * @return void
 	 */
 	function Image( $file = '', $x = null, $y = null, $w = 0, $h = 0, $type = '', $link = '' ) {
@@ -103,8 +105,8 @@ class VIP_tFPDF extends tFPDF {
 
 		$filestring = $wp_filesystem->get_contents( $file );
 
-		$file = sys_get_temp_dir() . DIRECTORY_SEPARATOR . basename( $file );
-		$fhandle = fopen( $file, 'wb');
+		$file    = sys_get_temp_dir() . DIRECTORY_SEPARATOR . basename( $file );
+		$fhandle = fopen( $file, 'wb' );
 		fwrite( $fhandle, $filestring );
 		fclose( $fhandle );
 		parent::Image( $file, $x, $y, $w, $h, $type, $link );
