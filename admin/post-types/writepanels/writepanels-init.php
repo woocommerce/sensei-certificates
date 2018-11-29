@@ -576,13 +576,13 @@ function certificates_wp_radio( $field ) {
 	foreach ( $field['options'] as $key => $value ) {
 
 		echo '<li><label><input
-        		name="' . esc_attr( $field['id'] ) . '"
-        		value="' . esc_attr( $key ) . '"
-        		type="radio"
-        		class="' . esc_attr( $field['class'] ) . '"
-        		' . checked( esc_attr( $field['value'] ), esc_attr( $key ), false ) . '
-        		/> ' . esc_html( $value ) . '</label>
-    	</li>';
+				name="' . esc_attr( $field['id'] ) . '"
+				value="' . esc_attr( $key ) . '"
+				type="radio"
+				class="' . esc_attr( $field['class'] ) . '"
+				' . checked( esc_attr( $field['value'] ), esc_attr( $key ), false ) . '
+				/> ' . esc_html( $value ) . '</label>
+		</li>';
 
 	} // End For Loop
 

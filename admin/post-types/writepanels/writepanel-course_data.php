@@ -46,22 +46,22 @@ function course_certificate_template_data_meta_box( $post ) {
 
 	global $post;
 
-		$select_certificate_template = get_post_meta( $post->ID, '_course_certificate_template', true );
+	$select_certificate_template = get_post_meta( $post->ID, '_course_certificate_template', true );
 
-		$post_args   = array(
-			'post_type'        => 'certificate_template',
-			'post_status'      => 'private',
-			'numberposts'      => -1,
-			'orderby'          => 'title',
-			'order'            => 'DESC',
-			'exclude'          => $post->ID,
-			'suppress_filters' => 0,
-		);
-		$posts_array = get_posts( $post_args );
+	$post_args   = array(
+		'post_type'        => 'certificate_template',
+		'post_status'      => 'private',
+		'numberposts'      => -1,
+		'orderby'          => 'title',
+		'order'            => 'DESC',
+		'exclude'          => $post->ID,
+		'suppress_filters' => 0,
+	);
+	$posts_array = get_posts( $post_args );
 
-		$html = '';
+	$html = '';
 
-		$html .= '<input type="hidden" name="' . esc_attr( 'woo_course_noonce' ) . '" id="' . esc_attr( 'woo_course_noonce' ) . '" value="' . esc_attr( wp_create_nonce( plugin_basename( __FILE__ ) ) ) . '" />';
+	$html .= '<input type="hidden" name="' . esc_attr( 'woo_course_noonce' ) . '" id="' . esc_attr( 'woo_course_noonce' ) . '" value="' . esc_attr( wp_create_nonce( plugin_basename( __FILE__ ) ) ) . '" />';
 
 	if ( count( $posts_array ) > 0 ) {
 		$html .= '<select id="course-certificate-template-options" name="course_certificate_template" class="widefat">' . "\n";
@@ -69,7 +69,7 @@ function course_certificate_template_data_meta_box( $post ) {
 		foreach ( $posts_array as $post_item ) {
 			$html .= '<option value="' . esc_attr( absint( $post_item->ID ) ) . '"' . selected( $post_item->ID, $select_certificate_template, false ) . '>' . esc_html( $post_item->post_title ) . '</option>' . "\n";
 		} // End For Loop
-			$html .= '</select>' . "\n";
+		$html .= '</select>' . "\n";
 	} else {
 		if ( ! empty( $select_certificate_template ) ) {
 			$html .= '<input type="hidden" name="course_certificate_template" value="' . absint( $select_certificate_template ) . '">';
@@ -77,7 +77,7 @@ function course_certificate_template_data_meta_box( $post ) {
 		$html .= '<p>' . esc_html( __( 'No certificate template exist yet. Please add some first.', 'sensei-certificates' ) ) . '</p>';
 	} // End If Statement
 
-		echo $html;
+	echo $html;
 
 } // End course_certificate_templates_data_meta_box()
 
