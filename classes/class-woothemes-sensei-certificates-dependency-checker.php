@@ -138,7 +138,7 @@ class Woothemes_Sensei_Certificates_Dependency_Checker {
 		}
 
 		// translators: %1$s is the minimum version number of Sensei that is required.
-		$message = sprintf( __( '<strong>Sensei Certificates</strong> requires the plugin <strong>Sensei</strong> (minimum version: <strong>%1$s</strong>) to be installed and activated.', 'sensei-certificates' ), self::MINIMUM_SENSEI_VERSION );
+		$message = sprintf( __( '<strong>Sensei Certificates</strong> requires the plugin <strong>Sensei</strong> (minimum version: <strong>%1$s</strong>) is installed and activated.', 'sensei-certificates' ), self::MINIMUM_SENSEI_VERSION );
 		echo '<div class="error"><p>';
 		echo wp_kses( $message, array( 'strong' => array() ) );
 		echo '</p></div>';
