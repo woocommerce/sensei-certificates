@@ -6,6 +6,7 @@
  * Version: 1.1.1
  * Author: Automattic
  * Author URI: https://automattic.com
+ * Woo: 247548:625ee5fe1bf36b4c741ab07507ba2ffd
  * License: GPLv2+
  */
 
@@ -23,20 +24,6 @@
  * - sensei_create_master_certificate_template()
  * - is_sensei_active()
  */
-
-/**
- * Required functions
- */
-if ( ! function_exists( 'woothemes_queue_update' ) ) {
-	require_once 'woo-includes/woo-functions.php';
-}
-
-
-/**
- * Plugin updates
- */
-woothemes_queue_update( plugin_basename( __FILE__ ), '625ee5fe1bf36b4c741ab07507ba2ffd', '247548' );
-
 
 /**
  * Actions and Filters
