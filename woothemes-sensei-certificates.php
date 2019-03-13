@@ -22,8 +22,13 @@
  * - sensei_certificates_updates_list()
  * - sensei_update_users_certificate_data()
  * - sensei_create_master_certificate_template()
- * - is_sensei_active()
  */
+
+require_once dirname( __FILE__ ) . '/classes/class-woothemes-sensei-certificates-dependency-checker.php';
+
+if ( ! Woothemes_Sensei_Certificates_Dependency_Checker::are_dependencies_met() ) {
+	return;
+}
 
 /**
  * Actions and Filters
@@ -52,15 +57,12 @@ function init_certificates_textdomain() {
  * @return void
  */
 function init_sensei_certificates() {
-
-	if ( is_sensei_active() ) {
-		require_once 'classes/class-woothemes-sensei-certificates-utils.php';
-		require_once 'classes/class-woothemes-sensei-certificates.php';
-		$GLOBALS['woothemes_sensei_certificates'] = new WooThemes_Sensei_Certificates( __FILE__ );
-		require_once 'classes/class-woothemes-sensei-certificate-templates.php';
-		$GLOBALS['woothemes_sensei_certificate_templates'] = new WooThemes_Sensei_Certificate_Templates( __FILE__ );
-		require_once 'classes/class-woothemes-sensei-certificates-data-store.php';
-	}
+	require_once 'classes/class-woothemes-sensei-certificates-utils.php';
+	require_once 'classes/class-woothemes-sensei-certificates.php';
+	$GLOBALS['woothemes_sensei_certificates'] = new WooThemes_Sensei_Certificates( __FILE__ );
+	require_once 'classes/class-woothemes-sensei-certificate-templates.php';
+	$GLOBALS['woothemes_sensei_certificate_templates'] = new WooThemes_Sensei_Certificate_Templates( __FILE__ );
+	require_once 'classes/class-woothemes-sensei-certificates-data-store.php';
 
 } // End init_sensei_extension()
 
@@ -440,21 +442,3 @@ function sensei_create_master_certificate_template() {
 	} // End If Statement
 
 } // End sensei_create_master_certificate_template()
-
-
-/**
- * Functions used by plugins
- */
-if ( ! class_exists( 'WooThemes_Sensei_Dependencies' ) ) {
-	require_once 'woo-includes/class-woothemes-sensei-dependencies.php';
-}
-
-
-/**
- * Sensei Detection
- */
-if ( ! function_exists( 'is_sensei_active' ) ) {
-	function is_sensei_active() {
-		return WooThemes_Sensei_Dependencies::sensei_active_check();
-	} // End is_sensei_active()
-} // End If Statement
