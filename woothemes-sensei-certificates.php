@@ -24,19 +24,6 @@
  * - sensei_create_master_certificate_template()
  */
 
-/**
- * Required functions
- */
-if ( ! function_exists( 'woothemes_queue_update' ) ) {
-	require_once 'woo-includes/woo-functions.php';
-}
-
-
-/**
- * Plugin updates
- */
-woothemes_queue_update( plugin_basename( __FILE__ ), '625ee5fe1bf36b4c741ab07507ba2ffd', '247548' );
-
 require_once dirname( __FILE__ ) . '/classes/class-woothemes-sensei-certificates-dependency-checker.php';
 
 if ( ! Woothemes_Sensei_Certificates_Dependency_Checker::are_dependencies_met() ) {
