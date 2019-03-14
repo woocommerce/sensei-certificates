@@ -378,7 +378,23 @@ class WooThemes_Sensei_Certificates {
 				echo wp_kses_post( $course_end_date );
 				break;
 			case 'actions':
-				echo '<a href="' . esc_url( get_permalink( $post_ID ) ) . '" target="_blank">' . esc_html__( 'View Certificate', 'sensei-certificates' ) . '</a>';
+				$template_id = get_post_meta( $course_id, '_course_certificate_template', true );
+				if ( $template_id ) {
+					echo '<a href="' . esc_url( get_permalink( $post_ID ) ) . '" target="_blank">' . esc_html__( 'View Certificate', 'sensei-certificates' ) . '</a>';
+				} else {
+					$course_link = sprintf(
+						'<a href="%1$s">%2$s</a>',
+						esc_url( get_edit_post_link( $course_id ) ),
+						__( 'Course', 'sensei-certificates' )
+					);
+					echo wp_kses_post(
+						sprintf(
+							// translators: %1$s is a link to the Course.
+							__( 'Set a Certificate Template on the %1$s in order to view this certificate' ),
+							$course_link
+						)
+					);
+				}
 				break;
 		} // End Switch Statement
 
