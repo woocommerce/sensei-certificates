@@ -127,7 +127,7 @@ class WooThemes_Sensei_Certificates {
 		}
 
 		// Generate certificate hash when course is completed.
-		add_action( 'sensei_course_status_updated', array( $this, 'generate_certificate_number' ), 9, 4 );
+		add_action( 'sensei_course_status_updated', array( $this, 'handle_course_completed' ), 9, 3 );
 		// Background Image to display on certificate
 		add_action( 'sensei_certificates_set_background_image', array( $this, 'certificate_background' ), 10, 1 );
 		// Text to display on certificate
@@ -389,6 +389,24 @@ class WooThemes_Sensei_Certificates {
 
 	} // End post_type_custom_column_content()
 
+	/**
+	 * Ensure certificate is generated on course completion.
+	 *
+	 * @access private
+	 * @since 2.0.0
+	 *
+	 * @param string $status    The new course status.
+	 * @param int    $user_id   The ID of the learner.
+	 * @param int    $course_id The ID of the course.
+	 * @return void
+	 */
+	public function handle_course_completed( $status, $user_id, $course_id ) {
+		if ( 'complete' !== $status ) {
+			return;
+		}
+
+		$this->generate_certificate_number( $user_id, $course_id );
+	}
 
 	/**
 	 * Generate unique certificate hash and save as comment.
@@ -399,9 +417,9 @@ class WooThemes_Sensei_Certificates {
 	 * @param  int $course_id data to post
 	 * @return void
 	 */
-	public function generate_certificate_number( $status, $user_id = 0, $course_id = 0 ) {
+	public function generate_certificate_number( $user_id = 0, $course_id = 0 ) {
 
-		if ( 'complete' !== $status || ! $user_id || ! $course_id || ! is_numeric( $user_id ) || ! is_numeric( $course_id ) ) {
+		if ( ! $user_id || ! $course_id || ! is_numeric( $user_id ) || ! is_numeric( $course_id ) ) {
 			return;
 		}
 		$user_id   = absint( $user_id );
