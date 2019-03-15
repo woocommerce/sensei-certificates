@@ -127,7 +127,7 @@ class WooThemes_Sensei_Certificates {
 		}
 
 		// Generate certificate hash when course is completed.
-		add_action( 'sensei_user_course_end', array( $this, 'generate_certificate_number' ), 10, 2 );
+		add_action( 'sensei_course_status_updated', array( $this, 'generate_certificate_number' ), 9, 4 );
 		// Background Image to display on certificate
 		add_action( 'sensei_certificates_set_background_image', array( $this, 'certificate_background' ), 10, 1 );
 		// Text to display on certificate
@@ -399,9 +399,9 @@ class WooThemes_Sensei_Certificates {
 	 * @param  int $course_id data to post
 	 * @return void
 	 */
-	public function generate_certificate_number( $user_id = 0, $course_id = 0 ) {
+	public function generate_certificate_number( $status, $user_id = 0, $course_id = 0 ) {
 
-		if ( ! $user_id || ! $course_id || ! is_numeric( $user_id ) || ! is_numeric( $course_id ) ) {
+		if ( 'complete' !== $status || ! $user_id || ! $course_id || ! is_numeric( $user_id ) || ! is_numeric( $course_id ) ) {
 			return;
 		}
 		$user_id   = absint( $user_id );
