@@ -382,16 +382,11 @@ class WooThemes_Sensei_Certificates {
 				if ( $template_id ) {
 					echo '<a href="' . esc_url( get_permalink( $post_ID ) ) . '" target="_blank">' . esc_html__( 'View Certificate', 'sensei-certificates' ) . '</a>';
 				} else {
-					$course_link = sprintf(
-						'<a href="%1$s">%2$s</a>',
-						esc_url( get_edit_post_link( $course_id ) ),
-						__( 'Course', 'sensei-certificates' )
-					);
 					echo wp_kses_post(
 						sprintf(
-							// translators: %1$s is a link to the Course.
-							__( 'Set a Certificate Template on the %1$s in order to view this certificate' ),
-							$course_link
+							// translators: %1$s is the URL for editing the Course.
+							__( 'Set a certificate template on the <a href="%1$s">course</a> in order to view this certificate', 'sensei-certificates' ),
+							esc_url( get_edit_post_link( $course_id ) )
 						)
 					);
 				}
