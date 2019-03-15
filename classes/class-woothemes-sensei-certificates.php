@@ -104,6 +104,11 @@ class WooThemes_Sensei_Certificates {
 		add_action( 'sensei_frontend_messages', array( $this, 'certificates_user_settings_messages' ), 10 );
 
 		/**
+		 * Emails
+		 */
+		add_action( 'sensei_after_email_content', array( $this, 'email_certificate_link' ) );
+
+		/**
 		 * BACKEND
 		 */
 		if ( is_admin() ) {
@@ -1169,5 +1174,37 @@ class WooThemes_Sensei_Certificates {
 		} // End If Statement
 
 	} // End certificates_user_settings_message()
+
+	public function email_certificate_link( $template ) {
+		global $sensei_email_data;
+
+		// Only handle emails for course completion.
+		if ( ! ( 'learner-completed-course' === $template || 'teacher-completed-course' === $template ) ) {
+			return;
+		}
+
+		// Get ID of learner who completed the course.
+		$user_id = null;
+		if ( 'learner-completed-course' === $template ) {
+			$user_id = $sensei_email_data['user_id'];
+		} else {
+			$user_id = $sensei_email_data['learner_id'];
+		}
+
+		$course_id   = $sensei_email_data['course_id'];
+		$template_id = get_post_meta( $course_id, '_course_certificate_template', true );
+
+		// Only include the link if the certificate has a template.
+		if ( $template_id ) {
+			$certificate_url  = $this->get_certificate_url( $course_id, $user_id );
+?>
+			<p style="text-align: center !important">
+				<a href="<?php echo esc_url( $certificate_url ); ?>" target="_blank">
+					<?php echo esc_html__( 'View certificate', 'sensei-certificates' ); ?>
+				</a>
+			</p>
+<?php
+		}
+	}
 
 } // End Class
