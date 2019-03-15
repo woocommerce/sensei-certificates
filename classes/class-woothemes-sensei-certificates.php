@@ -1193,6 +1193,14 @@ class WooThemes_Sensei_Certificates {
 
 	} // End certificates_user_settings_message()
 
+	/**
+	 * Output the "View certificate" link for emails.
+	 *
+	 * @access private
+	 * @since 2.0.0
+	 *
+	 * @param string $template The email template being rendered.
+	 */
 	public function email_certificate_link( $template ) {
 		global $sensei_email_data;
 
