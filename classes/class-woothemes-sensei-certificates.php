@@ -104,6 +104,11 @@ class WooThemes_Sensei_Certificates {
 		add_action( 'sensei_frontend_messages', array( $this, 'certificates_user_settings_messages' ), 10 );
 
 		/**
+		 * Emails
+		 */
+		add_action( 'sensei_after_email_content', array( $this, 'email_certificate_link' ) );
+
+		/**
 		 * BACKEND
 		 */
 		if ( is_admin() ) {
@@ -122,7 +127,7 @@ class WooThemes_Sensei_Certificates {
 		}
 
 		// Generate certificate hash when course is completed.
-		add_action( 'sensei_user_course_end', array( $this, 'generate_certificate_number' ), 10, 2 );
+		add_action( 'sensei_course_status_updated', array( $this, 'handle_course_completed' ), 9, 3 );
 		// Background Image to display on certificate
 		add_action( 'sensei_certificates_set_background_image', array( $this, 'certificate_background' ), 10, 1 );
 		// Text to display on certificate
@@ -384,6 +389,24 @@ class WooThemes_Sensei_Certificates {
 
 	} // End post_type_custom_column_content()
 
+	/**
+	 * Ensure certificate is generated on course completion.
+	 *
+	 * @access private
+	 * @since 2.0.0
+	 *
+	 * @param string $status    The new course status.
+	 * @param int    $user_id   The ID of the learner.
+	 * @param int    $course_id The ID of the course.
+	 * @return void
+	 */
+	public function handle_course_completed( $status, $user_id, $course_id ) {
+		if ( 'complete' !== $status ) {
+			return;
+		}
+
+		$this->generate_certificate_number( $user_id, $course_id );
+	}
 
 	/**
 	 * Generate unique certificate hash and save as comment.
@@ -1169,5 +1192,45 @@ class WooThemes_Sensei_Certificates {
 		} // End If Statement
 
 	} // End certificates_user_settings_message()
+
+	/**
+	 * Output the "View certificate" link for emails.
+	 *
+	 * @access private
+	 * @since 2.0.0
+	 *
+	 * @param string $template The email template being rendered.
+	 */
+	public function email_certificate_link( $template ) {
+		global $sensei_email_data;
+
+		// Only handle emails for course completion.
+		if ( ! ( 'learner-completed-course' === $template || 'teacher-completed-course' === $template ) ) {
+			return;
+		}
+
+		// Get ID of learner who completed the course.
+		$user_id = null;
+		if ( 'learner-completed-course' === $template ) {
+			$user_id = $sensei_email_data['user_id'];
+		} else {
+			$user_id = $sensei_email_data['learner_id'];
+		}
+
+		$course_id   = $sensei_email_data['course_id'];
+		$template_id = get_post_meta( $course_id, '_course_certificate_template', true );
+
+		// Only include the link if the certificate has a template.
+		if ( $template_id ) {
+			$certificate_url  = $this->get_certificate_url( $course_id, $user_id );
+?>
+			<p style="text-align: center !important">
+				<a href="<?php echo esc_url( $certificate_url ); ?>" target="_blank">
+					<?php echo esc_html__( 'View certificate', 'sensei-certificates' ); ?>
+				</a>
+			</p>
+<?php
+		}
+	}
 
 } // End Class
