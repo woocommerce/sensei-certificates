@@ -45,6 +45,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WooThemes_Sensei_Certificates {
 
 	/**
+	 * The single instance of WooThemes_Sensei_Certificates.
+	 *
+	 * @var    object
+	 * @access private
+	 * @static
+	 * @since  1.0.0
+	 */
+	private static $_instance = null;
+
+	/**
 	 * @var string url link to plugin files
 	 */
 	public $plugin_url;
@@ -66,74 +76,188 @@ class WooThemes_Sensei_Certificates {
 	 * @return void
 	 * @since 1.0.0
 	 */
-	public function __construct( $file ) {
+	public function __construct() {
 
 		// Defaults
-		$this->plugin_url  = trailingslashit( plugins_url( '', $file ) );
-		$this->plugin_path = plugin_dir_path( $file );
+		$this->plugin_url  = trailingslashit( plugins_url( '', SENSEI_CERTIFICATES_PLUGIN_FILE ) );
+		$this->plugin_path = plugin_dir_path( SENSEI_CERTIFICATES_PLUGIN_FILE );
+
+		register_activation_hook( SENSEI_CERTIFICATES_PLUGIN_FILE,  array( __CLASS__, 'activate' ) );
+	} // End __construct()
+
+	/**
+	 * Set up all hooks and filters.
+	 */
+	public static function init() {
+		add_action( 'plugins_loaded', array( __CLASS__, 'load_textdomain' ) );
+		add_action( 'sensei_certificates_check_run_installer', array( __CLASS__, 'check_run_installer' ) );
+
+		$version  = get_option( 'sensei_certificates_version', false );
+		if ( ! $version || SENSEI_CERTIFICATES_VERSION !== $version ) {
+			// If we haven't been installed, schedule another installer check on another plugin's activation.
+			add_action( 'activated_plugin', array( __CLASS__, 'schedule_installer_check' ) );
+		}
+
+		if ( ! Woothemes_Sensei_Certificates_Dependency_Checker::are_plugin_dependencies_met() ) {
+			return;
+		}
+
+		$instance = self::instance();
+
+		self::load_files();
+		$GLOBALS['woothemes_sensei_certificates'] = self::instance();
+		$GLOBALS['woothemes_sensei_certificate_templates'] = new WooThemes_Sensei_Certificate_Templates();
+
+		add_action( 'sensei_certificates_run_installer', array( $instance, 'install' ) );
 
 		// Hook onto Sensei settings and load a new tab with settings for extension
-		add_filter( 'sensei_settings_tabs', array( $this, 'certificates_settings_tabs' ) );
-		add_filter( 'sensei_settings_fields', array( $this, 'certificates_settings_fields' ) );
+		add_filter( 'sensei_settings_tabs', array( $instance, 'certificates_settings_tabs' ) );
+		add_filter( 'sensei_settings_fields', array( $instance, 'certificates_settings_fields' ) );
 
 		// Setup post type
-		add_action( 'init', array( $this, 'setup_certificates_post_type' ), 110 );
-		add_filter( 'manage_edit-certificate_columns', array( $this, 'post_type_custom_column_headings' ) );
-		add_action( 'manage_certificate_posts_custom_column', array( $this, 'post_type_custom_column_content' ), 10, 2 );
+		add_action( 'init', array( $instance, 'setup_certificates_post_type' ), 110 );
+		add_filter( 'manage_edit-certificate_columns', array( $instance, 'post_type_custom_column_headings' ) );
+		add_action( 'manage_certificate_posts_custom_column', array( $instance, 'post_type_custom_column_content' ), 10, 2 );
 
 		/**
 		 * FRONTEND
 		 */
-		add_filter( 'sensei_user_course_status_passed', array( $this, 'certificate_link' ), 10, 1 );
+		add_filter( 'sensei_user_course_status_passed', array( $instance, 'certificate_link' ), 10, 1 );
 
 		// Remove in future version
 		if ( version_compare( Sensei()->version, '1.6', '<' ) ) {
-			add_filter( 'sensei_view_results_text', array( $this, 'certificate_link' ), 10, 1 );
+			add_filter( 'sensei_view_results_text', array( $instance, 'certificate_link' ), 10, 1 );
 		}
-		add_filter( 'sensei_results_links', array( $this, 'certificate_link' ), 10, 2 );
-		add_action( 'sensei_additional_styles', array( $this, 'enqueue_styles' ) );
-		add_action( 'sensei_user_lesson_reset', array( $this, 'reset_lesson_course_certificate' ), 10, 2 );
-		add_action( 'sensei_user_course_reset', array( $this, 'reset_course_certificate' ), 10, 2 );
+		add_filter( 'sensei_results_links', array( $instance, 'certificate_link' ), 10, 2 );
+		add_action( 'sensei_additional_styles', array( $instance, 'enqueue_styles' ) );
+		add_action( 'sensei_user_lesson_reset', array( $instance, 'reset_lesson_course_certificate' ), 10, 2 );
+		add_action( 'sensei_user_course_reset', array( $instance, 'reset_course_certificate' ), 10, 2 );
 
 		// Create certificate endpoint and handle generation of pdf certificate
-		add_action( 'template_redirect', array( $this, 'download_certificate' ) );
+		add_action( 'template_redirect', array( $instance, 'download_certificate' ) );
 
 		// User settings output and save handling
-		add_action( 'sensei_learner_profile_info', array( $this, 'certificates_user_settings_form' ), 10, 1 );
-		add_action( 'sensei_complete_course', array( $this, 'certificates_user_settings_save' ), 10 );
-		add_action( 'sensei_frontend_messages', array( $this, 'certificates_user_settings_messages' ), 10 );
+		add_action( 'sensei_learner_profile_info', array( $instance, 'certificates_user_settings_form' ), 10, 1 );
+		add_action( 'sensei_complete_course', array( $instance, 'certificates_user_settings_save' ), 10 );
+		add_action( 'sensei_frontend_messages', array( $instance, 'certificates_user_settings_messages' ), 10 );
 
 		/**
 		 * Emails
 		 */
-		add_action( 'sensei_after_email_content', array( $this, 'email_certificate_link' ) );
+		add_action( 'sensei_after_email_content', array( $instance, 'email_certificate_link' ) );
 
 		/**
 		 * BACKEND
 		 */
 		if ( is_admin() ) {
 			// Add Certificates Menu
-			add_action( 'sensei_analysis_course_columns', array( $this, 'create_columns' ), 10, 2 );
-			add_action( 'sensei_analysis_course_column_data', array( $this, 'populate_columns' ), 10, 3 );
-			add_action( 'admin_footer', array( $this, 'output_inline_js' ), 25 );
-			add_filter( 'sensei_scripts_allowed_post_types', array( $this, 'include_sensei_scripts' ), 10, 1 );
+			add_action( 'sensei_analysis_course_columns', array( $instance, 'create_columns' ), 10, 2 );
+			add_action( 'sensei_analysis_course_column_data', array( $instance, 'populate_columns' ), 10, 3 );
+			add_action( 'admin_footer', array( $instance, 'output_inline_js' ), 25 );
+			add_filter( 'sensei_scripts_allowed_post_types', array( $instance, 'include_sensei_scripts' ), 10, 1 );
+			add_filter( 'sensei_upgrade_functions', 'sensei_certificates_updates_list', 10, 1 );
+			add_filter( 'sensei_updates_function_whitelist', 'sensei_certificates_add_update_functions_to_whitelist', 1 );
 
 			// We don't need a WordPress SEO meta box for certificates and certificate templates. Hide it.
-			add_filter( 'option_wpseo_titles', array( $this, 'force_hide_wpseo_meta_box' ) );
+			add_filter( 'option_wpseo_titles', array( $instance, 'force_hide_wpseo_meta_box' ) );
 
 			// Reorder the admin menus to display Certificates below Lessons.
 			add_filter( 'custom_menu_order', '__return_true', 20 );
-			add_filter( 'menu_order', array( $this, 'admin_menu_order' ) );
+			add_filter( 'menu_order', array( $instance, 'admin_menu_order' ) );
 		}
 
 		// Generate certificate hash when course is completed.
-		add_action( 'sensei_course_status_updated', array( $this, 'handle_course_completed' ), 9, 3 );
+		add_action( 'sensei_course_status_updated', array( $instance, 'handle_course_completed' ), 9, 3 );
 		// Background Image to display on certificate
-		add_action( 'sensei_certificates_set_background_image', array( $this, 'certificate_background' ), 10, 1 );
+		add_action( 'sensei_certificates_set_background_image', array( $instance, 'certificate_background' ), 10, 1 );
 		// Text to display on certificate
-		add_action( 'sensei_certificates_before_pdf_output', array( $this, 'certificate_text' ), 10, 2 );
+		add_action( 'sensei_certificates_before_pdf_output', array( $instance, 'certificate_text' ), 10, 2 );
+	}
 
-	} // End __construct()
+	/**
+	 * Load plugin files.
+	 */
+	private static function load_files() {
+		require_once dirname( dirname( __FILE__ ) ) . '/sensei-certificates-functions.php';
+		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-utils.php';
+		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates.php';
+		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificate-templates.php';
+		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-data-store.php';
+	}
+
+	/**
+	 * Check dependencies. If met, run installer.
+	 */
+	public static function check_run_installer() {
+		if ( ! Woothemes_Sensei_Certificates_Dependency_Checker::are_plugin_dependencies_met() ) {
+			return;
+		}
+
+		do_action( 'sensei_certificates_run_installer' );
+	}
+
+	/**
+	 * Load the plugin text domain.
+	 */
+	public static function load_textdomain() {
+		load_plugin_textdomain( 'sensei-certificates', false, dirname( SENSEI_CERTIFICATES_PLUGIN_BASENAME ) . '/lang/' );
+	}
+
+	/**
+	 * Function that runs on activation.
+	 *
+	 * @since  1.0.0
+	 * @return string
+	 */
+	public static function activate() {
+		self::schedule_installer_check();
+	}
+
+	/**
+	 * Schedules event to check if we can run the installer.
+	 */
+	public static function schedule_installer_check() {
+		wp_clear_scheduled_hook( 'sensei_certificates_check_run_installer' );
+		wp_schedule_single_event( time(), 'sensei_certificates_check_run_installer' );
+	}
+
+	/**
+	 * Performs actions to on activation once dependencies are met.
+	 *
+	 * @since  2.0.0
+	 * @return string
+	 */
+	public function install() {
+		// Register post types, so we can flush the rewrite rules.
+		$this->setup_certificates_post_type();
+		$GLOBALS['woothemes_sensei_certificate_templates']->setup_certificate_templates_post_type();
+
+		update_option( 'sensei_certificates_version', SENSEI_CERTIFICATES_VERSION );
+
+		// Check if the installer has already been run
+		$sensei_certificates_user_data_installed = get_option( 'sensei_certificate_user_data_installer', false );
+		$sensei_certificate_templates_installed  = get_option( 'sensei_certificate_templates_installer', false );
+		$user_count                              = count_users();
+		$total_users                             = intval( $user_count['total_users'] );
+
+		if ( ! $sensei_certificates_user_data_installed && 1000 >= $total_users ) {
+
+			// Add certificates for courses that have been completed.
+			$user_data_installed = sensei_update_users_certificate_data( $total_users, 0 );
+			update_option( 'sensei_certificate_user_data_installer', $user_data_installed );
+
+		}
+
+		if ( ! $sensei_certificate_templates_installed ) {
+
+			// Create the example Certificate Template.
+			$template_installed = sensei_create_master_certificate_template();
+			update_option( 'sensei_certificate_templates_installer', $template_installed );
+
+		}
+
+		flush_rewrite_rules();
+	}
 
 	/**
 	 * [admin_menu_order description]
@@ -1244,4 +1368,21 @@ class WooThemes_Sensei_Certificates {
 		}
 	}
 
+	/**
+	 * Main Sensei_Content_Drip Instance
+	 *
+	 * Ensures only one instance of Sensei_Content_Drip is loaded or can be loaded.
+	 *
+	 * @since  1.0.0
+	 * @static
+	 * @see    Sensei_Content_Drip()
+	 * @return Sensei_Content_Drip
+	 */
+	public static function instance() {
+		if ( is_null( self::$_instance ) ) {
+			self::$_instance = new self();
+		}
+
+		return self::$_instance;
+	}
 } // End Class

@@ -16,7 +16,8 @@ var paths = {
         'LICENSE',
         'README.md',
         'templates/**/*',
-        'woothemes-sensei-certificates.php',
+		'woothemes-sensei-certificates.php',
+		'sensei-certificates-functions.php',
     ],
     packageDir: 'build/sensei-certificates',
     packageZip: 'build/sensei-certificates.zip'

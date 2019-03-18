@@ -62,11 +62,11 @@ class WooThemes_Sensei_Certificate_Templates {
 	 * @return void
 	 * @since 1.0.0
 	 */
-	public function __construct( $file ) {
+	public function __construct() {
 
 		// Default values
-		$this->plugin_url  = trailingslashit( plugins_url( '', $file ) );
-		$this->plugin_path = plugin_dir_path( $file );
+		$this->plugin_url  = trailingslashit( plugins_url( '', SENSEI_CERTIFICATES_PLUGIN_FILE ) );
+		$this->plugin_path = plugin_dir_path( SENSEI_CERTIFICATES_PLUGIN_FILE );
 		$this->token       = 'sensei-certificate-templates';
 
 		// Setup post type
