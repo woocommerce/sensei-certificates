@@ -50,7 +50,7 @@ class WooThemes_Sensei_Certificates {
 	 * @var    object
 	 * @access private
 	 * @static
-	 * @since  1.0.0
+	 * @since  2.0.0
 	 */
 	private static $_instance = null;
 
@@ -93,7 +93,7 @@ class WooThemes_Sensei_Certificates {
 	public static function init() {
 		add_action( 'sensei_certificates_check_run_installer', array( __CLASS__, 'check_run_installer' ) );
 
-		$version  = get_option( 'sensei_certificates_version', false );
+		$version = get_option( 'sensei_certificates_version', false );
 		if ( ! $version || SENSEI_CERTIFICATES_VERSION !== $version ) {
 			// If we haven't been installed, schedule another installer check on another plugin's activation.
 			add_action( 'activated_plugin', array( __CLASS__, 'schedule_installer_check' ) );
@@ -1370,14 +1370,12 @@ class WooThemes_Sensei_Certificates {
 	}
 
 	/**
-	 * Main Sensei_Content_Drip Instance
+	 * Main Woothemes_Sensei_Certificates Instance
 	 *
-	 * Ensures only one instance of Sensei_Content_Drip is loaded or can be loaded.
+	 * Ensures only one instance of Woothemes_Sensei_Certificates is loaded or can be loaded.
 	 *
-	 * @since  1.0.0
-	 * @static
-	 * @see    Sensei_Content_Drip()
-	 * @return Sensei_Content_Drip
+	 * @since  2.0.0
+	 * @return Woothemes_Sensei_Certificates
 	 */
 	public static function instance() {
 		if ( is_null( self::$_instance ) ) {
