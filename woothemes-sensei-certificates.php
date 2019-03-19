@@ -6,6 +6,7 @@
  * Version: 1.1.1
  * Author: Automattic
  * Author URI: https://automattic.com
+ * Requires PHP: 5.6
  * Woo: 247548:625ee5fe1bf36b4c741ab07507ba2ffd
  * License: GPLv2+
  */
