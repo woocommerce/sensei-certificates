@@ -83,13 +83,14 @@ class WooThemes_Sensei_Certificates {
 		$this->plugin_path = plugin_dir_path( SENSEI_CERTIFICATES_PLUGIN_FILE );
 
 		register_activation_hook( SENSEI_CERTIFICATES_PLUGIN_FILE,  array( __CLASS__, 'activate' ) );
+
+		add_action( 'plugins_loaded', array( __CLASS__, 'load_textdomain' ) );
 	} // End __construct()
 
 	/**
 	 * Set up all hooks and filters.
 	 */
 	public static function init() {
-		add_action( 'plugins_loaded', array( __CLASS__, 'load_textdomain' ) );
 		add_action( 'sensei_certificates_check_run_installer', array( __CLASS__, 'check_run_installer' ) );
 
 		$version  = get_option( 'sensei_certificates_version', false );
