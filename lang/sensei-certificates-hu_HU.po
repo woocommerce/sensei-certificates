@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the sensei-certificates package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Sensei Certificates 1.1.1\n"
+"Project-Id-Version: Sensei Certificates 2.0\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2018-11-30 10:11+0100\n"
+"PO-Revision-Date: 2019-03-21 12:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: hu_HU\n"
@@ -17,47 +17,47 @@ msgstr ""
 "esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
 "_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: woothemes-sensei-certificates.php:284
+#: sensei-certificates-functions.php:144
 msgid "Example Template"
 msgstr "Példa Sablon"
 
-#: woothemes-sensei-certificates.php:294
+#: sensei-certificates-functions.php:156
 msgid "Sensei Certificate Template Example"
 msgstr "Sensei Bizonyítvány Sablon példa"
 
-#: woothemes-sensei-certificates.php:331,
+#: sensei-certificates-functions.php:199,
 #: classes/class-woothemes-sensei-certificate-templates.php:495,
-#: classes/class-woothemes-sensei-certificates.php:606,
+#: classes/class-woothemes-sensei-certificates.php:765,
 #: admin/post-types/writepanels/writepanel-certificate_data.php:131
 msgid "Certificate of Completion"
 msgstr "Tanúsítvány"
 
-#: woothemes-sensei-certificates.php:338,
+#: sensei-certificates-functions.php:206,
 #: classes/class-woothemes-sensei-certificate-templates.php:503,
-#: classes/class-woothemes-sensei-certificates.php:613
+#: classes/class-woothemes-sensei-certificates.php:772
 msgid "This is to certify that"
 msgstr "Jelen tanúsítvány igazolja, hogy"
 
-#: woothemes-sensei-certificates.php:338,
+#: sensei-certificates-functions.php:206,
 #: classes/class-woothemes-sensei-certificate-templates.php:503,
-#: classes/class-woothemes-sensei-certificates.php:613
+#: classes/class-woothemes-sensei-certificates.php:772
 msgid "has completed the course"
 msgstr "teljesítette a tanfolyamot"
 
-#: woothemes-sensei-certificates.php:345,
+#: sensei-certificates-functions.php:213,
 #: admin/post-types/writepanels/writepanel-certificate_data.php:219
 msgid "{{course_title}}"
 msgstr "{{course_title}}"
 
-#: woothemes-sensei-certificates.php:352
+#: sensei-certificates-functions.php:220
 msgid "{{completion_date}} at {{course_place}}"
 msgstr "{{completion_date}} - {{course_place}}"
 
-#: woothemes-sensei-certificates.php:359,
+#: sensei-certificates-functions.php:227,
 #: admin/post-types/writepanels/writepanel-certificate_data.php:307
 msgid "{{course_place}}"
 msgstr "{{course_place}}"
@@ -323,31 +323,31 @@ msgid "No certificate templates found in Trash"
 msgstr "Nem találhatók bizonyítvány sablonok a Lomtárban"
 
 #: classes/class-woothemes-sensei-certificate-templates.php:196,
-#: classes/class-woothemes-sensei-certificates.php:316
+#: classes/class-woothemes-sensei-certificates.php:446
 msgid "Learner"
 msgstr "Tanuló"
 
 #: classes/class-woothemes-sensei-certificate-templates.php:197,
-#: classes/class-woothemes-sensei-certificates.php:317
+#: classes/class-woothemes-sensei-certificates.php:447
 msgid "Course"
 msgstr "Tanfolyam"
 
 #: classes/class-woothemes-sensei-certificate-templates.php:198,
-#: classes/class-woothemes-sensei-certificates.php:318
+#: classes/class-woothemes-sensei-certificates.php:448
 msgid "Date Completed"
 msgstr "Teljesítés dátuma"
 
 #: classes/class-woothemes-sensei-certificate-templates.php:199,
-#: classes/class-woothemes-sensei-certificates.php:319
+#: classes/class-woothemes-sensei-certificates.php:449
 msgid "Actions"
 msgstr "Műveletek"
 
 #: classes/class-woothemes-sensei-certificate-templates.php:265,
-#: classes/class-woothemes-sensei-certificates.php:274,
-#: classes/class-woothemes-sensei-certificates.php:381,
-#: classes/class-woothemes-sensei-certificates.php:846,
-#: classes/class-woothemes-sensei-certificates.php:947,
-#: classes/class-woothemes-sensei-certificates.php:947
+#: classes/class-woothemes-sensei-certificates.php:404,
+#: classes/class-woothemes-sensei-certificates.php:513,
+#: classes/class-woothemes-sensei-certificates.php:1005,
+#: classes/class-woothemes-sensei-certificates.php:1106,
+#: classes/class-woothemes-sensei-certificates.php:1106
 msgid "View Certificate"
 msgstr "Bizonyítvány megtekintése"
 
@@ -356,7 +356,7 @@ msgid "Course Title"
 msgstr "Tanfolyam Címe"
 
 #: classes/class-woothemes-sensei-certificate-templates.php:527,
-#: classes/class-woothemes-sensei-certificates.php:637
+#: classes/class-woothemes-sensei-certificates.php:796
 msgid "At %s"
 msgstr "%s"
 
@@ -373,19 +373,48 @@ msgstr "Bizonyítvány Sablon"
 msgid "Edit %s"
 msgstr "%s szerkesztése"
 
-#: classes/class-woothemes-sensei-certificates.php:209
+#. translators: %1$s is version of PHP that this plugin requires; %2$s is the version of PHP WordPress is running on.
+#: classes/class-woothemes-sensei-certificates-dependency-checker.php:92
+msgid ""
+"<strong>Sensei Certificates</strong> requires a minimum PHP version of %1$s, "
+"but you are running %2$s."
+msgstr ""
+"A <strong>Sensei Bizonyítványok</strong> minimális PHP igénye %1$s, azonban "
+"a jelenlegi verzió: %2$s."
+
+#: classes/class-woothemes-sensei-certificates-dependency-checker.php:102
+msgid "Learn more about updating PHP"
+msgstr "További információk a PHP frissítéséről"
+
+#. translators: accessibility text
+#: classes/class-woothemes-sensei-certificates-dependency-checker.php:104
+msgid "(opens in a new tab)"
+msgstr "(új fülön nyílik meg)"
+
+#. translators: %1$s is the minimum version number of Sensei that is required.
+#: classes/class-woothemes-sensei-certificates-dependency-checker.php:123
+msgid ""
+"<strong>Sensei Certificates</strong> requires that the plugin "
+"<strong>Sensei</strong> (minimum version: <strong>%1$s</strong>) is "
+"installed and activated."
+msgstr ""
+"A <strong>Sensei Bizonyítványok</strong> működéséhez szükséges a "
+"<strong>Sensei</strong> bővítmény (minimum verzió: <strong>%1$s</strong>) "
+"telepítése és aktiválása."
+
+#: classes/class-woothemes-sensei-certificates.php:339
 msgid "Certificate Settings"
 msgstr "Bizonyítványok"
 
-#: classes/class-woothemes-sensei-certificates.php:210
+#: classes/class-woothemes-sensei-certificates.php:340
 msgid "Options for the Certificate Extension."
 msgstr "Opciók a Bizonyítványok bővítményhez."
 
-#: classes/class-woothemes-sensei-certificates.php:228
+#: classes/class-woothemes-sensei-certificates.php:358
 msgid "View in Courses"
 msgstr "Megtekintés a Tanfolyamoknál"
 
-#: classes/class-woothemes-sensei-certificates.php:229
+#: classes/class-woothemes-sensei-certificates.php:359
 msgid ""
 "Show a View Certificate link in the single Course page and the My Courses "
 "page."
@@ -393,20 +422,20 @@ msgstr ""
 "“Bizonyítvány megtekintése” gomb megjelenítése az önálló Tanfolyam oldalakon "
 "és a Tanfolyamaim oldalon."
 
-#: classes/class-woothemes-sensei-certificates.php:236
+#: classes/class-woothemes-sensei-certificates.php:366
 msgid "View in Learner Profile"
 msgstr "Megtekintés a Tanulói Profilban"
 
-#: classes/class-woothemes-sensei-certificates.php:237
+#: classes/class-woothemes-sensei-certificates.php:367
 msgid "Show a View Certificate link in the Learner Profile page."
 msgstr ""
 "“Bizonyítvány megtekintése” gomb megjelenítése a Tanuló Profil oldalán."
 
-#: classes/class-woothemes-sensei-certificates.php:244
+#: classes/class-woothemes-sensei-certificates.php:374
 msgid "Public Certificate"
 msgstr "Nyilvános Bizonyítvány"
 
-#: classes/class-woothemes-sensei-certificates.php:245
+#: classes/class-woothemes-sensei-certificates.php:375
 msgid ""
 "Allow the Learner to share their Certificate with the public. (The learner "
 "will have to enable this in their profile by going to mysite.com/learner/"
@@ -416,78 +445,91 @@ msgstr ""
 "előbb engedélyezniük kell a saját profiljukon: peldahonlap.hu/tanulo/tanulo-"
 "felhasznaloneve)"
 
-#: classes/class-woothemes-sensei-certificates.php:267
+#: classes/class-woothemes-sensei-certificates.php:397
 msgctxt "post type general name"
 msgid "Certificates"
 msgstr "Bizonyítványok"
 
-#: classes/class-woothemes-sensei-certificates.php:268
+#: classes/class-woothemes-sensei-certificates.php:398
 msgctxt "post type singular name"
 msgid "Certificate"
 msgstr "Bizonyítvány"
 
-#: classes/class-woothemes-sensei-certificates.php:269
+#: classes/class-woothemes-sensei-certificates.php:399
 msgctxt "post type add_new"
 msgid "Add New Certificate"
 msgstr "Új hozzáadása"
 
-#: classes/class-woothemes-sensei-certificates.php:270
+#: classes/class-woothemes-sensei-certificates.php:400
 msgid "Add New Certificate"
 msgstr "Új Bizonyítvány hozzáadása"
 
-#: classes/class-woothemes-sensei-certificates.php:271
+#: classes/class-woothemes-sensei-certificates.php:401
 msgid "Edit Certificate"
 msgstr "Bizonyítvány szerkesztése"
 
-#: classes/class-woothemes-sensei-certificates.php:272
+#: classes/class-woothemes-sensei-certificates.php:402
 msgid "New Certificate"
 msgstr "Új Bizonyítvány"
 
-#: classes/class-woothemes-sensei-certificates.php:273,
-#: classes/class-woothemes-sensei-certificates.php:279
+#: classes/class-woothemes-sensei-certificates.php:403,
+#: classes/class-woothemes-sensei-certificates.php:409
 msgid "Certificates"
 msgstr "Bizonyítványok"
 
-#: classes/class-woothemes-sensei-certificates.php:275
+#: classes/class-woothemes-sensei-certificates.php:405
 msgid "Search Certificates"
 msgstr "Keresés Bizonyítványokra"
 
-#: classes/class-woothemes-sensei-certificates.php:276
+#: classes/class-woothemes-sensei-certificates.php:406
 msgid "No certificates found"
 msgstr "Nem találhatók bizonyítványok"
 
-#: classes/class-woothemes-sensei-certificates.php:277
+#: classes/class-woothemes-sensei-certificates.php:407
 msgid "No certificates found in Trash"
 msgstr "Nem találhatók bizonyítványok a Lomtárban"
 
-#: classes/class-woothemes-sensei-certificates.php:506
+#. translators: %1$s is the URL for editing the Course.
+#: classes/class-woothemes-sensei-certificates.php:518
+msgid ""
+"Set a certificate template on the <a href=\"%1$s\">course</a> in order to "
+"view this certificate"
+msgstr ""
+"Állíts be egy Bizonyítvány sablont a <a href=“%1$s”>tanfolyam</a> oldalon "
+"ahhoz, hogy megtekinthesd ezt a bizonyítványt"
+
+#: classes/class-woothemes-sensei-certificates.php:665
 msgid "You are not allowed to view this Certificate."
 msgstr "Nem engedélyezett számodra a Bizonyítvány a megtekintése."
 
-#: classes/class-woothemes-sensei-certificates.php:506,
-#: classes/class-woothemes-sensei-certificates.php:666
+#: classes/class-woothemes-sensei-certificates.php:665,
+#: classes/class-woothemes-sensei-certificates.php:825
 msgid "Certificate Error"
 msgstr "Bizonyítvány Hiba"
 
-#: classes/class-woothemes-sensei-certificates.php:666
+#: classes/class-woothemes-sensei-certificates.php:825
 msgid "The certificate you are searching for does not exist."
 msgstr "Nem található a keresésnek megfelelő bizonyítvány."
 
-#: classes/class-woothemes-sensei-certificates.php:921
+#: classes/class-woothemes-sensei-certificates.php:1080
 msgid "Certificate"
 msgstr "Bizonyítvány"
 
-#: classes/class-woothemes-sensei-certificates.php:1115
+#: classes/class-woothemes-sensei-certificates.php:1274
 msgid "Allow my Certificates to be publicly viewed"
 msgstr "Bizonyítványaim nyilvános megtekinthetőségének engedélyezése"
 
-#: classes/class-woothemes-sensei-certificates.php:1115
+#: classes/class-woothemes-sensei-certificates.php:1274
 msgid "Save"
 msgstr "Mentés"
 
-#: classes/class-woothemes-sensei-certificates.php:1150
+#: classes/class-woothemes-sensei-certificates.php:1309
 msgid "Your Certificates Public View Settings Saved Successfully."
 msgstr "Bizonyítványaid Nyilvános Megtekinthetősége sikeresen mentve."
+
+#: classes/class-woothemes-sensei-certificates.php:1365
+msgid "View certificate"
+msgstr "Bizonyítvány megtekintése"
 
 #: templates/single-certificate_template.php:33
 msgid ""
