@@ -1,11 +1,12 @@
 *** Sensei Certificates Changelog ***
 
 2019.03.27 - version 2.0.0
-* New: Add dependency check for minimum Sensei (1.11.0) and PHP (5.6) versions
-* New: Add certificate link to course completion emails
-* New: Add Hungarian translation
-* Tweak: Refactor to load plugin after `plugins_loaded` hook
-* Fix: Disable viewing of certificates for courses without a certificate template
+* New: Add dependency check for minimum Sensei (1.11.0) and PHP (5.6) versions - #171 
+* New: Add certificate link to course completion emails - #174 
+* New: Add Hungarian translation (@amroland) - #170, #177
+* Tweak: Check dependencies and perform the majority of plugin loading tasks after other plugins have loaded - #175 
+* Tweak: Use Woo header for plugin updates - #172 
+* Fix: Disable viewing of certificates for courses without a certificate template - #173
 
 2018.12.06 - version 1.1.1
 * Fixes JavaScript error when editing a certificate template
