@@ -1,46 +1,134 @@
-var gulp      = require( 'gulp' );
-var wpPot     = require( 'gulp-wp-pot' );
-var sort      = require( 'gulp-sort' );
-var zip       = require( 'gulp-zip' );
+const { dest, parallel, series, src } = require( 'gulp' );
+const del = require( 'del' );
+const minify = require('gulp-minify');
+const sass = require( 'gulp-sass' );
+const wpPot = require( 'gulp-wp-pot' );
+const zip = require( 'gulp-zip' );
 
-var paths = {
-    packageContents: [
-        'admin/**/*',
-        'assets/**/*',
-        'classes/**/*',
-        'lang/**/*',
-        'lib/**/*',
-        'templates/**/*',
-        'woo-includes/**/*',
-        'changelog.txt',
-        'LICENSE',
-        'README.md',
-        'templates/**/*',
-		'woothemes-sensei-certificates.php',
-		'sensei-certificates-functions.php',
-    ],
-    packageDir: 'build/sensei-certificates',
-    packageZip: 'build/sensei-certificates.zip'
-};
+const buildDir = 'build/sensei-certificates';
 
-gulp.task( 'pot', gulp.series( function() {
-    return gulp.src( [ '**/**.php', '!node_modules/**', '!build/**' ] )
-        .pipe( sort() )
-        .pipe( wpPot( {
-            domain: 'sensei-certificates'
-        } ) )
-        .pipe( gulp.dest( 'lang/sensei-certificates.pot' ) );
-} ) );
+function clean() {
+	return del( [ 'build' ] );
+}
 
-gulp.task( 'copy-package', function() {
-    return gulp.src( paths.packageContents, { base: '.' } )
-        .pipe( gulp.dest( paths.packageDir ) );
-} );
+function css() {
+	return src( 'assets/css/*.scss')
+		.pipe( sass( { outputStyle: 'expanded' } ) )
+		.pipe( dest( 'assets/css' ) )
+		.pipe( dest( buildDir + '/assets/css' ) )
+}
 
-gulp.task( 'zip-package', function() {
-    return gulp.src( paths.packageDir + '/**/*', { base: paths.packageDir + '/..' } )
-        .pipe( zip( paths.packageZip ) )
-        .pipe( gulp.dest( '.' ) );
-} );
+function cssMinify() {
+	return src( 'assets/css/*.scss')
+		.pipe( sass( { outputStyle: 'compressed' } ) )
+		.pipe( dest( 'assets/css' ) )
+		.pipe( dest( buildDir + '/assets/css' ) )
+}
 
-gulp.task( 'package', gulp.series( 'copy-package', 'zip-package' ) );
+function docs() {
+	return src( [ 'changelog.txt', 'README.md' ] )
+		.pipe( dest( buildDir ) )
+}
+
+function fonts() {
+	return src( 'lib/tfpdf/**/*.ttf', { base: '.' } )
+		.pipe( dest( buildDir ) )
+}
+
+function images() {
+	return src( 'assets/images/*.*')
+		.pipe( dest( buildDir + '/assets/images' ) )
+}
+
+function js() {
+	return src( 'assets/js/*.js')
+		.pipe( dest( buildDir + '/assets/js' ) )
+}
+
+function jsMinify() {
+	return src( 'assets/js/*.js')
+		.pipe( minify( {
+			ext:{ min:'.js' },
+			noSource: true
+		} ) )
+		.pipe( dest( buildDir + '/assets/js' ) )
+}
+
+function languages() {
+	return src( 'lang/*.*', { base: '.' } )
+		.pipe( dest( buildDir ) );
+}
+
+function php() {
+	return src(
+		[
+			'admin/**/*.php',
+			'classes/**/*.php',
+			'lib/**/*.php',
+			'templates/**/*.php',
+			'sensei-certificates-functions.php',
+			'woothemes-sensei-certificates.php'
+		], { base: '.' } )
+		.pipe( dest( buildDir ) )
+}
+
+function pot() {
+	return src(
+		[
+			'admin/**/*.php',
+			'classes/**/*.php',
+			'templates/**/*.php',
+			'sensei-certificates-functions.php',
+			'woothemes-sensei-certificates.php'
+		] )
+		.pipe( wpPot( {
+			domain: 'sensei-certificates',
+			package: 'Sensei Certificates',
+		} ) )
+		.pipe( dest( 'lang/sensei-certificates.pot' ) );
+}
+
+function zipFiles() {
+	return src( buildDir + '/**/*', { base: buildDir + '/..' } )
+		.pipe( zip( buildDir + '.zip' ) )
+		.pipe( dest( '.' ) );
+}
+
+exports.clean = clean;
+exports.css = css;
+exports.docs = docs;
+exports.js = js;
+exports.languages = languages;
+exports.php = php;
+exports.pot = pot;
+exports.zipFiles = zipFiles;
+
+if ( process.env.NODE_ENV === 'dev' ) {
+	exports.package = series(
+		clean,
+		parallel(
+			css,
+			docs,
+			fonts,
+			images,
+			js,
+			series( pot, languages ),
+			php,
+		),
+		zipFiles,
+	);
+} else {
+	exports.package = series(
+		clean,
+		parallel(
+			cssMinify,
+			docs,
+			fonts,
+			images,
+			jsMinify,
+			series( pot, languages ),
+			php,
+		),
+		zipFiles,
+	);
+}

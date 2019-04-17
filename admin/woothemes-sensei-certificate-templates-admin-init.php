@@ -249,7 +249,7 @@ function sensei_certificate_template_admin_enqueue_scripts() {
 		wp_enqueue_script( 'sensei_certificate_templates_admin', $woothemes_sensei_certificates->plugin_url . 'assets/js/admin.js', array( 'jquery' ) );
 		wp_localize_script( 'sensei_certificate_templates_admin', 'sensei_certificate_templates_params', $sensei_certificate_templates_params );
 
-		wp_enqueue_style( 'sensei_certificate_templates_admin_styles', $woothemes_sensei_certificates->plugin_url . '/assets/css/admin.css' );
+		wp_enqueue_style( 'sensei_certificate_templates_admin_styles', $woothemes_sensei_certificates->plugin_url . 'assets/css/admin.css' );
 
 	} // End If Statement
 
