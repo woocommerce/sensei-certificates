@@ -21,6 +21,7 @@ function css() {
 function cssMinify() {
 	return src( 'assets/css/*.scss')
 		.pipe( sass( { outputStyle: 'compressed' } ) )
+		.pipe( dest( 'assets/css' ) )
 		.pipe( dest( buildDir + '/assets/css' ) )
 }
 
