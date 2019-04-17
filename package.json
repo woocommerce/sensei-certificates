@@ -2,6 +2,11 @@
   "name": "sensei-certificates",
   "version": "2.0.0-beta.1",
   "description": "Certificates extension for Sensei",
+  "scripts": {
+    "dev": "NODE_ENV=dev gulp package",
+    "prod": "NODE_ENV=prod gulp package",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/woothemes/sensei-certificates.git"
