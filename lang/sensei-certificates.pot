@@ -1,8 +1,8 @@
-# Copyright (C) 2019 sensei-certificates
-# This file is distributed under the same license as the sensei-certificates package.
+# Copyright (C) 2019 Sensei Certificates
+# This file is distributed under the same license as the Sensei Certificates package.
 msgid ""
 msgstr ""
-"Project-Id-Version: sensei-certificates\n"
+"Project-Id-Version: Sensei Certificates\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -254,10 +254,6 @@ msgstr ""
 
 #: classes/class-woothemes-sensei-certificate-templates.php:527, classes/class-woothemes-sensei-certificates.php:796
 msgid "At %s"
-msgstr ""
-
-#: classes/class-woothemes-sensei-certificate-templates.php:889
-msgid "$meta_name"
 msgstr ""
 
 #: classes/class-woothemes-sensei-certificate-templates.php:944
