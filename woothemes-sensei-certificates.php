@@ -3,7 +3,7 @@
  * Plugin Name: Sensei Certificates
  * Plugin URI: https://woocommerce.com/products/sensei-certificates/
  * Description: Award your students with a certificate of completion and a sense of accomplishment after finishing a course.
- * Version: 2.0.0-beta.1
+ * Version: 2.0.0
  * Author: Automattic
  * Author URI: https://automattic.com
  * Requires PHP: 5.6
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SENSEI_CERTIFICATES_VERSION', '2.0.0-beta.1' );
+define( 'SENSEI_CERTIFICATES_VERSION', '2.0.0' );
 define( 'SENSEI_CERTIFICATES_PLUGIN_FILE', __FILE__ );
 define( 'SENSEI_CERTIFICATES_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
