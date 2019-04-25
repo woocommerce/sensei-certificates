@@ -7,6 +7,7 @@
  * Author: Automattic
  * Author URI: https://automattic.com
  * Requires PHP: 5.6
+ * Requires at least: 4.1
  * Tested up to: 5.1
  * Woo: 247548:625ee5fe1bf36b4c741ab07507ba2ffd
  * License: GPLv2+
