@@ -15,12 +15,18 @@ class Woothemes_Sensei_Certificates_TFPDF {
 	 * @param string $units
 	 * @param string $size
 	 *
-	 * @return tFPDF
+	 * @return tFPDF\PDF
 	 */
 	public static function get_tfpdf_object( $orientation, $units, $size ) {
 		// Include the pdf library if needed.
-		require_once( dirname( __FILE__ ) . '/../lib/tfpdf/src/tFPDF/PDF.php' );
-		require_once( dirname( __FILE__ ) . '/../lib/tfpdf/src/tFPDF/TTFontFile.php' );
+		require_once dirname( __FILE__ ) . '/../lib/tfpdf/src/tFPDF/PDF.php';
+		require_once dirname( __FILE__ ) . '/../lib/tfpdf/src/tFPDF/TTFontFile.php';
+
+		if ( defined( 'WPCOM_IS_VIP_ENV' ) && true === WPCOM_IS_VIP_ENV ) {
+			require_once dirname( __FILE__ ) . 'class-vip-tfpdf.php';
+
+			return new VIP_tFPDF( $orientation, $units, $size );
+		}
 
 		return new tFPDF\PDF( $orientation, $units, $size );
 	}
@@ -29,8 +35,8 @@ class Woothemes_Sensei_Certificates_TFPDF {
 	 * Get the PDF from the tFPDF object and send it to the HTTP client. Note
 	 * that this will set headers and echo to stdout.
 	 *
-	 * @param string $tfpdf    The tFPDF object.
-	 * @param string $filename The filename to send in the HTTP headers.
+	 * @param \tFPDF\PDF $tfpdf    The tFPDF object.
+	 * @param string     $filename The filename to send in the HTTP headers.
 	 */
 	public static function output_to_http( $tfpdf, $filename ) {
 		header( 'Content-Type: application/pdf' );
