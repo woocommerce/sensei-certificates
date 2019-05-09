@@ -1,4 +1,7 @@
 .DS_Store
 node_modules
+vendor
+build
+composer.lock
 lib/tfpdf/font/unifont/*.cw.dat
 lib/tfpdf/font/unifont/*.mtx.php

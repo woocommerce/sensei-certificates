@@ -7,9 +7,8 @@
  * @package WordPress
  * @subpackage Sensei
  * @category Extension
- * @author WooThemes
+ * @author Automattic
  * @since 1.0.0
- *
  */
 
 /**
@@ -29,7 +28,9 @@
  * @since 1.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 /**
  * Actions and Filters
@@ -82,13 +83,13 @@ function certificate_template_edit_certificate_views( $views ) {
  *
  * @return array associative-array of column identifier to header names for the certificate tempaltes page
  */
-function certificate_template_edit_certificate_columns( $columns ){
+function certificate_template_edit_certificate_columns( $columns ) {
 
 	$columns = array();
 
-	$columns['cb']             = '<input type="checkbox" />';
-	$columns['name']           = __( 'Name', 'sensei-certificates' );
-	$columns['thumb']          = __( 'Image', 'sensei-certificates' );
+	$columns['cb']    = '<input type="checkbox" />';
+	$columns['name']  = __( 'Name', 'sensei-certificates' );
+	$columns['thumb'] = __( 'Image', 'sensei-certificates' );
 
 	return $columns;
 
@@ -107,28 +108,26 @@ function certificate_template_custom_certificate_columns( $column ) {
 
 	switch ( $column ) {
 		case 'thumb':
-			
 			$edit_link = get_edit_post_link( $post->ID );
 			if ( has_post_thumbnail( $post->ID ) ) {
 				$image = get_the_post_thumbnail( $post->ID, 'thumb' );
-				echo '<a href="' . $edit_link . '">' . $image . '</a>';
+				echo '<a href="' . esc_url( $edit_link ) . '">' . wp_kses_post( $image ) . '</a>';
 			} // End If Statement
 
-		break;
+			break;
 
 		case 'name':
-			
 			$edit_link = get_edit_post_link( $post->ID );
-			$title = _draft_or_post_title();
+			$title     = _draft_or_post_title();
 
 			$post_type_object = get_post_type_object( $post->post_type );
-			$can_edit_post = current_user_can( $post_type_object->cap->edit_post, $post->ID );
+			$can_edit_post    = current_user_can( $post_type_object->cap->edit_post, $post->ID );
 
-			echo '<strong><a class="row-title" href="' . $edit_link . '">' . $title . '</a>';
+			echo '<strong><a class="row-title" href="' . esc_url( $edit_link ) . '">' . esc_html( $title ) . '</a>';
 
 			// display post states a little more selectively than _post_states( $post );
 			if ( 'draft' == $post->post_status ) {
-				echo " - <span class='post-state'>" . __( 'Draft', 'sensei-certificates' ) . '</span>';
+				echo " - <span class='post-state'>" . esc_html__( 'Draft', 'sensei-certificates' ) . '</span>';
 			} // End If Statement
 
 			echo '</strong>';
@@ -139,28 +138,30 @@ function certificate_template_custom_certificate_columns( $column ) {
 			$actions['id'] = 'ID: ' . $post->ID;
 
 			if ( current_user_can( $post_type_object->cap->delete_post, $post->ID ) ) {
-				if ( 'trash' == $post->post_status )
-					$actions['untrash'] = "<a title='" . esc_attr( __( 'Restore this item from the Trash', 'sensei-certificates' ) ) . "' href='" . wp_nonce_url( admin_url( sprintf( $post_type_object->_edit_link . '&amp;action=untrash', $post->ID ) ), 'untrash-' . $post->post_type . '_' . $post->ID ) . "'>" . __( 'Restore', 'sensei-certificates' ) . "</a>";
-				elseif ( EMPTY_TRASH_DAYS )
-					$actions['trash'] = "<a class='submitdelete' title='" . esc_attr( __( 'Move this item to the Trash', 'sensei-certificates' ) ) . "' href='" . get_delete_post_link( $post->ID ) . "'>" . __( 'Trash', 'sensei-certificates' ) . "</a>";
-				if ( 'trash' == $post->post_status || ! EMPTY_TRASH_DAYS )
-					$actions['delete'] = "<a class='submitdelete' title='" . esc_attr( __( 'Delete this item permanently', 'sensei-certificates' ) ) . "' href='" . get_delete_post_link( $post->ID, '', true ) . "'>" . __( 'Delete Permanently', 'sensei-certificates' ) . "</a>";
+				if ( 'trash' == $post->post_status ) {
+					$actions['untrash'] = "<a title='" . esc_attr( __( 'Restore this item from the Trash', 'sensei-certificates' ) ) . "' href='" . wp_nonce_url( admin_url( sprintf( $post_type_object->_edit_link . '&amp;action=untrash', $post->ID ) ), 'untrash-post_' . $post->ID ) . "'>" . __( 'Restore', 'sensei-certificates' ) . '</a>';
+				} elseif ( EMPTY_TRASH_DAYS ) {
+					$actions['trash'] = "<a class='submitdelete' title='" . esc_attr( __( 'Move this item to the Trash', 'sensei-certificates' ) ) . "' href='" . get_delete_post_link( $post->ID ) . "'>" . __( 'Trash', 'sensei-certificates' ) . '</a>';
+				}
+				if ( 'trash' == $post->post_status || ! EMPTY_TRASH_DAYS ) {
+					$actions['delete'] = "<a class='submitdelete' title='" . esc_attr( __( 'Delete this item permanently', 'sensei-certificates' ) ) . "' href='" . get_delete_post_link( $post->ID, '', true ) . "'>" . __( 'Delete Permanently', 'sensei-certificates' ) . '</a>';
+				}
 			} // End If Statement
 
 			$actions = apply_filters( 'post_row_actions', $actions, $post );
 
 			echo '<div class="row-actions">';
 
-			$i = 0;
+			$i            = 0;
 			$action_count = count( $actions );
 
 			foreach ( $actions as $action => $link ) {
 				( $action_count - 1 == $i ) ? $sep = '' : $sep = ' | ';
-				echo '<span class="' . $action . '">' . $link . $sep . '</span>';
+				echo '<span class="' . esc_attr( $action ) . '">' . wp_kses_post( $link . $sep ) . '</span>';
 				$i++;
 			} // End For Loop
 			echo '</div>';
-		break;
+			break;
 
 	} // End Switch Statement
 

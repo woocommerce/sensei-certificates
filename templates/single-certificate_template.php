@@ -7,9 +7,8 @@
  * @package WordPress
  * @subpackage Sensei
  * @category Extension
- * @author WooThemes
+ * @author Automattic
  * @since 1.0.0
- *
  */
 
 /**
@@ -20,7 +19,9 @@
  * @since 1.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 global $post, $woothemes_sensei_certificate_templates;
 

@@ -1,0 +1,747 @@
+# Copyright (C) 2017 sensei-certificates
+# This file is distributed under the same license as the sensei-certificates package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Sensei Certificates 2.0\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2019-03-21 12:07+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: hu_HU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.2.1\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: sensei-certificates-functions.php:144
+msgid "Example Template"
+msgstr "Példa Sablon"
+
+#: sensei-certificates-functions.php:156
+msgid "Sensei Certificate Template Example"
+msgstr "Sensei Bizonyítvány Sablon példa"
+
+#: sensei-certificates-functions.php:199,
+#: classes/class-woothemes-sensei-certificate-templates.php:495,
+#: classes/class-woothemes-sensei-certificates.php:765,
+#: admin/post-types/writepanels/writepanel-certificate_data.php:131
+msgid "Certificate of Completion"
+msgstr "Tanúsítvány"
+
+#: sensei-certificates-functions.php:206,
+#: classes/class-woothemes-sensei-certificate-templates.php:503,
+#: classes/class-woothemes-sensei-certificates.php:772
+msgid "This is to certify that"
+msgstr "Jelen tanúsítvány igazolja, hogy"
+
+#: sensei-certificates-functions.php:206,
+#: classes/class-woothemes-sensei-certificate-templates.php:503,
+#: classes/class-woothemes-sensei-certificates.php:772
+msgid "has completed the course"
+msgstr "teljesítette a tanfolyamot"
+
+#: sensei-certificates-functions.php:213,
+#: admin/post-types/writepanels/writepanel-certificate_data.php:219
+msgid "{{course_title}}"
+msgstr "{{course_title}}"
+
+#: sensei-certificates-functions.php:220
+msgid "{{completion_date}} at {{course_place}}"
+msgstr "{{completion_date}} - {{course_place}}"
+
+#: sensei-certificates-functions.php:227,
+#: admin/post-types/writepanels/writepanel-certificate_data.php:307
+msgid "{{course_place}}"
+msgstr "{{course_place}}"
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:115
+msgid "Overview"
+msgstr "Áttekintés"
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:116
+msgid ""
+"The Sensei Certificates extension allows you to create and configure "
+"customizable certificate templates which can be attached to Sensei Courses.  "
+"Your learners will earn a Certificate which they can download and share with "
+"others once they have completed a course."
+msgstr ""
+"A Sensei Bizonyítványok bővítménnyel személyre szabható bizonyítvány "
+"sablonokat hozhatsz létre, amelyeket a Tanfolyamaidhoz csatolhatsz. A "
+"tanulóid bizonyítványt szerezhetnek a tanfolyamok teljesítésével, amelyet "
+"letölthetnek vagy akár meg is oszthatnak másokkal."
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:123
+msgid "Editing a Certificate"
+msgstr "Bizonyítvány szerkesztése"
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:131
+msgid "Certificates List"
+msgstr "Bizonyítványok Listája"
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:132
+msgid ""
+"From the list view you can review all your certificate templates, quickly "
+"see the name, primary default image and its data, and trash a certificate "
+"template."
+msgstr ""
+"A listanézetből könnyen áttekintheted az összes bizonyítvány sablont, azok "
+"nevét, elsődleges alapértelmezett képüket és adataikat, valamint lomtárba "
+"dobhatod a feleslegeseket."
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:139
+msgid "How To"
+msgstr "Hogyan csináld"
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:145
+msgid "For more information:"
+msgstr "További információ:"
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:146
+msgid "Certificates Docs"
+msgstr "Bizonyítvány Dokumentumok"
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:160
+msgid "Certificate Name"
+msgstr "Bizonyítvány Név"
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:160
+msgid ""
+"All certificate templates must be given a name.  This will be used to "
+"identify the certificate within the admin."
+msgstr ""
+"Valamennyi bizonyítvány sablonnak nevet kell adni. Ez azonosítja a "
+"bizonyítványt az admin felületen belül."
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:161
+msgid "Certificate Background Image"
+msgstr "Bizonyítvány Háttérkép"
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:161
+msgid ""
+"This is the main image for your certificate, and will be used to configure "
+"the layout of the various text fields defined in the Certificate Data panel."
+msgstr ""
+"Ez a bizonyítványod fő képe, és a Bizonyítvány Adatok részen megadott "
+"különböző szövegmezők elrendezésének konfigurálására szolgál."
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:162,
+#: admin/post-types/writepanels/writepanels-init.php:83
+msgid "Certificate Data"
+msgstr "Bizonyítvány Adatok"
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:162
+msgid ""
+"These configuration options allow you to specify exactly where various text "
+"fields will be displayed on your certificate, as well as the font used.  For "
+"instance, if you want the message displayed on your certificate, click the "
+"\"Set Position\" button next to \"Message Position\".  Then select the area "
+"of the Certificate Image where you want the message to be displayed."
+msgstr ""
+"A konfigurációs beállításokkal meghatározhatod az egyes szövegmezők pontos "
+"helyét a bizonyítványodon, valamint a használni kívánt betűtípust. Például, "
+"ha üzenetet szeretnél megjeleníteni a bizonyítványodon, kattints az \"Üzenet "
+"Pozíció\" melletti “Pozíció beállítás” gombra. Ezután jelöld ki a "
+"Bizonyítvány Háttérkép felületén azt a részt, ahol az üzenetet látni "
+"szeretnéd."
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:163
+msgid ""
+"You can define a default font, size, style and color to be used for the "
+"certificate text fields.  For each individual text field, you can override "
+"these defaults by setting a specific font/style, size or color.  Note that "
+"the default font style (Italic/Bold) will only be used if a font is not "
+"selected at the field level."
+msgstr ""
+"Megadhatsz egy alapértelmezett betűtípust, méretet, stílust és színt, "
+"amelyet a bizonyítvány szövegmező kell használni. Minden egyes szövegmezőnél "
+"felülbírálhatja ezeket az alapértelmezéseket meghatározott betűtípus / "
+"stílus, méret vagy szín beállításával. Ne feledje, hogy az alapértelmezett "
+"betűtípus-stílus (Dőlt / Bold) csak akkor használható, ha a betűtípus nincs "
+"kijelölve a mező szintjén."
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:164
+msgid "Previewing"
+msgstr "Előnézet"
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:164
+msgid ""
+"You must update the certificate template to see any changes in the Preview."
+msgstr ""
+"A változások megtekintéséhez (Előnézet gomb), előbb a Frissítés gombbal "
+"mentsd el a bizonyítvány sablont."
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:178
+msgid "How to Create Your First Certificate Template "
+msgstr "Hogyan hozd létre az első Bizonyítvány Sablonodat "
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:180
+msgid ""
+"First go to Sensei &gt; Certificate Templates and click \"Add Certificate "
+"Template\" to add a template"
+msgstr ""
+"Menj a Bizonyítványok &gt; Bizonyítvány Sablonok menüre és kattints az “Új "
+"Bizonyítvány Sablon hozzáadása” gombra"
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:181
+msgid ""
+"Set a Certificate Name, and Certificate Background Image.  Optionally "
+"configure and add some Certificate Data fields (see the \"Editing a "
+"Certificate\" section for more details)"
+msgstr ""
+"Állítsd be a Bizonyítvány Sablon nevét és a Bizonyítvány Háttérképét. "
+"Opcionálisan hozzáadhatsz Bizonyítvány Adat mezőket (további részletekért "
+"nézd át a “Bizonyítvány szerkesztése\" részt)"
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:182
+msgid ""
+"Next click \"Publish\" to save your certificate template.  You can also "
+"optionally \"Preview\" the certificate to check your work and field layout."
+msgstr ""
+"A “Közzététel\" gombbal mentsd el a bizonyítvány sablonodat. Az “Előnézet” "
+"gombbal ellenőrizheted a munkádat és a mezők elrendezését a bizonyítványon."
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:183
+msgid ""
+"Next go to Sensei &gt; All Courses and either create a new course or edit an "
+"existing one, and assigning the template you created to the course."
+msgstr ""
+"A Tanfolyamok menüpontnál, akár új tanfolyamot létrehozva, akár egy meglévőt "
+"szerkesztve, csatold a tanfolyamhoz a megfelelő bizonyítvány sablont."
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:184
+msgid ""
+"Your learners can now earn a Certificate when they have completed a course! "
+"Your existing learners who have already completed a course will "
+"automatically have certificates generated for them when you installed the "
+"plugin."
+msgstr ""
+"A tanulóid ezentúl bizonyítványt szerezhetnek a tanfolyamok teljesítésével! "
+"A meglévő tanulóid, akik már teljesítettek tanfolyamokat, automatikusan "
+"megkapják a bizonyítványaikat a bővítmény telepítésekor."
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:240
+msgid "Done"
+msgstr "Kész"
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:241,
+#: admin/post-types/writepanels/writepanels-init.php:350
+msgid "Set Position"
+msgstr "Pozíció beállítás"
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:276,
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:279,
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:281
+msgid "Certificate Template updated."
+msgstr "Bizonyítvány Sablon frissítve."
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:277
+msgid "Custom field updated."
+msgstr "Egyéni mező frissítve."
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:278
+msgid "Custom field deleted."
+msgstr "Egyéni mező törölve."
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:280
+msgid "Certificate Template restored to revision from %s"
+msgstr "Bizonyítvány Sablon visszaállítva %s-ból"
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:282
+msgid "Certificate Template saved."
+msgstr "Bizonyítvány Sablon mentve."
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:283
+msgid "Certificate Template submitted."
+msgstr "Bizonyítvány Sablon beküldve."
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:285
+msgid "Certificate Template scheduled for: <strong>%1$s</strong>."
+msgstr "Bizonyítvány Sablon időzítve: <strong>%1$s</strong>."
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:286
+msgid "M j, Y @ G:i"
+msgstr "Y M j @ G:i"
+
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:288
+msgid "Certificate Template draft updated."
+msgstr "Bizonyítvány Sablon vázlata frissítve."
+
+#: classes/class-woothemes-sensei-certificate-templates.php:149
+msgctxt "post type general name"
+msgid "Certificate Templates"
+msgstr "Bizonyítvány Sablonok"
+
+#: classes/class-woothemes-sensei-certificate-templates.php:150
+msgctxt "post type singular name"
+msgid "Certificate Template"
+msgstr "Bizonyítvány Sablon"
+
+#: classes/class-woothemes-sensei-certificate-templates.php:151
+msgctxt "post type add_new"
+msgid "Add New Certificate Template"
+msgstr "Új Bizonyítvány Sablon hozzáadása"
+
+#: classes/class-woothemes-sensei-certificate-templates.php:152
+msgid "Add New Certificate Template"
+msgstr "Új Bizonyítvány Sablon hozzáadása"
+
+#: classes/class-woothemes-sensei-certificate-templates.php:153
+msgid "Edit Certificate Template"
+msgstr "Bizonyítvány Sablon szerkesztése"
+
+#: classes/class-woothemes-sensei-certificate-templates.php:154
+msgid "New Certificate Template"
+msgstr "Új Bizonyítvány Sablon"
+
+#: classes/class-woothemes-sensei-certificate-templates.php:155,
+#: classes/class-woothemes-sensei-certificate-templates.php:161
+msgid "Certificate Templates"
+msgstr "Bizonyítvány Sablonok"
+
+#: classes/class-woothemes-sensei-certificate-templates.php:156
+msgid "View Certificate Template"
+msgstr "Bizonyítvány Sablon megtekintése"
+
+#: classes/class-woothemes-sensei-certificate-templates.php:157
+msgid "Search Certificate Templates"
+msgstr "Keresés Bizonyítvány Sablonokra"
+
+#: classes/class-woothemes-sensei-certificate-templates.php:158
+msgid "No certificate templates found"
+msgstr "Nem találhatók bizonyítvány sablonok"
+
+#: classes/class-woothemes-sensei-certificate-templates.php:159
+msgid "No certificate templates found in Trash"
+msgstr "Nem találhatók bizonyítvány sablonok a Lomtárban"
+
+#: classes/class-woothemes-sensei-certificate-templates.php:196,
+#: classes/class-woothemes-sensei-certificates.php:446
+msgid "Learner"
+msgstr "Tanuló"
+
+#: classes/class-woothemes-sensei-certificate-templates.php:197,
+#: classes/class-woothemes-sensei-certificates.php:447
+msgid "Course"
+msgstr "Tanfolyam"
+
+#: classes/class-woothemes-sensei-certificate-templates.php:198,
+#: classes/class-woothemes-sensei-certificates.php:448
+msgid "Date Completed"
+msgstr "Teljesítés dátuma"
+
+#: classes/class-woothemes-sensei-certificate-templates.php:199,
+#: classes/class-woothemes-sensei-certificates.php:449
+msgid "Actions"
+msgstr "Műveletek"
+
+#: classes/class-woothemes-sensei-certificate-templates.php:265,
+#: classes/class-woothemes-sensei-certificates.php:404,
+#: classes/class-woothemes-sensei-certificates.php:513,
+#: classes/class-woothemes-sensei-certificates.php:1005,
+#: classes/class-woothemes-sensei-certificates.php:1106,
+#: classes/class-woothemes-sensei-certificates.php:1106
+msgid "View Certificate"
+msgstr "Bizonyítvány megtekintése"
+
+#: classes/class-woothemes-sensei-certificate-templates.php:469
+msgid "Course Title"
+msgstr "Tanfolyam Címe"
+
+#: classes/class-woothemes-sensei-certificate-templates.php:527,
+#: classes/class-woothemes-sensei-certificates.php:796
+msgid "At %s"
+msgstr "%s"
+
+#: classes/class-woothemes-sensei-certificate-templates.php:889
+msgid "$meta_name"
+msgstr "$meta_name"
+
+#: classes/class-woothemes-sensei-certificate-templates.php:944
+msgctxt "column name"
+msgid "Certificate Template"
+msgstr "Bizonyítvány Sablon"
+
+#: classes/class-woothemes-sensei-certificate-templates.php:970
+msgid "Edit %s"
+msgstr "%s szerkesztése"
+
+#. translators: %1$s is version of PHP that this plugin requires; %2$s is the version of PHP WordPress is running on.
+#: classes/class-woothemes-sensei-certificates-dependency-checker.php:92
+msgid ""
+"<strong>Sensei Certificates</strong> requires a minimum PHP version of %1$s, "
+"but you are running %2$s."
+msgstr ""
+"A <strong>Sensei Bizonyítványok</strong> minimális PHP igénye %1$s, azonban "
+"a jelenlegi verzió: %2$s."
+
+#: classes/class-woothemes-sensei-certificates-dependency-checker.php:102
+msgid "Learn more about updating PHP"
+msgstr "További információk a PHP frissítéséről"
+
+#. translators: accessibility text
+#: classes/class-woothemes-sensei-certificates-dependency-checker.php:104
+msgid "(opens in a new tab)"
+msgstr "(új fülön nyílik meg)"
+
+#. translators: %1$s is the minimum version number of Sensei that is required.
+#: classes/class-woothemes-sensei-certificates-dependency-checker.php:123
+msgid ""
+"<strong>Sensei Certificates</strong> requires that the plugin "
+"<strong>Sensei</strong> (minimum version: <strong>%1$s</strong>) is "
+"installed and activated."
+msgstr ""
+"A <strong>Sensei Bizonyítványok</strong> működéséhez szükséges a "
+"<strong>Sensei</strong> bővítmény (minimum verzió: <strong>%1$s</strong>) "
+"telepítése és aktiválása."
+
+#: classes/class-woothemes-sensei-certificates.php:339
+msgid "Certificate Settings"
+msgstr "Bizonyítványok"
+
+#: classes/class-woothemes-sensei-certificates.php:340
+msgid "Options for the Certificate Extension."
+msgstr "Opciók a Bizonyítványok bővítményhez."
+
+#: classes/class-woothemes-sensei-certificates.php:358
+msgid "View in Courses"
+msgstr "Megtekintés a Tanfolyamoknál"
+
+#: classes/class-woothemes-sensei-certificates.php:359
+msgid ""
+"Show a View Certificate link in the single Course page and the My Courses "
+"page."
+msgstr ""
+"“Bizonyítvány megtekintése” gomb megjelenítése az önálló Tanfolyam oldalakon "
+"és a Tanfolyamaim oldalon."
+
+#: classes/class-woothemes-sensei-certificates.php:366
+msgid "View in Learner Profile"
+msgstr "Megtekintés a Tanulói Profilban"
+
+#: classes/class-woothemes-sensei-certificates.php:367
+msgid "Show a View Certificate link in the Learner Profile page."
+msgstr ""
+"“Bizonyítvány megtekintése” gomb megjelenítése a Tanuló Profil oldalán."
+
+#: classes/class-woothemes-sensei-certificates.php:374
+msgid "Public Certificate"
+msgstr "Nyilvános Bizonyítvány"
+
+#: classes/class-woothemes-sensei-certificates.php:375
+msgid ""
+"Allow the Learner to share their Certificate with the public. (The learner "
+"will have to enable this in their profile by going to mysite.com/learner/"
+"{learner_username})"
+msgstr ""
+"A tanulók megoszthatják Bizonyítványaikat nyilvánosan. (A tanulóknak ezt "
+"előbb engedélyezniük kell a saját profiljukon: peldahonlap.hu/tanulo/tanulo-"
+"felhasznaloneve)"
+
+#: classes/class-woothemes-sensei-certificates.php:397
+msgctxt "post type general name"
+msgid "Certificates"
+msgstr "Bizonyítványok"
+
+#: classes/class-woothemes-sensei-certificates.php:398
+msgctxt "post type singular name"
+msgid "Certificate"
+msgstr "Bizonyítvány"
+
+#: classes/class-woothemes-sensei-certificates.php:399
+msgctxt "post type add_new"
+msgid "Add New Certificate"
+msgstr "Új hozzáadása"
+
+#: classes/class-woothemes-sensei-certificates.php:400
+msgid "Add New Certificate"
+msgstr "Új Bizonyítvány hozzáadása"
+
+#: classes/class-woothemes-sensei-certificates.php:401
+msgid "Edit Certificate"
+msgstr "Bizonyítvány szerkesztése"
+
+#: classes/class-woothemes-sensei-certificates.php:402
+msgid "New Certificate"
+msgstr "Új Bizonyítvány"
+
+#: classes/class-woothemes-sensei-certificates.php:403,
+#: classes/class-woothemes-sensei-certificates.php:409
+msgid "Certificates"
+msgstr "Bizonyítványok"
+
+#: classes/class-woothemes-sensei-certificates.php:405
+msgid "Search Certificates"
+msgstr "Keresés Bizonyítványokra"
+
+#: classes/class-woothemes-sensei-certificates.php:406
+msgid "No certificates found"
+msgstr "Nem találhatók bizonyítványok"
+
+#: classes/class-woothemes-sensei-certificates.php:407
+msgid "No certificates found in Trash"
+msgstr "Nem találhatók bizonyítványok a Lomtárban"
+
+#. translators: %1$s is the URL for editing the Course.
+#: classes/class-woothemes-sensei-certificates.php:518
+msgid ""
+"Set a certificate template on the <a href=\"%1$s\">course</a> in order to "
+"view this certificate"
+msgstr ""
+"Állíts be egy Bizonyítvány sablont a <a href=“%1$s”>tanfolyam</a> oldalon "
+"ahhoz, hogy megtekinthesd ezt a bizonyítványt"
+
+#: classes/class-woothemes-sensei-certificates.php:665
+msgid "You are not allowed to view this Certificate."
+msgstr "Nem engedélyezett számodra a Bizonyítvány a megtekintése."
+
+#: classes/class-woothemes-sensei-certificates.php:665,
+#: classes/class-woothemes-sensei-certificates.php:825
+msgid "Certificate Error"
+msgstr "Bizonyítvány Hiba"
+
+#: classes/class-woothemes-sensei-certificates.php:825
+msgid "The certificate you are searching for does not exist."
+msgstr "Nem található a keresésnek megfelelő bizonyítvány."
+
+#: classes/class-woothemes-sensei-certificates.php:1080
+msgid "Certificate"
+msgstr "Bizonyítvány"
+
+#: classes/class-woothemes-sensei-certificates.php:1274
+msgid "Allow my Certificates to be publicly viewed"
+msgstr "Bizonyítványaim nyilvános megtekinthetőségének engedélyezése"
+
+#: classes/class-woothemes-sensei-certificates.php:1274
+msgid "Save"
+msgstr "Mentés"
+
+#: classes/class-woothemes-sensei-certificates.php:1309
+msgid "Your Certificates Public View Settings Saved Successfully."
+msgstr "Bizonyítványaid Nyilvános Megtekinthetősége sikeresen mentve."
+
+#: classes/class-woothemes-sensei-certificates.php:1365
+msgid "View certificate"
+msgstr "Bizonyítvány megtekintése"
+
+#: templates/single-certificate_template.php:33
+msgid ""
+"You must set a certificate_template primary image before you can preview"
+msgstr ""
+"Be kell állítanod egy certificate_template elsődleges képet, mielőtt "
+"megtekinthetnéd"
+
+#: admin/post-types/certificate_templates.php:91
+msgid "Name"
+msgstr "Név"
+
+#: admin/post-types/certificate_templates.php:92
+msgid "Image"
+msgstr "Kép"
+
+#: admin/post-types/certificate_templates.php:130
+msgid "Draft"
+msgstr "Vázlat"
+
+#: admin/post-types/certificate_templates.php:142
+msgid "Restore this item from the Trash"
+msgstr "Elem visszaállítása a Lomtárból"
+
+#: admin/post-types/certificate_templates.php:142
+msgid "Restore"
+msgstr "Visszaállítás"
+
+#: admin/post-types/certificate_templates.php:144
+msgid "Move this item to the Trash"
+msgstr "Elem Lomtárba helyezése"
+
+#: admin/post-types/certificate_templates.php:144
+msgid "Trash"
+msgstr "Lomtár"
+
+#: admin/post-types/certificate_templates.php:147
+msgid "Delete this item permanently"
+msgstr "Elem végleges törlése"
+
+#: admin/post-types/certificate_templates.php:147
+msgid "Delete Permanently"
+msgstr "Végleges Törlés"
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:77
+msgid "Default Font"
+msgstr "Alapértelmezett Betűtípus"
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:85
+msgid "Default Font color"
+msgstr "Alapértelmezett Betűtípus szín"
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:87
+msgid "The default text color for the certificate."
+msgstr "A bizonyítvány szövegének alapértelmezett színe."
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:98
+msgid "Heading Position"
+msgstr "Fejléc Pozíció"
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:100
+msgid "Optional position of the Certificate Heading"
+msgstr "A Bizonyítvány Fejlécének opcionális pozíciója"
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:113,
+#: admin/post-types/writepanels/writepanel-certificate_data.php:157,
+#: admin/post-types/writepanels/writepanel-certificate_data.php:201,
+#: admin/post-types/writepanels/writepanel-certificate_data.php:245,
+#: admin/post-types/writepanels/writepanel-certificate_data.php:289
+msgid "Font"
+msgstr "Betűtípus"
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:120,
+#: admin/post-types/writepanels/writepanel-certificate_data.php:164,
+#: admin/post-types/writepanels/writepanel-certificate_data.php:208,
+#: admin/post-types/writepanels/writepanel-certificate_data.php:252,
+#: admin/post-types/writepanels/writepanel-certificate_data.php:296
+msgid "Font color"
+msgstr "Betűtípus szín"
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:129
+msgid "Heading Text"
+msgstr "Fejléc Szöveg"
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:130
+msgid "Text to display in the heading."
+msgstr "A fejlécben megjelenő szöveg."
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:142
+msgid "Message Position"
+msgstr "Üzenet Pozíció"
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:144
+msgid "Optional position of the Certificate Message"
+msgstr "A Bizonyítvány Üzenet opcionális pozíciója"
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:173
+msgid "Message Text"
+msgstr "Üzenet Szöveg"
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:174
+msgid "Text to display in the message area."
+msgstr "Az üzenet részen megjelenő szöveg."
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:175
+msgid "This is to certify that {{learner}} has completed the course"
+msgstr ""
+"Jelen tanúsítvány igazolja, hogy {{learner}} teljesítette a tanfolyamot"
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:186
+msgid "Course Position"
+msgstr "Tanfolyam Pozíció"
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:188
+msgid "Optional position of the Course Name"
+msgstr "A Tanfolyam Név opcionális pozíciója"
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:217
+msgid "Course Text"
+msgstr "Tanfolyam Szöveg"
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:218
+msgid "Text to display in the course area."
+msgstr "A tanfolyam részen megjelenő szöveg."
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:230
+msgid "Completion Date Position"
+msgstr "Teljesítési Dátum Pozíció"
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:232
+msgid "Optional position of the Course Completion date"
+msgstr "A Tanfolyam Teljesítés dátumának opcionális pozíciója"
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:261
+msgid "Completion Date Text"
+msgstr "Teljesítési Dátum Szöveg"
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:262
+msgid "Text to display in the course completion date area."
+msgstr "A tanfolyam teljesítési dátum részen megjelenő szöveg."
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:263
+msgid "{{completion_date}}"
+msgstr "{{completion_date}}"
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:274
+msgid "Place Position"
+msgstr "Honlapnév Pozíció"
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:276
+msgid "Optional position of the place of Certification."
+msgstr "A bizonyítványt adó honlap nevének opcionális pozíciója."
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:305
+msgid "Course Place Text"
+msgstr "Honlapnév Szöveg"
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:306
+msgid "Text to display in the course place area."
+msgstr "A honlapnév részen megjelenő szöveg."
+
+#: admin/post-types/writepanels/writepanel-certificate_image.php:70,
+#: admin/post-types/writepanels/writepanel-certificate_image.php:70
+msgid "Set certificate image"
+msgstr "Bizonyítványkép beállítása"
+
+#: admin/post-types/writepanels/writepanel-certificate_image.php:71,
+#: admin/post-types/writepanels/writepanel-certificate_image.php:71
+msgid "Remove certificate image"
+msgstr "Bizonyítványkép eltávolítása"
+
+#: admin/post-types/writepanels/writepanel-course_data.php:68
+msgid "None"
+msgstr "Nincs"
+
+#: admin/post-types/writepanels/writepanel-course_data.php:77
+msgid "No certificate template exist yet. Please add some first."
+msgstr "Még nincs bizonyítvány sablon. Előbb hozz létre egyet."
+
+#: admin/post-types/writepanels/writepanels-init.php:73
+msgid ""
+"Certificate Background Image <small>&ndash; Used to lay out the certificate "
+"fields found in the Certificate Data box.</small>"
+msgstr ""
+"Bizonyítvány Háttérkép <small>&ndash; A Bizonyítvány Adatoknál megadott "
+"bizonyítvány mezők elrendezésére szolgál.</small>"
+
+#: admin/post-types/writepanels/writepanels-init.php:93,
+#: admin/post-types/writepanels/writepanels-init.php:121
+msgid "Certificate Template"
+msgstr "Bizonyítvány Sablon"
+
+#: admin/post-types/writepanels/writepanels-init.php:278
+msgid "Size"
+msgstr "Méret"
+
+#: admin/post-types/writepanels/writepanels-init.php:280
+msgid "Bold"
+msgstr "Félkövér"
+
+#: admin/post-types/writepanels/writepanels-init.php:284
+msgid "Italic"
+msgstr "Dőlt"
+
+#: admin/post-types/writepanels/writepanels-init.php:290
+msgid "Center Align"
+msgstr "Középre Igazított"
+
+#: admin/post-types/writepanels/writepanels-init.php:294
+msgid "Border"
+msgstr "Keret"
+
+#: admin/post-types/writepanels/writepanels-init.php:350
+msgid "Remove Position"
+msgstr "Pozíció eltávolítás"
