@@ -184,7 +184,7 @@ class WooThemes_Sensei_Certificates {
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates.php';
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificate-templates.php';
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-data-store.php';
-		require_once dirname( __FILE__ ) . 'classes/class-woothemes-sensei-certificates-tfpdf.php';
+		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-tfpdf.php';
 	}
 
 	/**
