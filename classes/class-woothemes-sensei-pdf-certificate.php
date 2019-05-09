@@ -221,7 +221,7 @@ class WooThemes_Sensei_PDF_Certificate {
 				$fonttype = $this->get_font_type( $value );
 				switch ( $fonttype ) {
 					case 'mb':
-						$fpdf->SetFont( 'DejaVu', '', $font['font_size'] );
+						$fpdf->SetFont( 'dejavusanscondensed', '', $font['font_size'] );
 						break;
 					case 'latin':
 						$fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] );
@@ -342,7 +342,7 @@ class WooThemes_Sensei_PDF_Certificate {
 				$fonttype = $this->get_font_type( $value );
 				switch ( $fonttype ) {
 					case 'mb':
-						$fpdf->SetFont( 'DejaVu', '', $font['font_size'] );
+						$fpdf->SetFont( 'dejavusanscondensed', '', $font['font_size'] );
 						break;
 					case 'latin':
 						$fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] );
@@ -421,7 +421,7 @@ class WooThemes_Sensei_PDF_Certificate {
 				$fonttype = $this->get_font_type( $value );
 				switch ( $fonttype ) {
 					case 'mb':
-						$fpdf->SetFont( 'DejaVu', '', $font['font_size'] );
+						$fpdf->SetFont( 'dejavusanscondensed', '', $font['font_size'] );
 						break;
 					case 'latin':
 						$fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] );
