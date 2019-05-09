@@ -131,14 +131,14 @@ class PDF
     /**
      * Dimensions of current page in points
      *
-     * @var mixed
+     * @var float
      */
     protected $flt_width_points, $flt_height_points = 0.00;
 
     /**
      * Dimensions of current page in user units
      *
-     * @var mixed
+     * @var float
      */
     protected $flt_current_width, $flt_current_height = 0.00;
 
@@ -548,9 +548,9 @@ class PDF
     }
 
     /**
-     * @param $int_left
-     * @param $int_top
-     * @param null $int_right
+     * @param int $int_left
+     * @param int $int_top
+     * @param int|null $int_right
      */
     public function setMargins($int_left, $int_top, $int_right = null)
     {
@@ -564,7 +564,7 @@ class PDF
     }
 
     /**
-     * @param $int_margin
+     * @param int $int_margin
      */
     public function SetLeftMargin($int_margin)
     {
@@ -576,7 +576,7 @@ class PDF
     }
 
     /**
-     * @param $int_margin
+     * @param int $int_margin
      */
     public function SetTopMargin($int_margin)
     {
@@ -585,7 +585,7 @@ class PDF
     }
 
     /**
-     * @param $int_margin
+     * @param int $int_margin
      */
     public function SetRightMargin($int_margin)
     {
@@ -606,7 +606,7 @@ class PDF
     }
 
     /**
-     * @param $str_zoom
+     * @param string $str_zoom
      * @param string $str_layout
      */
     public function SetDisplayMode($str_zoom, $str_layout = 'default')
@@ -638,7 +638,7 @@ class PDF
     }
 
     /**
-     * @param $str_title
+     * @param string $str_title
      * @param bool $bol_utf8
      */
     public function SetTitle($str_title, $bol_utf8 = false)
@@ -651,7 +651,7 @@ class PDF
     }
 
     /**
-     * @param $str_subject
+     * @param string $str_subject
      * @param bool $bol_utf8
      */
     public function SetSubject($str_subject, $bol_utf8 = false)
@@ -664,7 +664,7 @@ class PDF
     }
 
     /**
-     * @param $str_author
+     * @param string $str_author
      * @param bool $bol_utf8
      */
     public function SetAuthor($str_author, $bol_utf8 = false)
@@ -677,7 +677,7 @@ class PDF
     }
 
     /**
-     * @param $str_keywords
+     * @param string $str_keywords
      * @param bool $bol_utf8
      */
     public function SetKeywords($str_keywords, $bol_utf8 = false)
@@ -690,7 +690,7 @@ class PDF
     }
 
     /**
-     * @param $str_creator
+     * @param string $str_creator
      * @param bool $bol_utf8
      */
     public function SetCreator($str_creator, $bol_utf8 = false)
@@ -712,7 +712,7 @@ class PDF
     }
 
     /**
-     * @param $str_message
+     * @param string $str_message
      */
     private function Error($str_message)
     {
@@ -851,36 +851,52 @@ class PDF
     }
 
     /**
-     * @param $int_red
-     * @param null $int_green
-     * @param null $int_blue
+     * @param array $args
+     * @return string
      */
-    public function SetDrawColor($int_red, $int_green = null, $int_blue = null)
+    protected function getColourString($args)
+    {
+        if (count($args) && is_array($args[0])) {
+            $args = $args[0];
+        }
+        switch (count($args)) {
+            case 1:
+                return sprintf('%.3f g', $args[0] / 255);
+            case 3:
+                return sprintf('%.3f %.3f %.3f rg', $args[0] / 255, $args[1] / 255, $args[2] / 255);
+            case 4:
+                return sprintf('%.3f %.3f %.3f %.3f k', $args[0] / 100, $args[1] / 100, $args[2] / 100, $args[3] / 100);
+            default:
+                return '0 g';
+        }
+    }
+
+    /**
+     * @param int $int_red
+     * @param int|null $int_green
+     * @param int|null $int_blue
+     */
+    public function SetDrawColor()
     {
         // Set color for all stroking operations
-        if (($int_red == 0 && $int_green == 0 && $int_blue == 0) || $int_green === null) {
-            $this->str_draw_color = sprintf('%.3F G', $int_red / 255);
-        } else {
-            $this->str_draw_color = sprintf('%.3F %.3F %.3F RG', $int_red / 255, $int_green / 255, $int_blue / 255);
-        }
+        $args = func_get_args();
+        // Setting draw colour (unlike any other colours) requires it to be uppercase
+        $this->str_draw_color = strtoupper($this->getColourString($args));
         if ($this->int_page > 0) {
             $this->Out($this->str_draw_color);
         }
     }
 
     /**
-     * @param $int_red
-     * @param null $int_green
-     * @param null $int_blue
+     * @param int $int_red
+     * @param int|null $int_green
+     * @param int|null $int_blue
      */
-    public function SetFillColor($int_red, $int_green = null, $int_blue = null)
+    public function SetFillColor()
     {
         // Set color for all filling operations
-        if (($int_red == 0 && $int_green == 0 && $int_blue == 0) || $int_green === null) {
-            $this->str_fill_color = sprintf('%.3F g', $int_red / 255);
-        } else {
-            $this->str_fill_color = sprintf('%.3F %.3F %.3F rg', $int_red / 255, $int_green / 255, $int_blue / 255);
-        }
+        $args = func_get_args();
+        $this->str_fill_color = $this->getColourString($args);
         $this->bol_fill_text_differ = ($this->str_fill_color != $this->str_text_color);
         if ($this->int_page > 0) {
             $this->Out($this->str_fill_color);
@@ -888,23 +904,20 @@ class PDF
     }
 
     /**
-     * @param $int_red
-     * @param null $int_green
-     * @param null $int_blue
+     * @param int $int_red
+     * @param int|null $int_green
+     * @param int|null $int_blue
      */
-    public function SetTextColor($int_red, $int_green = null, $int_blue = null)
+    public function SetTextColor()
     {
         // Set color for text
-        if (($int_red == 0 && $int_green == 0 && $int_blue == 0) || $int_green === null) {
-            $this->str_text_color = sprintf('%.3F g', $int_red / 255);
-        } else {
-            $this->str_text_color = sprintf('%.3F %.3F %.3F rg', $int_red / 255, $int_green / 255, $int_blue / 255);
-        }
+        $args = func_get_args();
+        $this->str_text_color = $this->getColourString($args);
         $this->bol_fill_text_differ = ($this->str_fill_color != $this->str_text_color);
     }
 
     /**
-     * @param $str_text
+     * @param string $str_text
      * @return float|int
      */
     public function GetStringWidth($str_text)
@@ -944,7 +957,7 @@ class PDF
     }
 
     /**
-     * @param $flt_width
+     * @param float $flt_width
      */
     public function SetLineWidth($flt_width)
     {
@@ -956,10 +969,10 @@ class PDF
     }
 
     /**
-     * @param $flt_x_1
-     * @param $flt_y_1
-     * @param $flt_x_2
-     * @param $flt_y_2
+     * @param float $flt_x_1
+     * @param float $flt_y_1
+     * @param float $flt_x_2
+     * @param float $flt_y_2
      */
     public function Line($flt_x_1, $flt_y_1, $flt_x_2, $flt_y_2)
     {
@@ -970,10 +983,10 @@ class PDF
     }
 
     /**
-     * @param $flt_x
-     * @param $flt_y
-     * @param $flt_width
-     * @param $flt_height
+     * @param float $flt_x
+     * @param float $flt_y
+     * @param float $flt_width
+     * @param float $flt_height
      * @param string $str_style
      */
     public function Rect($flt_x, $flt_y, $flt_width, $flt_height, $str_style = '')
@@ -992,7 +1005,7 @@ class PDF
     }
 
     /**
-     * @param $str_family
+     * @param string $str_family
      * @param string $str_style
      * @param string $str_file
      * @param bool $bol_unicode
@@ -1123,7 +1136,7 @@ class PDF
     }
 
     /**
-     * @param $str_family
+     * @param string $str_family
      * @param string $str_style
      * @param int $int_size
      */
@@ -1188,7 +1201,7 @@ class PDF
     }
 
     /**
-     * @param $int_size
+     * @param int $int_size
      */
     public function SetFontSize($int_size)
     {
@@ -1232,10 +1245,10 @@ class PDF
     }
 
     /**
-     * @param $flt_x
-     * @param $flt_y
-     * @param $flt_width
-     * @param $flt_height
+     * @param float $flt_x
+     * @param float $flt_y
+     * @param float $flt_width
+     * @param float $flt_height
      * @param $mix_link_key
      */
     public function Link($flt_x, $flt_y, $flt_width, $flt_height, $mix_link_key)
@@ -1251,9 +1264,9 @@ class PDF
     }
 
     /**
-     * @param $flt_x
-     * @param $flt_y
-     * @param $str_text
+     * @param float $flt_x
+     * @param float $flt_y
+     * @param string $str_text
      */
     public function Text($flt_x, $flt_y, $str_text)
     {
@@ -1424,9 +1437,9 @@ class PDF
     }
 
     /**
-     * @param $flt_width
-     * @param $flt_height
-     * @param $str_text
+     * @param float $flt_width
+     * @param float $flt_height
+     * @param string $str_text
      * @param int $int_border
      * @param string $str_alignment
      * @param bool $bol_fill
@@ -1718,7 +1731,7 @@ class PDF
     }
 
     /**
-     * @param $str_file
+     * @param string $str_file
      * @param float|null $flt_x
      * @param float|null $flt_y
      * @param int $int_width
@@ -1805,7 +1818,7 @@ class PDF
     }
 
     /**
-     * @param $flt_position_x
+     * @param float $flt_position_x
      */
     public function SetX($flt_position_x)
     {
@@ -1827,7 +1840,7 @@ class PDF
     }
 
     /**
-     * @param $flt_position_y
+     * @param float $flt_position_y
      */
     public function SetY($flt_position_y)
     {
@@ -1925,7 +1938,7 @@ class PDF
     }
 
     /**
-     * @param $str_orientation
+     * @param string $str_orientation
      * @param $mix_size
      */
     private function BeginPage($str_orientation, $mix_size)
@@ -1976,7 +1989,7 @@ class PDF
     }
 
     /**
-     * @param $str_font
+     * @param string $str_font
      * @return array
      */
     private function LoadFont($str_font)
@@ -1991,7 +2004,7 @@ class PDF
     }
 
     /**
-     * @param $str_text
+     * @param string $str_text
      * @return mixed
      */
     protected function EscapeString($str_text)
@@ -2005,7 +2018,7 @@ class PDF
     }
 
     /**
-     * @param $s
+     * @param string $s
      * @return string
      */
     protected function TextString($s)
@@ -2015,7 +2028,7 @@ class PDF
     }
 
     /**
-     * @param $str_text
+     * @param string $str_text
      * @return string
      */
     private function UTF8toUTF16($str_text)
@@ -2057,7 +2070,7 @@ class PDF
     }
 
     /**
-     * @param $str_file
+     * @param string $str_file
      * @return array
      */
     private function _parsejpg($str_file)
@@ -2083,7 +2096,7 @@ class PDF
     }
 
     /**
-     * @param $str_file
+     * @param string $str_file
      * @return array
      */
     private function _parsepng($str_file)
@@ -2100,7 +2113,7 @@ class PDF
 
     /**
      * @param $ptr_file
-     * @param $str_file
+     * @param string $str_file
      * @return array
      */
     private function _parsepngstream($ptr_file, $str_file)
@@ -2236,7 +2249,7 @@ class PDF
 
     /**
      * @param $ptr_file
-     * @param $int_bytes
+     * @param int $int_bytes
      * @return string
      */
     private function _readstream($ptr_file, $int_bytes)
@@ -2269,7 +2282,7 @@ class PDF
     }
 
     /**
-     * @param $str_file
+     * @param string $str_file
      * @return array
      */
     private function _parsegif($str_file)
@@ -2324,7 +2337,7 @@ class PDF
     }
 
     /**
-     * @param $str_data
+     * @param string $str_data
      */
     protected function PutStream($str_data)
     {
@@ -2334,7 +2347,7 @@ class PDF
     }
 
     /**
-     * @param $str_data
+     * @param string $str_data
      */
     protected function Out($str_data)
     {
@@ -2349,7 +2362,7 @@ class PDF
     /**
      * Puts the pages into the document
      */
-    private function PutPages()
+    protected function PutPages()
     {
         $int_page = $this->int_page;
         if (!empty($this->str_alias_number_pages)) {
@@ -2799,7 +2812,7 @@ class PDF
     }
 
     /**
-     * @param $arr_info
+     * @param array $arr_info
      */
     public function PutImage(&$arr_info)
     {
@@ -3013,7 +3026,7 @@ class PDF
     /**
      * Converts UTF-8 strings to UTF16-BE
      *
-     * @param $str_input
+     * @param string $str_input
      * @param bool $bol_set_byte_order_mark
      * @return string
      */
@@ -3030,7 +3043,7 @@ class PDF
     /**
      * Converts UTF-8 strings to codepoints array
      *
-     * @param $str_input
+     * @param string $str_input
      * @return array
      */
     public function UTF8StringToArray($str_input)
@@ -3062,8 +3075,8 @@ class PDF
     }
 
     /**
-     * @param $str_name
-     * @param $str_data
+     * @param string $str_name
+     * @param string $str_data
      * @return int
      */
     public function writeFontFile($str_name, $str_data)
@@ -3072,7 +3085,7 @@ class PDF
     }
 
     /**
-     * @param $str_name
+     * @param string $str_name
      * @return string
      */
     public function readFontFile($str_name)
@@ -3081,7 +3094,7 @@ class PDF
     }
 
     /**
-     * @param $str_name
+     * @param string $str_name
      * @return bool
      */
     public function clearFontFile($str_name)
@@ -3094,15 +3107,35 @@ class PDF
     }
 
     /**
-     * @param $str_path
+     * @param string $str_path
      */
     public function configureFontWritePath($str_path)
     {
         if (!is_dir($this->str_font_write_path . $str_path)) {
-            if (!mkdir($this->str_font_write_path . $str_path)) {
+            if (!mkdir($this->str_font_write_path . $str_path, 0777, true)) {
                 $this->Error("Unable to create unifont directory in path {$this->str_font_write_path}");
             }
         }
+    }
+
+    /**
+     * Get current page width
+     *
+     * @return float
+     */
+    public function GetPageWidth()
+    {
+        return $this->flt_current_width;
+    }
+
+    /**
+     * Get current page height
+     *
+     * @return float
+     */
+    public function GetPageHeight()
+    {
+        return $this->flt_current_height;
     }
 
 }

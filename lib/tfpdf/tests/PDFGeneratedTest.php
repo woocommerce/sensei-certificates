@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-define('FPDF_FONT_WRITE_PATH', __DIR__ . '/../build/');
+define('FPDF_FONT_WRITE_PATH', __DIR__ . '/../src/font/');
 
 class PDFGeneratedTest extends TestCase
 {
@@ -24,12 +24,33 @@ class PDFGeneratedTest extends TestCase
 
         $pdfLibrary->SetFont('Courier', '', 14);
         $pdfLibrary->Ln(10);
-        $pdfLibrary->Write(5, "Hello Courier World");
+        $pdfLibrary->SetTextColor(255, 0, 0);
+        $pdfLibrary->Write(5, "Hello Red Courier World");
+        $pdfLibrary->Ln(10);
+        $pdfLibrary->SetTextColor(122.5);
+        $pdfLibrary->Write(5, "Hello Gray Courier World");
         $pdfLibrary->SetFont('Courier', 'U', 14);
         $pdfLibrary->Ln(10);
+        $pdfLibrary->SetTextColor();
         $pdfLibrary->Write(5, "Hello Underscored Courier World");
 
         $pdfLibrary->Ln(10);
+
+        // Set draw color example
+        $pdfLibrary->SetLineWidth(2);
+        $pdfLibrary->SetDrawColor(122.5);
+        $pdfLibrary->Line(20, $pdfLibrary->GetY(), 200, $pdfLibrary->GetY());
+        $pdfLibrary->Ln(10);
+
+        // Set fill color example
+        $pdfLibrary->SetFillColor(122.5);
+        $pdfLibrary->Rect(20, $pdfLibrary->GetY(), 180, 20, 'F');
+        $pdfLibrary->Ln(30);
+
+        // Set text color example
+        $pdfLibrary->SetFont('Courier', '', 14);
+        $pdfLibrary->SetTextColor(122.5);
+        $pdfLibrary->Text(20, $pdfLibrary->GetY(), 'Test text');
 
         $file = $pdfLibrary->output();
 
@@ -39,7 +60,9 @@ class PDFGeneratedTest extends TestCase
 
         $file_name = __DIR__ . '/test_data/output.pdf';
 
-        unlink($file_name);
+        if (file_exists($file_name)) {
+            unlink($file_name);
+        }
         file_put_contents($file_name, $file);
 
         if (!file_exists($file_name)) {

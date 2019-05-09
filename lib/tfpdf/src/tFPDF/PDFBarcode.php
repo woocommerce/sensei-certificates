@@ -285,11 +285,11 @@ class PDFBarcode extends PDF
     }
 
     /**
-     * @param $flt_pos_x
-     * @param $flt_pos_y
-     * @param $str_code
-     * @param $flt_width
-     * @param $flt_height
+     * @param float $flt_pos_x
+     * @param float $flt_pos_y
+     * @param string $str_code
+     * @param float $flt_width
+     * @param float $flt_height
      */
     public function Code128($flt_pos_x, $flt_pos_y, $str_code, $flt_width, $flt_height)
     {
@@ -380,9 +380,9 @@ class PDFBarcode extends PDF
     }
 
     /**
-     * @param $flt_pos_x
-     * @param $flt_pos_y
-     * @param $str_code
+     * @param float $flt_pos_x
+     * @param float $flt_pos_y
+     * @param string $str_code
      * @param float $flt_baseline
      * @param int $flt_height
      * @throws \Exception
