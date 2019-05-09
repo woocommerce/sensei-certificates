@@ -395,7 +395,6 @@ class WooThemes_Sensei_Certificate_Templates {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param string $path Unused. Left here for backwards compatibility.
 	 *
 	 * @return mixed nothing if a $path is supplied, otherwise a PDF download
 	 */
@@ -479,13 +478,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		} // End For Loop
 
-		if( false !== strpos( get_locale(), 'en' ) ) {
-			$date_format = apply_filters( 'sensei_certificate_date_format', 'jS F Y' );
-			$date = date( $date_format, strtotime( $course_end_date ) );
-		} else {
-			$date_format = apply_filters( 'sensei_certificate_date_format', '%Y %B %e' );
-			$date = strftime ( $date_format, strtotime( $course_end_date ) );
-		}
+		$date = Woothemes_Sensei_Certificates_Utils::get_certificate_formatted_date( $course_end_date );
 
 		$certificate_heading = __( 'Certificate of Completion', 'sensei-certificates' ); // Certificate of Completion
 		if ( isset( $this->certificate_template_fields['certificate_heading']['text'] ) && '' != $this->certificate_template_fields['certificate_heading']['text'] ) {
