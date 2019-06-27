@@ -145,7 +145,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	public function setup_certificate_templates_post_type() {
 
 		$args = array(
-			'labels'             => array(
+			'labels'              => array(
 				'name'               => _x( 'Certificate Templates', 'post type general name', 'sensei-certificates' ),
 				'singular_name'      => _x( 'Certificate Template', 'post type singular name', 'sensei-certificates' ),
 				'add_new'            => _x( 'Add New Certificate Template', 'post type add_new', 'sensei-certificates' ),
@@ -160,23 +160,24 @@ class WooThemes_Sensei_Certificate_Templates {
 				'parent_item_colon'  => '',
 				'menu_name'          => __( 'Certificate Templates', 'sensei-certificates' ),
 			),
-			'public'             => true,
-			'publicly_queryable' => true,
-			'show_ui'            => true,
-			'show_in_menu'       => 'edit.php?post_type=certificate',
-			'query_var'          => true,
-			'rewrite'            => array(
+			'public'              => true,
+			'publicly_queryable'  => true,
+			'exclude_from_search' => true,
+			'show_ui'             => true,
+			'show_in_menu'        => 'edit.php?post_type=certificate',
+			'query_var'           => true,
+			'rewrite'             => array(
 				'slug'       => esc_attr( apply_filters( 'sensei_certificate_templates_slug', 'certificate-template' ) ),
 				'with_front' => true,
 				'feeds'      => true,
 				'pages'      => true,
 			),
-			'capability_type'    => 'certificate_template',
-			'map_meta_cap'       => true,
-			'has_archive'        => false,
-			'hierarchical'       => false,
-			'menu_icon'          => esc_url( Sensei()->plugin_url . 'assets/images/certificate.png' ),
-			'supports'           => array( 'title' ),
+			'capability_type'     => 'certificate_template',
+			'map_meta_cap'        => true,
+			'has_archive'         => false,
+			'hierarchical'        => false,
+			'menu_icon'           => esc_url( Sensei()->plugin_url . 'assets/images/certificate.png' ),
+			'supports'            => array( 'title' ),
 		);
 
 		register_post_type( 'certificate_template', $args );

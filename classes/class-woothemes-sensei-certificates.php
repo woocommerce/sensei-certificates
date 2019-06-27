@@ -393,7 +393,7 @@ class WooThemes_Sensei_Certificates {
 	public function setup_certificates_post_type() {
 
 		$args = array(
-			'labels'             => array(
+			'labels'              => array(
 				'name'               => _x( 'Certificates', 'post type general name', 'sensei-certificates' ),
 				'singular_name'      => _x( 'Certificate', 'post type singular name', 'sensei-certificates' ),
 				'add_new'            => _x( 'Add New Certificate', 'post type add_new', 'sensei-certificates' ),
@@ -408,23 +408,24 @@ class WooThemes_Sensei_Certificates {
 				'parent_item_colon'  => '',
 				'menu_name'          => __( 'Certificates', 'sensei-certificates' ),
 			),
-			'public'             => true,
-			'publicly_queryable' => true,
-			'show_ui'            => true,
-			'query_var'          => true,
-			'rewrite'            => array(
+			'public'              => true,
+			'publicly_queryable'  => true,
+			'exclude_from_search' => true,
+			'show_ui'             => true,
+			'query_var'           => true,
+			'rewrite'             => array(
 				'slug'       => esc_attr( apply_filters( 'sensei_certificates_slug', 'certificate' ) ),
 				'with_front' => true,
 				'feeds'      => true,
 				'pages'      => true,
 			),
-			'capability_type'    => 'certificate',
-			'map_meta_cap'       => true,
-			'has_archive'        => false,
-			'hierarchical'       => false,
-			'menu_icon'          => 'dashicons-awards',
-			'menu-position'      => 21,
-			'supports'           => array( 'title', 'custom-fields' ),
+			'capability_type'     => 'certificate',
+			'map_meta_cap'        => true,
+			'has_archive'         => false,
+			'hierarchical'        => false,
+			'menu_icon'           => 'dashicons-awards',
+			'menu-position'       => 21,
+			'supports'            => array( 'title', 'custom-fields' ),
 		);
 
 		register_post_type( 'certificate', $args );
