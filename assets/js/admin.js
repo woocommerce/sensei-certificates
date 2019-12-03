@@ -189,6 +189,7 @@ jQuery( function($){
 			instance: true,
 			imageWidth: imageWidth,
 			imageHeight: imageHeight,
+			persistent: true,
 			x1: coords[0],
 			y1: coords[1],
 			x2: coords[0] + coords[2],
@@ -250,7 +251,7 @@ jQuery( function($){
 
 		return false;
 	});
-	
+
 	if ( typeof jQuery.fn.hasParent !== 'function' ) {
 			jQuery.extend( jQuery.fn, {
 			// Name of our method & one argument (the parent selector)
