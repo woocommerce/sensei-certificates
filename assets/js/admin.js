@@ -197,6 +197,12 @@ jQuery( function($){
 			onSelectEnd: function(img, selection) { areaSelect(selection, field_name); }
 		});
 
+		// Remove image area select element when clicking elsewhere on the image.
+		$( '.imgareaselect-outer' ).click( function() {
+			removeImgAreaSelect();
+			$( '.set_position' ).val(sensei_certificate_templates_params.set_position_label);
+		} );
+
 		// scroll into viewport if needed
 		if ($(document).scrollTop() > $("img#certificate_image_0").offset().top + $("img#certificate_image_0").height() * (2/3)) {
 			$('html, body').animate({
