@@ -1,6 +1,6 @@
 <?php
 /**
- * Sensei Certificates Templates Admin
+ * Sensei LMS Certificates Templates Admin
  *
  * @package   woothemes-sensei-certificates/Admin
  * @author    Automattic
@@ -113,7 +113,7 @@ function sensei_certificate_template_admin_help_tab() {
 		array(
 			'id'      => 'sensei_certificate_template_overview_help_tab',
 			'title'   => __( 'Overview', 'sensei-certificates' ),
-			'content' => '<p>' . __( 'The Sensei Certificates extension allows you to create and configure customizable certificate templates which can be attached to Sensei Courses.  Your learners will earn a Certificate which they can download and share with others once they have completed a course.', 'sensei-certificates' ) . '</p>',
+			'content' => '<p>' . __( 'The Sensei LMS Certificates extension allows you to create and configure customizable certificate templates which can be attached to Sensei Courses.  Your learners will earn a Certificate which they can download and share with others once they have completed a course.', 'sensei-certificates' ) . '</p>',
 		)
 	);
 

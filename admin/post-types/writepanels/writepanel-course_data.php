@@ -1,6 +1,6 @@
 <?php
 /**
- * Sensei Certificates Templates
+ * Sensei LMS Certificates Templates
  *
  * All functionality pertaining to the Certificate Templates functionality in Sensei.
  *

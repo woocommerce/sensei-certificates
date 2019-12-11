@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Sensei Certificates Templates Class
+ * Sensei LMS Certificates Templates Class
  *
  * All functionality pertaining to the Certificate Templates functionality in Sensei.
  *

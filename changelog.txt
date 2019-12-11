@@ -1,4 +1,4 @@
-*** Sensei Certificates Changelog ***
+*** Changelog ***
 
 2019.04.25 - version 2.0.0
 * New: Add dependency check for minimum Sensei (1.11.0) and PHP (5.6) versions - #171

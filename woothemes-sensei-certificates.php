@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Sensei Certificates
+ * Plugin Name: Sensei LMS Certificates
  * Plugin URI: https://woocommerce.com/products/sensei-certificates/
  * Description: Award your students with a certificate of completion and a sense of accomplishment after finishing a course.
  * Version: 2.0.0
