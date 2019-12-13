@@ -1,6 +1,6 @@
 <?php
 /**
- * Sensei Certificates functions.
+ * Sensei LMS Certificates functions.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -22,12 +22,12 @@ function sensei_certificates_updates_list( $updates ) {
 			'sensei_update_users_certificate_data'      => array(
 				'title'   => 'Create Certificates',
 				'desc'    => 'Creates certificates for learners who have already completed Courses.',
-				'product' => 'Sensei Certificates',
+				'product' => 'Sensei LMS Certificates',
 			),
 			'sensei_create_master_certificate_template' => array(
 				'title'   => 'Create Master Certificate Template',
 				'desc'    => 'Creates the master Certificate Template for all Courses.',
-				'product' => 'Sensei Certificates',
+				'product' => 'Sensei LMS Certificates',
 			),
 		),
 	);
@@ -153,7 +153,7 @@ function sensei_create_master_certificate_template() {
 	}
 	$tmp     = download_url( $url );
 	$post_id = $post_id;
-	$desc    = __( 'Sensei Certificate Template Example', 'sensei-certificates' );
+	$desc    = __( 'Sensei LMS Certificate Template Example', 'sensei-certificates' );
 
 	// Set variables for storage
 	// fix file filename for query strings

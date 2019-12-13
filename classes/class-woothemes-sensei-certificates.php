@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Sensei Certificates Main Class
+ * Sensei LMS Certificates Main Class
  *
  * All functionality pertaining to the Certificates functionality in Sensei.
  *
@@ -1141,7 +1141,7 @@ class WooThemes_Sensei_Certificates {
 
 		if ( $this->_inline_js ) {
 
-			echo "<!-- Sensei Certificates JavaScript-->\n<script type=\"text/javascript\">\njQuery(document).ready(function($) {";
+			echo "<!-- Sensei LMS Certificates JavaScript-->\n<script type=\"text/javascript\">\njQuery(document).ready(function($) {";
 
 			// Sanitize
 			$this->_inline_js = wp_check_invalid_utf8( $this->_inline_js );

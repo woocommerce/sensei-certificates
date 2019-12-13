@@ -83,7 +83,7 @@ function pot() {
 		] )
 		.pipe( wpPot( {
 			domain: 'sensei-certificates',
-			package: 'Sensei Certificates',
+			package: 'Sensei LMS Certificates',
 		} ) )
 		.pipe( dest( 'lang/sensei-certificates.pot' ) );
 }
