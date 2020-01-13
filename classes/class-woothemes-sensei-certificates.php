@@ -886,14 +886,8 @@ class WooThemes_Sensei_Certificates {
 
 		// Logo image
 		if ( isset( $this->image_id ) && is_numeric( $this->image_id ) && 0 < intval( $this->image_id ) ) {
-			$image_src = wp_get_attachment_url( $this->image_id );
-
-			// Use image path instead of URL
-			$uploads   = wp_upload_dir();
-			$file_path = str_replace( $uploads['baseurl'], $uploads['basedir'], $image_src );
-
-			$pdf_certificate->bg_image_src = $file_path;
-		} // End If Statement
+            $pdf_certificate->bg_image_src = get_attached_file( $this->image_id );
+		}
 
 	} // End certificate_background()
 
