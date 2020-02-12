@@ -30,7 +30,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * - certificate_backgroudn()
  * - get_certificate_font_settings()
  * - certificate_link()
- * - enqueue_styles()
  * - create_columns()
  * - populate_columns()
  * - add_inline_js()
@@ -130,7 +129,6 @@ class WooThemes_Sensei_Certificates {
 			add_filter( 'sensei_view_results_text', array( $instance, 'certificate_link' ), 10, 1 );
 		}
 		add_filter( 'sensei_results_links', array( $instance, 'certificate_link' ), 10, 2 );
-		add_action( 'sensei_additional_styles', array( $instance, 'enqueue_styles' ) );
 		add_action( 'sensei_user_lesson_reset', array( $instance, 'reset_lesson_course_certificate' ), 10, 2 );
 		add_action( 'sensei_user_course_reset', array( $instance, 'reset_course_certificate' ), 10, 2 );
 
@@ -1043,22 +1041,6 @@ class WooThemes_Sensei_Certificates {
 		return $certificate_url;
 
 	} // End get_certificate_url()
-
-
-	/**
-	 * enqueue_styles loads frontend styles
-	 *
-	 * @access public
-	 * @since  1.0.0
-	 * @return void
-	 */
-	public function enqueue_styles() {
-
-		$this->token = 'sensei-certificates';
-		wp_register_style( $this->token . '-frontend', $this->plugin_url . 'assets/css/frontend.css', '', '1.0.0', 'screen' );
-		wp_enqueue_style( $this->token . '-frontend' );
-
-	} // End enqueue_styles()
 
 
 	/**
