@@ -995,7 +995,7 @@ class WooThemes_Sensei_Certificates {
 
 			} // End If Statement
 
-			$message = $message . '<a href="' . $certificate_url . '" class="' . $classes . 'sensei-certificate-link" title="' . esc_attr( __( 'View Certificate', 'sensei-certificates' ) ) . '">' . __( 'View Certificate', 'sensei-certificates' ) . '</a>';
+			$message = $message . '<a href="' . $certificate_url . '" class="' . $classes . 'view-results-link" title="' . esc_attr( __( 'View Certificate', 'sensei-certificates' ) ) . '">' . __( 'View Certificate', 'sensei-certificates' ) . '</a>';
 
 		} // End If Statement
 
@@ -1080,7 +1080,7 @@ class WooThemes_Sensei_Certificates {
 
 			if ( '' != $certificate_url ) {
 
-				$output = '<a href="' . $certificate_url . '" class="sensei-certificate-link" title="' . esc_attr( __( 'View Certificate', 'sensei-certificates' ) ) . '">' . __( 'View Certificate', 'sensei-certificates' ) . '</a>';
+				$output = '<a href="' . $certificate_url . '" class="view-results-link" title="' . esc_attr( __( 'View Certificate', 'sensei-certificates' ) ) . '">' . __( 'View Certificate', 'sensei-certificates' ) . '</a>';
 
 			} // End If Statement
 
