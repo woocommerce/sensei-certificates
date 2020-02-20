@@ -23,7 +23,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * - setup_certificate_templates_post_type()
  * - post_type_custom_column_heading()
  * - post_type_custom_column_content()
- * - enqueue_styles()
  * - populate_object()
  * - get_message()
  * - get_image_id()
@@ -71,11 +70,6 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		// Setup post type
 		add_action( 'init', array( $this, 'setup_certificate_templates_post_type' ), 110 );
-
-		/**
-		 * FRONTEND
-		 */
-		add_action( 'sensei_additional_styles', array( $this, 'enqueue_styles' ) );
 
 		/**
 		 * BACKEND
@@ -268,21 +262,6 @@ class WooThemes_Sensei_Certificate_Templates {
 		} // End Switch Statement
 
 	} // End post_type_custom_column_content()
-
-
-	/**
-	 * enqueue_styles loads frontend styles
-	 *
-	 * @access public
-	 * @since  1.0.0
-	 * @return void
-	 */
-	public function enqueue_styles() {
-
-		wp_register_style( $this->token . '-frontend', $this->plugin_url . 'assets/css/frontend.css', '', '1.0.0', 'screen' );
-		wp_enqueue_style( $this->token . '-frontend' );
-
-	} // End enqueue_styles()
 
 
 	/**
