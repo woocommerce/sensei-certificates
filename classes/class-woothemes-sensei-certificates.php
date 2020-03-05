@@ -209,7 +209,7 @@ class WooThemes_Sensei_Certificates {
 	/**
 	 * Load front-end CSS.
 	 *
-	 * @access public
+	 * @access private
 	 * @since  1.0.0
 	 */
 	public function enqueue_styles() {
