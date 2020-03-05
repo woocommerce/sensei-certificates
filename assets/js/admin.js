@@ -211,9 +211,15 @@ jQuery( function($){
 	}
 
 	// certificate image selection made, save it to the coordinate field and show the 'remove' button
-	function areaSelect(selection, field_name) {
-		$('#_' + field_name).val(selection.x1 + ',' + selection.y1 + ',' + selection.width + ',' + selection.height);
-		$('#remove_' + field_name).show();
+	function areaSelect( selection, field_name ) {
+		// Element is being drawn if width and height are not 0.
+		if ( selection && selection.width !== 0 && selection.height !== 0 ) {
+			$( '#_' + field_name ).val( selection.x1 + ',' + selection.y1 + ',' + selection.width + ',' + selection.height );
+		} else { // Otherwise, the user has clicked somewhere on the image.
+			certificate_field_area_select( field_name );
+		}
+
+		$( '#remove_' + field_name ).show();
 	}
 
 	// position remove button clicked
