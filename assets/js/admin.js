@@ -189,19 +189,12 @@ jQuery( function($){
 			instance: true,
 			imageWidth: imageWidth,
 			imageHeight: imageHeight,
-			persistent: true,
 			x1: coords[0],
 			y1: coords[1],
 			x2: coords[0] + coords[2],
 			y2: coords[1] + coords[3],
 			onSelectEnd: function(img, selection) { areaSelect(selection, field_name); }
 		});
-
-		// Remove image area select element when clicking elsewhere on the image.
-		$( '.imgareaselect-outer' ).click( function() {
-			removeImgAreaSelect();
-			$( '.set_position' ).val(sensei_certificate_templates_params.set_position_label);
-		} );
 
 		// scroll into viewport if needed
 		if ($(document).scrollTop() > $("img#certificate_image_0").offset().top + $("img#certificate_image_0").height() * (2/3)) {
