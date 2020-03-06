@@ -95,7 +95,9 @@ jQuery( function($){
 	function redrawCertificateFieldPlaceholders() {
 		$('.field_pos').each(function(index,el) {
 			el = $(el);
-			var field = $('#field'+el.attr('id'));
+
+			var id = el.attr( 'id' );
+			var field = $( '#field' + id );
 			var image = $('#certificate_image_0');
 
 			// if the image is removed, hide all fields
@@ -114,17 +116,17 @@ jQuery( function($){
 			var position = el.val() ? el.val().split(',').map(function(n) { return parseInt(n) * scale }) : null;
 
 			// create the field element if needed
-			if (0 == field.length) {
-				var name = el.prev().find('label').html();
-				name = name.substr(0, name.length - 9);
-				$('#certificate_image_wrapper').append('<span id="field'+el.attr('id')+'" class="certificate_field" style="display:none;">'+name+'</span>');
+			if ( 0 === field.length ) {
+				$( '#certificate_image_wrapper' ).append( '<span id="field' + id
+					+ '" class="certificate_field" style="display:none;">'
+					+ sensei_certificate_templates_params[id] + '</span>' );
 
 				// clicking on the fields allows them to be edited
-				$('#field'+el.attr('id')).click( function(el) {
+				$( '#field' + id ).click( function(el) {
 					certificate_field_area_select(el.target.id.substr(6));  // remove the leading 'field_' to create the field name
 				});
 
-				field = $('#field'+el.attr('id'));
+				field = $( '#field'+ id );
 			}
 
 			if (position) {
