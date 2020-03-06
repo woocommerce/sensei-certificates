@@ -125,12 +125,6 @@ class WooThemes_Sensei_Certificates {
 
 		// Filters
 		add_filter( 'sensei_user_course_status_passed', array( $instance, 'certificate_link' ), 10, 1 );
-
-		// Remove in future version
-		if ( version_compare( Sensei()->version, '1.6', '<' ) ) {
-			add_filter( 'sensei_view_results_text', array( $instance, 'certificate_link' ), 10, 1 );
-		}
-
 		add_filter( 'sensei_results_links', array( $instance, 'certificate_link' ), 10, 2 );
 
 		// Actions
