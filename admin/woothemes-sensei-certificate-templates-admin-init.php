@@ -237,11 +237,16 @@ function sensei_certificate_template_admin_enqueue_scripts() {
 
 			// pass parameters into the javascript file
 			$sensei_certificate_templates_params = array(
-				'done_label'           => __( 'Done', 'sensei-certificates' ),
-				'set_position_label'   => __( 'Set Position', 'sensei-certificates' ),
-				'post_id'              => $post->ID,
-				'primary_image_width'  => isset( $attachment['width'] ) && $attachment['width'] ? $attachment['width'] : '0',
-				'primary_image_height' => isset( $attachment['height'] ) && $attachment['height'] ? $attachment['height'] : '0',
+				'_certificate_heading_pos'    => __( 'Heading', 'sensei-certificates' ),
+				'_certificate_message_pos'    => __( 'Message', 'sensei-certificates' ),
+				'_certificate_course_pos'     => __( 'Course', 'sensei-certificates' ),
+				'_certificate_completion_pos' => __( 'Completion Date', 'sensei-certificates' ),
+				'_certificate_place_pos'      => __( 'Place', 'sensei-certificates' ),
+				'done_label'                  => __( 'Done', 'sensei-certificates' ),
+				'set_position_label'          => __( 'Set Position', 'sensei-certificates' ),
+				'post_id'                     => $post->ID,
+				'primary_image_width'         => isset( $attachment['width'] ) && $attachment['width'] ? $attachment['width'] : '0',
+				'primary_image_height'        => isset( $attachment['height'] ) && $attachment['height'] ? $attachment['height'] : '0',
 			);
 
 		} // End If Statement
