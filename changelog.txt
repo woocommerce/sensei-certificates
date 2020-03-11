@@ -1,5 +1,15 @@
 *** Changelog ***
 
+2020.03.12 - version 2.0.1
+* New: Rename plugin to Sensei LMS Certificates - #195
+* Tweak: Remove certificates and templates from public search queries - #183
+* Tweak: Retrieve absolute image path via get_attached_file - #199
+* Tweak: Only load CSS on pages that require it - #205
+* Tweak: Replace use of deprecated course_query function - #207
+* Fix: Ensure font files can be accessed when plugin is copied to another site - #193
+* Fix: Localize placeholder text when editing certificate template - #206
+* Fix: Don't hide template positioning box when clicking off it - #204
+
 2019.04.25 - version 2.0.0
 * New: Add dependency check for minimum Sensei (1.11.0) and PHP (5.6) versions - #171
 * New: Add certificate link to course completion emails - #174
