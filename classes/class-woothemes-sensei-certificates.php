@@ -125,12 +125,6 @@ class WooThemes_Sensei_Certificates {
 
 		// Filters
 		add_filter( 'sensei_user_course_status_passed', array( $instance, 'certificate_link' ), 10, 1 );
-
-		// Remove in future version
-		if ( version_compare( Sensei()->version, '1.6', '<' ) ) {
-			add_filter( 'sensei_view_results_text', array( $instance, 'certificate_link' ), 10, 1 );
-		}
-
 		add_filter( 'sensei_results_links', array( $instance, 'certificate_link' ), 10, 2 );
 
 		// Actions
@@ -753,8 +747,7 @@ class WooThemes_Sensei_Certificates {
 
 			// Get Course Data
 			$course_id       = get_post_meta( $certificate_id, 'course_id', true );
-			$course          = Sensei()->course->course_query( -1, 'usercourses', $course_id );
-			$course          = $course[0];
+			$course_title    = get_the_title( $course_id );
 			$course_end      = Sensei_Utils::sensei_check_for_activity(
 				array(
 					'post_id' => intval( $course_id ),
@@ -804,22 +797,22 @@ class WooThemes_Sensei_Certificates {
 			if ( isset( $this->certificate_template_fields['certificate_heading']['text'] ) && '' != $this->certificate_template_fields['certificate_heading']['text'] ) {
 
 				$certificate_heading = $this->certificate_template_fields['certificate_heading']['text'];
-				$certificate_heading = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}' ), array( $student_name, $course->post_title, $date, get_bloginfo( 'name' ) ), $certificate_heading );
+				$certificate_heading = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}' ), array( $student_name, $course_title, $date, get_bloginfo( 'name' ) ), $certificate_heading );
 			} // End If Statement
 
 			$certificate_message = __( 'This is to certify that', 'sensei-certificates' ) . " \r\n\r\n" . $student_name . " \r\n\r\n" . __( 'has completed the course', 'sensei-certificates' ); // This is to certify that {{learner}} has completed the course
 			if ( isset( $this->certificate_template_fields['certificate_message']['text'] ) && '' != $this->certificate_template_fields['certificate_message']['text'] ) {
 
 				$certificate_message = $this->certificate_template_fields['certificate_message']['text'];
-				$certificate_message = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}' ), array( $student_name, $course->post_title, $date, get_bloginfo( 'name' ) ), $certificate_message );
+				$certificate_message = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}' ), array( $student_name, $course_title, $date, get_bloginfo( 'name' ) ), $certificate_message );
 
 			} // End If Statement
 
-			$certificate_course = $course->post_title; // {{course_title}}
+			$certificate_course = $course_title;
 			if ( isset( $this->certificate_template_fields['certificate_course']['text'] ) && '' != $this->certificate_template_fields['certificate_course']['text'] ) {
 
 				$certificate_course = $this->certificate_template_fields['certificate_course']['text'];
-				$certificate_course = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}' ), array( $student_name, $course->post_title, $date, get_bloginfo( 'name' ) ), $certificate_course );
+				$certificate_course = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}' ), array( $student_name, $course_title, $date, get_bloginfo( 'name' ) ), $certificate_course );
 
 			} // End If Statement
 
@@ -827,7 +820,7 @@ class WooThemes_Sensei_Certificates {
 			if ( isset( $this->certificate_template_fields['certificate_completion']['text'] ) && '' != $this->certificate_template_fields['certificate_completion']['text'] ) {
 
 				$certificate_completion = $this->certificate_template_fields['certificate_completion']['text'];
-				$certificate_completion = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}' ), array( $student_name, $course->post_title, $date, get_bloginfo( 'name' ) ), $certificate_completion );
+				$certificate_completion = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}' ), array( $student_name, $course_title, $date, get_bloginfo( 'name' ) ), $certificate_completion );
 
 			} // End If Statement
 
@@ -835,7 +828,7 @@ class WooThemes_Sensei_Certificates {
 			if ( isset( $this->certificate_template_fields['certificate_place']['text'] ) && '' != $this->certificate_template_fields['certificate_place']['text'] ) {
 
 				$certificate_place = $this->certificate_template_fields['certificate_place']['text'];
-				$certificate_place = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}' ), array( $student_name, $course->post_title, $date, get_bloginfo( 'name' ) ), $certificate_place );
+				$certificate_place = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}' ), array( $student_name, $course_title, $date, get_bloginfo( 'name' ) ), $certificate_place );
 
 			} // End If Statement
 
