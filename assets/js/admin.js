@@ -191,19 +191,12 @@ jQuery( function($){
 			instance: true,
 			imageWidth: imageWidth,
 			imageHeight: imageHeight,
-			persistent: true,
 			x1: coords[0],
 			y1: coords[1],
 			x2: coords[0] + coords[2],
 			y2: coords[1] + coords[3],
 			onSelectEnd: function(img, selection) { areaSelect(selection, field_name); }
 		});
-
-		// Remove image area select element when clicking elsewhere on the image.
-		$( '.imgareaselect-outer' ).click( function() {
-			removeImgAreaSelect();
-			$( '.set_position' ).val(sensei_certificate_templates_params.set_position_label);
-		} );
 
 		// scroll into viewport if needed
 		if ($(document).scrollTop() > $("img#certificate_image_0").offset().top + $("img#certificate_image_0").height() * (2/3)) {
@@ -220,9 +213,15 @@ jQuery( function($){
 	}
 
 	// certificate image selection made, save it to the coordinate field and show the 'remove' button
-	function areaSelect(selection, field_name) {
-		$('#_' + field_name).val(selection.x1 + ',' + selection.y1 + ',' + selection.width + ',' + selection.height);
-		$('#remove_' + field_name).show();
+	function areaSelect( selection, field_name ) {
+		// Element is being drawn if width and height are not 0.
+		if ( selection && selection.width !== 0 && selection.height !== 0 ) {
+			$( '#_' + field_name ).val( selection.x1 + ',' + selection.y1 + ',' + selection.width + ',' + selection.height );
+		} else { // Otherwise, the user has clicked somewhere on the image.
+			certificate_field_area_select( field_name );
+		}
+
+		$( '#remove_' + field_name ).show();
 	}
 
 	// position remove button clicked
