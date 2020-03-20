@@ -1,5 +1,8 @@
 *** Changelog ***
 
+2020.03.20 - version 2.0.2
+* Fix: Certificate display issue when using non-Latin characters - #211
+
 2020.03.12 - version 2.0.1
 * New: Rename plugin to Sensei LMS Certificates - #195
 * Tweak: Remove certificates and templates from public search queries - #183
