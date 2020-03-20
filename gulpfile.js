@@ -31,7 +31,7 @@ function docs() {
 }
 
 function fonts() {
-	return src( 'lib/tfpdf/**/*.ttf', { base: '.' } )
+	return src( [ 'lib/tfpdf/**/*.ttf', 'lib/tfpdf/**/*.dat' ], { base: '.' } )
 		.pipe( dest( buildDir ) )
 }
 
