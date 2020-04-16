@@ -38,7 +38,7 @@ We look forward to seeing your students light up with excitement when they recei
 
 * Easily-customised certificate design
 * Lean code, to ensure a pleasant experience
-* Intuitive integration with Sensei
+* Intuitive integration with Sensei LMS
 
 == Installation ==
 
