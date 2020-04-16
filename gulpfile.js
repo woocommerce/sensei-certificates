@@ -26,7 +26,7 @@ function cssMinify() {
 }
 
 function docs() {
-	return src( [ 'changelog.txt', 'README.md' ] )
+	return src( [ 'changelog.txt', 'readme.txt' ] )
 		.pipe( dest( buildDir ) )
 }
 
