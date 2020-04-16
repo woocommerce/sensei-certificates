@@ -9,7 +9,6 @@
  * Requires at least: 4.9
  * Requires PHP: 5.6
  * Tested up to: 5.3
- * Woo: 247548:625ee5fe1bf36b4c741ab07507ba2ffd
  * License: GPLv2+
  */
 
