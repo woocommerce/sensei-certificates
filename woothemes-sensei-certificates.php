@@ -8,7 +8,7 @@
  * Author URI: https://automattic.com
  * Requires at least: 4.9
  * Requires PHP: 5.6
- * Tested up to: 5.3
+ * Tested up to: 5.4
  * License: GPLv2+
  */
 
