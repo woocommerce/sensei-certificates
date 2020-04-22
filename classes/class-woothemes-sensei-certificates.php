@@ -1300,7 +1300,13 @@ class WooThemes_Sensei_Certificates {
 	public function certificates_user_settings_save() {
 		global $current_user;
 		// phpcs:ignore WordPress.VIP.ValidatedSanitizedInput.InputNotSanitized
-		if ( is_user_logged_in() && isset( $_POST['certificates_user_meta_save'] ) && wp_verify_nonce( $_POST['woothemes_sensei_certificates_user_meta_save_noonce'], 'woothemes_sensei_certificates_user_meta_save_noonce' ) ) {
+		if (
+			is_user_logged_in()
+			&& isset( $_POST['certificates_user_meta_save'] )
+			&& isset( $_POST['woothemes_sensei_certificates_user_meta_save_noonce'] )
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Leave nonce value unmodified.
+			&& wp_verify_nonce( wp_unslash( $_POST['woothemes_sensei_certificates_user_meta_save_noonce'] ), 'woothemes_sensei_certificates_user_meta_save_noonce' )
+		) {
 
 			// Update the user meta with the setting
 			$current_user    = wp_get_current_user();
