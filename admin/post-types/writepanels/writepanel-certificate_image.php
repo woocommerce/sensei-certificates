@@ -85,13 +85,23 @@ function certificate_template_image_meta_box() {
  * @param object $post the certificate template post object
  */
 function certificate_template_process_images_meta( $post_id, $post ) {
+	if (
+		empty( $_POST['certificates_meta_nonce'] )
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Leave nonce value unmodified.
+		|| ! wp_verify_nonce( wp_unslash( $_POST['certificates_meta_nonce'] ), 'certificates_save_data' )
+		|| empty( $_POST['upload_image_id'] )
+	) {
+		return;
+	}
 
 	// handle the image_ids meta, which will always have at least an index 0 for the main template image, even if the value is empty
-	$image_ids = array();
-	foreach ( $_POST['upload_image_id'] as $i => $image_id ) {
+	$image_ids       = array();
+	$upload_image_id = array_map( 'intval', wp_unslash( $_POST['upload_image_id'] ) );
+
+	foreach ( $upload_image_id as $i => $image_id ) {
 
 		if ( 0 == $i || $image_id ) {
-			$image_ids[] = $image_id;
+			$image_ids[] = $image_id !== 0 ? $image_id : '';
 		} // End If Statement
 	} // End For Loop
 
