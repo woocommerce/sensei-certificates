@@ -81,7 +81,7 @@ class WooThemes_Sensei_Certificates {
 		$this->plugin_url  = trailingslashit( plugins_url( '', SENSEI_CERTIFICATES_PLUGIN_FILE ) );
 		$this->plugin_path = plugin_dir_path( SENSEI_CERTIFICATES_PLUGIN_FILE );
 
-		register_activation_hook( SENSEI_CERTIFICATES_PLUGIN_FILE,  array( __CLASS__, 'activate' ) );
+		register_activation_hook( SENSEI_CERTIFICATES_PLUGIN_FILE, array( __CLASS__, 'activate' ) );
 
 		add_action( 'plugins_loaded', array( __CLASS__, 'load_textdomain' ) );
 	} // End __construct()
@@ -105,7 +105,7 @@ class WooThemes_Sensei_Certificates {
 		$instance = self::instance();
 
 		self::load_files();
-		$GLOBALS['woothemes_sensei_certificates'] = self::instance();
+		$GLOBALS['woothemes_sensei_certificates']          = self::instance();
 		$GLOBALS['woothemes_sensei_certificate_templates'] = new WooThemes_Sensei_Certificate_Templates();
 
 		add_action( 'sensei_certificates_run_installer', array( $instance, 'install' ) );
@@ -225,7 +225,7 @@ class WooThemes_Sensei_Certificates {
 			|| ( is_single() && 'course' === get_post_type() ) )
 		) {
 			$should_enqueue = true;
-		} else if ( $view_link_profile && isset( $wp_query->query_vars['learner_profile'] )
+		} elseif ( $view_link_profile && isset( $wp_query->query_vars['learner_profile'] )
 		) {
 			$should_enqueue = true;
 		}
@@ -916,7 +916,7 @@ class WooThemes_Sensei_Certificates {
 
 		// Logo image
 		if ( isset( $this->image_id ) && is_numeric( $this->image_id ) && 0 < intval( $this->image_id ) ) {
-            $pdf_certificate->bg_image_src = get_attached_file( $this->image_id );
+			$pdf_certificate->bg_image_src = get_attached_file( $this->image_id );
 		}
 
 	} // End certificate_background()
@@ -1367,14 +1367,14 @@ class WooThemes_Sensei_Certificates {
 
 		// Only include the link if the certificate has a template.
 		if ( $template_id ) {
-			$certificate_url  = $this->get_certificate_url( $course_id, $user_id );
-?>
+			$certificate_url = $this->get_certificate_url( $course_id, $user_id );
+			?>
 			<p style="text-align: center !important">
 				<a href="<?php echo esc_url( $certificate_url ); ?>" target="_blank">
 					<?php echo esc_html__( 'View certificate', 'sensei-certificates' ); ?>
 				</a>
 			</p>
-<?php
+			<?php
 		}
 	}
 

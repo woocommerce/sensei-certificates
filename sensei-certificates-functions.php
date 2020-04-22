@@ -168,7 +168,6 @@ function sensei_create_master_certificate_template() {
 		error_log( 'An error occurred while uploading the image' );
 	} // End If Statement
 
-
 	if ( ! function_exists( 'media_handle_sideload' ) ) {
 		include_once ABSPATH . '/wp-admin/includes/image.php';
 		include_once ABSPATH . '/wp-admin/includes/media.php';
