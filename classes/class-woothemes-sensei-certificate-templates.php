@@ -899,7 +899,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		// Get the meta key.
 		$meta_key       = '_' . $post_key;
-		$new_meta_value = ( isset( $_POST[ $post_key ] ) ? sanitize_html_class( $_POST[ $post_key ] ) : '' );
+		$new_meta_value = isset( $_POST[ $post_key ] ) ? intval( $_POST[ $post_key ] ) : '';
 		// Get the meta value of the custom field key.
 		$meta_value = get_post_meta( $post_id, $meta_key, true );
 		// If a new meta value was added and there was no previous value, add it.
