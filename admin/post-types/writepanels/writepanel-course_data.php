@@ -46,6 +46,8 @@ function course_certificate_template_data_meta_box( $post ) {
 
 	global $post;
 
+	wp_nonce_field( 'course_certificates_save_data', 'course_certificates_meta_nonce' );
+
 	$select_certificate_template = get_post_meta( $post->ID, '_course_certificate_template', true );
 
 	$post_args   = array(

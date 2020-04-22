@@ -187,6 +187,13 @@ function course_certificate_templates_meta_boxes_save( $post_id, $post ) {
 	if ( is_int( wp_is_post_autosave( $post ) ) ) {
 		return;
 	}
+	if (
+		empty( $_POST['course_certificates_meta_nonce'] )
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Leave nonce value unmodified.
+		|| ! wp_verify_nonce( wp_unslash( $_POST['course_certificates_meta_nonce'] ), 'course_certificates_save_data' )
+	) {
+		return;
+	}
 	if ( ! current_user_can( 'edit_post', $post_id ) ) {
 		return;
 	}
