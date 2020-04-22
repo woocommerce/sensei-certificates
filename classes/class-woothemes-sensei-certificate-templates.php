@@ -889,6 +889,13 @@ class WooThemes_Sensei_Certificate_Templates {
 	 * @return void
 	 */
 	public function save_post_meta( $post_key = '', $post_id = 0 ) {
+		if (
+			empty( $_POST['course_certificates_meta_nonce'] )
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Leave nonce value unmodified.
+			|| ! wp_verify_nonce( wp_unslash( $_POST['course_certificates_meta_nonce'] ), 'course_certificates_save_data' )
+		) {
+			return;
+		}
 
 		// Get the meta key.
 		$meta_key       = '_' . $post_key;
