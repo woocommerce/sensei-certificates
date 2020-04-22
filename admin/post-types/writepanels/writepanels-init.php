@@ -147,7 +147,11 @@ function certificate_templates_meta_boxes_save( $post_id, $post ) {
 	if ( is_int( wp_is_post_autosave( $post ) ) ) {
 		return;
 	}
-	if ( empty( $_POST['certificates_meta_nonce'] ) || ! wp_verify_nonce( $_POST['certificates_meta_nonce'], 'certificates_save_data' ) ) {
+	if (
+		empty( $_POST['certificates_meta_nonce'] )
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Leave nonce value unmodified.
+		|| ! wp_verify_nonce( wp_unslash( $_POST['certificates_meta_nonce'] ), 'certificates_save_data' )
+	) {
 		return;
 	}
 	if ( ! current_user_can( 'edit_post', $post_id ) ) {
