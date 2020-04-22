@@ -7,30 +7,30 @@ assignees: ''
 
 ---
 
-<!-- Thanks for contributing to Sensei! Pick a clear title ("Lesson: Show complexity in individual lessons") and proceed. -->
+<!-- Thanks for contributing to Sensei Certificates! Pick a clear title ("Lesson: Show complexity in individual lessons") and proceed. -->
 
-#### Steps to Reproduce
+### Steps to Reproduce
 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
 4. See error
 
-#### What I Expected
+### What I Expected
 
 
-#### What Happened Instead
+### What Happened Instead
 
 
-#### PHP / WordPress / Sensei version
+### PHP / WordPress / Sensei Certificates / Sensei LMS version
 
 
-#### Browser / OS version
+### Browser / OS version
 
 
-#### Screenshot / Video
+### Screenshot / Video
 
 
-#### Context / Source
+### Context / Source
 <!-- Optional: share your unique context to help us understand your perspective. -->
 
 
@@ -39,9 +39,6 @@ assignees: ''
 PLEASE NOTE
 - These comments won't show up when you submit the issue.
 - Everything is optional, but try to add as many details as possible.
-
-Contributing docs:
-https://github.com/Automattic/sensei/blob/master/CONTRIBUTING.md
 
 Helpful tips for screenshots:
 https://en.support.wordpress.com/make-a-screenshot/
