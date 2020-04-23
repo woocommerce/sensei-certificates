@@ -392,26 +392,26 @@ function certificate_templates_process_meta( $post_id, $post ) {
 		} // End If Statement
 
 		// get the field font settings (if any)
-		if ( $_POST[ $field_name . '_font_family' ] ) {
-			$field['font']['family'] = $_POST[ $field_name . '_font_family' ];
+		if ( ! empty( $_POST[ $field_name . '_font_family' ] ) ) {
+			$field['font']['family'] = sanitize_text_field( wp_unslash( $_POST[ $field_name . '_font_family' ] ) );
 		}
-		if ( $_POST[ $field_name . '_font_size' ] ) {
-			$field['font']['size'] = $_POST[ $field_name . '_font_size' ];
+		if ( ! empty( $_POST[ $field_name . '_font_size' ] ) ) {
+			$field['font']['size'] = intval( $_POST[ $field_name . '_font_size' ] );
 		}
-		if ( isset( $_POST[ $field_name . '_font_style_b' ] ) && $_POST[ $field_name . '_font_style_b' ] ) {
+		if ( isset( $_POST[ $field_name . '_font_style_b' ] ) ) {
 			$field['font']['style'] = 'B';
 		}
-		if ( isset( $_POST[ $field_name . '_font_style_i' ] ) && $_POST[ $field_name . '_font_style_i' ] ) {
+		if ( isset( $_POST[ $field_name . '_font_style_i' ] ) ) {
 			$field['font']['style'] .= 'I';
 		}
-		if ( isset( $_POST[ $field_name . '_font_style_c' ] ) && $_POST[ $field_name . '_font_style_c' ] ) {
+		if ( isset( $_POST[ $field_name . '_font_style_c' ] ) ) {
 			$field['font']['style'] .= 'C';
 		}
-		if ( isset( $_POST[ $field_name . '_font_style_o' ] ) && $_POST[ $field_name . '_font_style_o' ] ) {
+		if ( isset( $_POST[ $field_name . '_font_style_o' ] ) ) {
 			$field['font']['style'] .= 'O';
 		}
-		if ( $_POST[ $field_name . '_font_color' ] ) {
-			$field['font']['color'] = $_POST[ $field_name . '_font_color' ];
+		if ( isset( $_POST[ $field_name . '_font_color' ] ) ) {
+			$field['font']['color'] = sanitize_text_field( wp_unslash( $_POST[ $field_name . '_font_color' ] ) );
 		}
 
 		// cut off the leading '_' to create the field name
