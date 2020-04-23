@@ -1337,9 +1337,14 @@ class WooThemes_Sensei_Certificates {
 	 * @return void
 	 */
 	public function certificates_user_settings_messages() {
+		$allowed_html = [
+			'div'      => [
+				'class'  => [],
+			],
+		];
 
 		if ( isset( $this->messages ) && '' != $this->messages ) {
-			echo $this->messages;
+			echo wp_kses( $this->messages, $allowed_html );
 		} // End If Statement
 
 	} // End certificates_user_settings_message()
