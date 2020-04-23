@@ -63,12 +63,12 @@ function certificate_template_image_meta_box() {
 
 	?>
 	<div id="certificate_image_wrapper" style="position:relative;">
-		<img id="certificate_image_0" src="<?php echo $image_src; ?>" style="max-width:100%;" />
+		<img id="certificate_image_0" src="<?php echo esc_attr( $image_src ); ?>" style="max-width:100%;" />
 	</div>
-	<input type="hidden" name="upload_image_id[0]" id="upload_image_id_0" value="<?php echo $image_id; ?>" />
+	<input type="hidden" name="upload_image_id[0]" id="upload_image_id_0" value="<?php echo esc_attr( $image_id ); ?>" />
 	<p>
-		<a title="<?php esc_attr_e( 'Set certificate image', 'sensei-certificates' ); ?>" href="#" id="set-certificate-image"><?php _e( 'Set certificate image', 'sensei-certificates' ); ?></a>
-		<a title="<?php esc_attr_e( 'Remove certificate image', 'sensei-certificates' ); ?>" href="#" id="remove-certificate-image" style="<?php echo ( ! $image_id ? 'display:none;' : '' ); ?>"><?php _e( 'Remove certificate image', 'sensei-certificates' ); ?></a>
+		<a title="<?php esc_attr_e( 'Set certificate image', 'sensei-certificates' ); ?>" href="#" id="set-certificate-image"><?php esc_html_e( 'Set certificate image', 'sensei-certificates' ); ?></a>
+		<a title="<?php esc_attr_e( 'Remove certificate image', 'sensei-certificates' ); ?>" href="#" id="remove-certificate-image" style="<?php echo ( ! $image_id ? 'display:none;' : '' ); ?>"><?php esc_html_e( 'Remove certificate image', 'sensei-certificates' ); ?></a>
 	</p>
 	<?php
 }
