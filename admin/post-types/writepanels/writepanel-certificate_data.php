@@ -387,8 +387,8 @@ function certificate_templates_process_meta( $post_id, $post ) {
 			);
 		} // End If Statement
 
-		if ( $_POST[ $field_name . '_text' ] ) {
-			$field['text'] = $_POST[ $field_name . '_text' ] ? $_POST[ $field_name . '_text' ] : '';
+		if ( ! empty( $_POST[ $field_name . '_text' ] ) ) {
+			$field['text'] = sanitize_text_field( wp_unslash( $_POST[ $field_name . '_text' ] ) );
 		} // End If Statement
 
 		// get the field font settings (if any)
