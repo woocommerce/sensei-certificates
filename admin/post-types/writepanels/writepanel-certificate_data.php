@@ -330,11 +330,22 @@ function certificate_template_data_meta_box( $post ) {
  * @param object $post the certificate post object
  */
 function certificate_templates_process_meta( $post_id, $post ) {
+	if (
+		empty( $_POST['certificates_meta_nonce'] )
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Leave nonce value unmodified.
+		|| ! wp_verify_nonce( wp_unslash( $_POST['certificates_meta_nonce'] ), 'certificates_save_data' )
+	) {
+		return;
+	}
+
+	$font_color  = ! empty( $_POST['_certificate_font_color'] ) ? sanitize_text_field( wp_unslash( $_POST['_certificate_font_color'] ) ) : '#000000'; // provide a default
+	$font_size   = ! empty( $_POST['_certificate_font_size'] ) ? intval( $_POST['_certificate_font_size'] ) : 11; // provide a default
+	$font_family = ! empty( $_POST['_certificate_font_family'] ) ? sanitize_text_field( wp_unslash( $_POST['_certificate_font_family'] ) ) : '';
 
 	// certificate template font defaults
-	update_post_meta( $post_id, '_certificate_font_color', $_POST['_certificate_font_color'] ? $_POST['_certificate_font_color'] : '#000000' );  // provide a default
-	update_post_meta( $post_id, '_certificate_font_size', $_POST['_certificate_font_size'] ? $_POST['_certificate_font_size'] : 11 );  // provide a default
-	update_post_meta( $post_id, '_certificate_font_family', $_POST['_certificate_font_family'] );
+	update_post_meta( $post_id, '_certificate_font_color', $font_color );
+	update_post_meta( $post_id, '_certificate_font_size', $font_size );
+	update_post_meta( $post_id, '_certificate_font_family', $font_family );
 	update_post_meta(
 		$post_id,
 		'_certificate_font_style',
