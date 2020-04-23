@@ -79,7 +79,26 @@ function course_certificate_template_data_meta_box( $post ) {
 		$html .= '<p>' . esc_html( __( 'No certificate template exist yet. Please add some first.', 'sensei-certificates' ) ) . '</p>';
 	}
 
-	echo $html;
+	$allowed_html = [
+		'input'  => [
+			'type'  => [],
+			'name'  => [],
+			'id'    => [],
+			'value' => [],
+		],
+		'select' => [
+			'id'    => [],
+			'name'  => [],
+			'class' => [],
+		],
+		'option' => [
+			'value'    => [],
+			'selected' => [],
+		],
+		'p'      => [],
+	];
+
+	echo wp_kses( $html, $allowed_html );
 
 }
 
