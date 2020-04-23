@@ -150,7 +150,6 @@ class WooThemes_Sensei_Certificates {
 			// Add Certificates Menu
 			add_action( 'sensei_analysis_course_columns', array( $instance, 'create_columns' ), 10, 2 );
 			add_action( 'sensei_analysis_course_column_data', array( $instance, 'populate_columns' ), 10, 3 );
-			add_action( 'admin_footer', array( $instance, 'output_inline_js' ), 25 );
 			add_filter( 'sensei_scripts_allowed_post_types', array( $instance, 'include_sensei_scripts' ), 10, 1 );
 			add_filter( 'sensei_upgrade_functions', 'sensei_certificates_updates_list', 10, 1 );
 			add_filter( 'sensei_updates_function_whitelist', 'sensei_certificates_add_update_functions_to_whitelist', 1 );
@@ -1130,8 +1129,11 @@ class WooThemes_Sensei_Certificates {
 	 * @since  1.0.0
 	 * @param string $code
 	 * @return void
+	 *
+	 * @deprecated 2.0.4
 	 */
 	public function add_inline_js( $code ) {
+		_deprecated_function( __METHOD__, '2.0.4' );
 
 		$this->_inline_js .= "\n" . $code . "\n";
 
@@ -1144,8 +1146,11 @@ class WooThemes_Sensei_Certificates {
 	 * @access public
 	 * @since  1.0.0
 	 * @return void
+	 *
+	 * @deprecated 2.0.4
 	 */
 	public function output_inline_js() {
+		_deprecated_function( __METHOD__, '2.0.4' );
 
 		if ( $this->_inline_js ) {
 
@@ -1157,6 +1162,7 @@ class WooThemes_Sensei_Certificates {
 			$this->_inline_js = str_replace( "\r", '', $this->_inline_js );
 
 			// Output
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Custom sanitization above.
 			echo $this->_inline_js;
 
 			echo "});\n</script>\n";

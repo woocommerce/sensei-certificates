@@ -314,9 +314,6 @@ function certificate_template_data_meta_box( $post ) {
 		</div>
 	</div>
 	<?php
-
-	certificate_templates_wp_color_picker_js();
-
 }
 
 
