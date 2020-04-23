@@ -374,8 +374,11 @@ function certificate_templates_process_meta( $post_id, $post ) {
 		);
 
 		// get the field position (if set)
-		if ( $_POST[ $field_name . '_pos' ] ) {
-			$position          = explode( ',', $_POST[ $field_name . '_pos' ] );
+		if ( ! empty( $_POST[ $field_name . '_pos' ] ) ) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized after the explode in map with intval.
+			$position = explode( ',', wp_unslash( $_POST[ $field_name . '_pos' ] ) );
+			$position = array_map( 'intval', $position );
+
 			$field['position'] = array(
 				'x1'     => $position[0],
 				'y1'     => $position[1],
