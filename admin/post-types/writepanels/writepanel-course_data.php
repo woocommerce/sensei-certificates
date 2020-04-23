@@ -97,7 +97,6 @@ function course_certificate_templates_process_meta( $post_id ) {
 
 	global $woothemes_sensei_certificate_templates;
 
-	// Verify the nonce before proceeding.
 	if ( ( get_post_type() != 'course' ) ) {
 		return $post_id;
 	}
