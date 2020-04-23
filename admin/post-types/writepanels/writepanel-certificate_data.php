@@ -1,14 +1,14 @@
 <?php
 /**
- * Sensei LMS Certificates Templates
+ * Sensei LMS Certificates Templates.
  *
  * All functionality pertaining to the Certificate Templates functionality in Sensei.
  *
- * @package WordPress
+ * @package    WordPress
  * @subpackage Sensei
- * @category Extension
- * @author Automattic
- * @since 1.0.0
+ * @category   Extension
+ * @author     Automattic
+ * @since      1.0.0
  */
 
 /**
@@ -21,25 +21,25 @@
  */
 
 /**
- * Functions for displaying the certificates data meta box
+ * Functions for displaying the certificates data meta box.
  *
  * @since 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 /**
- * Actions and Filters
+ * Actions and Filters.
  */
 add_action( 'sensei_process_certificate_template_meta', 'certificate_templates_process_meta', 10, 2 );
 
 
 /**
- * Certificates data meta box
+ * Certificates data meta box.
  *
- * Displays the meta box
+ * Displays the meta box.
  *
  * @since 1.0.0
  */
@@ -58,7 +58,7 @@ function certificate_template_data_meta_box( $post ) {
 	);
 	$available_fonts = array_merge( array( '' => '' ), $default_fonts );
 
-	// since this little snippet of css applies only to the certificates post page, it's easier to have inline here
+	// Since this little snippet of css applies only to the certificates post page, it's easier to have inline here.
 	?>
 	<style type="text/css">
 		#misc-publishing-actions { display:none; }
@@ -69,7 +69,7 @@ function certificate_template_data_meta_box( $post ) {
 		<div class="options_group">
 			<?php
 
-				// Defaults
+				// Defaults.
 				echo '<div class="options_group">';
 					certificate_templates_wp_font_select(
 						array(
@@ -90,7 +90,7 @@ function certificate_template_data_meta_box( $post ) {
 					);
 				echo '</div>';
 
-				// Heading
+				// Heading.
 				echo '<div class="options_group">';
 					certificate_templates_wp_position_picker(
 						array(
@@ -134,7 +134,7 @@ function certificate_template_data_meta_box( $post ) {
 					);
 				echo '</div>';
 
-				// Message
+				// Message.
 				echo '<div class="options_group">';
 					certificate_templates_wp_position_picker(
 						array(
@@ -178,7 +178,7 @@ function certificate_template_data_meta_box( $post ) {
 					);
 				echo '</div>';
 
-				// Certificate course position
+				// Certificate course position.
 				echo '<div class="options_group">';
 					certificate_templates_wp_position_picker(
 						array(
@@ -222,7 +222,7 @@ function certificate_template_data_meta_box( $post ) {
 					);
 				echo '</div>';
 
-				// Certificate complete position
+				// Certificate complete position.
 				echo '<div class="options_group">';
 					certificate_templates_wp_position_picker(
 						array(
@@ -266,7 +266,7 @@ function certificate_template_data_meta_box( $post ) {
 					);
 				echo '</div>';
 
-				// Certificate place position
+				// Certificate place position.
 				echo '<div class="options_group">';
 					certificate_templates_wp_position_picker(
 						array(
@@ -317,17 +317,17 @@ function certificate_template_data_meta_box( $post ) {
 
 	certificate_templates_wp_color_picker_js();
 
-} // End certificate_template_data_meta_box()
+}
 
 
 /**
- * Certificate Data Save
+ * Certificate Data Save.
  *
  * Function for processing and storing all certificate data.
  *
  * @since 1.0.0
- * @param int    $post_id the certificate id
- * @param object $post the certificate post object
+ * @param int    $post_id The certificate id.
+ * @param object $post    The certificate post object.
  */
 function certificate_templates_process_meta( $post_id, $post ) {
 	if (
@@ -338,11 +338,11 @@ function certificate_templates_process_meta( $post_id, $post ) {
 		return;
 	}
 
-	$font_color  = ! empty( $_POST['_certificate_font_color'] ) ? sanitize_text_field( wp_unslash( $_POST['_certificate_font_color'] ) ) : '#000000'; // provide a default
-	$font_size   = ! empty( $_POST['_certificate_font_size'] ) ? intval( $_POST['_certificate_font_size'] ) : 11; // provide a default
+	$font_color  = ! empty( $_POST['_certificate_font_color'] ) ? sanitize_text_field( wp_unslash( $_POST['_certificate_font_color'] ) ) : '#000000'; // Provide a default.
+	$font_size   = ! empty( $_POST['_certificate_font_size'] ) ? intval( $_POST['_certificate_font_size'] ) : 11; // Provide a default.
 	$font_family = ! empty( $_POST['_certificate_font_family'] ) ? sanitize_text_field( wp_unslash( $_POST['_certificate_font_family'] ) ) : '';
 
-	// certificate template font defaults
+	// Certificate template font defaults.
 	update_post_meta( $post_id, '_certificate_font_color', $font_color );
 	update_post_meta( $post_id, '_certificate_font_size', $font_size );
 	update_post_meta( $post_id, '_certificate_font_family', $font_family );
@@ -355,12 +355,12 @@ function certificate_templates_process_meta( $post_id, $post ) {
 														( isset( $_POST['_certificate_font_style_o'] ) && 'yes' == $_POST['_certificate_font_style_o'] ? 'O' : '' )
 	);
 
-	// original sizes: default 11, product name 16, sku 8
-	// create the certificate template fields data structure
+	// Original sizes: default 11, product name 16, sku 8.
+	// Create the certificate template fields data structure.
 	$fields = array();
 	foreach ( array( '_certificate_heading', '_certificate_message', '_certificate_course', '_certificate_completion', '_certificate_place' ) as $i => $field_name ) {
 
-		// set the field defaults
+		// Set the field defaults.
 		$field = array(
 			'type'     => 'property',
 			'font'     => array(
@@ -373,7 +373,7 @@ function certificate_templates_process_meta( $post_id, $post ) {
 			'order'    => $i,
 		);
 
-		// get the field position (if set)
+		// Get the field position (if set).
 		if ( ! empty( $_POST[ $field_name . '_pos' ] ) ) {
 			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized after the explode in map with intval.
 			$position = explode( ',', wp_unslash( $_POST[ $field_name . '_pos' ] ) );
@@ -385,13 +385,13 @@ function certificate_templates_process_meta( $post_id, $post ) {
 				'width'  => $position[2],
 				'height' => $position[3],
 			);
-		} // End If Statement
+		}
 
 		if ( ! empty( $_POST[ $field_name . '_text' ] ) ) {
 			$field['text'] = sanitize_text_field( wp_unslash( $_POST[ $field_name . '_text' ] ) );
-		} // End If Statement
+		}
 
-		// get the field font settings (if any)
+		// Get the field font settings (if any).
 		if ( ! empty( $_POST[ $field_name . '_font_family' ] ) ) {
 			$field['font']['family'] = sanitize_text_field( wp_unslash( $_POST[ $field_name . '_font_family' ] ) );
 		}
@@ -414,11 +414,10 @@ function certificate_templates_process_meta( $post_id, $post ) {
 			$field['font']['color'] = sanitize_text_field( wp_unslash( $_POST[ $field_name . '_font_color' ] ) );
 		}
 
-		// cut off the leading '_' to create the field name
+		// Cut off the leading '_' to create the field name.
 		$fields[ ltrim( $field_name, '_' ) ] = $field;
 
-	} // End For Loop
+	}
 
 	update_post_meta( $post_id, '_certificate_template_fields', $fields );
-
-} // End certificate_templates_process_meta()
+}

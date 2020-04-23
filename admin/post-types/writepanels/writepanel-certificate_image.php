@@ -1,6 +1,6 @@
 <?php
 /**
- * Sensei LMS Certificates Templates
+ * Sensei LMS Certificates Templates.
  *
  * All functionality pertaining to the Certificate Templates functionality in Sensei.
  *
@@ -21,23 +21,23 @@
  */
 
 /**
- * Functions for displaying the certificate primary image meta box
+ * Functions for displaying the certificate primary image meta box.
  *
  * @since 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 /**
- * Actions and Filters
+ * Actions and Filters.
  */
 add_action( 'sensei_process_certificate_template_meta', 'certificate_template_process_images_meta', 10, 2 );
 
 /**
- * Display the certificate image meta box
- * Fluid image reference: http://unstoppablerobotninja.com/entry/fluid-images
+ * Display the certificate image meta box.
+ * Fluid image reference: http://unstoppablerobotninja.com/entry/fluid-images.
  *
  * @since 1.0.0
  */
@@ -59,7 +59,7 @@ function certificate_template_image_meta_box() {
 			$attachment = wp_get_attachment_metadata( $image_id );
 
 		}
-	} // End If Statement
+	}
 
 	?>
 	<div id="certificate_image_wrapper" style="position:relative;">
@@ -71,18 +71,17 @@ function certificate_template_image_meta_box() {
 		<a title="<?php esc_attr_e( 'Remove certificate image', 'sensei-certificates' ); ?>" href="#" id="remove-certificate-image" style="<?php echo ( ! $image_id ? 'display:none;' : '' ); ?>"><?php _e( 'Remove certificate image', 'sensei-certificates' ); ?></a>
 	</p>
 	<?php
-
-} // End certificate_template_image_meta_box()
+}
 
 
 /**
- * Certificate Templates Images Data Save
+ * Certificate Templates Images Data Save.
  *
- * Function for processing and storing certificate template images
+ * Function for processing and storing certificate template images.
  *
  * @since 1.0.0
- * @param int    $post_id the certificate template id
- * @param object $post the certificate template post object
+ * @param int    $post_id The certificate template id.
+ * @param object $post    The certificate template post object.
  */
 function certificate_template_process_images_meta( $post_id, $post ) {
 	if (
@@ -94,7 +93,7 @@ function certificate_template_process_images_meta( $post_id, $post ) {
 		return;
 	}
 
-	// handle the image_ids meta, which will always have at least an index 0 for the main template image, even if the value is empty
+	// Handle the image_ids meta, which will always have at least an index 0 for the main template image, even if the value is empty.
 	$image_ids       = array();
 	$upload_image_id = array_map( 'intval', wp_unslash( $_POST['upload_image_id'] ) );
 
@@ -102,8 +101,8 @@ function certificate_template_process_images_meta( $post_id, $post ) {
 
 		if ( 0 == $i || $image_id ) {
 			$image_ids[] = $image_id !== 0 ? $image_id : '';
-		} // End If Statement
-	} // End For Loop
+		}
+	}
 
 	update_post_meta( $post_id, '_image_ids', $image_ids );
 
@@ -112,5 +111,4 @@ function certificate_template_process_images_meta( $post_id, $post ) {
 	} else {
 		delete_post_thumbnail( $post_id );
 	}
-
-} // End certificate_template_process_images_meta()
+}
