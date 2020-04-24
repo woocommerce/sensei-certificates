@@ -308,6 +308,40 @@ function certificate_templates_wp_font_select( $field ) {
 
 
 /**
+ * Add inline javascript to activate the farbtastic color picker element.
+ * Must be called in order to use the certificate_templates_wp_color_picker() method.
+ *
+ * @since 1.0.0
+ *
+ * @deprecated 2.0.4
+ */
+function certificate_templates_wp_color_picker_js() {
+	_deprecated_function( __FUNCTION__, '2.0.4' );
+
+	global $woothemes_sensei_certificates;
+
+	ob_start();
+	?>
+	$(".colorpick").wpColorPicker();
+
+	$(document).mousedown(function(e) {
+		if ($(e.target).hasParent(".wp-picker-holder"))
+			return;
+		if ($( e.target ).hasParent("mark"))
+			return;
+		$(".wp-picker-holder").each(function() {
+			$(this).fadeOut();
+		});
+	});
+	<?php
+	$javascript = ob_get_clean();
+
+	$woothemes_sensei_certificates->add_inline_js( $javascript );
+
+}
+
+
+/**
  * Renders a custom admin control used on the certificate edit page to Set/Remove
  * the position via two buttons.
  *
