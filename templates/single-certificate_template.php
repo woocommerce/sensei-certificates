@@ -30,5 +30,5 @@ if ( $woothemes_sensei_certificate_templates->get_image_id() ) {
 	$woothemes_sensei_certificate_templates->generate_pdf();
 	exit;
 } else {
-	wp_die( __( 'You must set a certificate_template primary image before you can preview', 'sensei-certificates' ) );
+	wp_die( esc_html__( 'You must set a certificate_template primary image before you can preview', 'sensei-certificates' ) );
 }

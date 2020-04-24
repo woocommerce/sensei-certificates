@@ -272,6 +272,21 @@ jQuery( function($){
 		});
 	}
 
+	// Activate colorpick.
+	const $colorpick = $( '.colorpick' );
+	if ( typeof jQuery.fn.wpColorPicker === 'function' && $colorpick.length > 0 ) {
+		$colorpick.wpColorPicker();
+
+		$( document ).mousedown( function( e ) {
+			if ( $( e.target ).hasParent( '.wp-picker-holder' ) )
+				return;
+			if ( $( e.target ).hasParent( 'mark' ) )
+				return;
+			$( '.wp-picker-holder' ).each( function() {
+				$( this ).fadeOut();
+			} );
+		} );
+	}
 });
 
 // Polyfill

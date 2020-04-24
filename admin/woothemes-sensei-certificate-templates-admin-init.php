@@ -1,10 +1,10 @@
 <?php
 /**
- * Sensei LMS Certificates Templates Admin
+ * Sensei LMS Certificates Templates Admin.
  *
- * @package   woothemes-sensei-certificates/Admin
- * @author    Automattic
- * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
+ * @package woothemes-sensei-certificates/Admin
+ * @author  Automattic
+ * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
 /**
@@ -22,23 +22,23 @@
  */
 
 /**
- * Main admin file which loads all Template panels
+ * Main admin file which loads all Template panels.
  *
  * @since 1.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 /**
- * Requires
+ * Requires.
  */
 require_once 'post-types/certificate_templates.php';
 
 
 /**
- * Actions and Filters
+ * Actions and Filters.
  */
 add_action( 'admin_init', 'sensei_certificate_template_admin_init' );
 add_action( 'admin_init', 'sensei_certificate_add_role_caps', 9999 );
@@ -47,7 +47,7 @@ add_filter( 'post_updated_messages', 'sensei_certificate_template_item_updated_m
 
 /**
  * Add editing capabilities for certificates and certificate templates
- * Only teachers and administrators can access
+ * Only teachers and administrators can access.
  */
 function sensei_certificate_add_role_caps() {
 	$custom_post_types = array( 'certificate', 'certificate_template' );
@@ -77,7 +77,7 @@ function sensei_certificate_add_role_caps() {
 
 /**
  * Initialize the admin, adding actions to properly display and handle
- * the certificate custom post type add/edit page
+ * the certificate custom post type add/edit page.
  *
  * @since 1.0.0
  */
@@ -91,13 +91,13 @@ function sensei_certificate_template_admin_init() {
 		// add certificate list/edit pages contextual help
 		add_action( 'admin_print_styles', 'sensei_certificate_template_admin_help_tab' );
 
-	} // End If Statement
+	}
 
-} // End sensei_certificate_template_admin_init()
+}
 
 
 /**
- * Adds the certificates Admin Help tab to the certificates admin screens
+ * Adds the certificates Admin Help tab to the certificates admin screens.
  *
  * @since 1.0.0
  */
@@ -146,11 +146,11 @@ function sensei_certificate_template_admin_help_tab() {
 		'<p><a href="https://senseilms.com/documentation/sensei-certificates/" target="_blank">' . __( 'Certificates Docs', 'sensei-certificates' ) . '</a></p>'
 	);
 
-} // End sensei_certificate_template_admin_help_tab()
+}
 
 
 /**
- * Renders the certificate help tab content for the contextual help menu
+ * Renders the certificate help tab content for the contextual help menu.
  *
  * @since 1.0.0
  */
@@ -164,11 +164,11 @@ function sensei_certificate_template_certificate_help_tab_content() {
 	<p><strong><?php esc_html_e( 'Previewing', 'sensei-certificates' ); ?></strong> - <?php esc_html_e( 'You must update the certificate template to see any changes in the Preview.', 'sensei-certificates' ); ?></p>
 	<?php
 
-} // End sensei_certificate_template_certificate_help_tab_content()
+}
 
 
 /**
- * Renders the "How To" help tab content for the contextual help menu
+ * Renders the "How To" help tab content for the contextual help menu.
  *
  * @since 1.0.0
  */
@@ -185,11 +185,11 @@ function sensei_certificate_template_how_to_help_tab_content() {
 	</ol>
 	<?php
 
-} // End sensei_certificate_template_how_to_help_tab_content()
+}
 
 
 /**
- * Enqueue the certificates admin scripts
+ * Enqueue the certificates admin scripts.
  *
  * @since 1.0.0
  */
@@ -197,27 +197,27 @@ function sensei_certificate_template_admin_enqueue_scripts() {
 
 	global $post, $woothemes_sensei_certificates, $wp_version;
 
-	// Get admin screen id
+	// Get admin screen id.
 	$screen = get_current_screen();
 
-	// Certificate Template admin pages
+	// Certificate Template admin pages.
 	if ( 'certificate_template' == $screen->id ) {
 
-		// color picker script/styles
+		// Color picker script/styles.
 		wp_enqueue_script( 'wp-color-picker' );
 		wp_enqueue_style( 'wp-color-picker' );
 
 		wp_enqueue_media();
 
-		// image area select, for selecting the certificate fields
+		// Image area select, for selecting the certificate fields.
 		wp_enqueue_script( 'imgareaselect' );
 		wp_enqueue_style( 'imgareaselect' );
 
-	} // End If Statement
+	}
 
 	if ( in_array( $screen->id, array( 'certificate_template' ) ) ) {
 
-		// default javascript params
+		// Default javascript params.
 		$sensei_certificate_templates_params = array(
 			'primary_image_width'  => '',
 			'primary_image_height' => '',
@@ -225,7 +225,7 @@ function sensei_certificate_template_admin_enqueue_scripts() {
 
 		if ( 'certificate_template' == $screen->id ) {
 
-			// get the primary image dimensions (if any) which are needed for the page script
+			// Get the primary image dimensions (if any) which are needed for the page script.
 			$attachment = null;
 			$image_ids  = get_post_meta( $post->ID, '_image_ids', true );
 
@@ -233,9 +233,9 @@ function sensei_certificate_template_admin_enqueue_scripts() {
 				if ( is_numeric( $image_ids[0] ) ) {
 					$attachment = wp_get_attachment_metadata( $image_ids[0] );
 				}
-			} // End If Statement
+			}
 
-			// pass parameters into the javascript file
+			// Pass parameters into the javascript file.
 			$sensei_certificate_templates_params = array(
 				'_certificate_heading_pos'    => __( 'Heading', 'sensei-certificates' ),
 				'_certificate_message_pos'    => __( 'Message', 'sensei-certificates' ),
@@ -249,26 +249,26 @@ function sensei_certificate_template_admin_enqueue_scripts() {
 				'primary_image_height'        => isset( $attachment['height'] ) && $attachment['height'] ? $attachment['height'] : '0',
 			);
 
-		} // End If Statement
+		}
 
 		wp_enqueue_script( 'sensei_certificate_templates_admin', $woothemes_sensei_certificates->plugin_url . 'assets/js/admin.js', array( 'jquery' ) );
 		wp_localize_script( 'sensei_certificate_templates_admin', 'sensei_certificate_templates_params', $sensei_certificate_templates_params );
 
 		wp_enqueue_style( 'sensei_certificate_templates_admin_styles', $woothemes_sensei_certificates->plugin_url . 'assets/css/admin.css' );
 
-	} // End If Statement
+	}
 
 	if ( in_array( $screen->id, array( 'course' ) ) ) {
 
 		wp_enqueue_script( 'sensei_course_certificate_templates_admin', $woothemes_sensei_certificates->plugin_url . 'assets/js/course.js', array( 'jquery' ) );
 
-	} // End If Statement
+	}
 
-} // End sensei_certificate_template_admin_enqueue_scripts()
+}
 
 
 /**
- * Set the product updated messages so they're specific to the certificates
+ * Set the product updated messages so they're specific to the certificates.
  *
  * @since 1.0.0
  */
@@ -282,6 +282,7 @@ function sensei_certificate_template_item_updated_messages( $messages ) {
 		2  => __( 'Custom field updated.', 'sensei-certificates' ),
 		3  => __( 'Custom field deleted.', 'sensei-certificates' ),
 		4  => __( 'Certificate Template updated.', 'sensei-certificates' ),
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Same as the WP core.
 		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Certificate Template restored to revision from %s', 'sensei-certificates' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
 		6  => __( 'Certificate Template updated.', 'sensei-certificates' ),
 		7  => __( 'Certificate Template saved.', 'sensei-certificates' ),
@@ -295,4 +296,4 @@ function sensei_certificate_template_item_updated_messages( $messages ) {
 
 	return $messages;
 
-} // End sensei_certificate_template_item_updated_messages()
+}

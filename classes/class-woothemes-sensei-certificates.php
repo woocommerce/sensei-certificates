@@ -81,7 +81,7 @@ class WooThemes_Sensei_Certificates {
 		$this->plugin_url  = trailingslashit( plugins_url( '', SENSEI_CERTIFICATES_PLUGIN_FILE ) );
 		$this->plugin_path = plugin_dir_path( SENSEI_CERTIFICATES_PLUGIN_FILE );
 
-		register_activation_hook( SENSEI_CERTIFICATES_PLUGIN_FILE,  array( __CLASS__, 'activate' ) );
+		register_activation_hook( SENSEI_CERTIFICATES_PLUGIN_FILE, array( __CLASS__, 'activate' ) );
 
 		add_action( 'plugins_loaded', array( __CLASS__, 'load_textdomain' ) );
 	} // End __construct()
@@ -105,7 +105,7 @@ class WooThemes_Sensei_Certificates {
 		$instance = self::instance();
 
 		self::load_files();
-		$GLOBALS['woothemes_sensei_certificates'] = self::instance();
+		$GLOBALS['woothemes_sensei_certificates']          = self::instance();
 		$GLOBALS['woothemes_sensei_certificate_templates'] = new WooThemes_Sensei_Certificate_Templates();
 
 		add_action( 'sensei_certificates_run_installer', array( $instance, 'install' ) );
@@ -150,7 +150,6 @@ class WooThemes_Sensei_Certificates {
 			// Add Certificates Menu
 			add_action( 'sensei_analysis_course_columns', array( $instance, 'create_columns' ), 10, 2 );
 			add_action( 'sensei_analysis_course_column_data', array( $instance, 'populate_columns' ), 10, 3 );
-			add_action( 'admin_footer', array( $instance, 'output_inline_js' ), 25 );
 			add_filter( 'sensei_scripts_allowed_post_types', array( $instance, 'include_sensei_scripts' ), 10, 1 );
 			add_filter( 'sensei_upgrade_functions', 'sensei_certificates_updates_list', 10, 1 );
 			add_filter( 'sensei_updates_function_whitelist', 'sensei_certificates_add_update_functions_to_whitelist', 1 );
@@ -225,7 +224,7 @@ class WooThemes_Sensei_Certificates {
 			|| ( is_single() && 'course' === get_post_type() ) )
 		) {
 			$should_enqueue = true;
-		} else if ( $view_link_profile && isset( $wp_query->query_vars['learner_profile'] )
+		} elseif ( $view_link_profile && isset( $wp_query->query_vars['learner_profile'] )
 		) {
 			$should_enqueue = true;
 		}
@@ -916,7 +915,7 @@ class WooThemes_Sensei_Certificates {
 
 		// Logo image
 		if ( isset( $this->image_id ) && is_numeric( $this->image_id ) && 0 < intval( $this->image_id ) ) {
-            $pdf_certificate->bg_image_src = get_attached_file( $this->image_id );
+			$pdf_certificate->bg_image_src = get_attached_file( $this->image_id );
 		}
 
 	} // End certificate_background()
@@ -1130,8 +1129,11 @@ class WooThemes_Sensei_Certificates {
 	 * @since  1.0.0
 	 * @param string $code
 	 * @return void
+	 *
+	 * @deprecated 2.0.4
 	 */
 	public function add_inline_js( $code ) {
+		_deprecated_function( __METHOD__, '2.0.4' );
 
 		$this->_inline_js .= "\n" . $code . "\n";
 
@@ -1144,8 +1146,11 @@ class WooThemes_Sensei_Certificates {
 	 * @access public
 	 * @since  1.0.0
 	 * @return void
+	 *
+	 * @deprecated 2.0.4
 	 */
 	public function output_inline_js() {
+		_deprecated_function( __METHOD__, '2.0.4' );
 
 		if ( $this->_inline_js ) {
 
@@ -1157,6 +1162,7 @@ class WooThemes_Sensei_Certificates {
 			$this->_inline_js = str_replace( "\r", '', $this->_inline_js );
 
 			// Output
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Custom sanitization above.
 			echo $this->_inline_js;
 
 			echo "});\n</script>\n";
@@ -1300,7 +1306,13 @@ class WooThemes_Sensei_Certificates {
 	public function certificates_user_settings_save() {
 		global $current_user;
 		// phpcs:ignore WordPress.VIP.ValidatedSanitizedInput.InputNotSanitized
-		if ( is_user_logged_in() && isset( $_POST['certificates_user_meta_save'] ) && wp_verify_nonce( $_POST['woothemes_sensei_certificates_user_meta_save_noonce'], 'woothemes_sensei_certificates_user_meta_save_noonce' ) ) {
+		if (
+			is_user_logged_in()
+			&& isset( $_POST['certificates_user_meta_save'] )
+			&& isset( $_POST['woothemes_sensei_certificates_user_meta_save_noonce'] )
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Leave nonce value unmodified.
+			&& wp_verify_nonce( wp_unslash( $_POST['woothemes_sensei_certificates_user_meta_save_noonce'] ), 'woothemes_sensei_certificates_user_meta_save_noonce' )
+		) {
 
 			// Update the user meta with the setting
 			$current_user    = wp_get_current_user();
@@ -1331,9 +1343,14 @@ class WooThemes_Sensei_Certificates {
 	 * @return void
 	 */
 	public function certificates_user_settings_messages() {
+		$allowed_html = [
+			'div'      => [
+				'class'  => [],
+			],
+		];
 
 		if ( isset( $this->messages ) && '' != $this->messages ) {
-			echo $this->messages;
+			echo wp_kses( $this->messages, $allowed_html );
 		} // End If Statement
 
 	} // End certificates_user_settings_message()
@@ -1367,14 +1384,14 @@ class WooThemes_Sensei_Certificates {
 
 		// Only include the link if the certificate has a template.
 		if ( $template_id ) {
-			$certificate_url  = $this->get_certificate_url( $course_id, $user_id );
-?>
+			$certificate_url = $this->get_certificate_url( $course_id, $user_id );
+			?>
 			<p style="text-align: center !important">
 				<a href="<?php echo esc_url( $certificate_url ); ?>" target="_blank">
 					<?php echo esc_html__( 'View certificate', 'sensei-certificates' ); ?>
 				</a>
 			</p>
-<?php
+			<?php
 		}
 	}
 

@@ -4,15 +4,15 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 /**
- * sensei_certificates_updates_list add sensei certificates updates to sensei list
+ * Function sensei_certificates_updates_list add sensei certificates updates to sensei list.
  *
  * @since  1.0.0
- * @param  array $updates list of existing updates
- * @return array $updates list of existing and new updates
+ * @param  array $updates List of existing updates.
+ * @return array $updates List of existing and new updates.
  */
 function sensei_certificates_updates_list( $updates ) {
 
@@ -34,10 +34,12 @@ function sensei_certificates_updates_list( $updates ) {
 
 	return $updates;
 
-} // End sensei_certificates_updates_list()
+}
 
 /**
- * @param array $permitted_functions
+ * Function sensei_certificates_add_update_functions_to_whitelist.
+ *
+ * @param  array $permitted_functions Permitted functions.
  * @return array
  */
 function sensei_certificates_add_update_functions_to_whitelist( $permitted_functions ) {
@@ -51,20 +53,20 @@ function sensei_certificates_add_update_functions_to_whitelist( $permitted_funct
 }
 
 /**
- * sensei_update_users_certificate_data install user certificate data
+ * Function sensei_update_users_certificate_data install user certificate data.
  *
  * @since  1.0.0
- * @param  int $n number of items to iterate through
- * @param  int $offeset number to offset iteration by
+ * @param  int $n      Number of items to iterate through.
+ * @param  int $offset Number to offset iteration by.
  * @return boolean
  */
 function sensei_update_users_certificate_data( $n = 5, $offset = 0 ) {
-	// Calculate if this is the last page
+	// Calculate if this is the last page.
 	if ( 0 == $offset ) {
 		$current_page = 1;
 	} else {
 		$current_page = intval( $offset / $n );
-	} // End If Statement
+	}
 
 	$args_array     = array(
 		'number'  => $n,
@@ -122,29 +124,30 @@ function sensei_update_users_certificate_data( $n = 5, $offset = 0 ) {
 
 				wp_reset_query();
 
-			} // End If Statement
-		} // End For Loop
-	} // End For Loop
+			}
+		}
+	}
 
 	return ( $current_page >= $total_pages ) ? true : false;
-} // End sensei_update_users_certificate_data()
+}
 
 /**
- * sensei_create_master_certificate_template Creates the example Certificate Template and assigns to every Course
+ * Function sensei_create_master_certificate_template Creates the example
+ * Certificate Template and assigns to every Course.
  *
  * @since  1.0.0
  * @return boolean
  */
 function sensei_create_master_certificate_template() {
 
-	// Register Post Data
+	// Register Post Data.
 	$post                 = array();
 	$post['post_status']  = 'private';
 	$post['post_type']    = 'certificate_template';
 	$post['post_title']   = __( 'Example Template', 'sensei-certificates' );
 	$post['post_content'] = '';
 
-	// Create Post
+	// Create Post.
 	$post_id = wp_insert_post( $post );
 
 	$url = trailingslashit( plugins_url( '', __FILE__ ) ) . 'assets/images/sensei_certificate_nograde.png';
@@ -155,33 +158,32 @@ function sensei_create_master_certificate_template() {
 	$post_id = $post_id;
 	$desc    = __( 'Sensei LMS Certificate Template Example', 'sensei-certificates' );
 
-	// Set variables for storage
-	// fix file filename for query strings
+	// Set variables for storage.
+	// fix file filename for query strings.
 	preg_match( '/[^\?]+\.(jpg|JPG|jpe|JPE|jpeg|JPEG|gif|GIF|png|PNG)/', $url, $matches );
 	$file_array['name']     = basename( $matches[0] );
 	$file_array['tmp_name'] = $tmp;
 
-	// If error storing temporarily, unlink
+	// If error storing temporarily, unlink.
 	if ( is_wp_error( $tmp ) ) {
 		@unlink( $file_array['tmp_name'] );
 		$file_array['tmp_name'] = '';
 		error_log( 'An error occurred while uploading the image' );
-	} // End If Statement
-
+	}
 
 	if ( ! function_exists( 'media_handle_sideload' ) ) {
 		include_once ABSPATH . '/wp-admin/includes/image.php';
 		include_once ABSPATH . '/wp-admin/includes/media.php';
 	}
 
-	// do the validation and storage stuff
+	// Do the validation and storage stuff.
 	$image_id = media_handle_sideload( $file_array, $post_id, $desc );
 
-	// If error storing permanently, unlink
+	// If error storing permanently, unlink.
 	if ( is_wp_error( $image_id ) ) {
 		@unlink( $file_array['tmp_name'] );
 		error_log( 'An error occurred while uploading the image' );
-	} // End If Statement
+	}
 
 	$src = wp_get_attachment_url( $image_id );
 
@@ -227,16 +229,16 @@ function sensei_create_master_certificate_template() {
 		'_certificate_place_text'             => __( '{{course_place}}', 'sensei-certificates' ),
 	);
 
-	// certificate template font defaults
+	// Certificate template font defaults.
 	update_post_meta( $post_id, '_certificate_font_color', $defaults['_certificate_font_color'] );
 	update_post_meta( $post_id, '_certificate_font_size', $defaults['_certificate_font_size'] );
 	update_post_meta( $post_id, '_certificate_font_family', $defaults['_certificate_font_family'] );
 	update_post_meta( $post_id, '_certificate_font_style', $defaults['_certificate_font_style'] );
 
-	// create the certificate template fields data structure
+	// Create the certificate template fields data structure.
 	$fields = array();
 	foreach ( array( '_certificate_heading', '_certificate_message', '_certificate_course', '_certificate_completion', '_certificate_place' ) as $i => $field_name ) {
-		// set the field defaults
+		// Set the field defaults.
 		$field = array(
 			'type'     => 'property',
 			'font'     => array(
@@ -249,7 +251,7 @@ function sensei_create_master_certificate_template() {
 			'order'    => $i,
 		);
 
-		// get the field position (if set)
+		// Get the field position (if set).
 		if ( $defaults[ $field_name . '_pos' ] ) {
 			$position          = explode( ',', $defaults[ $field_name . '_pos' ] );
 			$field['position'] = array(
@@ -264,7 +266,7 @@ function sensei_create_master_certificate_template() {
 			$field['text'] = $defaults[ $field_name . '_text' ] ? $defaults[ $field_name . '_text' ] : '';
 		}
 
-		// get the field font settings (if any)
+		// Get the field font settings (if any).
 		if ( $defaults[ $field_name . '_font_family' ] ) {
 			$field['font']['family'] = $defaults[ $field_name . '_font_family' ];
 		}
@@ -278,22 +280,22 @@ function sensei_create_master_certificate_template() {
 			$field['font']['color'] = $defaults[ $field_name . '_font_color' ];
 		}
 
-		// cut off the leading '_' to create the field name
+		// Cut off the leading '_' to create the field name.
 		$fields[ ltrim( $field_name, '_' ) ] = $field;
-	} // End For Loop
+	}
 
 	update_post_meta( $post_id, '_certificate_template_fields', $fields );
 
-	// Test attachment upload
+	// Test attachment upload.
 	$image_ids   = array();
 	$image_ids[] = $image_id;
 	update_post_meta( $post_id, '_image_ids', $image_ids );
 
 	if ( $image_ids[0] ) {
 		set_post_thumbnail( $post_id, $image_ids[0] );
-	} // End If Statement
+	}
 
-	// Set all courses to the default template
+	// Set all courses to the default template.
 	$query_args['posts_per_page'] = -1;
 	$query_args['post_status']    = 'any';
 	$query_args['post_type']      = 'course';
@@ -309,8 +311,8 @@ function sensei_create_master_certificate_template() {
 
 			update_post_meta( get_the_id(), '_course_certificate_template', $post_id );
 
-		} // End While Loop
-	} // End If Statement
+		}
+	}
 
 	wp_reset_postdata();
 
@@ -318,6 +320,5 @@ function sensei_create_master_certificate_template() {
 		return true;
 	} else {
 		return false;
-	} // End If Statement
-
-} // End sensei_create_master_certificate_template()
+	}
+}
