@@ -1,5 +1,5 @@
 === Sensei LMS Certificates ===
-Contributors: automattic, alexsanford1, donnapep, jakeom, gkaragia, renatho, yscik
+Contributors: automattic, alexsanford1, donnapep, jakeom, gikaragia, renathoc, yscik
 Tags: certificates, course certificate, sensei lms
 Requires at least: 4.9
 Tested up to: 5.4
