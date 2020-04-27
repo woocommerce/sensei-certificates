@@ -1,6 +1,6 @@
 {
   "name": "sensei-certificates",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Certificates extension for Sensei",
   "scripts": {
     "dev": "NODE_ENV=dev gulp package",
