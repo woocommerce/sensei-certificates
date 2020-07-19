@@ -15,7 +15,7 @@ msgstr ""
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Language-Team: \n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.3.1\n"
 "Last-Translator: \n"
 "Language: de_DE@formal\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -514,7 +514,7 @@ msgid ""
 "view this certificate"
 msgstr ""
 "Legen Sie eine Zertifikatsvorlage für den <a href=\"%1$s\">Kurs</a> fest, um "
-"dieses Zertifikat anzuzeigen."
+"dieses Zertifikat anzuzeigen"
 
 #: classes/class-woothemes-sensei-certificates.php:697
 msgid "You are not allowed to view this Certificate."
@@ -556,7 +556,7 @@ msgid ""
 "You must set a certificate_template primary image before you can preview"
 msgstr ""
 "Sie müssen ein certificate_template Primärbild festlegen, bevor Sie eine "
-"Vorschau anzeigen können."
+"Vorschau anzeigen können"
 
 #: admin/post-types/certificate_templates.php:91
 msgid "Name"
@@ -600,7 +600,7 @@ msgstr "Standardschriftart"
 
 #: admin/post-types/writepanels/writepanel-certificate_data.php:85
 msgid "Default Font color"
-msgstr "Standardschriftfarbe "
+msgstr "Standardschriftfarbe"
 
 #: admin/post-types/writepanels/writepanel-certificate_data.php:87
 msgid "The default text color for the certificate."
@@ -656,7 +656,7 @@ msgstr "Text, der im Nachrichtenbereich angezeigt werden soll."
 
 #: admin/post-types/writepanels/writepanel-certificate_data.php:175
 msgid "This is to certify that {{learner}} has completed the course"
-msgstr "Hiermit wird bescheinigt, dass {{learner}} den Kurs abgeschlossen hat."
+msgstr "Hiermit wird bescheinigt, dass {{learner}} den Kurs abgeschlossen hat"
 
 #: admin/post-types/writepanels/writepanel-certificate_data.php:186
 msgid "Course Position"
