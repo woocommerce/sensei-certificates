@@ -428,20 +428,20 @@ msgstr ""
 msgid "Draft"
 msgstr ""
 
-#: admin/post-types/certificate_templates.php:142
-msgid "Restore this item from the Trash"
-msgstr ""
-
-#: admin/post-types/certificate_templates.php:142
-msgid "Restore"
-msgstr ""
-
 #: admin/post-types/certificate_templates.php:144
 msgid "Move this item to the Trash"
 msgstr ""
 
 #: admin/post-types/certificate_templates.php:144
 msgid "Trash"
+msgstr ""
+
+#: admin/post-types/certificate_templates.php:142
+msgid "Restore this item from the Trash"
+msgstr ""
+
+#: admin/post-types/certificate_templates.php:142
+msgid "Restore"
 msgstr ""
 
 #: admin/post-types/certificate_templates.php:147
@@ -568,12 +568,12 @@ msgstr ""
 msgid "Remove certificate image"
 msgstr ""
 
-#: admin/post-types/writepanels/writepanel-course_data.php:70
-msgid "None"
-msgstr ""
-
 #: admin/post-types/writepanels/writepanel-course_data.php:79
 msgid "No certificate template exist yet. Please add some first."
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-course_data.php:70
+msgid "None"
 msgstr ""
 
 #: admin/post-types/writepanels/writepanels-init.php:73
