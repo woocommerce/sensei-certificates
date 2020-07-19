@@ -1,7 +1,7 @@
 {
   "name": "sensei-certificates",
-  "version": "2.0.4",
-  "description": "Certificates extension for Sensei",
+  "version": "2.0.5",
+  "description": "Sensei LMS Certificates",
   "scripts": {
     "dev": "NODE_ENV=dev gulp package",
     "prod": "NODE_ENV=prod gulp package",
