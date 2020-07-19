@@ -1,6 +1,6 @@
 {
 	"name": "sensei-certificates",
-	"description": "Certificates extension for Sensei",
+	"description": "Sensei LMS Certificates",
 	"require-dev": {
 		"php": "^5.4 || ^7",
 		"dealerdirect/phpcodesniffer-composer-installer": "0.7.0",
