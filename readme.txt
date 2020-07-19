@@ -1,7 +1,7 @@
 === Sensei LMS Certificates ===
 Contributors: automattic, alexsanford1, donnapep, jakeom, gikaragia, renathoc, yscik
 Tags: certificates, course certificate, sensei lms
-Requires at least: 4.9
+Requires at least: 5.0
 Tested up to: 5.4
 Requires PHP: 5.6
 Stable tag: 2.0.5
