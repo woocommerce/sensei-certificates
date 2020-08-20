@@ -15,7 +15,7 @@ jQuery( function($){
 	var imageWidth  = sensei_certificate_templates_params.primary_image_width;
 	var imageHeight = sensei_certificate_templates_params.primary_image_height;
 
-	$('#set-certificate-image, #set-additional-image, #add-alternative-certificate-image').live('click', function(event){
+	$( document ).on( 'click', '#set-certificate-image, #set-additional-image, #add-alternative-certificate-image', function( event ) {
 
 		event.preventDefault();
 
