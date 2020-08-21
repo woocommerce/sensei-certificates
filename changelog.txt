@@ -1,8 +1,8 @@
 *** Changelog ***
 
 2020.08.21 - version 2.0.6
-* Fix: Allow line breaks in certificate templates - #239
-* Fix: Fix certificate template image functionality - #238
+* Fix: Allow line breaks in certificate templates - [#239](https://github.com/woocommerce/sensei-certificates/pull/239)
+* Fix: Fix certificate template image functionality - [#238](https://github.com/woocommerce/sensei-certificates/pull/238)
 
 2020.07.20 - version 2.0.5
 * New: Add German translation [#214](https://github.com/woocommerce/sensei-certificates/pull/214)
