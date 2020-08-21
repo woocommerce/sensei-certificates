@@ -385,7 +385,7 @@ function certificate_templates_process_meta( $post_id, $post ) {
 		}
 
 		if ( ! empty( $_POST[ $field_name . '_text' ] ) ) {
-			$field['text'] = sanitize_text_field( wp_unslash( $_POST[ $field_name . '_text' ] ) );
+			$field['text'] = sanitize_textarea_field( wp_unslash( $_POST[ $field_name . '_text' ] ) );
 		}
 
 		// Get the field font settings (if any).
