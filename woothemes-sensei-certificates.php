@@ -6,9 +6,9 @@
  * Version: 2.0.5
  * Author: Automattic
  * Author URI: https://automattic.com
- * Requires at least: 5.0
- * Requires PHP: 5.6
- * Tested up to: 5.4
+ * Requires at least: 5.3
+ * Requires PHP: 7.0
+ * Tested up to: 5.5
  * License: GPLv2+
  */
 
