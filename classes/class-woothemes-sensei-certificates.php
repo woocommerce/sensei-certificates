@@ -230,7 +230,7 @@ class WooThemes_Sensei_Certificates {
 		}
 
 		if ( $should_enqueue ) {
-			wp_enqueue_style( 'sensei-certificates-frontend', $this->plugin_url . 'assets/css/frontend.css', array(), SENSEI_CERTIFICATES_VERSION, 'screen' );
+			wp_enqueue_style( 'sensei-certificates-frontend', $this->plugin_url . 'assets/dist/css/frontend.css', array(), SENSEI_CERTIFICATES_VERSION, 'screen' );
 		}
 	}
 
