@@ -2,26 +2,39 @@
   "name": "sensei-certificates",
   "version": "2.0.6",
   "description": "Sensei LMS Certificates",
-  "scripts": {
-    "dev": "NODE_ENV=dev gulp package",
-    "prod": "NODE_ENV=prod gulp package",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "author": "Automattic",
+  "license": "GPL-2.0-or-later",
+  "keywords": [
+    "wordpress-plugin"
+  ],
+  "homepage": "https://woocommerce.com/products/sensei-certificates/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/woothemes/sensei-certificates.git"
+    "url": "git+https://github.com/woocommerce/sensei-certificates.git"
   },
-  "author": "Automattic",
-  "license": "GPL-2.0+",
   "bugs": {
-    "url": "https://github.com/woothemes/sensei-certificates/issues"
+    "url": "https://github.com/woocommerce/sensei-certificates/issues"
   },
   "devDependencies": {
-    "del": "5.1.0",
-    "gulp": "4.0.2",
-    "gulp-minify": "3.1.0",
-    "gulp-sass": "4.1.0",
-    "gulp-wp-pot": "2.4.3",
-    "gulp-zip": "5.0.2"
+    "@wordpress/scripts": "12.1.1"
+  },
+  "scripts": {
+    "build": "npm run build:assets && npm run archive",
+    "build:assets": "wp-scripts build",
+    "archive": "composer archive --file=$npm_package_name --format=zip",
+    "postarchive": "rm -rf $npm_package_name && unzip $npm_package_name.zip -d $npm_package_name && rm $npm_package_name.zip && zip -r $npm_package_name.zip $npm_package_name && rm -rf $npm_package_name",
+    "check-engines": "wp-scripts check-engines",
+    "check-licenses": "wp-scripts check-licenses",
+    "format:js": "wp-scripts format-js",
+    "lint:css": "wp-scripts lint-style assets/css",
+    "lint:js": "wp-scripts lint-js assets/js",
+    "lint:pkg-json": "wp-scripts lint-pkg-json",
+    "packages-update": "wp-scripts packages-update",
+    "start": "wp-scripts start",
+    "i18n:build": "npm run i18n:php",
+    "i18n:php": "wp i18n make-pot --exclude=lib,vendor,node_modules --skip-js --headers='{\"Last-Translator\":null,\"Language-Team\":null,\"Report-Msgid-Bugs-To\":\"https://wordpress.org/support/plugin/sensei-certificates\"}' . lang/sensei-certificates.pot"
+  },
+  "config": {
+    "wp_org_slug": "sensei-certificates"
   }
 }

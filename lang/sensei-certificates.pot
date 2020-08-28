@@ -1,48 +1,265 @@
-# Copyright (C) 2020 Sensei LMS Certificates
-# This file is distributed under the same license as the Sensei LMS Certificates package.
+# Copyright (C) 2020 Automattic
+# This file is distributed under the same license as the Sensei LMS Certificates plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Sensei LMS Certificates\n"
+"Project-Id-Version: Sensei LMS Certificates 2.0.6\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sensei-certificates\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Basepath: ..\n"
-"X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: *.js\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"POT-Creation-Date: 2020-08-26T12:21:38+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Domain: sensei-certificates\n"
 
-#: sensei-certificates-functions.php:147
-msgid "Example Template"
+#. Plugin Name of the plugin
+msgid "Sensei LMS Certificates"
 msgstr ""
 
-#: sensei-certificates-functions.php:159
-msgid "Sensei LMS Certificate Template Example"
+#. Plugin URI of the plugin
+msgid "https://woocommerce.com/products/sensei-certificates/"
 msgstr ""
 
-#: sensei-certificates-functions.php:201, classes/class-woothemes-sensei-certificate-templates.php:474, classes/class-woothemes-sensei-certificates.php:795, admin/post-types/writepanels/writepanel-certificate_data.php:131
+#. Description of the plugin
+msgid "Award your students with a certificate of completion and a sense of accomplishment after finishing a course."
+msgstr ""
+
+#. Author of the plugin
+msgid "Automattic"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://automattic.com"
+msgstr ""
+
+#: admin/post-types/certificate_templates.php:91
+msgid "Name"
+msgstr ""
+
+#: admin/post-types/certificate_templates.php:92
+msgid "Image"
+msgstr ""
+
+#: admin/post-types/certificate_templates.php:130
+msgid "Draft"
+msgstr ""
+
+#: admin/post-types/certificate_templates.php:142
+msgid "Restore this item from the Trash"
+msgstr ""
+
+#: admin/post-types/certificate_templates.php:142
+msgid "Restore"
+msgstr ""
+
+#: admin/post-types/certificate_templates.php:144
+msgid "Move this item to the Trash"
+msgstr ""
+
+#: admin/post-types/certificate_templates.php:144
+msgid "Trash"
+msgstr ""
+
+#: admin/post-types/certificate_templates.php:147
+msgid "Delete this item permanently"
+msgstr ""
+
+#: admin/post-types/certificate_templates.php:147
+msgid "Delete Permanently"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:77
+msgid "Default Font"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:85
+msgid "Default Font color"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:87
+msgid "The default text color for the certificate."
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:98
+msgid "Heading Position"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:100
+msgid "Optional position of the Certificate Heading"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:113
+#: admin/post-types/writepanels/writepanel-certificate_data.php:157
+#: admin/post-types/writepanels/writepanel-certificate_data.php:201
+#: admin/post-types/writepanels/writepanel-certificate_data.php:245
+#: admin/post-types/writepanels/writepanel-certificate_data.php:289
+msgid "Font"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:120
+#: admin/post-types/writepanels/writepanel-certificate_data.php:164
+#: admin/post-types/writepanels/writepanel-certificate_data.php:208
+#: admin/post-types/writepanels/writepanel-certificate_data.php:252
+#: admin/post-types/writepanels/writepanel-certificate_data.php:296
+msgid "Font color"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:129
+msgid "Heading Text"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:130
+msgid "Text to display in the heading."
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:131
+#: classes/class-woothemes-sensei-certificate-templates.php:474
+#: classes/class-woothemes-sensei-certificates.php:795
+#: sensei-certificates-functions.php:201
 msgid "Certificate of Completion"
 msgstr ""
 
-#: sensei-certificates-functions.php:208, classes/class-woothemes-sensei-certificate-templates.php:482, classes/class-woothemes-sensei-certificates.php:802
-msgid "This is to certify that"
+#: admin/post-types/writepanels/writepanel-certificate_data.php:142
+msgid "Message Position"
 msgstr ""
 
-#: sensei-certificates-functions.php:208, classes/class-woothemes-sensei-certificate-templates.php:482, classes/class-woothemes-sensei-certificates.php:802
-msgid "has completed the course"
+#: admin/post-types/writepanels/writepanel-certificate_data.php:144
+msgid "Optional position of the Certificate Message"
 msgstr ""
 
-#: sensei-certificates-functions.php:215, admin/post-types/writepanels/writepanel-certificate_data.php:219
+#: admin/post-types/writepanels/writepanel-certificate_data.php:173
+msgid "Message Text"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:174
+msgid "Text to display in the message area."
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:175
+msgid "This is to certify that {{learner}} has completed the course"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:186
+msgid "Course Position"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:188
+msgid "Optional position of the Course Name"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:217
+msgid "Course Text"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:218
+msgid "Text to display in the course area."
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:219
+#: sensei-certificates-functions.php:215
 msgid "{{course_title}}"
 msgstr ""
 
-#: sensei-certificates-functions.php:222
-msgid "{{completion_date}} at {{course_place}}"
+#: admin/post-types/writepanels/writepanel-certificate_data.php:230
+msgid "Completion Date Position"
 msgstr ""
 
-#: sensei-certificates-functions.php:229, admin/post-types/writepanels/writepanel-certificate_data.php:307
+#: admin/post-types/writepanels/writepanel-certificate_data.php:232
+msgid "Optional position of the Course Completion date"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:261
+msgid "Completion Date Text"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:262
+msgid "Text to display in the course completion date area."
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:263
+msgid "{{completion_date}}"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:274
+msgid "Place Position"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:276
+msgid "Optional position of the place of Certification."
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:305
+msgid "Course Place Text"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:306
+msgid "Text to display in the course place area."
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_data.php:307
+#: sensei-certificates-functions.php:229
 msgid "{{course_place}}"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_image.php:70
+msgid "Set certificate image"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-certificate_image.php:71
+msgid "Remove certificate image"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-course_data.php:70
+msgid "None"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanel-course_data.php:79
+msgid "No certificate template exist yet. Please add some first."
+msgstr ""
+
+#: admin/post-types/writepanels/writepanels-init.php:73
+msgid "Certificate Background Image <small>&ndash; Used to lay out the certificate fields found in the Certificate Data box.</small>"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanels-init.php:83
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:162
+msgid "Certificate Data"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanels-init.php:93
+#: admin/post-types/writepanels/writepanels-init.php:120
+msgid "Certificate Template"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanels-init.php:284
+msgid "Size"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanels-init.php:286
+msgid "Bold"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanels-init.php:290
+msgid "Italic"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanels-init.php:296
+msgid "Center Align"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanels-init.php:300
+msgid "Border"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanels-init.php:358
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:246
+msgid "Set Position"
+msgstr ""
+
+#: admin/post-types/writepanels/writepanels-init.php:358
+msgid "Remove Position"
 msgstr ""
 
 #: admin/woothemes-sensei-certificate-templates-admin-init.php:115
@@ -93,10 +310,6 @@ msgstr ""
 msgid "This is the main image for your certificate, and will be used to configure the layout of the various text fields defined in the Certificate Data panel."
 msgstr ""
 
-#: admin/woothemes-sensei-certificate-templates-admin-init.php:162, admin/post-types/writepanels/writepanels-init.php:83
-msgid "Certificate Data"
-msgstr ""
-
 #: admin/woothemes-sensei-certificate-templates-admin-init.php:162
 msgid "These configuration options allow you to specify exactly where various text fields will be displayed on your certificate, as well as the font used.  For instance, if you want the message displayed on your certificate, click the \"Set Position\" button next to \"Message Position\".  Then select the area of the Certificate Image where you want the message to be displayed."
 msgstr ""
@@ -145,7 +358,9 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-#: admin/woothemes-sensei-certificate-templates-admin-init.php:242, classes/class-woothemes-sensei-certificate-templates.php:192, classes/class-woothemes-sensei-certificates.php:478
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:242
+#: classes/class-woothemes-sensei-certificate-templates.php:192
+#: classes/class-woothemes-sensei-certificates.php:478
 msgid "Course"
 msgstr ""
 
@@ -161,11 +376,9 @@ msgstr ""
 msgid "Done"
 msgstr ""
 
-#: admin/woothemes-sensei-certificate-templates-admin-init.php:246, admin/post-types/writepanels/writepanels-init.php:358
-msgid "Set Position"
-msgstr ""
-
-#: admin/woothemes-sensei-certificate-templates-admin-init.php:281, admin/woothemes-sensei-certificate-templates-admin-init.php:284, admin/woothemes-sensei-certificate-templates-admin-init.php:287
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:281
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:284
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:287
 msgid "Certificate Template updated."
 msgstr ""
 
@@ -228,7 +441,8 @@ msgstr ""
 msgid "New Certificate Template"
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificate-templates.php:149, classes/class-woothemes-sensei-certificate-templates.php:155
+#: classes/class-woothemes-sensei-certificate-templates.php:149
+#: classes/class-woothemes-sensei-certificate-templates.php:155
 msgid "Certificate Templates"
 msgstr ""
 
@@ -248,19 +462,26 @@ msgstr ""
 msgid "No certificate templates found in Trash"
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificate-templates.php:191, classes/class-woothemes-sensei-certificates.php:477
+#: classes/class-woothemes-sensei-certificate-templates.php:191
+#: classes/class-woothemes-sensei-certificates.php:477
 msgid "Learner"
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificate-templates.php:193, classes/class-woothemes-sensei-certificates.php:479
+#: classes/class-woothemes-sensei-certificate-templates.php:193
+#: classes/class-woothemes-sensei-certificates.php:479
 msgid "Date Completed"
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificate-templates.php:194, classes/class-woothemes-sensei-certificates.php:480
+#: classes/class-woothemes-sensei-certificate-templates.php:194
+#: classes/class-woothemes-sensei-certificates.php:480
 msgid "Actions"
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificate-templates.php:260, classes/class-woothemes-sensei-certificates.php:434, classes/class-woothemes-sensei-certificates.php:544, classes/class-woothemes-sensei-certificates.php:1029, classes/class-woothemes-sensei-certificates.php:1029, classes/class-woothemes-sensei-certificates.php:1114, classes/class-woothemes-sensei-certificates.php:1114
+#: classes/class-woothemes-sensei-certificate-templates.php:260
+#: classes/class-woothemes-sensei-certificates.php:434
+#: classes/class-woothemes-sensei-certificates.php:544
+#: classes/class-woothemes-sensei-certificates.php:1029
+#: classes/class-woothemes-sensei-certificates.php:1114
 msgid "View Certificate"
 msgstr ""
 
@@ -268,7 +489,20 @@ msgstr ""
 msgid "Course Title"
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificate-templates.php:506, classes/class-woothemes-sensei-certificates.php:826
+#: classes/class-woothemes-sensei-certificate-templates.php:482
+#: classes/class-woothemes-sensei-certificates.php:802
+#: sensei-certificates-functions.php:208
+msgid "This is to certify that"
+msgstr ""
+
+#: classes/class-woothemes-sensei-certificate-templates.php:482
+#: classes/class-woothemes-sensei-certificates.php:802
+#: sensei-certificates-functions.php:208
+msgid "has completed the course"
+msgstr ""
+
+#: classes/class-woothemes-sensei-certificate-templates.php:506
+#: classes/class-woothemes-sensei-certificates.php:826
 msgid "At %s"
 msgstr ""
 
@@ -359,7 +593,8 @@ msgstr ""
 msgid "New Certificate"
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificates.php:433, classes/class-woothemes-sensei-certificates.php:439
+#: classes/class-woothemes-sensei-certificates.php:433
+#: classes/class-woothemes-sensei-certificates.php:439
 msgid "Certificates"
 msgstr ""
 
@@ -384,7 +619,8 @@ msgstr ""
 msgid "You are not allowed to view this Certificate."
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificates.php:696, classes/class-woothemes-sensei-certificates.php:855
+#: classes/class-woothemes-sensei-certificates.php:696
+#: classes/class-woothemes-sensei-certificates.php:855
 msgid "Certificate Error"
 msgstr ""
 
@@ -412,198 +648,18 @@ msgstr ""
 msgid "View certificate"
 msgstr ""
 
+#: sensei-certificates-functions.php:147
+msgid "Example Template"
+msgstr ""
+
+#: sensei-certificates-functions.php:159
+msgid "Sensei LMS Certificate Template Example"
+msgstr ""
+
+#: sensei-certificates-functions.php:222
+msgid "{{completion_date}} at {{course_place}}"
+msgstr ""
+
 #: templates/single-certificate_template.php:33
 msgid "You must set a certificate_template primary image before you can preview"
-msgstr ""
-
-#: admin/post-types/certificate_templates.php:91
-msgid "Name"
-msgstr ""
-
-#: admin/post-types/certificate_templates.php:92
-msgid "Image"
-msgstr ""
-
-#: admin/post-types/certificate_templates.php:130
-msgid "Draft"
-msgstr ""
-
-#: admin/post-types/certificate_templates.php:144
-msgid "Move this item to the Trash"
-msgstr ""
-
-#: admin/post-types/certificate_templates.php:144
-msgid "Trash"
-msgstr ""
-
-#: admin/post-types/certificate_templates.php:142
-msgid "Restore this item from the Trash"
-msgstr ""
-
-#: admin/post-types/certificate_templates.php:142
-msgid "Restore"
-msgstr ""
-
-#: admin/post-types/certificate_templates.php:147
-msgid "Delete this item permanently"
-msgstr ""
-
-#: admin/post-types/certificate_templates.php:147
-msgid "Delete Permanently"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:77
-msgid "Default Font"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:85
-msgid "Default Font color"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:87
-msgid "The default text color for the certificate."
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:98
-msgid "Heading Position"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:100
-msgid "Optional position of the Certificate Heading"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:113, admin/post-types/writepanels/writepanel-certificate_data.php:157, admin/post-types/writepanels/writepanel-certificate_data.php:201, admin/post-types/writepanels/writepanel-certificate_data.php:245, admin/post-types/writepanels/writepanel-certificate_data.php:289
-msgid "Font"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:120, admin/post-types/writepanels/writepanel-certificate_data.php:164, admin/post-types/writepanels/writepanel-certificate_data.php:208, admin/post-types/writepanels/writepanel-certificate_data.php:252, admin/post-types/writepanels/writepanel-certificate_data.php:296
-msgid "Font color"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:129
-msgid "Heading Text"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:130
-msgid "Text to display in the heading."
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:142
-msgid "Message Position"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:144
-msgid "Optional position of the Certificate Message"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:173
-msgid "Message Text"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:174
-msgid "Text to display in the message area."
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:175
-msgid "This is to certify that {{learner}} has completed the course"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:186
-msgid "Course Position"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:188
-msgid "Optional position of the Course Name"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:217
-msgid "Course Text"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:218
-msgid "Text to display in the course area."
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:230
-msgid "Completion Date Position"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:232
-msgid "Optional position of the Course Completion date"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:261
-msgid "Completion Date Text"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:262
-msgid "Text to display in the course completion date area."
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:263
-msgid "{{completion_date}}"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:274
-msgid "Place Position"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:276
-msgid "Optional position of the place of Certification."
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:305
-msgid "Course Place Text"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_data.php:306
-msgid "Text to display in the course place area."
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_image.php:70, admin/post-types/writepanels/writepanel-certificate_image.php:70
-msgid "Set certificate image"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-certificate_image.php:71, admin/post-types/writepanels/writepanel-certificate_image.php:71
-msgid "Remove certificate image"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-course_data.php:79
-msgid "No certificate template exist yet. Please add some first."
-msgstr ""
-
-#: admin/post-types/writepanels/writepanel-course_data.php:70
-msgid "None"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanels-init.php:73
-msgid "Certificate Background Image <small>&ndash; Used to lay out the certificate fields found in the Certificate Data box.</small>"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanels-init.php:93, admin/post-types/writepanels/writepanels-init.php:120
-msgid "Certificate Template"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanels-init.php:284
-msgid "Size"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanels-init.php:286
-msgid "Bold"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanels-init.php:290
-msgid "Italic"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanels-init.php:296
-msgid "Center Align"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanels-init.php:300
-msgid "Border"
-msgstr ""
-
-#: admin/post-types/writepanels/writepanels-init.php:358
-msgid "Remove Position"
 msgstr ""

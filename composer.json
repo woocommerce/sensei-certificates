@@ -1,11 +1,37 @@
 {
-	"name": "sensei-certificates",
-	"description": "Sensei LMS Certificates",
-	"require-dev": {
-		"php": "^5.4 || ^7",
-		"dealerdirect/phpcodesniffer-composer-installer": "0.7.0",
-		"phpcompatibility/phpcompatibility-wp": "2.1.0",
-		"squizlabs/php_codesniffer": "3.5.5",
-		"wp-coding-standards/wpcs": "2.3.0"
-	}
+  "name": "automattic/sensei-certificates",
+  "description": "Sensei LMS Certificates",
+  "require-dev": {
+    "php": "^7",
+    "dealerdirect/phpcodesniffer-composer-installer": "0.7.0",
+    "phpcompatibility/phpcompatibility-wp": "2.1.0",
+    "squizlabs/php_codesniffer": "3.5.5",
+    "wp-coding-standards/wpcs": "2.3.0"
+  },
+  "archive": {
+    "exclude": [
+      "/*",
+      "!/admin",
+      "!/assets/dist",
+      "/assets/dist/css/*.js",
+      "!/assets/images",
+      "!/classes",
+      "!/lang",
+      "!/lib/tfpdf/*.php",
+      "!/lib/tfpdf/font/*.php",
+      "!/lib/tfpdf/font/unifont/*.php",
+      "!/lib/tfpdf/font/unifont/*.ttf",
+      "!/lib/tfpdf/font/unifont/*.dat",
+      "!/templates",
+      "!/changelog.txt",
+      "!/LICENSE",
+      "!/readme.txt",
+      "!/widgets",
+      "!/sensei-certificates-functions.php",
+      "!/woothemes-sensei-certificates.php",
+      ".DS_Store",
+      ".*",
+      "*.test.js"
+    ]
+  }
 }
