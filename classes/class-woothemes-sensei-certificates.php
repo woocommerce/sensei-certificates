@@ -746,7 +746,7 @@ class WooThemes_Sensei_Certificates {
 
 			// Get Course Data
 			$course_id       = get_post_meta( $certificate_id, 'course_id', true );
-			$course_title    = get_the_title( $course_id );
+			$course_title    = get_post_field('post_title', $course_id);
 			$course_end      = Sensei_Utils::sensei_check_for_activity(
 				array(
 					'post_id' => intval( $course_id ),
