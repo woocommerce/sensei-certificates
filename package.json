@@ -16,7 +16,7 @@
     "url": "https://github.com/woocommerce/sensei-certificates/issues"
   },
   "devDependencies": {
-    "@wordpress/scripts": "12.2.0"
+    "@wordpress/scripts": "12.2.1"
   },
   "scripts": {
     "build": "npm run build:assets && npm run archive",
