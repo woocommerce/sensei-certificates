@@ -15,7 +15,7 @@ jQuery( function($){
 	var imageWidth  = sensei_certificate_templates_params.primary_image_width;
 	var imageHeight = sensei_certificate_templates_params.primary_image_height;
 
-	$( document ).on( 'click', '#set-certificate-image, #set-additional-image, #add-alternative-certificate-image', function( event ) {
+	$( document ).on( 'click', '#set-certificate-image', function( event ) {
 
 		event.preventDefault();
 
@@ -51,24 +51,6 @@ jQuery( function($){
 				$('#upload_image_id_0').val(attachment.id);
 				$('#remove-certificate-image').show();
 				$('img#certificate_image_0').attr('src', attachment.url);
-			} else if ('set-additional-image' == el.attr('id')) {
-				// additional (second page) certificate image
-				$('#upload_additional_image_id_0').val(attachment.id);
-				$('#set-additional-image').hide();
-				$('#remove-additional-image').show();
-				$('img#certificate_additional_image').attr('src', attachment.url);
-			} else if ('add-alternative-certificate-image' == el.attr('id')) {
-				var imgindex = $('#certificate_alternative_images li').size() + 1;
-
-				$('#certificate_alternative_images').append(
-					'<li class="alternative_image">' +
-						'<a href="#" class="remove-alternative-certificate-image">' +
-							'<img style="max-width:100px;max-height:100px;" src="' + attachment.url + '" />' +
-							'<input type="hidden" name="upload_image_id[' + imgindex + ']" class="upload_image_id" value="' + attachment.id + '" />' +
-							'<span class="overlay"></span>' +
-						'</a>' +
-					'</li>');
-				setRemoveAlternativeCertificateImageHandler();
 			}
 		});
 
@@ -231,32 +213,6 @@ jQuery( function($){
 		$('#' + this.id.substr(7)).val(sensei_certificate_templates_params.set_position_label);
 		removeImgAreaSelect();  // make sure the overlay is gone
 		return;
-	});
-
-	// remove an alternative certificate image
-	function setRemoveAlternativeCertificateImageHandler() {
-		$('.remove-alternative-certificate-image').click(function() {
-
-			var parent = $(this).parent();
-			var current_field_wrapper = parent;
-
-			$('input', current_field_wrapper).val('');
-			$('img', current_field_wrapper).attr('src', '');
-			parent.hide();
-
-			return false;
-		});
-	}
-	setRemoveAlternativeCertificateImageHandler();
-
-	$('#remove-additional-image').click(function() {
-
-		$('#upload_additional_image_id_0').val('');
-		$('img#certificate_additional_image').attr('src', '');
-		$(this).hide();
-		$('#set-additional-image').show();
-
-		return false;
 	});
 
 	if ( typeof jQuery.fn.hasParent !== 'function' ) {
