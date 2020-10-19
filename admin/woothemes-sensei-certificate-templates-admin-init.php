@@ -283,10 +283,12 @@ function sensei_certificate_template_item_updated_messages( $messages ) {
 		3  => __( 'Custom field deleted.', 'sensei-certificates' ),
 		4  => __( 'Certificate Template updated.', 'sensei-certificates' ),
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Same as the WP core.
+		/* translators: %s is replaced with the formatted date timestamp of a certificate template revision */
 		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Certificate Template restored to revision from %s', 'sensei-certificates' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
 		6  => __( 'Certificate Template updated.', 'sensei-certificates' ),
 		7  => __( 'Certificate Template saved.', 'sensei-certificates' ),
 		8  => __( 'Certificate Template submitted.', 'sensei-certificates' ),
+		/* translators: %1$s is replaced with the date on which the certificate template is scheduled to be published */
 		9  => sprintf(
 			__( 'Certificate Template scheduled for: <strong>%1$s</strong>.', 'sensei-certificates' ),
 			date_i18n( __( 'M j, Y @ G:i', 'sensei-certificates' ), strtotime( $post->post_date ) )
