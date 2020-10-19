@@ -288,8 +288,8 @@ function sensei_certificate_template_item_updated_messages( $messages ) {
 		6  => __( 'Certificate Template updated.', 'sensei-certificates' ),
 		7  => __( 'Certificate Template saved.', 'sensei-certificates' ),
 		8  => __( 'Certificate Template submitted.', 'sensei-certificates' ),
-		/* translators: %1$s is replaced with the date on which the certificate template is scheduled to be published */
 		9  => sprintf(
+			/* translators: %1$s is replaced with the date on which the certificate template is scheduled to be published */
 			__( 'Certificate Template scheduled for: <strong>%1$s</strong>.', 'sensei-certificates' ),
 			date_i18n( __( 'M j, Y @ G:i', 'sensei-certificates' ), strtotime( $post->post_date ) )
 		),
