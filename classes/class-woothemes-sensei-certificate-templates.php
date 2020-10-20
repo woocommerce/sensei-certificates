@@ -503,6 +503,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		}
 
+		/* translators: %s is replaced with the site title */
 		$certificate_place = sprintf( __( 'At %s', 'sensei-certificates' ), get_bloginfo( 'name' ) ); // At {{course_place}}
 		if ( isset( $this->certificate_template_fields['certificate_place']['text'] ) && '' != $this->certificate_template_fields['certificate_place']['text'] ) {
 
@@ -952,7 +953,7 @@ class WooThemes_Sensei_Certificate_Templates {
 				$course_certificate_template_id = get_post_meta( $id, '_course_certificate_template', true );
 
 				if ( 0 < absint( $course_certificate_template_id ) ) {
-
+					/* translators: %s is replaced with the title of the certificate template */
 					echo '<a href="' . esc_url( get_edit_post_link( absint( $course_certificate_template_id ) ) ) . '" title="' . esc_attr( sprintf( __( 'Edit %s', 'sensei-certificates' ), get_the_title( absint( $course_certificate_template_id ) ) ) ) . '">' . esc_html( get_the_title( absint( $course_certificate_template_id ) ) ) . '</a>';
 
 				}
