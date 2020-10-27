@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Sensei LMS Certificates plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Sensei LMS Certificates 2.0.6\n"
+"Project-Id-Version: Sensei LMS Certificates 2.0.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sensei-certificates\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-08-26T12:21:38+00:00\n"
+"POT-Creation-Date: 2020-10-26T20:40:27+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: sensei-certificates\n"
@@ -378,7 +378,7 @@ msgstr ""
 
 #: admin/woothemes-sensei-certificate-templates-admin-init.php:281
 #: admin/woothemes-sensei-certificate-templates-admin-init.php:284
-#: admin/woothemes-sensei-certificate-templates-admin-init.php:287
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:288
 msgid "Certificate Template updated."
 msgstr ""
 
@@ -390,27 +390,29 @@ msgstr ""
 msgid "Custom field deleted."
 msgstr ""
 
-#: admin/woothemes-sensei-certificate-templates-admin-init.php:286
+#. translators: %s is replaced with the formatted date timestamp of a certificate template revision
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:287
 msgid "Certificate Template restored to revision from %s"
 msgstr ""
 
-#: admin/woothemes-sensei-certificate-templates-admin-init.php:288
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:289
 msgid "Certificate Template saved."
 msgstr ""
 
-#: admin/woothemes-sensei-certificate-templates-admin-init.php:289
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:290
 msgid "Certificate Template submitted."
 msgstr ""
 
-#: admin/woothemes-sensei-certificate-templates-admin-init.php:291
+#. translators: %1$s is replaced with the date on which the certificate template is scheduled to be published
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:293
 msgid "Certificate Template scheduled for: <strong>%1$s</strong>."
 msgstr ""
 
-#: admin/woothemes-sensei-certificate-templates-admin-init.php:292
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:294
 msgid "M j, Y @ G:i"
 msgstr ""
 
-#: admin/woothemes-sensei-certificate-templates-admin-init.php:294
+#: admin/woothemes-sensei-certificate-templates-admin-init.php:296
 msgid "Certificate Template draft updated."
 msgstr ""
 
@@ -501,17 +503,19 @@ msgstr ""
 msgid "has completed the course"
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificate-templates.php:506
+#. translators: %s is replaced with the site title
+#: classes/class-woothemes-sensei-certificate-templates.php:507
 #: classes/class-woothemes-sensei-certificates.php:826
 msgid "At %s"
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificate-templates.php:930
+#: classes/class-woothemes-sensei-certificate-templates.php:931
 msgctxt "column name"
 msgid "Certificate Template"
 msgstr ""
 
-#: classes/class-woothemes-sensei-certificate-templates.php:956
+#. translators: %s is replaced with the title of the certificate template
+#: classes/class-woothemes-sensei-certificate-templates.php:957
 msgid "Edit %s"
 msgstr ""
 
