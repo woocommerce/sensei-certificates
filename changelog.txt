@@ -1,6 +1,6 @@
 *** Changelog ***
 
-2020.10.19 - version 2.0.7
+2020.10.27 - version 2.0.7
 * Tweak: Remove JS code that references non-existent selectors - [#247](https://github.com/woocommerce/sensei-certificates/pull/247)
 * Tweak: Switch to webpack via wordpress-scripts and simplify build - [#241](https://github.com/woocommerce/sensei-certificates/pull/241)
 * Tweak: Add missing translator comments - [#248](https://github.com/woocommerce/sensei-certificates/pull/248)
