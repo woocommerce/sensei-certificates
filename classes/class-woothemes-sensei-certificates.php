@@ -213,6 +213,7 @@ class WooThemes_Sensei_Certificates {
 	 */
 	private static function load_tools() {
 		require_once __DIR__ . '/tools/class-sensei-certificates-tool-create-certificates.php';
+		require_once __DIR__ . '/tools/class-sensei-certificates-tool-create-default-example-template.php';
 
 		add_filter( 'sensei_tools', [ __CLASS__, 'add_sensei_certificates_tools' ] );
 	}
@@ -226,6 +227,7 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public static function add_sensei_certificates_tools( $tools ) {
 		$tools[] = new Sensei_Certificates_Tool_Create_Certificates();
+		$tools[] = new Sensei_Certificates_Tool_Create_Default_Example_Template();
 
 		return $tools;
 	}
