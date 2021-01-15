@@ -160,6 +160,14 @@ class WooThemes_Sensei_Certificates {
 			// Reorder the admin menus to display Certificates below Lessons.
 			add_filter( 'custom_menu_order', '__return_true', 20 );
 			add_filter( 'menu_order', array( $instance, 'admin_menu_order' ) );
+
+			if ( interface_exists( 'Sensei_Tool_Interface' ) ) {
+				self::load_tools();
+			}
+		}
+
+		if ( interface_exists( 'Sensei_Background_Job_Interface' ) ) {
+			self::load_background_jobs();
 		}
 
 		// Generate certificate hash when course is completed.
@@ -179,6 +187,49 @@ class WooThemes_Sensei_Certificates {
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates.php';
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificate-templates.php';
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-data-store.php';
+	}
+
+	/**
+	 * Load background jobs.
+	 */
+	private static function load_background_jobs() {
+		require_once __DIR__ . '/background-jobs/class-sensei-certificates-create-certificates.php';
+
+		add_action( Sensei_Certificates_Create_Certificates::NAME, [ __CLASS__, 'run_create_certificates_job' ] );
+	}
+
+	/**
+	 * Run the create certificates job.
+	 *
+	 * @access private
+	 */
+	public static function run_create_certificates_job() {
+		$job = Sensei_Certificates_Create_Certificates::instance();
+		Sensei_Scheduler::instance()->run( $job );
+	}
+
+	/**
+	 * Load the tools and add needed filters.
+	 */
+	private static function load_tools() {
+		require_once __DIR__ . '/tools/class-sensei-certificates-tool-create-certificates.php';
+		require_once __DIR__ . '/tools/class-sensei-certificates-tool-create-default-example-template.php';
+
+		add_filter( 'sensei_tools', [ __CLASS__, 'add_sensei_certificates_tools' ] );
+	}
+
+	/**
+	 * Add Sensei Certificates tools to Sensei LMS.
+	 *
+	 * @param array $tools Tool objects for Sensei LMS.
+	 *
+	 * @return array
+	 */
+	public static function add_sensei_certificates_tools( $tools ) {
+		$tools[] = new Sensei_Certificates_Tool_Create_Certificates();
+		$tools[] = new Sensei_Certificates_Tool_Create_Default_Example_Template();
+
+		return $tools;
 	}
 
 	/**
