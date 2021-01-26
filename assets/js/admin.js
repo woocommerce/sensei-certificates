@@ -15,7 +15,7 @@ jQuery( function($){
 	var imageWidth  = sensei_certificate_templates_params.primary_image_width;
 	var imageHeight = sensei_certificate_templates_params.primary_image_height;
 
-	$('#set-certificate-image, #set-additional-image, #add-alternative-certificate-image').live('click', function(event){
+	$( document ).on( 'click', '#set-certificate-image', function( event ) {
 
 		event.preventDefault();
 
@@ -51,24 +51,6 @@ jQuery( function($){
 				$('#upload_image_id_0').val(attachment.id);
 				$('#remove-certificate-image').show();
 				$('img#certificate_image_0').attr('src', attachment.url);
-			} else if ('set-additional-image' == el.attr('id')) {
-				// additional (second page) certificate image
-				$('#upload_additional_image_id_0').val(attachment.id);
-				$('#set-additional-image').hide();
-				$('#remove-additional-image').show();
-				$('img#certificate_additional_image').attr('src', attachment.url);
-			} else if ('add-alternative-certificate-image' == el.attr('id')) {
-				var imgindex = $('#certificate_alternative_images li').size() + 1;
-
-				$('#certificate_alternative_images').append(
-					'<li class="alternative_image">' +
-						'<a href="#" class="remove-alternative-certificate-image">' +
-							'<img style="max-width:100px;max-height:100px;" src="' + attachment.url + '" />' +
-							'<input type="hidden" name="upload_image_id[' + imgindex + ']" class="upload_image_id" value="' + attachment.id + '" />' +
-							'<span class="overlay"></span>' +
-						'</a>' +
-					'</li>');
-				setRemoveAlternativeCertificateImageHandler();
 			}
 		});
 
@@ -95,7 +77,9 @@ jQuery( function($){
 	function redrawCertificateFieldPlaceholders() {
 		$('.field_pos').each(function(index,el) {
 			el = $(el);
-			var field = $('#field'+el.attr('id'));
+
+			var id = el.attr( 'id' );
+			var field = $( '#field' + id );
 			var image = $('#certificate_image_0');
 
 			// if the image is removed, hide all fields
@@ -114,17 +98,17 @@ jQuery( function($){
 			var position = el.val() ? el.val().split(',').map(function(n) { return parseInt(n) * scale }) : null;
 
 			// create the field element if needed
-			if (0 == field.length) {
-				var name = el.prev().find('label').html();
-				name = name.substr(0, name.length - 9);
-				$('#certificate_image_wrapper').append('<span id="field'+el.attr('id')+'" class="certificate_field" style="display:none;">'+name+'</span>');
+			if ( 0 === field.length ) {
+				$( '#certificate_image_wrapper' ).append( '<span id="field' + id
+					+ '" class="certificate_field" style="display:none;">'
+					+ sensei_certificate_templates_params[id] + '</span>' );
 
 				// clicking on the fields allows them to be edited
-				$('#field'+el.attr('id')).click( function(el) {
+				$( '#field' + id ).click( function(el) {
 					certificate_field_area_select(el.target.id.substr(6));  // remove the leading 'field_' to create the field name
 				});
 
-				field = $('#field'+el.attr('id'));
+				field = $( '#field'+ id );
 			}
 
 			if (position) {
@@ -211,9 +195,15 @@ jQuery( function($){
 	}
 
 	// certificate image selection made, save it to the coordinate field and show the 'remove' button
-	function areaSelect(selection, field_name) {
-		$('#_' + field_name).val(selection.x1 + ',' + selection.y1 + ',' + selection.width + ',' + selection.height);
-		$('#remove_' + field_name).show();
+	function areaSelect( selection, field_name ) {
+		// Element is being drawn if width and height are not 0.
+		if ( selection && selection.width !== 0 && selection.height !== 0 ) {
+			$( '#_' + field_name ).val( selection.x1 + ',' + selection.y1 + ',' + selection.width + ',' + selection.height );
+		} else { // Otherwise, the user has clicked somewhere on the image.
+			certificate_field_area_select( field_name );
+		}
+
+		$( '#remove_' + field_name ).show();
 	}
 
 	// position remove button clicked
@@ -225,32 +215,6 @@ jQuery( function($){
 		return;
 	});
 
-	// remove an alternative certificate image
-	function setRemoveAlternativeCertificateImageHandler() {
-		$('.remove-alternative-certificate-image').click(function() {
-
-			var parent = $(this).parent();
-			var current_field_wrapper = parent;
-
-			$('input', current_field_wrapper).val('');
-			$('img', current_field_wrapper).attr('src', '');
-			parent.hide();
-
-			return false;
-		});
-	}
-	setRemoveAlternativeCertificateImageHandler();
-
-	$('#remove-additional-image').click(function() {
-
-		$('#upload_additional_image_id_0').val('');
-		$('img#certificate_additional_image').attr('src', '');
-		$(this).hide();
-		$('#set-additional-image').show();
-
-		return false;
-	});
-	
 	if ( typeof jQuery.fn.hasParent !== 'function' ) {
 			jQuery.extend( jQuery.fn, {
 			// Name of our method & one argument (the parent selector)
@@ -264,6 +228,21 @@ jQuery( function($){
 		});
 	}
 
+	// Activate colorpick.
+	const $colorpick = $( '.colorpick' );
+	if ( typeof jQuery.fn.wpColorPicker === 'function' && $colorpick.length > 0 ) {
+		$colorpick.wpColorPicker();
+
+		$( document ).mousedown( function( e ) {
+			if ( $( e.target ).hasParent( '.wp-picker-holder' ) )
+				return;
+			if ( $( e.target ).hasParent( 'mark' ) )
+				return;
+			$( '.wp-picker-holder' ).each( function() {
+				$( this ).fadeOut();
+			} );
+		} );
+	}
 });
 
 // Polyfill

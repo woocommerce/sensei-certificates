@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Sensei Certificates Templates Class
+ * Sensei LMS Certificates Templates Class
  *
  * All functionality pertaining to the Certificate Templates functionality in Sensei.
  *
@@ -23,7 +23,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * - setup_certificate_templates_post_type()
  * - post_type_custom_column_heading()
  * - post_type_custom_column_content()
- * - enqueue_styles()
  * - populate_object()
  * - get_message()
  * - get_image_id()
@@ -73,11 +72,6 @@ class WooThemes_Sensei_Certificate_Templates {
 		add_action( 'init', array( $this, 'setup_certificate_templates_post_type' ), 110 );
 
 		/**
-		 * FRONTEND
-		 */
-		add_action( 'sensei_additional_styles', array( $this, 'enqueue_styles' ) );
-
-		/**
 		 * BACKEND
 		 */
 		if ( is_admin() ) {
@@ -88,12 +82,12 @@ class WooThemes_Sensei_Certificate_Templates {
 			add_filter( 'manage_edit-course_columns', array( $this, 'add_column_headings' ), 11, 1 );
 			add_action( 'manage_posts_custom_column', array( $this, 'add_column_data' ), 11, 2 );
 
-		} // End If Statement
+		}
 
 		// Preview Template
 		add_filter( 'single_template', array( $this, 'certificate_templates_locate_preview_template' ) );
 
-	} // End __construct()
+	}
 
 
 	/**
@@ -111,7 +105,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		return $this->plugin_path = untrailingslashit( plugin_dir_path( dirname( __FILE__ ) ) );
 
-	} // End plugin_path()
+	}
 
 
 	/**
@@ -128,11 +122,11 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		if ( 'certificate_template' == $post_type && strpos( $locate, 'single.php' ) ) {
 			$locate = $this->plugin_path() . '/templates/single-certificate_template.php';
-		} // End If Statement
+		}
 
 		return $locate;
 
-	} // End certificate_templates_locate_preview_template()
+	}
 
 
 	/**
@@ -145,7 +139,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	public function setup_certificate_templates_post_type() {
 
 		$args = array(
-			'labels'             => array(
+			'labels'              => array(
 				'name'               => _x( 'Certificate Templates', 'post type general name', 'sensei-certificates' ),
 				'singular_name'      => _x( 'Certificate Template', 'post type singular name', 'sensei-certificates' ),
 				'add_new'            => _x( 'Add New Certificate Template', 'post type add_new', 'sensei-certificates' ),
@@ -160,28 +154,29 @@ class WooThemes_Sensei_Certificate_Templates {
 				'parent_item_colon'  => '',
 				'menu_name'          => __( 'Certificate Templates', 'sensei-certificates' ),
 			),
-			'public'             => true,
-			'publicly_queryable' => true,
-			'show_ui'            => true,
-			'show_in_menu'       => 'edit.php?post_type=certificate',
-			'query_var'          => true,
-			'rewrite'            => array(
+			'public'              => true,
+			'publicly_queryable'  => true,
+			'exclude_from_search' => true,
+			'show_ui'             => true,
+			'show_in_menu'        => 'edit.php?post_type=certificate',
+			'query_var'           => true,
+			'rewrite'             => array(
 				'slug'       => esc_attr( apply_filters( 'sensei_certificate_templates_slug', 'certificate-template' ) ),
 				'with_front' => true,
 				'feeds'      => true,
 				'pages'      => true,
 			),
-			'capability_type'    => 'certificate_template',
-			'map_meta_cap'       => true,
-			'has_archive'        => false,
-			'hierarchical'       => false,
-			'menu_icon'          => esc_url( Sensei()->plugin_url . 'assets/images/certificate.png' ),
-			'supports'           => array( 'title' ),
+			'capability_type'     => 'certificate_template',
+			'map_meta_cap'        => true,
+			'has_archive'         => false,
+			'hierarchical'        => false,
+			'menu_icon'           => esc_url( Sensei()->plugin_url . 'assets/images/certificate.png' ),
+			'supports'            => array( 'title' ),
 		);
 
 		register_post_type( 'certificate_template', $args );
 
-	} // End setup_certificate_templates_post_type()
+	}
 
 	/**
 	 * post_type_custom_column_headings function.
@@ -200,7 +195,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		return $defaults;
 
-	} // End post_type_custom_column_headings()
+	}
 
 
 	/**
@@ -264,24 +259,9 @@ class WooThemes_Sensei_Certificate_Templates {
 					)
 				) . '" target="_blank">' . esc_html__( 'View Certificate', 'sensei-certificates' ) . '</a>';
 				break;
-		} // End Switch Statement
+		}
 
-	} // End post_type_custom_column_content()
-
-
-	/**
-	 * enqueue_styles loads frontend styles
-	 *
-	 * @access public
-	 * @since  1.0.0
-	 * @return void
-	 */
-	public function enqueue_styles() {
-
-		wp_register_style( $this->token . '-frontend', $this->plugin_url . 'assets/css/frontend.css', '', '1.0.0', 'screen' );
-		wp_enqueue_style( $this->token . '-frontend' );
-
-	} // End enqueue_styles()
+	}
 
 
 	/**
@@ -316,12 +296,12 @@ class WooThemes_Sensei_Certificate_Templates {
 			// set value from db (unserialized if needed) or use default
 			$this->$key = ( isset( $this->certificate_template_custom_fields[ '_' . $key ][0] ) && '' !== $this->certificate_template_custom_fields[ '_' . $key ][0] ) ? ( is_array( $default ) ? maybe_unserialize( $this->certificate_template_custom_fields[ '_' . $key ][0] ) : $this->certificate_template_custom_fields[ '_' . $key ][0] ) : $default;
 
-		} // End For Loop
+		}
 
 		// set the main template image, if any
 		if ( count( $this->image_ids ) > 0 ) {
 			$this->image_id = $this->image_ids[0];
-		} // End If Statement
+		}
 
 		return false;
 
@@ -341,11 +321,11 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		if ( ! isset( $this->message ) ) {
 			$this->message = $this->get_item_meta_value( $this->certificate_template_fields['message']['display_name'] );
-		} // End If Statement
+		}
 
 		return $this->message;
 
-	} // End get_message()
+	}
 
 
 	/**
@@ -365,12 +345,12 @@ class WooThemes_Sensei_Certificate_Templates {
 			$image_id  = $image_ids[0];
 		} else {
 			return false;
-		} // End If Statement
+		}
 
 		// otherwise return the template primary image id
 		return $image_id;
 
-	} // End get_image_id()
+	}
 
 
 	/**
@@ -385,7 +365,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		return isset( $this->certificate_template_fields[ $field_name ]['position'] ) ? $this->certificate_template_fields[ $field_name ]['position'] : array();
 
-	} // End get_field_position()
+	}
 
 
 	/** PDF Generation methods ******************************************************/
@@ -409,7 +389,7 @@ class WooThemes_Sensei_Certificate_Templates {
 			$orientation = 'L';
 		} else {
 			$orientation = 'P';
-		} // End If Statement
+		}
 
 		// Create the pdf
 		// TODO: we're assuming a standard DPI here of where 1 point = 1/72 inch = 1 pixel
@@ -433,8 +413,7 @@ class WooThemes_Sensei_Certificate_Templates {
 		}
 
 		// set the certificate image
-		$upload_dir = wp_upload_dir();
-		$fpdf->Image( $upload_dir['basedir'] . '/' . $image['file'], 0, 0, $image['width'], $image['height'] );
+		$fpdf->Image( get_attached_file( $this->get_image_id() ), 0, 0, $image['width'], $image['height'] );
 
 		// this is useful for displaying the text cell borders when debugging the PDF layout,
 		// though keep in mind that we translate the box position to align the text to bottom
@@ -476,7 +455,7 @@ class WooThemes_Sensei_Certificate_Templates {
 			// set value from db (unserialized if needed) or use default
 			$this->$key = ( isset( $certificate_template_custom_fields[ '_' . $key ][0] ) && '' !== $certificate_template_custom_fields[ '_' . $key ][0] ) ? ( is_array( $default ) ? maybe_unserialize( $certificate_template_custom_fields[ '_' . $key ][0] ) : $certificate_template_custom_fields[ '_' . $key ][0] ) : $default;
 
-		} // End For Loop
+		}
 
 		$date = Woothemes_Sensei_Certificates_Utils::get_certificate_formatted_date( $course_end_date );
 
@@ -486,7 +465,7 @@ class WooThemes_Sensei_Certificate_Templates {
 			$certificate_heading = $this->certificate_template_fields['certificate_heading']['text'];
 			$certificate_heading = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}' ), array( $student_name, $course['post_title'], $date, get_bloginfo( 'name' ) ), $certificate_heading );
 
-		} // End If Statement
+		}
 
 		$certificate_message = __( 'This is to certify that', 'sensei-certificates' ) . " \r\n\r\n" . $student_name . " \r\n\r\n" . __( 'has completed the course', 'sensei-certificates' ); // This is to certify that {{learner}} has completed the course
 		if ( isset( $this->certificate_template_fields['certificate_message']['text'] ) && '' != $this->certificate_template_fields['certificate_message']['text'] ) {
@@ -494,7 +473,7 @@ class WooThemes_Sensei_Certificate_Templates {
 			$certificate_message = $this->certificate_template_fields['certificate_message']['text'];
 			$certificate_message = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}' ), array( $student_name, $course['post_title'], $date, get_bloginfo( 'name' ) ), $certificate_message );
 
-		} // End If Statement
+		}
 
 		$certificate_course = $course['post_title']; // {{course_title}}
 		if ( isset( $this->certificate_template_fields['certificate_course']['text'] ) && '' != $this->certificate_template_fields['certificate_course']['text'] ) {
@@ -502,7 +481,7 @@ class WooThemes_Sensei_Certificate_Templates {
 			$certificate_course = $this->certificate_template_fields['certificate_course']['text'];
 			$certificate_course = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}' ), array( $student_name, $course['post_title'], $date, get_bloginfo( 'name' ) ), $certificate_course );
 
-		} // End If Statement
+		}
 
 		$certificate_completion = $date; // {{completion_date}}
 		if ( isset( $this->certificate_template_fields['certificate_completion']['text'] ) && '' != $this->certificate_template_fields['certificate_completion']['text'] ) {
@@ -510,15 +489,16 @@ class WooThemes_Sensei_Certificate_Templates {
 			$certificate_completion = $this->certificate_template_fields['certificate_completion']['text'];
 			$certificate_completion = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}' ), array( $student_name, $course['post_title'], $date, get_bloginfo( 'name' ) ), $certificate_completion );
 
-		} // End If Statement
+		}
 
+		/* translators: %s is replaced with the site title */
 		$certificate_place = sprintf( __( 'At %s', 'sensei-certificates' ), get_bloginfo( 'name' ) ); // At {{course_place}}
 		if ( isset( $this->certificate_template_fields['certificate_place']['text'] ) && '' != $this->certificate_template_fields['certificate_place']['text'] ) {
 
 			$certificate_place = $this->certificate_template_fields['certificate_place']['text'];
 			$certificate_place = str_replace( array( '{{learner}}', '{{course_title}}', '{{completion_date}}', '{{course_place}}' ), array( $student_name, $course['post_title'], $date, get_bloginfo( 'name' ) ), $certificate_place );
 
-		} // End If Statement
+		}
 
 		$output_fields = array(
 			'certificate_heading'    => 'text_field',
@@ -537,15 +517,15 @@ class WooThemes_Sensei_Certificate_Templates {
 
 				call_user_func_array( array( $this, $function_name ), array( $fpdf, $$meta_key, $show_border, array( $this->certificate_template_fields[ $meta_key ]['position']['x1'], $this->certificate_template_fields[ $meta_key ]['position']['y1'], $this->certificate_template_fields[ $meta_key ]['position']['width'], $this->certificate_template_fields[ $meta_key ]['position']['height'] ), $font_settings ) );
 
-			} // End If Statement
-		} // End For Loop
+			}
+		}
 
 		// download file
 		Woothemes_Sensei_Certificates_TFPDF::output_to_http(
 			$fpdf, 'certificate-preview-' . $post->ID . '.pdf'
 		);
 
-	} // End generate_pdf()
+	}
 
 
 	/**
@@ -561,23 +541,23 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		if ( isset( $this->certificate_template_fields[ $field_key ]['font']['color'] ) && '' != $this->certificate_template_fields[ $field_key ]['font']['color'] ) {
 			$return_array['font_color'] = $this->certificate_template_fields[ $field_key ]['font']['color'];
-		} // End If Statement
+		}
 
 		if ( isset( $this->certificate_template_fields[ $field_key ]['font']['family'] ) && '' != $this->certificate_template_fields[ $field_key ]['font']['family'] ) {
 			$return_array['font_family'] = $this->certificate_template_fields[ $field_key ]['font']['family'];
-		} // End If Statement
+		}
 
 		if ( isset( $this->certificate_template_fields[ $field_key ]['font']['style'] ) && '' != $this->certificate_template_fields[ $field_key ]['font']['style'] ) {
 			$return_array['font_style'] = $this->certificate_template_fields[ $field_key ]['font']['style'];
-		} // End If Statement
+		}
 
 		if ( isset( $this->certificate_template_fields[ $field_key ]['font']['size'] ) && '' != $this->certificate_template_fields[ $field_key ]['font']['size'] ) {
 			$return_array['font_size'] = $this->certificate_template_fields[ $field_key ]['font']['size'];
-		} // End If Statement
+		}
 
 		return $return_array;
 
-	} // End get_certificate_font_settings()
+	}
 
 
 	/**
@@ -604,7 +584,7 @@ class WooThemes_Sensei_Certificate_Templates {
 					'font_size'   => $this->certificate_font_size,
 				);
 
-			} // End If Statement
+			}
 
 			// Test each font element
 			if ( empty( $font['font_color'] ) ) {
@@ -629,11 +609,11 @@ class WooThemes_Sensei_Certificate_Templates {
 			if ( isset( $font['font_style'] ) && ! empty( $font['font_style'] ) && false !== strpos( $font['font_style'], 'C' ) ) {
 				$center             = 'C';
 				$font['font_style'] = str_replace( 'C', '', $font['font_style'] );
-			} // End If Statement
+			}
 			if ( isset( $font['font_style'] ) && ! empty( $font['font_style'] ) && false !== strpos( $font['font_style'], 'O' ) ) {
 				$border             = 1;
 				$font['font_style'] = str_replace( 'O', '', $font['font_style'] );
-			} // End If Statement
+			}
 
 			$custom_font = $this->set_custom_font( $fpdf, $font );
 
@@ -659,7 +639,7 @@ class WooThemes_Sensei_Certificate_Templates {
 			if ( 0 < $border ) {
 				$show_border = 1;
 				$fpdf->SetDrawColor( $font_color[0], $font_color[1], $font_color[2] );
-			} // End If Statement
+			}
 
 			// Decode string based on font type
 			if ( 'latin' == $fonttype ) {
@@ -669,9 +649,9 @@ class WooThemes_Sensei_Certificate_Templates {
 			// and write out the value
 			$fpdf->Multicell( $w, $font['font_size'], $value, $show_border, $center );
 
-		} // End If Statement
+		}
 
-	} // End textarea_field()
+	}
 
 	/**
 	 * Render a single-line text field to the PDF
@@ -697,7 +677,7 @@ class WooThemes_Sensei_Certificate_Templates {
 					'font_size'   => $this->certificate_font_size,
 				);
 
-			} // End If Statement
+			}
 
 			// Test each font element
 			if ( empty( $font['font_color'] ) ) {
@@ -722,11 +702,11 @@ class WooThemes_Sensei_Certificate_Templates {
 			if ( isset( $font['font_style'] ) && ! empty( $font['font_style'] ) && false !== strpos( $font['font_style'], 'C' ) ) {
 				$center             = 'C';
 				$font['font_style'] = str_replace( 'C', '', $font['font_style'] );
-			} // End If Statement
+			}
 			if ( isset( $font['font_style'] ) && ! empty( $font['font_style'] ) && false !== strpos( $font['font_style'], 'O' ) ) {
 				$border             = 1;
 				$font['font_style'] = str_replace( 'O', '', $font['font_style'] );
-			} // End If Statement
+			}
 
 			$custom_font = $this->set_custom_font( $fpdf, $font );
 
@@ -751,12 +731,12 @@ class WooThemes_Sensei_Certificate_Templates {
 			if ( $show_border ) {
 				$fpdf->setXY( $x, $y );
 				$fpdf->Cell( $w, $h, '', 1 );
-			} // End If Statement
+			}
 
 			if ( 0 < $border ) {
 				$show_border = 1;
 				$fpdf->SetDrawColor( $font_color[0], $font_color[1], $font_color[2] );
-			} // End If Statement
+			}
 
 			// align the text to the bottom edge of the cell by translating as needed
 			$y = $font['font_size'] > $h ? $y - ( $font['font_size'] - $h ) / 2 : $y + ( $h - $font['font_size'] ) / 2;
@@ -770,9 +750,9 @@ class WooThemes_Sensei_Certificate_Templates {
 			// and write out the value
 			$fpdf->Cell( $w, $h, $value, $show_border, $position, $center );
 
-		} // End If Statement
+		}
 
-	} // End text_field()
+	}
 
 	/**
 	 * Taxes a hex color code and returns the RGB components in an array
@@ -798,11 +778,11 @@ class WooThemes_Sensei_Certificate_Templates {
 			$r = hexdec( substr( $hex, 0, 2 ) );
 			$g = hexdec( substr( $hex, 2, 2 ) );
 			$b = hexdec( substr( $hex, 4, 2 ) );
-		} // End If Statement
+		}
 
 		return array( $r, $g, $b );
 
-	} // End hex2rgb()
+	}
 
 	/**
 	 * Gets the font type (character set) of a string
@@ -855,7 +835,7 @@ class WooThemes_Sensei_Certificate_Templates {
 		}
 
 		return false;
-	} // End set_custom_font()
+	}
 
 	/** Helper methods ******************************************************/
 
@@ -880,13 +860,13 @@ class WooThemes_Sensei_Certificate_Templates {
 
 				return $value;
 
-			} // End If Statement
-		} // End For Loop
+			}
+		}
 
 		// not found
 		return '';
 
-	} // End get_item_meta_value()
+	}
 
 
 	/**
@@ -900,10 +880,17 @@ class WooThemes_Sensei_Certificate_Templates {
 	 * @return void
 	 */
 	public function save_post_meta( $post_key = '', $post_id = 0 ) {
+		if (
+			empty( $_POST['course_certificates_meta_nonce'] )
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Leave nonce value unmodified.
+			|| ! wp_verify_nonce( wp_unslash( $_POST['course_certificates_meta_nonce'] ), 'course_certificates_save_data' )
+		) {
+			return;
+		}
 
 		// Get the meta key.
 		$meta_key       = '_' . $post_key;
-		$new_meta_value = ( isset( $_POST[ $post_key ] ) ? sanitize_html_class( $_POST[ $post_key ] ) : '' );
+		$new_meta_value = isset( $_POST[ $post_key ] ) ? intval( $_POST[ $post_key ] ) : '';
 		// Get the meta value of the custom field key.
 		$meta_value = get_post_meta( $post_id, $meta_key, true );
 		// If a new meta value was added and there was no previous value, add it.
@@ -915,9 +902,9 @@ class WooThemes_Sensei_Certificate_Templates {
 		} elseif ( '' == $new_meta_value && $meta_value ) {
 			// If there is no new meta value but an old value exists, delete it.
 			delete_post_meta( $post_id, $meta_key, $meta_value );
-		} // End If Statement
+		}
 
-	} // End save_post_meta()
+	}
 
 
 	/**
@@ -935,7 +922,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		return $new_columns;
 
-	} // End add_column_headings()
+	}
 
 	/**
 	 * Add data for our newly-added custom columns.
@@ -956,17 +943,17 @@ class WooThemes_Sensei_Certificate_Templates {
 				$course_certificate_template_id = get_post_meta( $id, '_course_certificate_template', true );
 
 				if ( 0 < absint( $course_certificate_template_id ) ) {
-
+					/* translators: %s is replaced with the title of the certificate template */
 					echo '<a href="' . esc_url( get_edit_post_link( absint( $course_certificate_template_id ) ) ) . '" title="' . esc_attr( sprintf( __( 'Edit %s', 'sensei-certificates' ), get_the_title( absint( $course_certificate_template_id ) ) ) ) . '">' . esc_html( get_the_title( absint( $course_certificate_template_id ) ) ) . '</a>';
 
-				} // End If Statement
+				}
 
 				break;
 
 			default:
 				break;
-		} // End Switch Statement
+		}
 
-	} // End add_column_data()
+	}
 
-} // End Class
+}

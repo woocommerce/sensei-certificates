@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Sensei Certificates Extension Dependencies Check
+ * Sensei LMS Certificates Extension Dependencies Check
  *
  * @since 2.0.0
  */
@@ -89,7 +89,7 @@ class Woothemes_Sensei_Certificates_Dependency_Checker {
 		}
 
 		// translators: %1$s is version of PHP that this plugin requires; %2$s is the version of PHP WordPress is running on.
-		$message = sprintf( __( '<strong>Sensei Certificates</strong> requires a minimum PHP version of %1$s, but you are running %2$s.', 'sensei-certificates' ), self::MINIMUM_PHP_VERSION, phpversion() );
+		$message = sprintf( __( '<strong>Sensei LMS Certificates</strong> requires a minimum PHP version of %1$s, but you are running %2$s.', 'sensei-certificates' ), self::MINIMUM_PHP_VERSION, phpversion() );
 		echo '<div class="error"><p>';
 		echo wp_kses( $message, array( 'strong' => array() ) );
 		$php_update_url = 'https://wordpress.org/support/update-php/';
@@ -120,7 +120,7 @@ class Woothemes_Sensei_Certificates_Dependency_Checker {
 		}
 
 		// translators: %1$s is the minimum version number of Sensei that is required.
-		$message = sprintf( __( '<strong>Sensei Certificates</strong> requires that the plugin <strong>Sensei</strong> (minimum version: <strong>%1$s</strong>) is installed and activated.', 'sensei-certificates' ), self::MINIMUM_SENSEI_VERSION );
+		$message = sprintf( __( '<strong>Sensei LMS Certificates</strong> requires that the plugin <strong>Sensei</strong> (minimum version: <strong>%1$s</strong>) is installed and activated.', 'sensei-certificates' ), self::MINIMUM_SENSEI_VERSION );
 		echo '<div class="error"><p>';
 		echo wp_kses( $message, array( 'strong' => array() ) );
 		echo '</p></div>';
