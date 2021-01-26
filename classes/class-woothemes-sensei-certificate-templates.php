@@ -382,11 +382,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		global $current_user, $post;
 
-		// include the pdf library
-		$root_dir = dirname( __FILE__ ) . DIRECTORY_SEPARATOR;
-		require_once $root_dir . '/../lib/tfpdf/tfpdf.php';
-
-		$image = wp_get_attachment_metadata( $this->get_image_id() );
+		$image    = wp_get_attachment_metadata( $this->get_image_id() );
 
 		// determine orientation: landscape or portrait
 		if ( $image['width'] > $image['height'] ) {
@@ -398,17 +394,9 @@ class WooThemes_Sensei_Certificate_Templates {
 		// Create the pdf
 		// TODO: we're assuming a standard DPI here of where 1 point = 1/72 inch = 1 pixel
 		// When writing text to a Cell, the text is vertically-aligned in the middle
-		$fpdf = null;
-
-		/**
-		 * For VIP Go we need to utilize WP_Filesystem to be able to preview/download certificate files.
-		 */
-		if ( defined( 'WPCOM_IS_VIP_ENV' ) && true === WPCOM_IS_VIP_ENV ) {
-			require_once $root_dir . 'class-vip-tfpdf.php';
-			$fpdf = new VIP_tFPDF( $orientation, 'pt', array( $image['width'], $image['height'] ) );
-		} else {
-			$fpdf = new tFPDF( $orientation, 'pt', array( $image['width'], $image['height'] ) );
-		}
+		$fpdf = Woothemes_Sensei_Certificates_TFPDF::get_tfpdf_object(
+			$orientation, 'pt', array( $image['width'], $image['height'] )
+		);
 
 		$fpdf->AddPage();
 		$fpdf->SetAutoPageBreak( false );
@@ -533,7 +521,9 @@ class WooThemes_Sensei_Certificate_Templates {
 		}
 
 		// download file
-		$fpdf->Output( 'certificate-preview-' . $post->ID . '.pdf', 'I' );
+		Woothemes_Sensei_Certificates_TFPDF::output_to_http(
+			$fpdf, 'certificate-preview-' . $post->ID . '.pdf'
+		);
 
 	}
 

@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once ABSPATH . '/wp-admin/includes/file.php';
 
-class VIP_tFPDF extends tFPDF {
+class VIP_tFPDF extends tFPDF\PDF {
 	function __construct( $orientation = 'P', $unit = 'mm', $size = 'A4' ) {
 		parent::__construct( $orientation, $unit, $size );
 		$this->init_wp_filesystem();
@@ -34,54 +34,6 @@ class VIP_tFPDF extends tFPDF {
 		return true;
 	}
 
-	function Output( $name = '', $dest = '' ) {
-		// Output PDF to some destination
-		if ( $this->state < 3 ) {
-			$this->Close();
-		}
-
-		$dest = strtoupper( $dest );
-		if ( $dest === '' ) {
-			if ( $name === '' ) {
-				$name = 'doc.pdf';
-				$dest = 'I';
-			} else {
-				$dest = 'F';
-			}
-		}
-
-		switch ( $dest ) {
-			case 'F':
-				$parent_dir = dirname( $name );
-				global $wp_filesystem;
-				if ( ! is_a( $wp_filesystem, 'WP_Filesystem_Base' ) ) {
-					$this->Error( 'Unable to access the file system' );
-				}
-
-				if ( 0 !== validate_file( $name ) ) {
-					$this->Error( 'Filename is invalid' );
-				}
-
-				if ( false === stristr( $name, wp_upload_dir()['basedir'] ) ) {
-					$this->Error( 'To ensure portability all files must be created in uploads/ folder' );
-				}
-
-				if ( ! $wp_filesystem->is_dir( $parent_dir ) && ! $wp_filesystem->mkdir( $parent_dir ) ) {
-					$this->Error( 'Unable to access the file system' );
-				}
-
-				// Save the file using WP_Filesystem ensuring that different types of transfers are supported.
-				if ( ! $wp_filesystem->put_contents( $name, $this->buffer ) ) {
-					$this->Error( 'Unable to create output file: ' . basename( $name ) );
-				}
-				break;
-			default:
-				parent::Output( $name, $dest );
-		}
-
-		return '';
-	}
-
 	/**
 	 * This is a thin wrapper around tFPDF's Image method.
 	 * In certain cases direct access to the uploads folder is prohibited,
@@ -97,7 +49,7 @@ class VIP_tFPDF extends tFPDF {
 	 * @param string  $link
 	 * @return void
 	 */
-	function Image( $file = '', $x = null, $y = null, $w = 0, $h = 0, $type = '', $link = '' ) {
+	public function Image( $file = '', $x = null, $y = null, $w = 0, $h = 0, $type = '', $link = '' ) {
 		global $wp_filesystem;
 		if ( ! is_writable( sys_get_temp_dir() ) ) {
 			$this->Error( 'Unable to access the file system' );
@@ -113,4 +65,15 @@ class VIP_tFPDF extends tFPDF {
 		unlink( $file );
 	}
 
+	/**
+	 * Throws error.
+	 *
+	 * @param string $str_message
+	 *
+	 * @throws \RuntimeException On error.
+	 */
+	private function Error( $str_message ) {
+		// Fatal error.
+		throw new \RuntimeException( 'FPDF Error: ' . $str_message );
+	}
 }

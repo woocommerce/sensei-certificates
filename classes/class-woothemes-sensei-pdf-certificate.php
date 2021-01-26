@@ -104,16 +104,11 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param string $path optional absolute path to the certificate directory, if
-	 *        not supplied the PDF will be streamed as a downloadable file
+	 * @param string $path Unused. Left here for backwards compatibility.
 	 *
 	 * @return mixed nothing if a $path is supplied, otherwise a PDF download
 	 */
 	public function generate_pdf( $path = '' ) {
-
-		// include the pdf library
-		$root_dir = dirname( __FILE__ ) . DIRECTORY_SEPARATOR;
-		require_once $root_dir . '../lib/tfpdf/tfpdf.php';
 
 		do_action( 'sensei_certificates_set_background_image', $this );
 
@@ -132,17 +127,9 @@ class WooThemes_Sensei_PDF_Certificate {
 		// Create the pdf
 		// TODO: we're assuming a standard DPI here of where 1 point = 1/72 inch = 1 pixel
 		// When writing text to a Cell, the text is vertically-aligned in the middle
-		$fpdf = null;
-
-		/**
-		 * For VIP Go we need to utilize WP_Filesystem to be able to preview/download certificate files.
-		 */
-		if ( defined( 'WPCOM_IS_VIP_ENV' ) && true === WPCOM_IS_VIP_ENV ) {
-			require_once $root_dir . 'class-vip-tfpdf.php';
-			$fpdf = new VIP_tFPDF( $orientation, 'pt', array( $image_attr[0], $image_attr[1] ) );
-		} else {
-			$fpdf = new tFPDF( $orientation, 'pt', array( $image_attr[0], $image_attr[1] ) );
-		}
+		$fpdf = Woothemes_Sensei_Certificates_TFPDF::get_tfpdf_object(
+			$orientation, 'pt', array( $image_attr[0], $image_attr[1] )
+		);
 
 		$fpdf->AddPage();
 		$fpdf->SetAutoPageBreak( false );
@@ -163,13 +150,10 @@ class WooThemes_Sensei_PDF_Certificate {
 
 		do_action( 'sensei_certificates_before_pdf_output', $this, $fpdf );
 
-		if ( $path ) {
-			// save the pdf as a file
-			$fpdf->Output( trailingslashit( $path ) . $this->get_certificate_filename(), 'F' );
-		} else {
-			// download file
-			$fpdf->Output( 'certificate-preview-' . $this->hash . '.pdf', 'I' );
-		} // End If Statement
+		// download file
+		Woothemes_Sensei_Certificates_TFPDF::output_to_http(
+			$fpdf, 'certificate-preview-' . $this->hash . '.pdf'
+		);
 
 	} // End generate_pdf()
 
@@ -237,7 +221,7 @@ class WooThemes_Sensei_PDF_Certificate {
 				$fonttype = $this->get_font_type( $value );
 				switch ( $fonttype ) {
 					case 'mb':
-						$fpdf->SetFont( 'DejaVu', '', $font['font_size'] );
+						$fpdf->SetFont( 'dejavusanscondensed', '', $font['font_size'] );
 						break;
 					case 'latin':
 						$fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] );
@@ -358,7 +342,7 @@ class WooThemes_Sensei_PDF_Certificate {
 				$fonttype = $this->get_font_type( $value );
 				switch ( $fonttype ) {
 					case 'mb':
-						$fpdf->SetFont( 'DejaVu', '', $font['font_size'] );
+						$fpdf->SetFont( 'dejavusanscondensed', '', $font['font_size'] );
 						break;
 					case 'latin':
 						$fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] );
@@ -437,7 +421,7 @@ class WooThemes_Sensei_PDF_Certificate {
 				$fonttype = $this->get_font_type( $value );
 				switch ( $fonttype ) {
 					case 'mb':
-						$fpdf->SetFont( 'DejaVu', '', $font['font_size'] );
+						$fpdf->SetFont( 'dejavusanscondensed', '', $font['font_size'] );
 						break;
 					case 'latin':
 						$fpdf->SetFont( $font['font_family'], $font['font_style'], $font['font_size'] );
