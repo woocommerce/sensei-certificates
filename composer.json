@@ -17,7 +17,7 @@
       "!/assets/images",
       "!/classes",
       "!/lang",
-      "!/lib/tfpdf/*.php",
+      "!/lib/tfpdf/tFPDF/*.php",
       "!/lib/tfpdf/font/*.php",
       "!/lib/tfpdf/font/unifont/*.php",
       "!/lib/tfpdf/font/unifont/*.ttf",
