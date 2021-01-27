@@ -19,8 +19,8 @@ class Woothemes_Sensei_Certificates_TFPDF {
 	 */
 	public static function get_tfpdf_object( $orientation, $units, $size ) {
 		// Include the pdf library if needed.
-		require_once dirname( __FILE__ ) . '/../lib/tfpdf/src/tFPDF/PDF.php';
-		require_once dirname( __FILE__ ) . '/../lib/tfpdf/src/tFPDF/TTFontFile.php';
+		require_once dirname( __DIR__ ) . '/lib/tfpdf/tFPDF/PDF.php';
+		require_once dirname( __DIR__ ) . '/lib/tfpdf/tFPDF/TTFontFile.php';
 
 		if ( defined( 'WPCOM_IS_VIP_ENV' ) && true === WPCOM_IS_VIP_ENV ) {
 			require_once dirname( __FILE__ ) . 'class-vip-tfpdf.php';
