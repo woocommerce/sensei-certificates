@@ -1,5 +1,10 @@
 *** Changelog ***
 
+2021.03.02 - version 2.1.0
+
+* New: Introduce new tools to replace data updates - [#254](https://github.com/woocommerce/sensei-certificates/pull/254)
+* Tweak: Update tFPDF version - [#149](https://github.com/woocommerce/sensei-certificates/pull/149), [#256](https://github.com/woocommerce/sensei-certificates/pull/256)
+
 2020.10.27 - version 2.0.7
 * Tweak: Remove JS code that references non-existent selectors - [#247](https://github.com/woocommerce/sensei-certificates/pull/247)
 * Tweak: Switch to webpack via wordpress-scripts and simplify build - [#241](https://github.com/woocommerce/sensei-certificates/pull/241)
