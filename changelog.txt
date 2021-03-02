@@ -1,6 +1,6 @@
 *** Changelog ***
 
-2021.03.01 - version 2.1.0
+2021.03.02 - version 2.1.0
 
 * New: Introduce new tools to replace data updates - [#254](https://github.com/woocommerce/sensei-certificates/pull/254)
 * Tweak: Update tFPDF version - [#149](https://github.com/woocommerce/sensei-certificates/pull/149), [#256](https://github.com/woocommerce/sensei-certificates/pull/256)
