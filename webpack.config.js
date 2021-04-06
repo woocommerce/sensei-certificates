@@ -4,6 +4,7 @@ const path = require( 'path' );
 const files = {
 	'js/admin': 'js/admin.js',
 	'js/course': 'js/course.js',
+	'blocks/view-certificate-block': 'blocks/view-certificate-block/index.js',
 	'css/admin': 'css/admin.scss',
 	'css/frontend': 'css/frontend.scss',
 };

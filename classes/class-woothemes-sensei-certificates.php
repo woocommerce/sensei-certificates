@@ -176,6 +176,56 @@ class WooThemes_Sensei_Certificates {
 		add_action( 'sensei_certificates_set_background_image', array( $instance, 'certificate_background' ), 10, 1 );
 		// Text to display on certificate
 		add_action( 'sensei_certificates_before_pdf_output', array( $instance, 'certificate_text' ), 10, 2 );
+
+		// Add filters for the View Certificates block variation.
+		add_filter( 'render_block', array( $instance, 'generate_view_certificate_link' ), 10, 2 );
+		add_action( 'enqueue_block_editor_assets', array( $instance, 'enqueue_block_editor_assets' ) );
+	}
+
+	/**
+	 * Enqueues block related assets.
+	 *
+	 * @access private
+	 */
+	public function enqueue_block_editor_assets() {
+		$screen = get_current_screen();
+
+		if ( $screen && $screen->is_block_editor && 'course' === $screen->post_type ) {
+			wp_enqueue_script( 'sensei_certificate_course_block', $this->plugin_url . 'assets/dist/blocks/view-certificate-block.js' );
+		}
+	}
+
+	/**
+	 * Modifies the 'View Certificate' button block to link the users certificate.
+	 *
+	 * @param string $block_content The block content.
+	 * @param array  $parsed_block  The parsed block.
+	 *
+	 * @access private
+	 *
+	 * @return string The modified block.
+	 */
+	public function generate_view_certificate_link( $block_content, $parsed_block ) : string {
+		if ( ! is_single() || 'course' !== get_post_type() ) {
+			return $block_content;
+		}
+
+		// A button block is considered to be a 'View Certificate' one if it has the predefined url.
+		if ( ! isset( $parsed_block['blockName'] ) ||
+			'core/buttons' !== $parsed_block['blockName'] ||
+			false === strpos( $block_content, 'href="/course/sensei-view-certificate"' )
+		) {
+			return $block_content;
+		}
+
+		$certificate_url = $this->get_certificate_url( get_the_ID(), get_current_user_id() );
+
+		// Do not show the block if the user does not have a certificate.
+		if ( empty( $certificate_url ) ) {
+			return '';
+		}
+
+		return preg_replace( '/href="\/course\/sensei-view-certificate"/', 'href=" ' . $certificate_url . '"', $block_content );
 	}
 
 	/**
