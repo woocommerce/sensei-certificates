@@ -191,7 +191,7 @@ class WooThemes_Sensei_Certificates {
 		$screen = get_current_screen();
 
 		if ( $screen && $screen->is_block_editor && 'course' === $screen->post_type ) {
-			wp_enqueue_script( 'sensei_certificate_course_block', $this->plugin_url . 'assets/dist/blocks/view-certificate-block.js' );
+			wp_enqueue_script( 'sensei_certificate_course_block', $this->plugin_url . 'assets/dist/blocks/view-certificate-block.js', array( 'wp-blocks', 'wp-i18n' ) );
 		}
 	}
 
