@@ -18,7 +18,7 @@ registerBlockVariation( 'core/button', {
 } );
 
 registerBlockVariation( 'core/buttons', {
-	name: 'sensei-certificates//view-certificate-buttons',
+	name: 'sensei-certificates/view-certificate-buttons',
 	category: 'sensei-lms',
 	description: __( 'Allow a user to view the course certificate. The block is not displayed if the user does not have a certificate.', 'sensei-certificates' ),
 	title: __( 'View Certificate Button', 'sensei-certificates' ),
