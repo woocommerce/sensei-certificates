@@ -796,6 +796,8 @@ class WooThemes_Sensei_Certificates {
 				$student_name = $fname . ' ' . $lname;
 			}
 
+			$student_name = html_entity_decode($student_name, ENT_QUOTES);
+
 			// Get Course Data
 			$course_id       = get_post_meta( $certificate_id, 'course_id', true );
 			$course_title    = get_post_field('post_title', $course_id);
