@@ -105,6 +105,12 @@ class WooThemes_Sensei_Certificates {
 		$instance = self::instance();
 
 		self::load_files();
+		new Woothemes_Sensei_Certificates_Blocks();
+
+		if ( class_exists( 'Sensei_Assets' ) ) {
+			$instance->assets = new \Sensei_Assets( $instance->plugin_url, dirname( __DIR__ ), SENSEI_CERTIFICATES_VERSION );
+		}
+
 		$GLOBALS['woothemes_sensei_certificates']          = self::instance();
 		$GLOBALS['woothemes_sensei_certificate_templates'] = new WooThemes_Sensei_Certificate_Templates();
 
@@ -186,6 +192,7 @@ class WooThemes_Sensei_Certificates {
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-utils.php';
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates.php';
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificate-templates.php';
+		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-blocks.php';
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-data-store.php';
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-tfpdf.php';
 	}
@@ -1090,13 +1097,13 @@ class WooThemes_Sensei_Certificates {
 	/**
 	 * get_certificate_url gets url for certificate
 	 *
-	 * @access private
+	 * @access public
 	 * @since  1.0.0
 	 * @param  int $course_id course post id
 	 * @param  int $user_id   course learner user id
 	 * @return string $certificate_url certificate link
 	 */
-	private function get_certificate_url( $course_id, $user_id ) {
+	public function get_certificate_url( $course_id, $user_id ) {
 
 		$certificate_url = '';
 
