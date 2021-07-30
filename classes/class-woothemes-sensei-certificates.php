@@ -105,7 +105,10 @@ class WooThemes_Sensei_Certificates {
 		$instance = self::instance();
 
 		self::load_files();
-		new Woothemes_Sensei_Certificates_Blocks();
+
+		if ( Sensei()->feature_flags->is_enabled( 'course_completed_page' ) ) {
+			new Woothemes_Sensei_Certificates_Blocks();
+		}
 
 		if ( class_exists( 'Sensei_Assets' ) ) {
 			$instance->assets = new \Sensei_Assets( $instance->plugin_url, dirname( __DIR__ ), SENSEI_CERTIFICATES_VERSION );
@@ -192,7 +195,11 @@ class WooThemes_Sensei_Certificates {
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-utils.php';
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates.php';
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificate-templates.php';
-		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-blocks.php';
+
+		if ( Sensei()->feature_flags->is_enabled( 'course_completed_page' ) ) {
+			require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-blocks.php';
+		}
+
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-data-store.php';
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-tfpdf.php';
 	}
