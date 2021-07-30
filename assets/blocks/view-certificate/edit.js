@@ -13,7 +13,6 @@ const TEMPLATE = [
 	[
 		'core/button',
 		{
-			align: 'left',
 			text: __( 'View Certificate', 'sensei-certificates' ),
 		},
 	],
@@ -22,6 +21,9 @@ const TEMPLATE = [
 /**
  * Edit View Certificate block.
  */
-const ViewCertificateEdit = () => <InnerBlocks template={ TEMPLATE } />;
+const ViewCertificateEdit = ( { className } ) =>
+	<div className={ className }>
+		<InnerBlocks template={ TEMPLATE } templateLock="all" />
+	</div>;
 
 export default ViewCertificateEdit;

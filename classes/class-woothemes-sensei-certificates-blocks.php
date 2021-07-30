@@ -30,7 +30,12 @@ class Woothemes_Sensei_Certificates_Blocks extends Sensei_Blocks_Initializer {
 	 *
 	 * @access private
 	 */
-	public function enqueue_block_editor_assets() {}
+	public function enqueue_block_editor_assets() {
+		WooThemes_Sensei_Certificates::instance()->assets->enqueue(
+			'sensei-certificates-block-style',
+			'css/blocks.css'
+		);
+	}
 
 	/**
 	 * Enqueue frontend and editor assets.
