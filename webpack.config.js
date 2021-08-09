@@ -7,7 +7,7 @@ const files = {
 	'css/admin': 'css/admin.scss',
 	'css/frontend': 'css/frontend.scss',
 	'css/blocks': 'blocks/view-certificate/editor.scss',
-	'blocks/view-certificate/index': 'blocks/view-certificate/index.js',
+	'blocks/index': 'blocks/index.js',
 };
 
 const baseDist = 'assets/dist/';

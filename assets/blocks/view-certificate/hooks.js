@@ -4,7 +4,7 @@
 import { addFilter } from '@wordpress/hooks';
 
 const addBlockToTemplate = ( props ) => {
-	props.push( [ 'sensei-certificates/button-view-certificate' ] );
+	// props.push( [ 'sensei-certificates/view-certificate-button' ] );
 
 	return props;
 };
