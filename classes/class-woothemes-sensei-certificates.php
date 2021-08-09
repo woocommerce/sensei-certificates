@@ -106,10 +106,6 @@ class WooThemes_Sensei_Certificates {
 
 		self::load_files();
 
-		if ( Sensei()->feature_flags->is_enabled( 'course_completed_page' ) ) {
-			new Woothemes_Sensei_Certificates_Blocks();
-		}
-
 		if ( class_exists( 'Sensei_Assets' ) ) {
 			$instance->assets = new \Sensei_Assets( $instance->plugin_url, dirname( __DIR__ ), SENSEI_CERTIFICATES_VERSION );
 		}
@@ -185,6 +181,9 @@ class WooThemes_Sensei_Certificates {
 		add_action( 'sensei_certificates_set_background_image', array( $instance, 'certificate_background' ), 10, 1 );
 		// Text to display on certificate
 		add_action( 'sensei_certificates_before_pdf_output', array( $instance, 'certificate_text' ), 10, 2 );
+
+		// Blocks
+		add_action( 'enqueue_block_editor_assets', [ $instance, 'enqueue_block_editor_assets' ] );
 	}
 
 	/**
@@ -195,11 +194,6 @@ class WooThemes_Sensei_Certificates {
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-utils.php';
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates.php';
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificate-templates.php';
-
-		if ( Sensei()->feature_flags->is_enabled( 'course_completed_page' ) ) {
-			require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-blocks.php';
-		}
-
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-data-store.php';
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-tfpdf.php';
 	}
@@ -297,6 +291,22 @@ class WooThemes_Sensei_Certificates {
 
 		if ( $should_enqueue ) {
 			wp_enqueue_style( 'sensei-certificates-frontend', $this->plugin_url . 'assets/dist/css/frontend.css', array(), SENSEI_CERTIFICATES_VERSION, 'screen' );
+		}
+	}
+
+	/**
+	 * Enqueue block assets for the editing interface.
+	 *
+	 * @access private
+	 */
+	public function enqueue_block_editor_assets() {
+		$screen = get_current_screen();
+
+		if ( $screen && 'page' === $screen->post_type ) {
+			WooThemes_Sensei_Certificates::instance()->assets->enqueue(
+				'sensei-certificates-block',
+				'blocks/index.js'
+			);
 		}
 	}
 

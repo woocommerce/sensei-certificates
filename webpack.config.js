@@ -6,7 +6,6 @@ const files = {
 	'js/course': 'js/course.js',
 	'css/admin': 'css/admin.scss',
 	'css/frontend': 'css/frontend.scss',
-	'css/blocks': 'blocks/view-certificate/editor.scss',
 	'blocks/index': 'blocks/index.js',
 };
 
