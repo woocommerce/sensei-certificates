@@ -105,6 +105,11 @@ class WooThemes_Sensei_Certificates {
 		$instance = self::instance();
 
 		self::load_files();
+
+		if ( class_exists( 'Sensei_Assets' ) ) {
+			$instance->assets = new \Sensei_Assets( $instance->plugin_url, dirname( __DIR__ ), SENSEI_CERTIFICATES_VERSION );
+		}
+
 		$GLOBALS['woothemes_sensei_certificates']          = self::instance();
 		$GLOBALS['woothemes_sensei_certificate_templates'] = new WooThemes_Sensei_Certificate_Templates();
 
@@ -176,6 +181,10 @@ class WooThemes_Sensei_Certificates {
 		add_action( 'sensei_certificates_set_background_image', array( $instance, 'certificate_background' ), 10, 1 );
 		// Text to display on certificate
 		add_action( 'sensei_certificates_before_pdf_output', array( $instance, 'certificate_text' ), 10, 2 );
+
+		// Blocks
+		add_action( 'enqueue_block_editor_assets', [ $instance, 'enqueue_block_editor_assets' ] );
+		add_filter( 'render_block', [ $instance, 'update_view_certificate_button_url' ], 10, 2 );
 	}
 
 	/**
@@ -1445,6 +1454,54 @@ class WooThemes_Sensei_Certificates {
 			</p>
 			<?php
 		}
+	}
+
+	/**
+	 * Enqueue block assets for the editing interface.
+	 *
+	 * @access private
+	 */
+	public function enqueue_block_editor_assets() {
+		$screen = get_current_screen();
+
+		if ( $screen && 'page' === $screen->post_type ) {
+			WooThemes_Sensei_Certificates::instance()->assets->enqueue(
+				'sensei-certificates-block',
+				'blocks/index.js'
+			);
+		}
+	}
+
+	/**
+	 * Update the URL of the "View Certificate" button.
+	 *
+	 * @access private
+	 *
+	 * @param string $block_content The block content about to be appended.
+	 * @param array  $block         The full block, including name and attributes.
+	 *
+	 * @return string Block HTML.
+	 */
+	public function update_view_certificate_button_url( $block_content, $block ): string {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Only used if the learner completed the course.
+		$course_id = isset( $_GET['course_id'] ) ? (int) $_GET['course_id'] : false;
+
+		// Check that the course ID exists and that the user has completed the course.
+		if (
+			! $course_id
+			|| ! get_current_user_id()
+			|| 'course' !== get_post_type( $course_id )
+			|| ! Sensei_Utils::user_completed_course( $course_id, get_current_user_id() )
+		) {
+			return $block_content;
+		}
+
+		if ( ! method_exists( 'Sensei_Blocks', 'update_button_block_url' ) ) {
+			return $block_content;
+		}
+
+		return Sensei_Blocks::update_button_block_url( $block_content, $block, 'view-certificate',
+			WooThemes_Sensei_Certificates::instance()->get_certificate_url( $course_id, get_current_user_id() ) );
 	}
 
 	/**

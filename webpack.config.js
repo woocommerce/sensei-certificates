@@ -6,6 +6,7 @@ const files = {
 	'js/course': 'js/course.js',
 	'css/admin': 'css/admin.scss',
 	'css/frontend': 'css/frontend.scss',
+	'blocks/index': 'blocks/index.js',
 };
 
 const baseDist = 'assets/dist/';
