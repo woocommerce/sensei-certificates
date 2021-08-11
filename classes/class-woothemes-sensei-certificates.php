@@ -1473,7 +1473,7 @@ class WooThemes_Sensei_Certificates {
 	}
 
 	/**
-	 * * Update the URL of the "View Certificate" button.
+	 * Update the URL of the "View Certificate" button.
 	 *
 	 * @access private
 	 *
