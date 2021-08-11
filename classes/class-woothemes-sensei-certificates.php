@@ -1099,13 +1099,13 @@ class WooThemes_Sensei_Certificates {
 	/**
 	 * get_certificate_url gets url for certificate
 	 *
-	 * @access public
+	 * @access private
 	 * @since  1.0.0
 	 * @param  int $course_id course post id
 	 * @param  int $user_id   course learner user id
 	 * @return string $certificate_url certificate link
 	 */
-	public function get_certificate_url( $course_id, $user_id ) {
+	private function get_certificate_url( $course_id, $user_id ) {
 
 		$certificate_url = '';
 
