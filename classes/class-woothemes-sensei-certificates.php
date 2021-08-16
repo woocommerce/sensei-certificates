@@ -1483,24 +1483,36 @@ class WooThemes_Sensei_Certificates {
 	 * @return string Block HTML.
 	 */
 	public function update_view_certificate_button_url( $block_content, $block ): string {
+		$class_name = 'view-certificate';
+
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Only used if the learner completed the course.
 		$course_id = isset( $_GET['course_id'] ) ? (int) $_GET['course_id'] : false;
 
-		// Check that the course ID exists and that the user has completed the course.
 		if (
+			// Check that the course ID exists and that the user has completed the course.
 			! $course_id
 			|| ! get_current_user_id()
 			|| 'course' !== get_post_type( $course_id )
 			|| ! Sensei_Utils::user_completed_course( $course_id, get_current_user_id() )
+
+			// Check that the block is a core/button and it contains the respective class name.
+			|| ! isset( $block['blockName'] )
+			|| 'core/button' !== $block['blockName']
+			|| ! isset( $block['attrs']['className'] )
+			|| false === strpos( $block['attrs']['className'], $class_name )
 		) {
 			return $block_content;
 		}
 
-		if ( ! method_exists( 'Sensei_Blocks', 'update_button_block_url' ) ) {
-			return $block_content;
+		// Check if course has template and core method exists.
+		if (
+			! get_post_meta( $course_id, '_course_certificate_template', true )
+			|| ! method_exists( 'Sensei_Blocks', 'update_button_block_url' )
+		) {
+			return '';
 		}
 
-		return Sensei_Blocks::update_button_block_url( $block_content, $block, 'view-certificate',
+		return Sensei_Blocks::update_button_block_url( $block_content, $block, $class_name,
 			WooThemes_Sensei_Certificates::instance()->get_certificate_url( $course_id, get_current_user_id() ) );
 	}
 
