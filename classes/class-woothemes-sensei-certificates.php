@@ -185,6 +185,7 @@ class WooThemes_Sensei_Certificates {
 		// Blocks
 		add_action( 'enqueue_block_editor_assets', [ $instance, 'enqueue_block_editor_assets' ] );
 		add_filter( 'render_block', [ $instance, 'update_view_certificate_button_url' ], 10, 2 );
+		add_filter( 'sensei_course_completed_page_template', [ $instance, 'add_certificate_button_to_course_completed_template' ] );
 	}
 
 	/**
@@ -1514,6 +1515,34 @@ class WooThemes_Sensei_Certificates {
 
 		return Sensei_Blocks::update_button_block_url( $block_content, $block, $class_name,
 			WooThemes_Sensei_Certificates::instance()->get_certificate_url( $course_id, get_current_user_id() ) );
+	}
+
+	/**
+	 * Add certificate button to course completed template.
+	 * This template is used when creating the page through Sensei Setup Wizard.
+	 *
+	 * @param {array} $blocks Blocks array.
+	 *
+	 * @return {array} Blocks array.
+	 */
+	public function add_certificate_button_to_course_completed_template( $blocks ) {
+		$blocks = array_map(
+			function( $block ) {
+				if (
+					'core/buttons' === $block['blockName']
+					&& isset( $block['attrs'] )
+					&& 'course-completed-actions' === $block['attrs']['anchor']
+				) {
+					$button_content        = '<!-- wp:button {"className":"view-certificate"} --><div class="wp-block-button view-certificate"><a class="wp-block-button__link">' . __( 'View Certificate', 'sensei-certificates' ) . '</a></div><!-- /wp:button -->';
+					$block['innerContent'] = str_replace( '<!-- /wp:button --></div>', "<!-- /wp:button -->{$button_content}</div>", $block['innerContent'] );
+				}
+
+				return $block;
+			},
+			$blocks
+		);
+
+		return $blocks;
 	}
 
 	/**
