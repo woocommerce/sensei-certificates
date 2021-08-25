@@ -4,17 +4,16 @@
 import { __ } from '@wordpress/i18n';
 import { addFilter } from '@wordpress/hooks';
 
-const addBlockToTemplate = ( props ) => {
-	props.push( [
+const addBlockToTemplate = ( blocks ) => ( [
+	...blocks,
+	[
 		'core/button',
 		{
 			className: 'view-certificate',
 			text: __( 'View Certificate', 'sensei-certificates' ),
 		},
-	] );
-
-	return props;
-};
+	]
+] );
 
 // Add this block to the Course Completed Actions block.
 addFilter(
