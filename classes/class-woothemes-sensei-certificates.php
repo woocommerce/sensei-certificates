@@ -186,6 +186,7 @@ class WooThemes_Sensei_Certificates {
 		add_action( 'enqueue_block_editor_assets', [ $instance, 'enqueue_block_editor_assets' ] );
 		add_filter( 'render_block', [ $instance, 'update_view_certificate_button_url' ], 10, 2 );
 		add_filter( 'sensei_course_completed_page_template', [ $instance, 'add_certificate_button_to_course_completed_template' ] );
+		add_action( 'init', [ $instance, 'add_certificate_button_to_current_course_completed_page' ] );
 	}
 
 	/**
@@ -1530,21 +1531,101 @@ class WooThemes_Sensei_Certificates {
 	 * @return {array} Blocks array.
 	 */
 	public function add_certificate_button_to_course_completed_template( $blocks ) {
+		return $this->add_view_certificate_block_to_course_completed_actions( $blocks );
+	}
+
+	/**
+	 * Add certificate button to Course Completed page, when already created.
+	 * It's useful for cases where the user already created the Course Completed
+	 * page, and then they activate the this plugin.
+	 *
+	 * @since 2.2.1
+	 *
+	 * @access private
+	 */
+	public function add_certificate_button_to_current_course_completed_page() {
+		$option_name = 'sensei_certificates_view_certificate_button_added';
+
+		if ( get_option( $option_name ) ) {
+			return;
+		}
+
+		update_option( $option_name, true );
+
+		$page_id = isset( Sensei()->settings->settings['course_completed_page'] ) ? intval( Sensei()->settings->settings['course_completed_page'] ) : 0;
+		if ( ! $page_id ) {
+			return;
+		}
+
+		$page = get_post( $page_id );
+		if ( ! $page ) {
+			return;
+		}
+
+		$blocks = parse_blocks( $page->post_content );
+
+		wp_update_post(
+			[
+				'ID'           => $page_id,
+				'post_content' => serialize_blocks(
+					$this->add_view_certificate_block_to_course_completed_actions( $blocks )
+				),
+			]
+		);
+	}
+
+	/**
+	 * It adds the View Certificate button as inner block to the course completed actions.
+	 * If it's not found or if the button is already added, it's not changed.
+	 *
+	 * @param array $blocks Parsed blocks.
+	 *
+	 * @return array Parsed blocks with the view certificate button.
+	 */
+	private function add_view_certificate_block_to_course_completed_actions( $blocks ) {
+		$class_name = 'view-certificate';
+
 		$blocks = array_map(
-			function( $block ) {
+			function( $block ) use ( $class_name ) {
+				/**
+				 * Notice that we check the block through the innerContent and not through
+				 * the anchor attribute directly, which is what we use to check the block
+				 * variation. The reason is that the back-end doesn't contain this attribute
+				 * when created through the block editor.
+				 */
 				if (
 					'core/buttons' === $block['blockName']
-					&& isset( $block['attrs'] )
-					&& 'course-completed-actions' === $block['attrs']['anchor']
+					&& isset( $block['innerContent'] )
+					&& isset( $block['innerContent'][0] )
+					& false !== strpos( $block['innerContent'][0], 'id="course-completed-actions"' )
 				) {
-					array_splice( $block['innerContent'], count( $block['innerContent'] ) - 1, 0, [ null ] );
+					$has_view_certificate = false;
 
+					// Check if action buttons contains the View Certificate button.
+					foreach ( $block['innerBlocks'] as $inner_block ) {
+						if (
+							isset( $inner_block['attrs'] )
+							&& isset( $inner_block['attrs']['className'] )
+							&& false !== strpos( $inner_block['attrs']['className'], $class_name )
+						) {
+							$has_view_certificate = true;
+							break;
+						}
+					}
+
+					// Skip if it already contains the button.
+					if ( $has_view_certificate ) {
+						return $block;
+					}
+
+					// Add the button block.
+					array_splice( $block['innerContent'], count( $block['innerContent'] ) - 1, 0, [ null ] );
 					array_push(
 						$block['innerBlocks'],
 						[
 							'blockName'    => 'core/button',
-							'innerContent' => [ '<div class="wp-block-button view-certificate"><a class="wp-block-button__link">' . __( 'View Certificate', 'sensei-certificates' ) . '</a></div>' ],
-							'attrs'        => [ 'className' => 'view-certificate' ],
+							'innerContent' => [ '<div class="wp-block-button ' . $class_name . '"><a class="wp-block-button__link">' . __( 'View Certificate', 'sensei-certificates' ) . '</a></div>' ],
+							'attrs'        => [ 'className' => $class_name ],
 						]
 					);
 				}
