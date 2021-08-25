@@ -1521,6 +1521,10 @@ class WooThemes_Sensei_Certificates {
 	 * Add certificate button to course completed template.
 	 * This template is used when creating the page through Sensei Setup Wizard.
 	 *
+	 * @since 2.2.1
+	 *
+	 * @access private
+	 *
 	 * @param {array} $blocks Blocks array.
 	 *
 	 * @return {array} Blocks array.
@@ -1533,8 +1537,16 @@ class WooThemes_Sensei_Certificates {
 					&& isset( $block['attrs'] )
 					&& 'course-completed-actions' === $block['attrs']['anchor']
 				) {
-					$button_content        = '<!-- wp:button {"className":"view-certificate"} --><div class="wp-block-button view-certificate"><a class="wp-block-button__link">' . __( 'View Certificate', 'sensei-certificates' ) . '</a></div><!-- /wp:button -->';
-					$block['innerContent'] = str_replace( '<!-- /wp:button --></div>', "<!-- /wp:button -->{$button_content}</div>", $block['innerContent'] );
+					array_splice( $block['innerContent'], count( $block['innerContent'] ) - 1, 0, [ null ] );
+
+					array_push(
+						$block['innerBlocks'],
+						[
+							'blockName'    => 'core/button',
+							'innerContent' => [ '<div class="wp-block-button view-certificate"><a class="wp-block-button__link">' . __( 'View Certificate', 'sensei-certificates' ) . '</a></div>' ],
+							'attrs'        => [ 'className' => 'view-certificate' ],
+						]
+					);
 				}
 
 				return $block;
