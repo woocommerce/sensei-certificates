@@ -14,6 +14,10 @@ registerBlockVariation( 'core/button', {
 	name: 'sensei-certificates/view-certificate-button',
 	title: __( 'View Certificate', 'sensei-certificates' ),
 	description: __( 'Allow a user to view the course certificate.', 'sensei-certificates' ),
+	keywords: [
+		__( 'Certificates', 'sensei-lms' ),
+	],
+	category: 'sensei-lms',
 	attributes,
 	isActive: ( blockAttributes, variationAttributes ) =>
 		blockAttributes.className.match( variationAttributes.className ),
