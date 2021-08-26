@@ -20,7 +20,7 @@ registerBlockVariation( 'core/button', {
 	category: 'sensei-lms',
 	attributes,
 	isActive: ( blockAttributes, variationAttributes ) =>
-		blockAttributes.className.match( variationAttributes.className ),
+		blockAttributes.className?.match( variationAttributes.className ),
 } );
 
 const addBlockToTemplate = ( blocks ) => ( [
