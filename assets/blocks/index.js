@@ -13,7 +13,7 @@ const attributes = {
 registerBlockVariation( 'core/button', {
 	name: 'sensei-certificates/view-certificate-button',
 	title: __( 'View Certificate', 'sensei-certificates' ),
-	description: __( 'Allow a user to view the course certificate.', 'sensei-certificates' ),
+	description: __( 'Enable a learner to view their course certificate.', 'sensei-certificates' ),
 	keywords: [
 		__( 'Certificates', 'sensei-lms' ),
 	],
