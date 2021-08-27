@@ -1594,43 +1594,37 @@ class WooThemes_Sensei_Certificates {
 				 * when created through the block editor.
 				 */
 				if (
-					'core/buttons' === $block['blockName']
-					&& isset( $block['innerContent'] )
-					&& isset( $block['innerContent'][0] )
-					& false !== strpos( $block['innerContent'][0], 'id="course-completed-actions"' )
+					'core/buttons' !== $block['blockName']
+					|| ! isset( $block['innerContent'] )
+					|| ! isset( $block['innerContent'][0] )
+					|| false === strpos( $block['innerContent'][0], 'id="course-completed-actions"' )
 				) {
-					$has_view_certificate = false;
+					return $block;
+				}
 
-					// Check if action buttons contains the View Certificate button.
-					foreach ( $block['innerBlocks'] as $inner_block ) {
-						if (
-							isset( $inner_block['attrs'] )
-							&& isset( $inner_block['attrs']['className'] )
-							&& false !== strpos( $inner_block['attrs']['className'], $class_name )
-						) {
-							$has_view_certificate = true;
-							break;
-						}
-					}
-
-					// Skip if it already contains the button.
-					if ( $has_view_certificate ) {
+				// Check if action buttons contains the View Certificate button.
+				foreach ( $block['innerBlocks'] as $inner_block ) {
+					if (
+						isset( $inner_block['attrs'] )
+						&& isset( $inner_block['attrs']['className'] )
+						&& false !== strpos( $inner_block['attrs']['className'], $class_name )
+					) {
 						return $block;
 					}
-
-					// Add space for the button in the second to last item in the innerContent.
-					array_splice( $block['innerContent'], count( $block['innerContent'] ) - 1, 0, [ null ] );
-
-					// Add button to the innerBlocks.
-					array_push(
-						$block['innerBlocks'],
-						[
-							'blockName'    => 'core/button',
-							'innerContent' => [ '<div class="wp-block-button ' . $class_name . '"><a class="wp-block-button__link">' . __( 'View Certificate', 'sensei-certificates' ) . '</a></div>' ],
-							'attrs'        => [ 'className' => $class_name ],
-						]
-					);
 				}
+
+				// Add space for the button in the second to last item in the innerContent.
+				array_splice( $block['innerContent'], count( $block['innerContent'] ) - 1, 0, [ null ] );
+
+				// Add button to the innerBlocks.
+				array_push(
+					$block['innerBlocks'],
+					[
+						'blockName'    => 'core/button',
+						'innerContent' => [ '<div class="wp-block-button ' . $class_name . '"><a class="wp-block-button__link">' . __( 'View Certificate', 'sensei-certificates' ) . '</a></div>' ],
+						'attrs'        => [ 'className' => $class_name ],
+					]
+				);
 
 				return $block;
 			},
