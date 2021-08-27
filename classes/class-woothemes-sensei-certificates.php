@@ -1537,7 +1537,7 @@ class WooThemes_Sensei_Certificates {
 	/**
 	 * Add certificate button to Course Completed page, when already created.
 	 * It's useful for cases where the user already created the Course Completed
-	 * page, and then they activate the this plugin.
+	 * page, and then they activate this plugin.
 	 *
 	 * @since 2.2.1
 	 *
@@ -1618,8 +1618,10 @@ class WooThemes_Sensei_Certificates {
 						return $block;
 					}
 
-					// Add the button block.
+					// Add space for the button in the second to last item in the innerContent.
 					array_splice( $block['innerContent'], count( $block['innerContent'] ) - 1, 0, [ null ] );
+
+					// Add button to the innerBlocks.
 					array_push(
 						$block['innerBlocks'],
 						[
