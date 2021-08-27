@@ -1550,7 +1550,7 @@ class WooThemes_Sensei_Certificates {
 			return;
 		}
 
-		update_option( $option_name, true );
+		update_option( $option_name, 1 );
 
 		$page_id = isset( Sensei()->settings->settings['course_completed_page'] ) ? intval( Sensei()->settings->settings['course_completed_page'] ) : 0;
 		if ( ! $page_id ) {
