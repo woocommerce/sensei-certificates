@@ -1,5 +1,9 @@
 *** Changelog ***
 
+2021.08.27 - version 2.2.1
+* Tweak: Add View Certificate button to the Course Completed page automatically - #280
+* Fix: Don't display View Certificate button if course has no certificate template - #277
+
 2021.08.12 - version 2.2.0
 * New: Add "View Certificate" button to Course Completed Actions block - #271
 
