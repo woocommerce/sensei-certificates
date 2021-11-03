@@ -1148,6 +1148,9 @@ class PDF
         } else {
             $str_family = strtolower($str_family);
         }
+        if (is_array($str_style)) { 
+            $str_style = ''; 
+        }
         $str_style = strtoupper($str_style);
         if (strpos($str_style, 'U') !== false) {
             $this->bol_underline = true;
