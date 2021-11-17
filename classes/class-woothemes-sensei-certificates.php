@@ -754,9 +754,15 @@ class WooThemes_Sensei_Certificates {
 			$pdf->generate_pdf();
 			exit;
 
-		} else {
+		} elseif ( is_user_logged_in() ) {
 
 			wp_die( esc_html__( 'You are not allowed to view this Certificate.', 'sensei-certificates' ), esc_html__( 'Certificate Error', 'sensei-certificates' ) );
+
+		} else {
+
+			// Redirect to the login page.
+			wp_safe_redirect( wp_login_url( get_permalink() ) );
+			exit;
 
 		} // End If Statement
 
