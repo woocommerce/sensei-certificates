@@ -455,7 +455,7 @@ class WooThemes_Sensei_Certificate_Templates {
 			}
 
 			// Replace the template tags.
-			$field_value = apply_filters( 'sensei_certificate_data_field_value', $field_value, $field_key, true, null, null );
+			$field_value = apply_filters( 'sensei_certificate_data_field_value', $field_value, $field_key, wp_get_current_user(), null );
 
 			// Check if the field has a set position.
 			if ( isset( $this->certificate_template_fields[ $meta_key ]['position']['x1'] ) ) {
