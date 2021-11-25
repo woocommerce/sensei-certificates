@@ -426,10 +426,10 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		// Define the data we're going to load: Key => Default value
 		$load_data = array(
-			'certificate_font_style'      => array(),
-			'certificate_font_color'      => array(),
-			'certificate_font_size'       => array(),
-			'certificate_font_family'     => array(),
+			'certificate_font_style'      => '',
+			'certificate_font_color'      => '',
+			'certificate_font_size'       => '',
+			'certificate_font_family'     => '',
 			'image_ids'                   => array(),
 			'certificate_template_fields' => array(),
 		);
