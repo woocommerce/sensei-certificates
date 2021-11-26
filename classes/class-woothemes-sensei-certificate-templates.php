@@ -442,7 +442,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		}
 
-		// Data fields
+		// Data fields.
 		$data_fields = sensei_get_certificate_data_fields();
 		foreach ( $data_fields as $field_key => $field_info ) {
 
@@ -450,7 +450,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 			// Get the default field value.
 			$field_value = $field_info['text_placeholder'];
-			if ( isset( $this->certificate_template_fields[ $meta_key ]['text'] ) && '' != $this->certificate_template_fields[ $meta_key ]['text'] ) {
+			if ( isset( $this->certificate_template_fields[ $meta_key ]['text'] ) && '' !== $this->certificate_template_fields[ $meta_key ]['text'] ) {
 				$field_value = $this->certificate_template_fields[ $meta_key ]['text'];
 			}
 

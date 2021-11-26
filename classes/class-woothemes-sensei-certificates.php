@@ -180,8 +180,8 @@ class WooThemes_Sensei_Certificates {
 		add_action( 'sensei_course_status_updated', array( $instance, 'handle_course_completed' ), 9, 3 );
 		// Background Image to display on certificate
 		add_action( 'sensei_certificates_set_background_image', array( $instance, 'certificate_background' ), 10, 1 );
-		// Certificate data field tag replacement
-		add_filter( 'sensei_certificate_data_field_value', array( $instance, 'replace_data_field_template_tags'), 10, 5 );
+		// Certificate data field tag replacement.
+		add_filter( 'sensei_certificate_data_field_value', array( $instance, 'replace_data_field_template_tags' ), 10, 5 );
 		// Text to display on certificate
 		add_action( 'sensei_certificates_before_pdf_output', array( $instance, 'certificate_text' ), 10, 2 );
 
@@ -800,16 +800,13 @@ class WooThemes_Sensei_Certificates {
 		} else {
 			// Most likely this is for preview. Use placeholder data.
 			$course_title    = __( 'Course Title', 'sensei-certificates' );
-			$course_end_date = date( 'Y-m-d' );
+			$course_end_date = gmdate( 'Y-m-d' );
 		}
 
 		// Get student name.
 		$student_name = $student->display_name;
-		$fname        = $student->first_name;
-		$lname        = $student->last_name;
-
-		if ( '' != $fname && '' != $lname ) {
-			$student_name = $fname . ' ' . $lname;
+		if ( $student->first_name && $student->last_name ) {
+			$student_name = $student->first_name . ' ' . $student->last_name;
 		}
 
 		// Get end date.
@@ -822,9 +819,11 @@ class WooThemes_Sensei_Certificates {
 			'{{course_place}}'    => get_bloginfo( 'name' ),
 		);
 
-		$field_value = str_replace( array_keys( $replacement_values ), array_values( $replacement_values ), $field_value );
-
-		return $field_value;
+		return str_replace(
+			array_keys( $replacement_values ),
+			array_values( $replacement_values ),
+			$field_value
+		);
 	}
 
 	/**
@@ -910,7 +909,7 @@ class WooThemes_Sensei_Certificates {
 			if ( isset( $this->certificate_font_style ) && '' != $this->certificate_font_style ) {
 				$pdf_certificate->certificate_pdf_data['font_style'] = $this->certificate_font_style; }
 
-			// Data fields
+			// Data fields.
 			$data_fields = sensei_get_certificate_data_fields();
 			foreach ( $data_fields as $field_key => $field_info ) {
 
@@ -918,7 +917,7 @@ class WooThemes_Sensei_Certificates {
 
 				// Get the default field value.
 				$field_value = $field_info['text_placeholder'];
-				if ( isset( $this->certificate_template_fields[ $meta_key ]['text'] ) && '' != $this->certificate_template_fields[ $meta_key ]['text'] ) {
+				if ( isset( $this->certificate_template_fields[ $meta_key ]['text'] ) && '' !== $this->certificate_template_fields[ $meta_key ]['text'] ) {
 					$field_value = $this->certificate_template_fields[ $meta_key ]['text'];
 				}
 
