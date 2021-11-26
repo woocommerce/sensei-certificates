@@ -334,6 +334,7 @@ function sensei_get_certificate_data_fields() {
 	$data_fields = array(
 		'heading'    => array(
 			'type'                 => 'text',
+			'name'                 => __( 'Heading', 'sensei-certificates' ),
 			'position_label'       => __( 'Heading Position', 'sensei-certificates' ),
 			'position_description' => __( 'Optional position of the Certificate Heading', 'sensei-certificates' ),
 			'text_label'           => __( 'Heading Text', 'sensei-certificates' ),
@@ -342,6 +343,7 @@ function sensei_get_certificate_data_fields() {
 		),
 		'message'    => array(
 			'type'                 => 'textarea',
+			'name'                 => __( 'Message', 'sensei-certificates' ),
 			'position_label'       => __( 'Message Position', 'sensei-certificates' ),
 			'position_description' => __( 'Optional position of the Certificate Message', 'sensei-certificates' ),
 			'text_label'           => __( 'Message Text', 'sensei-certificates' ),
@@ -350,6 +352,7 @@ function sensei_get_certificate_data_fields() {
 		),
 		'course'     => array(
 			'type'                 => 'text',
+			'name'                 => __( 'Course', 'sensei-certificates' ),
 			'position_label'       => __( 'Course Position', 'sensei-certificates' ),
 			'position_description' => __( 'Optional position of the Course Name', 'sensei-certificates' ),
 			'text_label'           => __( 'Course Text', 'sensei-certificates' ),
@@ -358,6 +361,7 @@ function sensei_get_certificate_data_fields() {
 		),
 		'completion' => array(
 			'type'                 => 'text',
+			'name'                 => __( 'Completion Date', 'sensei-certificates' ),
 			'position_label'       => __( 'Completion Date Position', 'sensei-certificates' ),
 			'position_description' => __( 'Optional position of the Course Completion date', 'sensei-certificates' ),
 			'text_label'           => __( 'Completion Date Text', 'sensei-certificates' ),
@@ -366,6 +370,7 @@ function sensei_get_certificate_data_fields() {
 		),
 		'place'      => array(
 			'type'                 => 'text',
+			'name'                 => __( 'Place', 'sensei-certificates' ),
 			'position_label'       => __( 'Place Position', 'sensei-certificates' ),
 			'position_description' => __( 'Optional position of the place of Certification.', 'sensei-certificates' ),
 			'text_label'           => __( 'Course Place Text', 'sensei-certificates' ),
