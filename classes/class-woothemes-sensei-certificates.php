@@ -471,6 +471,14 @@ class WooThemes_Sensei_Certificates {
 			'section'     => 'certificate-settings',
 		);
 
+		$fields['certificates_delete_data_on_uninstall'] = array(
+			'name'        => __( 'Delete data on uninstall', 'sensei-certificates' ),
+			'description' => __( 'Delete Sensei Certificates data when the plugin is deleted. Once removed, this data cannot be restored.', 'sensei-certificates' ),
+			'type'        => 'checkbox',
+			'default'     => false,
+			'section'     => 'certificate-settings',
+		);
+
 		return $fields;
 
 	} // End certificates_settings_fields()
