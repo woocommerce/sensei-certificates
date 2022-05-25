@@ -587,11 +587,12 @@ class WooThemes_Sensei_Certificates {
 				echo '<a href="' . esc_url(
 					add_query_arg(
 						array(
-							'page'      => 'sensei_analysis',
+							'page'      => 'sensei_reports',
+							'post_type' => 'course',
 							'user_id'   => intval( $user_id ),
 							'course_id' => intval( $course_id ),
 						),
-						admin_url( 'admin.php' )
+						admin_url( 'edit.php' )
 					)
 				) . '">' . esc_html( "{$user->display_name} ({$user->user_login})" ) . '</a>';
 				break;
@@ -599,10 +600,11 @@ class WooThemes_Sensei_Certificates {
 				echo '<a href="' . esc_url(
 					add_query_arg(
 						array(
-							'page'      => 'sensei_analysis',
+							'page'      => 'sensei_reports',
+							'post_type' => 'course',
 							'course_id' => intval( $course_id ),
 						),
-						admin_url( 'admin.php' )
+						admin_url( 'edit.php' )
 					)
 				) . '">' . esc_html( $course->post_title ) . '</a>';
 				break;
