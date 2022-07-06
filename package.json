@@ -36,5 +36,8 @@
   },
   "config": {
     "wp_org_slug": "sensei-certificates"
+  },
+  "dependencies": {
+    "@wordpress/icons": "^9.3.0"
   }
 }
