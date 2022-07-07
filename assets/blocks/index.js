@@ -3,7 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { addFilter } from '@wordpress/hooks';
-import { registerBlockVariation, registerBlockType } from '@wordpress/blocks';
+import { registerBlockVariation } from '@wordpress/blocks';
 
 const attributes = {
 	className: 'view-certificate',
@@ -38,9 +38,9 @@ addFilter(
 
 registerBlockVariation( 'core/buttons', {
 	name: 'sensei-certificates/view-certificate-buttons',
-	title: __( 'View Certificate', 'sensei-certificates' ),
+	title: __( 'Buttons with View Certificate', 'sensei-certificates' ),
 	description: __(
-		'Enable students to view their course certificate.',
+		'A Buttons block which includes a View Certificate button.',
 		'sensei-certificates'
 	),
 	category: 'sensei-lms',
@@ -48,11 +48,5 @@ registerBlockVariation( 'core/buttons', {
 		__( 'Certificate', 'sensei-certificates' ),
 		__( 'View Certificate', 'sensei-certificates' ),
 	],
-	innerBlocks: [ [ 'core/button', attributes ] ],
-	templateLock: 'all',
-	attributes: {
-		anchor: 'view-certificate-actions',
-	},
-	isActive: ( blockAttributes, variationAttributes ) =>
-		blockAttributes.anchor === variationAttributes.anchor,
+	innerBlocks: [ [ 'core/button', attributes ] ]
 } );
