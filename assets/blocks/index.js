@@ -5,11 +5,6 @@ import { __ } from '@wordpress/i18n';
 import { addFilter } from '@wordpress/hooks';
 import { registerBlockVariation, registerBlockType } from '@wordpress/blocks';
 
-/**
- * Internal dependencies
- */
-import viewCertificateBlock from './view-certificate-block';
-
 const attributes = {
 	className: 'view-certificate',
 	text: __( 'View Certificate', 'sensei-certificates' ),
@@ -19,7 +14,7 @@ registerBlockVariation( 'core/button', {
 	name: 'sensei-certificates/view-certificate-button',
 	title: __( 'View Certificate', 'sensei-certificates' ),
 	description: __(
-		'Enable a learner to view their course certificate.',
+		'Enable students to view their course certificate.',
 		'sensei-certificates'
 	),
 	keywords: [ __( 'Certificates', 'sensei-lms' ) ],
@@ -41,5 +36,23 @@ addFilter(
 	addBlockToTemplate
 );
 
-// Register standalone View Certificate block.
-registerBlockType( viewCertificateBlock.name, { ...viewCertificateBlock } );
+registerBlockVariation( 'core/buttons', {
+	name: 'sensei-certificates/view-certificate-buttons',
+	title: __( 'View Certificate', 'sensei-certificates' ),
+	description: __(
+		'Enable students to view their course certificate.',
+		'sensei-certificates'
+	),
+	category: 'sensei-lms',
+	keywords: [
+		__( 'Certificate', 'sensei-certificates' ),
+		__( 'View Certificate', 'sensei-certificates' ),
+	],
+	innerBlocks: [ [ 'core/button', attributes ] ],
+	templateLock: 'all',
+	attributes: {
+		anchor: 'view-certificate-actions',
+	},
+	isActive: ( blockAttributes, variationAttributes ) =>
+		blockAttributes.anchor === variationAttributes.anchor,
+} );
