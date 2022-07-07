@@ -38,9 +38,9 @@ addFilter(
 
 registerBlockVariation( 'core/buttons', {
 	name: 'sensei-certificates/view-certificate-buttons',
-	title: __( 'Buttons with View Certificate', 'sensei-certificates' ),
+	title: __( 'View Certificate', 'sensei-certificates' ),
 	description: __(
-		'A Buttons block which includes a View Certificate button.',
+		'A Buttons block with a View Certificate button.',
 		'sensei-certificates'
 	),
 	category: 'sensei-lms',
@@ -48,5 +48,5 @@ registerBlockVariation( 'core/buttons', {
 		__( 'Certificate', 'sensei-certificates' ),
 		__( 'View Certificate', 'sensei-certificates' ),
 	],
-	innerBlocks: [ [ 'core/button', attributes ] ]
+	innerBlocks: [ [ 'core/button', attributes ] ],
 } );
