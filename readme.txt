@@ -1,10 +1,10 @@
 === Sensei LMS Certificates ===
-Contributors: automattic, alexsanford1, donnapep, jakeom, gikaragia, renathoc, yscik
+Contributors: automattic, alexsanford1, donnapep, jakeom, gikaragia, renathoc, yscik, m1r0, aaronfc
 Tags: certificates, course certificate, sensei lms
 Requires at least: 5.6
-Tested up to: 5.8
+Tested up to: 6.0
 Requires PHP: 7.0
-Stable tag: 2.2.1
+Stable tag: 2.3.0
 License: GPLv2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,4 +60,4 @@ We look forward to seeing your students light up with excitement when they recei
 2. Customise the certificate design
 
 == Changelog ==
-[See changelog for all versions](https://raw.githubusercontent.com/woocommerce/sensei-certificates/master/changelog.txt).
+[See changelog for all versions](https://raw.githubusercontent.com/woocommerce/sensei-certificates/trunk/changelog.txt).
