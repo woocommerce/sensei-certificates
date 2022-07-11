@@ -1,5 +1,12 @@
 *** Changelog ***
 
+2022.07.11 - version 2.3.0
+* New: Add View Certificate block - #302
+* New: Bump minimum PHP version to 7.0 - #293
+* New: Add setting to delete data on uninstall - #291
+* Fix: Redirect to login when viewing a certificate as a guest - #289
+* Fix: Fix warning when accessing certificate - #299
+
 2021.08.27 - version 2.2.1
 * Tweak: Add View Certificate button to the Course Completed page automatically - #280
 * Fix: Don't display View Certificate button if course has no certificate template - #277
