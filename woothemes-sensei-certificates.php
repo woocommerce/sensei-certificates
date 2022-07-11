@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SENSEI_CERTIFICATES_VERSION', '2.2.1' );
+define( 'SENSEI_CERTIFICATES_VERSION', '2.3.0' );
 define( 'SENSEI_CERTIFICATES_PLUGIN_FILE', __FILE__ );
 define( 'SENSEI_CERTIFICATES_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
