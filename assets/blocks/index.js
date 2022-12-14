@@ -26,12 +26,21 @@ registerBlockVariation( 'core/button', {
 
 const addBlockToTemplate = ( blocks ) => [
 	...blocks,
-	[ 'core/button', attributes ],
+	[
+		'core/buttons',
+		[],
+		[
+			[ 'core/button', attributes ],
+		]
+	],
 ];
 
 const addBlockToAllowedBlocks = ( blocks ) => [
 	...blocks,
 	'sensei-certificates/view-certificate-button',
+	'sensei-certificates/view-certificate-buttons',
+	'button',
+	'buttons',
 ];
 
 // Add this block to the Course Completed Actions block.
