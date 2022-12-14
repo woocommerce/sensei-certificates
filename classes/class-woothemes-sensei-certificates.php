@@ -187,6 +187,8 @@ class WooThemes_Sensei_Certificates {
 		add_filter( 'render_block', [ $instance, 'update_view_certificate_button_url' ], 10, 2 );
 		add_filter( 'sensei_course_completed_page_template', [ $instance, 'add_certificate_button_to_course_completed_template' ] );
 		add_action( 'init', [ $instance, 'add_certificate_button_to_current_course_completed_page' ] );
+
+		add_filter( 'sensei_course_list_block_patterns', [ $instance, 'add_view_certificate_button_to_block_patterns' ] );
 	}
 
 	/**
@@ -1592,6 +1594,76 @@ class WooThemes_Sensei_Certificates {
 				),
 			]
 		);
+	}
+
+	/**
+	 * Add "View Certificate" button to the Course List block patterns. To be
+	 * used with the sensei_course_list_block_patterns filter.
+	 *
+	 * @since 2.3.1
+	 *
+	 * @param array $patterns The block patterns.
+	 * @return array
+	 */
+	public function add_view_certificate_button_to_block_patterns( $patterns ) {
+		foreach ( $patterns as $key => $pattern ) {
+			// Get the rendered block.
+			$rendered_block = $this->get_rendered_view_certificate_button( 'full' );
+
+			// Add the block to the template.
+			$content_with_block = preg_replace(
+				'/(<!-- \/wp:sensei-lms\/course-actions -->)/',
+				$rendered_block . ' $1',
+				$pattern['content']
+			);
+
+			$patterns[$key]['content'] = $content_with_block;
+		}
+
+		return $patterns;
+	}
+
+	/**
+	 * Get the rendered "View Certificate" button string.
+	 *
+	 * @since 2.3.1
+	 *
+	 * @param string $align How the button should be aligned. Can be 'left', 'right', or 'full'.
+	 * @return string
+	 */
+	private function get_rendered_view_certificate_button( $align = 'left' ) {
+		switch ( $align ) {
+			case 'full':
+				$rendered = '
+					<!-- wp:buttons -->
+					<div class="wp-block-buttons"><!-- wp:button {"width":100,"className":"view-certificate"} -->
+					<div class="wp-block-button has-custom-width wp-block-button__width-100 view-certificate"><a class="wp-block-button__link wp-element-button">View Certificate</a></div>
+					<!-- /wp:button --></div>
+					<!-- /wp:buttons -->
+				';
+				break;
+
+			case 'right':
+				$rendered = '
+					<!-- wp:buttons -->
+					<div class="wp-block-buttons"><!-- wp:button {"align":"right","className":"view-certificate"} -->
+					<div class="wp-block-button alignright view-certificate"><a class="wp-block-button__link wp-element-button">View Certificate</a></div>
+					<!-- /wp:button --></div>
+					<!-- /wp:buttons -->
+				';
+				break;
+
+			default:
+				$rendered = '
+					<!-- wp:buttons -->
+					<div class="wp-block-buttons"><!-- wp:button {"className":"view-certificate"} -->
+					<div class="wp-block-button view-certificate"><a class="wp-block-button__link wp-element-button">View Certificate</a></div>
+					<!-- /wp:button --></div>
+					<!-- /wp:buttons -->
+				';
+		}
+
+		return $rendered;
 	}
 
 	/**
