@@ -34,21 +34,7 @@ registerBlockVariation( 'core/button', {
 
 const addBlockToTemplate = ( blocks ) => [
 	...blocks,
-	[
-		'core/buttons',
-		[],
-		[
-			[ 'core/button', attributes ],
-		]
-	],
-];
-
-const addBlockToAllowedBlocks = ( blocks ) => [
-	...blocks,
-	'sensei-certificates/view-certificate-button',
-	'sensei-certificates/view-certificate-buttons',
-	'button',
-	'buttons',
+	[ 'core/button', attributes ],
 ];
 
 // Add this block to the Course Completed Actions block.
@@ -56,18 +42,6 @@ addFilter(
 	'sensei-lms.Course.completedActions',
 	'sensei-certificates',
 	addBlockToTemplate
-);
-
-// Add this block to the Course Actions block template and allow list.
-addFilter(
-	'sensei-lms.Course.courseActionsTemplate',
-	'sensei-certificates',
-	addBlockToTemplate
-);
-addFilter(
-	'sensei-lms.Course.courseActionsAllowedBlocks',
-	'sensei-certificates',
-	addBlockToAllowedBlocks
 );
 
 registerBlockVariation( 'core/buttons', {
