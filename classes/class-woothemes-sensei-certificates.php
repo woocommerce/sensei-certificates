@@ -110,6 +110,9 @@ class WooThemes_Sensei_Certificates {
 			$instance->assets = new \Sensei_Assets( $instance->plugin_url, dirname( __DIR__ ), SENSEI_CERTIFICATES_VERSION );
 		}
 
+		// Load blocks.
+		new WooThemes_Sensei_Certificates_View_Certificate_Link_Block();
+
 		$GLOBALS['woothemes_sensei_certificates']          = self::instance();
 		$GLOBALS['woothemes_sensei_certificate_templates'] = new WooThemes_Sensei_Certificate_Templates();
 
@@ -201,6 +204,7 @@ class WooThemes_Sensei_Certificates {
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificate-templates.php';
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-data-store.php';
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-tfpdf.php';
+		require_once dirname( __FILE__ ) . '/blocks/class-woothemes-sensei-certificates-view-certificate-link-block.php';
 	}
 
 	/**
@@ -1115,15 +1119,14 @@ class WooThemes_Sensei_Certificates {
 
 
 	/**
-	 * get_certificate_url gets url for certificate
+	 * Get URL for certificate.
 	 *
-	 * @access private
 	 * @since  1.0.0
 	 * @param  int $course_id course post id
 	 * @param  int $user_id   course learner user id
 	 * @return string $certificate_url certificate link
 	 */
-	private function get_certificate_url( $course_id, $user_id ) {
+	public function get_certificate_url( $course_id, $user_id ) {
 
 		$certificate_url = '';
 
@@ -1607,13 +1610,25 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function add_view_certificate_button_to_block_patterns( $patterns ) {
 		foreach ( $patterns as $key => $pattern ) {
-			// Get the rendered block.
-			$rendered_block = $this->get_rendered_view_certificate_button( 'full' );
+			// Only alter the templates for the Course List block.
+			if (
+				! in_array( 'query', $pattern['categories'], true )
+				|| ! in_array( 'core/query', $pattern['blockTypes'], true )
+			) {
+				continue;
+			}
 
-			// Add the block to the template.
+			// Get the rendered block.
+			$block_str = '<!-- wp:sensei-certificates/view-certificate-link /-->';
+
+			// Add the block to the template. Note that we currently only
+			// support adding it after a "void" Course Overview block with no
+			// attributes. If, in the future, the Course Overview block can have
+			// inner content and/or attributes, then we will have to do a bit
+			// more advanced parsing here.
 			$content_with_block = preg_replace(
-				'/(<!-- \/wp:sensei-lms\/course-actions -->)/',
-				$rendered_block . ' $1',
+				'/(<!--\s+wp:sensei-lms\/course-overview\s+\/-->)/',
+				'$1 ' . $block_str,
 				$pattern['content']
 			);
 
@@ -1621,49 +1636,6 @@ class WooThemes_Sensei_Certificates {
 		}
 
 		return $patterns;
-	}
-
-	/**
-	 * Get the rendered "View Certificate" button string.
-	 *
-	 * @since 2.3.1
-	 *
-	 * @param string $align How the button should be aligned. Can be 'left', 'right', or 'full'.
-	 * @return string
-	 */
-	private function get_rendered_view_certificate_button( $align = 'left' ) {
-		switch ( $align ) {
-			case 'full':
-				$rendered = '
-					<!-- wp:buttons -->
-					<div class="wp-block-buttons"><!-- wp:button {"width":100,"className":"view-certificate"} -->
-					<div class="wp-block-button has-custom-width wp-block-button__width-100 view-certificate"><a class="wp-block-button__link wp-element-button">View Certificate</a></div>
-					<!-- /wp:button --></div>
-					<!-- /wp:buttons -->
-				';
-				break;
-
-			case 'right':
-				$rendered = '
-					<!-- wp:buttons -->
-					<div class="wp-block-buttons"><!-- wp:button {"align":"right","className":"view-certificate"} -->
-					<div class="wp-block-button alignright view-certificate"><a class="wp-block-button__link wp-element-button">View Certificate</a></div>
-					<!-- /wp:button --></div>
-					<!-- /wp:buttons -->
-				';
-				break;
-
-			default:
-				$rendered = '
-					<!-- wp:buttons -->
-					<div class="wp-block-buttons"><!-- wp:button {"className":"view-certificate"} -->
-					<div class="wp-block-button view-certificate"><a class="wp-block-button__link wp-element-button">View Certificate</a></div>
-					<!-- /wp:button --></div>
-					<!-- /wp:buttons -->
-				';
-		}
-
-		return $rendered;
 	}
 
 	/**
