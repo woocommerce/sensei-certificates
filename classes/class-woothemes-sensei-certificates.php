@@ -1490,11 +1490,6 @@ class WooThemes_Sensei_Certificates {
 				'sensei-certificates-block',
 				'blocks/index.js'
 			);
-
-			WooThemes_Sensei_Certificates::instance()->assets->enqueue(
-				'sensei-certificates-block-editor-style',
-				'blocks/editor.css'
-			);
 		}
 	}
 
