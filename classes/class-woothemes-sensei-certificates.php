@@ -191,7 +191,7 @@ class WooThemes_Sensei_Certificates {
 		add_filter( 'sensei_course_completed_page_template', [ $instance, 'add_certificate_button_to_course_completed_template' ] );
 		add_action( 'init', [ $instance, 'add_certificate_button_to_current_course_completed_page' ] );
 
-		add_filter( 'sensei_course_list_block_patterns', [ $instance, 'add_view_certificate_button_to_block_patterns' ] );
+		add_filter( 'sensei_course_list_block_patterns', [ $instance, 'add_view_certificate_link_to_block_patterns' ] );
 	}
 
 	/**
@@ -1608,7 +1608,7 @@ class WooThemes_Sensei_Certificates {
 	 * @param array $patterns The block patterns.
 	 * @return array
 	 */
-	public function add_view_certificate_button_to_block_patterns( $patterns ) {
+	public function add_view_certificate_link_to_block_patterns( $patterns ) {
 		foreach ( $patterns as $key => $pattern ) {
 			// Only alter the templates for the Course List block, and only if
 			// it contains the Course Overview block.
