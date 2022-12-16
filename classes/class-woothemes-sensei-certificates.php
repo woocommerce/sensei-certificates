@@ -1610,16 +1610,15 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function add_view_certificate_button_to_block_patterns( $patterns ) {
 		foreach ( $patterns as $key => $pattern ) {
-			// Only alter the templates for the Course List block.
+			// Only alter the templates for the Course List block, and only if
+			// it contains the Course Overview block.
 			if (
 				! in_array( 'query', $pattern['categories'], true )
 				|| ! in_array( 'core/query', $pattern['blockTypes'], true )
+				|| ! has_block( 'sensei-lms/course-overview', $pattern['content'] )
 			) {
 				continue;
 			}
-
-			// Get the rendered block.
-			$block_str = '<!-- wp:sensei-certificates/view-certificate-link /-->';
 
 			// Add the block to the template. Note that we currently only
 			// support adding it after a "void" Course Overview block with no
@@ -1628,7 +1627,7 @@ class WooThemes_Sensei_Certificates {
 			// more advanced parsing here.
 			$content_with_block = preg_replace(
 				'/(<!--\s+wp:sensei-lms\/course-overview\s+\/-->)/',
-				'$1 ' . $block_str,
+				'$1 <!-- wp:sensei-certificates/view-certificate-link /-->',
 				$pattern['content']
 			);
 
