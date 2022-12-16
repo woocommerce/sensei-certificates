@@ -30,7 +30,7 @@ const ViewCertificateLinkEdit = ( { context: { postType } } ) => {
 	return (
 		<div { ...blockProps }>
 			{ /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
-			<a href="#">{ __( 'View Certificate', 'sensei-lms' ) }</a>
+			<a href="#">{ __( 'View Certificate', 'sensei-certificates' ) }</a>
 		</div>
 	);
 };

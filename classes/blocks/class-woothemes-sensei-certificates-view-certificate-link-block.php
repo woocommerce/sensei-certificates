@@ -66,7 +66,7 @@ class WooThemes_Sensei_Certificates_View_Certificate_Link_Block {
 			'<div %1$s><a href="%2$s">%3$s</a></div>',
 			$wrapper_attributes,
 			$certificate_url,
-			__( 'View Certificate', 'sensei-lms' )
+			__( 'View Certificate', 'sensei-certificates' )
 		);
 	}
 }
