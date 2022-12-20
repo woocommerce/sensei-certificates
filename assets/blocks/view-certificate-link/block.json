@@ -6,6 +6,7 @@
 	"category": "sensei-lms",
 	"description": "Displays a link to the certificate.",
 	"textdomain": "sensei-certificates",
+	"ancestor": [ "sensei-lms/course-list" ],
 	"usesContext": [ "postType" ],
 	"example": {}
 }

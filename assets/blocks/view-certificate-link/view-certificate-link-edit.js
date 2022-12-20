@@ -5,7 +5,7 @@ import { useBlockProps, Warning } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 
 /**
- * Course Overview block edit component.
+ * View Certificate Link block edit component.
  *
  * @param {Object} props
  * @param {Object} props.context          Block context.
