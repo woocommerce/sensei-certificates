@@ -191,7 +191,7 @@ class WooThemes_Sensei_Certificates {
 		add_filter( 'sensei_course_completed_page_template', [ $instance, 'add_certificate_button_to_course_completed_template' ] );
 		add_action( 'init', [ $instance, 'add_certificate_button_to_current_course_completed_page' ] );
 
-		add_filter( 'sensei_course_list_block_patterns', [ $instance, 'add_view_certificate_link_to_block_patterns' ] );
+		add_filter( 'sensei_course_list_block_patterns_extra_links', [ $instance, 'add_view_certificate_link_to_block_patterns' ] );
 	}
 
 	/**
@@ -1596,40 +1596,17 @@ class WooThemes_Sensei_Certificates {
 
 	/**
 	 * Add "View Certificate" button to the Course List block patterns. To be
-	 * used with the sensei_course_list_block_patterns filter.
+	 * used with the sensei_course_list_block_patterns_extra_links filter.
 	 *
 	 * @since 2.3.1
 	 *
-	 * @param array $patterns The block patterns.
+	 * @param array $extra_links The links to be added.
+	 *
 	 * @return array
 	 */
-	public function add_view_certificate_link_to_block_patterns( $patterns ) {
-		foreach ( $patterns as $key => $pattern ) {
-			// Only alter the templates for the Course List block, and only if
-			// it contains the Course Overview block.
-			if (
-				! in_array( 'query', $pattern['categories'], true )
-				|| ! in_array( 'core/query', $pattern['blockTypes'], true )
-				|| ! has_block( 'sensei-lms/course-overview', $pattern['content'] )
-			) {
-				continue;
-			}
-
-			// Add the block to the template. Note that we currently only
-			// support adding it after a "void" Course Overview block with no
-			// attributes. If, in the future, the Course Overview block can have
-			// inner content and/or attributes, then we will have to do a bit
-			// more advanced parsing here.
-			$content_with_block = preg_replace(
-				'/(<!--\s+wp:sensei-lms\/course-overview\s+\/-->)/',
-				'$1 <!-- wp:sensei-certificates/view-certificate-link /-->',
-				$pattern['content']
-			);
-
-			$patterns[$key]['content'] = $content_with_block;
-		}
-
-		return $patterns;
+	public function add_view_certificate_link_to_block_patterns( $extra_links ) {
+		$extra_links[] = '<!-- wp:sensei-certificates/view-certificate-link /-->';
+		return $extra_links;
 	}
 
 	/**
