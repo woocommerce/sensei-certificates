@@ -110,6 +110,9 @@ class WooThemes_Sensei_Certificates {
 			$instance->assets = new \Sensei_Assets( $instance->plugin_url, dirname( __DIR__ ), SENSEI_CERTIFICATES_VERSION );
 		}
 
+		// Load blocks.
+		new WooThemes_Sensei_Certificates_View_Certificate_Link_Block();
+
 		$GLOBALS['woothemes_sensei_certificates']          = self::instance();
 		$GLOBALS['woothemes_sensei_certificate_templates'] = new WooThemes_Sensei_Certificate_Templates();
 
@@ -187,6 +190,8 @@ class WooThemes_Sensei_Certificates {
 		add_filter( 'render_block', [ $instance, 'update_view_certificate_button_url' ], 10, 2 );
 		add_filter( 'sensei_course_completed_page_template', [ $instance, 'add_certificate_button_to_course_completed_template' ] );
 		add_action( 'init', [ $instance, 'add_certificate_button_to_current_course_completed_page' ] );
+
+		add_filter( 'sensei_course_list_block_patterns_extra_links', [ $instance, 'add_view_certificate_link_to_block_patterns' ] );
 	}
 
 	/**
@@ -199,6 +204,7 @@ class WooThemes_Sensei_Certificates {
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificate-templates.php';
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-data-store.php';
 		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-tfpdf.php';
+		require_once dirname( __FILE__ ) . '/blocks/class-woothemes-sensei-certificates-view-certificate-link-block.php';
 	}
 
 	/**
@@ -1113,15 +1119,14 @@ class WooThemes_Sensei_Certificates {
 
 
 	/**
-	 * get_certificate_url gets url for certificate
+	 * Get URL for certificate.
 	 *
-	 * @access private
 	 * @since  1.0.0
 	 * @param  int $course_id course post id
 	 * @param  int $user_id   course learner user id
 	 * @return string $certificate_url certificate link
 	 */
-	private function get_certificate_url( $course_id, $user_id ) {
+	public function get_certificate_url( $course_id, $user_id ) {
 
 		$certificate_url = '';
 
@@ -1587,6 +1592,21 @@ class WooThemes_Sensei_Certificates {
 				),
 			]
 		);
+	}
+
+	/**
+	 * Add "View Certificate" button to the Course List block patterns. To be
+	 * used with the sensei_course_list_block_patterns_extra_links filter.
+	 *
+	 * @since 2.3.1
+	 *
+	 * @param array $extra_links The links to be added.
+	 *
+	 * @return array
+	 */
+	public function add_view_certificate_link_to_block_patterns( $extra_links ) {
+		$extra_links[] = '<!-- wp:sensei-certificates/view-certificate-link /-->';
+		return $extra_links;
 	}
 
 	/**

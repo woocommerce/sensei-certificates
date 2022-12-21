@@ -3,7 +3,15 @@
  */
 import { __ } from '@wordpress/i18n';
 import { addFilter } from '@wordpress/hooks';
-import { registerBlockVariation } from '@wordpress/blocks';
+import { registerBlockVariation, registerBlockType } from '@wordpress/blocks';
+
+/**
+ * Internal dependencies.
+ */
+import ViewCertificateLinkBlock from './view-certificate-link';
+
+// Register the View Certificate Link block.
+registerBlockType( ViewCertificateLinkBlock.name, ViewCertificateLinkBlock );
 
 const attributes = {
 	className: 'view-certificate',

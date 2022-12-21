@@ -1,0 +1,12 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "sensei-certificates/view-certificate-link",
+	"title": "View Certificate",
+	"category": "sensei-lms",
+	"description": "Displays a link to the certificate.",
+	"textdomain": "sensei-certificates",
+	"ancestor": [ "sensei-lms/course-list" ],
+	"usesContext": [ "postType" ],
+	"example": {}
+}
