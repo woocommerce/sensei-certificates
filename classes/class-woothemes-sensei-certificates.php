@@ -593,7 +593,7 @@ class WooThemes_Sensei_Certificates {
 				echo '<a href="' . esc_url(
 					add_query_arg(
 						array(
-							'page'      => 'sensei_analysis',
+							'page'      => 'sensei_reports',
 							'user_id'   => intval( $user_id ),
 							'course_id' => intval( $course_id ),
 						),
@@ -605,7 +605,7 @@ class WooThemes_Sensei_Certificates {
 				echo '<a href="' . esc_url(
 					add_query_arg(
 						array(
-							'page'      => 'sensei_analysis',
+							'page'      => 'sensei_reports',
 							'course_id' => intval( $course_id ),
 						),
 						admin_url( 'admin.php' )
