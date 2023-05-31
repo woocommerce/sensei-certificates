@@ -1,5 +1,10 @@
 *** Changelog ***
 
+2023.06.01 - version 2.4.0
+* New: Add "View Certificate" link to Course List templates - #327
+* Fix: Error on the certificate page for WP VIP users - #335
+* Fix: Fix report links on the certificates listing - #298
+
 2022.07.11 - version 2.3.0
 * New: Add View Certificate block - #302
 * New: Bump minimum PHP version to 7.0 - #293
