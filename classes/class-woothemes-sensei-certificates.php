@@ -1598,7 +1598,7 @@ class WooThemes_Sensei_Certificates {
 	 * Add "View Certificate" button to the Course List block patterns. To be
 	 * used with the sensei_course_list_block_patterns_extra_links filter.
 	 *
-	 * @since 2.3.1
+	 * @since 2.4.0
 	 *
 	 * @param array $extra_links The links to be added.
 	 *
