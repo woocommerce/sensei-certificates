@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 2.0.0
  */
 class Woothemes_Sensei_Certificates_Dependency_Checker {
-	const MINIMUM_PHP_VERSION    = '7.0';
+	const MINIMUM_PHP_VERSION    = '7.2';
 	const MINIMUM_SENSEI_VERSION = '1.11.0';
 
 

@@ -1,6 +1,6 @@
 {
   "name": "sensei-certificates",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Sensei LMS Certificates",
   "author": "Automattic",
   "license": "GPL-2.0-or-later",
@@ -16,7 +16,7 @@
     "url": "https://github.com/woocommerce/sensei-certificates/issues"
   },
   "devDependencies": {
-    "@wordpress/scripts": "14.0.1"
+    "@wordpress/scripts": "wp-6.0"
   },
   "scripts": {
     "build": "npm run build:assets && npm run archive",
@@ -38,6 +38,6 @@
     "wp_org_slug": "sensei-certificates"
   },
   "dependencies": {
-    "@wordpress/icons": "wp-5.9"
+    "@wordpress/icons": "wp-6.0"
   }
 }
