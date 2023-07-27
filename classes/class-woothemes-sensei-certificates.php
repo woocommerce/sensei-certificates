@@ -133,7 +133,7 @@ class WooThemes_Sensei_Certificates {
 
 		// Filters
 		add_filter( 'sensei_user_course_status_passed', array( $instance, 'certificate_link' ), 10, 1 );
-		add_filter( 'sensei_results_links', array( $instance, 'certificate_link' ), 10, 2 );
+		add_filter( 'sensei_completed_course_links', array( $instance, 'certificate_link' ), 10, 3 );
 
 		// Actions
 		add_action( 'wp_enqueue_scripts', array( $instance, 'enqueue_styles' ) );
@@ -186,12 +186,12 @@ class WooThemes_Sensei_Certificates {
 		add_action( 'sensei_certificates_before_pdf_output', array( $instance, 'certificate_text' ), 10, 2 );
 
 		// Blocks
-		add_action( 'enqueue_block_editor_assets', [ $instance, 'enqueue_block_editor_assets' ] );
-		add_filter( 'render_block', [ $instance, 'update_view_certificate_button_url' ], 10, 2 );
-		add_filter( 'sensei_course_completed_page_template', [ $instance, 'add_certificate_button_to_course_completed_template' ] );
-		add_action( 'init', [ $instance, 'add_certificate_button_to_current_course_completed_page' ] );
+		add_action( 'enqueue_block_editor_assets', array( $instance, 'enqueue_block_editor_assets' ) );
+		add_filter( 'render_block', array( $instance, 'update_view_certificate_button_url' ), 10, 2 );
+		add_filter( 'sensei_course_completed_page_template', array( $instance, 'add_certificate_button_to_course_completed_template' ) );
+		add_action( 'init', array( $instance, 'add_certificate_button_to_current_course_completed_page' ) );
 
-		add_filter( 'sensei_course_list_block_patterns_extra_links', [ $instance, 'add_view_certificate_link_to_block_patterns' ] );
+		add_filter( 'sensei_course_list_block_patterns_extra_links', array( $instance, 'add_view_certificate_link_to_block_patterns' ) );
 	}
 
 	/**
@@ -213,7 +213,7 @@ class WooThemes_Sensei_Certificates {
 	private static function load_background_jobs() {
 		require_once __DIR__ . '/background-jobs/class-sensei-certificates-create-certificates.php';
 
-		add_action( Sensei_Certificates_Create_Certificates::NAME, [ __CLASS__, 'run_create_certificates_job' ] );
+		add_action( Sensei_Certificates_Create_Certificates::NAME, array( __CLASS__, 'run_create_certificates_job' ) );
 	}
 
 	/**
@@ -233,7 +233,7 @@ class WooThemes_Sensei_Certificates {
 		require_once __DIR__ . '/tools/class-sensei-certificates-tool-create-certificates.php';
 		require_once __DIR__ . '/tools/class-sensei-certificates-tool-create-default-example-template.php';
 
-		add_filter( 'sensei_tools', [ __CLASS__, 'add_sensei_certificates_tools' ] );
+		add_filter( 'sensei_tools', array( __CLASS__, 'add_sensei_certificates_tools' ) );
 	}
 
 	/**
@@ -829,7 +829,7 @@ class WooThemes_Sensei_Certificates {
 
 			// Get Course Data
 			$course_id       = get_post_meta( $certificate_id, 'course_id', true );
-			$course_title    = get_post_field('post_title', $course_id);
+			$course_title    = get_post_field( 'post_title', $course_id );
 			$course_end      = Sensei_Utils::sensei_check_for_activity(
 				array(
 					'post_id' => intval( $course_id ),
@@ -1043,9 +1043,10 @@ class WooThemes_Sensei_Certificates {
 	 * @since  1.0.0
 	 * @param  string  $message html
 	 * @param integer $course_id
+	 * @param integer $user_id
 	 * @return string $message html
 	 */
-	public function certificate_link( $message, $course_id = 0 ) {
+	public function certificate_link( $message, $course_id = 0, $user_id = 0 ) {
 		global $wp_query, $post;
 
 		if ( empty( $course_id ) ) {
@@ -1063,12 +1064,17 @@ class WooThemes_Sensei_Certificates {
 			}
 		}
 
+		if ( empty( $user_id ) || 0 === $user_id ) {
+			$user_id = get_current_user_id();
+		}
+
 		$certificate_template_id = get_post_meta( $course_id, '_course_certificate_template', true );
 
 		if ( ! $certificate_template_id ) {
 			return $message;
 		}
 
+		$certificate_id = $this->get_certificate_id( $user_id, $course_id );
 		$my_account_page_id = intval( Sensei()->settings->settings['my_course_page'] );
 		$view_link_courses  = Sensei()->settings->settings['certificates_view_courses'];
 		$view_link_profile  = Sensei()->settings->settings['certificates_view_profile'];
@@ -1077,7 +1083,8 @@ class WooThemes_Sensei_Certificates {
 		if ( ( 'page' == get_post_type( $my_account_page_id )
 				|| is_singular( 'course' )
 				|| isset( $wp_query->query_vars['course_results'] ) ) && $view_link_courses
-				|| isset( $wp_query->query_vars['learner_profile'] ) && $view_link_profile ) {
+				|| isset( $wp_query->query_vars['learner_profile'] ) && $view_link_profile
+				|| $this->can_view_certificate( $certificate_id) ) {
 
 			$is_viewable = true;
 
@@ -1091,11 +1098,11 @@ class WooThemes_Sensei_Certificates {
 
 		if ( is_singular( 'course' ) ) {
 
-			$certificate_url = $this->get_certificate_url( $post->ID, get_current_user_id() );
+			$certificate_url = $this->get_certificate_url( $post->ID, $user_id );
 
 		} else {
 
-			$certificate_url = $this->get_certificate_url( $course_id, get_current_user_id() );
+			$certificate_url = $this->get_certificate_url( $course_id, $user_id );
 
 		} // End If Statement
 
@@ -1154,6 +1161,43 @@ class WooThemes_Sensei_Certificates {
 		return $certificate_url;
 
 	} // End get_certificate_url()
+
+	/**
+	 * Get ID for certificate.
+	 *
+	 * @since  4.16.0
+	 * @param  int $course_id course post id
+	 * @param  int $user_id   course learner user id
+	 * @return string $certificate_id certificate id
+	 */
+	public function get_certificate_id( $course_id, $user_id ) {
+
+		$certificate_url = false;
+
+		$args = array(
+			'post_type'  => 'certificate',
+			'author'     => $user_id,
+			'meta_key'   => 'course_id',
+			'meta_value' => $course_id,
+		);
+
+		$query = new WP_Query( $args );
+		if ( $query->have_posts() ) {
+
+			$count = 0;
+			while ( $query->have_posts() ) {
+
+				$query->the_post();
+				$certificate_id = the_ID();
+
+			} // End While Loop
+		} // End If Statement
+
+		wp_reset_postdata();
+
+		return $certificate_url;
+
+	} // End get_certificate_id()
 
 
 	/**
@@ -1425,11 +1469,11 @@ class WooThemes_Sensei_Certificates {
 	 * @return void
 	 */
 	public function certificates_user_settings_messages() {
-		$allowed_html = [
-			'div'      => [
-				'class'  => [],
-			],
-		];
+		$allowed_html = array(
+			'div' => array(
+				'class' => array(),
+			),
+		);
 
 		if ( isset( $this->messages ) && '' != $this->messages ) {
 			echo wp_kses( $this->messages, $allowed_html );
@@ -1486,7 +1530,7 @@ class WooThemes_Sensei_Certificates {
 		$screen = get_current_screen();
 
 		if ( $screen && 'page' === $screen->post_type || 'course' === $screen->post_type ) {
-			WooThemes_Sensei_Certificates::instance()->assets->enqueue(
+			self::instance()->assets->enqueue(
 				'sensei-certificates-block',
 				'blocks/index.js'
 			);
@@ -1534,8 +1578,12 @@ class WooThemes_Sensei_Certificates {
 			return '';
 		}
 
-		return Sensei_Blocks::update_button_block_url( $block_content, $block, $class_name,
-			WooThemes_Sensei_Certificates::instance()->get_certificate_url( $course_id, get_current_user_id() ) );
+		return Sensei_Blocks::update_button_block_url(
+			$block_content,
+			$block,
+			$class_name,
+			self::instance()->get_certificate_url( $course_id, get_current_user_id() )
+		);
 	}
 
 	/**
@@ -1585,12 +1633,12 @@ class WooThemes_Sensei_Certificates {
 		$blocks = parse_blocks( $page->post_content );
 
 		wp_update_post(
-			[
+			array(
 				'ID'           => $page_id,
 				'post_content' => serialize_blocks(
 					$this->add_view_certificate_block_to_course_completed_actions( $blocks )
 				),
-			]
+			)
 		);
 	}
 
@@ -1649,16 +1697,16 @@ class WooThemes_Sensei_Certificates {
 				}
 
 				// Add space for the button in the second to last item in the innerContent.
-				array_splice( $block['innerContent'], count( $block['innerContent'] ) - 1, 0, [ null ] );
+				array_splice( $block['innerContent'], count( $block['innerContent'] ) - 1, 0, array( null ) );
 
 				// Add button to the innerBlocks.
 				array_push(
 					$block['innerBlocks'],
-					[
+					array(
 						'blockName'    => 'core/button',
-						'innerContent' => [ '<div class="wp-block-button ' . $class_name . '"><a class="wp-block-button__link">' . __( 'View Certificate', 'sensei-certificates' ) . '</a></div>' ],
-						'attrs'        => [ 'className' => $class_name ],
-					]
+						'innerContent' => array( '<div class="wp-block-button ' . $class_name . '"><a class="wp-block-button__link">' . __( 'View Certificate', 'sensei-certificates' ) . '</a></div>' ),
+						'attrs'        => array( 'className' => $class_name ),
+					)
 				);
 
 				return $block;
