@@ -1074,7 +1074,7 @@ class WooThemes_Sensei_Certificates {
 			return $message;
 		}
 
-		$certificate_id = $this->get_certificate_id( $user_id, $course_id );
+		$certificate_id = $this->get_certificate_id( $course_id, $user_id );
 		$my_account_page_id = intval( Sensei()->settings->settings['my_course_page'] );
 		$view_link_courses  = Sensei()->settings->settings['certificates_view_courses'];
 		$view_link_profile  = Sensei()->settings->settings['certificates_view_profile'];
