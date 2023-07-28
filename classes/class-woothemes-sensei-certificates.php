@@ -133,7 +133,7 @@ class WooThemes_Sensei_Certificates {
 
 		// Filters
 		add_filter( 'sensei_user_course_status_passed', array( $instance, 'certificate_link' ), 10, 1 );
-		add_filter( 'sensei_completed_course_links', array( $instance, 'certificate_link' ), 10, 3 );
+		add_filter( 'sensei_results_completed_links', array( $instance, 'certificate_link' ), 10, 3 );
 
 		// Actions
 		add_action( 'wp_enqueue_scripts', array( $instance, 'enqueue_styles' ) );
