@@ -1074,7 +1074,7 @@ class WooThemes_Sensei_Certificates {
 			return $message;
 		}
 
-		$certificate_id = $this->get_certificate_id( $course_id, $user_id );
+		$certificate_id     = $this->get_certificate_id( $course_id, $user_id );
 		$my_account_page_id = intval( Sensei()->settings->settings['my_course_page'] );
 		$view_link_courses  = Sensei()->settings->settings['certificates_view_courses'];
 		$view_link_profile  = Sensei()->settings->settings['certificates_view_profile'];
@@ -1084,7 +1084,7 @@ class WooThemes_Sensei_Certificates {
 				|| is_singular( 'course' )
 				|| isset( $wp_query->query_vars['course_results'] ) ) && $view_link_courses
 				|| isset( $wp_query->query_vars['learner_profile'] ) && $view_link_profile
-				|| $this->can_view_certificate( $certificate_id) ) {
+				|| $this->can_view_certificate( $certificate_id ) ) {
 
 			$is_viewable = true;
 
@@ -1171,31 +1171,28 @@ class WooThemes_Sensei_Certificates {
 	 * @return string $certificate_id certificate id
 	 */
 	public function get_certificate_id( $course_id, $user_id ) {
+		global $wpdb;
 
-		$certificate_url = false;
-
-		$args = array(
-			'post_type'  => 'certificate',
-			'author'     => $user_id,
-			'meta_key'   => 'course_id',
-			'meta_value' => $course_id,
+		$sql = $wpdb->prepare(
+			"SELECT
+				p.id
+			FROM
+				$wpdb->posts p
+			INNER JOIN $wpdb->postmeta m ON p.id = m.post_id
+			WHERE
+				p.post_type = %s
+				AND m.meta_key = %s
+				AND m.meta_value = %d
+				AND p.post_author = %d",
+			'certificate',
+			'course_id',
+			$course_id,
+			$user_id
 		);
 
-		$query = new WP_Query( $args );
-		if ( $query->have_posts() ) {
+		$certificate_id = $wpdb->get_var( $sql );
 
-			$count = 0;
-			while ( $query->have_posts() ) {
-
-				$query->the_post();
-				$certificate_id = the_ID();
-
-			} // End While Loop
-		} // End If Statement
-
-		wp_reset_postdata();
-
-		return $certificate_url;
+		return $certificate_id;
 
 	} // End get_certificate_id()
 
