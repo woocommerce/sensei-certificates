@@ -133,7 +133,7 @@ class WooThemes_Sensei_Certificates {
 
 		// Filters
 		add_filter( 'sensei_user_course_status_passed', array( $instance, 'certificate_link' ), 10, 1 );
-		add_filter( 'sensei_results_completed_links', array( $instance, 'certificate_link' ), 10, 3 );
+		add_filter( 'sensei_results_links', array( $instance, 'certificate_link' ), 10, 3 );
 
 		// Actions
 		add_action( 'wp_enqueue_scripts', array( $instance, 'enqueue_styles' ) );
@@ -1080,11 +1080,12 @@ class WooThemes_Sensei_Certificates {
 		$view_link_profile  = Sensei()->settings->settings['certificates_view_profile'];
 		$is_viewable        = false;
 
-		if ( ( 'page' == get_post_type( $my_account_page_id )
+		if ( ( $this->can_view_certificate( $certificate_id ) )
+			&& ( 'page' == get_post_type( $my_account_page_id )
 				|| is_singular( 'course' )
-				|| isset( $wp_query->query_vars['course_results'] ) ) && $view_link_courses
+				|| isset( $wp_query->query_vars['course_results'] )  && $view_link_courses
 				|| isset( $wp_query->query_vars['learner_profile'] ) && $view_link_profile
-				|| $this->can_view_certificate( $certificate_id ) ) {
+		) ) {
 
 			$is_viewable = true;
 
@@ -1165,7 +1166,7 @@ class WooThemes_Sensei_Certificates {
 	/**
 	 * Get ID for certificate.
 	 *
-	 * @since  4.16.0
+	 * @since  $$next-version$$
 	 * @param  int $course_id course post id
 	 * @param  int $user_id   course learner user id
 	 * @return string $certificate_id certificate id
