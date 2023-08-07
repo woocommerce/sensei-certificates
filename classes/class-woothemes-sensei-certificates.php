@@ -1079,12 +1079,19 @@ class WooThemes_Sensei_Certificates {
 		$view_link_profile  = Sensei()->settings->settings['certificates_view_profile'];
 		$is_viewable        = false;
 
-		if (  'page' == get_post_type( $my_account_page_id )
-				|| is_singular( 'course' )
-				|| isset( $wp_query->query_vars['course_results'] )  && $view_link_courses
-				|| isset( $wp_query->query_vars['learner_profile'] ) && $view_link_profile
+		if (
+			(
+				(
+					is_page( $my_account_page_id )
+					|| is_singular( 'course' )
+					|| isset( $wp_query->query_vars['course_results'] )
+				)
+				&& $view_link_courses
+			) || (
+				isset( $wp_query->query_vars['learner_profile'] )
+				&& $view_link_profile
+			)
 		) {
-
 			$is_viewable = true;
 
 		} // End If Statement
