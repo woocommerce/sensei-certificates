@@ -54,6 +54,11 @@ class WooThemes_Sensei_Certificates {
 	private static $_instance = null;
 
 	/**
+	 * @var Sensei_Assets|null
+	 */
+	public $assets;
+
+	/**
 	 * @var string url link to plugin files
 	 */
 	public $plugin_url;
