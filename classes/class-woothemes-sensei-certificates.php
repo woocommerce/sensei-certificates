@@ -1181,7 +1181,7 @@ class WooThemes_Sensei_Certificates {
 	/**
 	 * Get ID for certificate.
 	 *
-	 * @since  $$next-version$$
+	 * @since  2.5.0
 	 * @param  int $course_id course post id
 	 * @param  int $user_id   course learner user id
 	 * @return string $certificate_id certificate id
