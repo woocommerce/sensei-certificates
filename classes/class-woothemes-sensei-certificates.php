@@ -1079,15 +1079,15 @@ class WooThemes_Sensei_Certificates {
 			return $message;
 		}
 
-		$my_account_page_id = intval( Sensei()->settings->settings['my_course_page'] );
+		$my_courses_page_id = intval( Sensei()->settings->settings['my_course_page'] );
 		$view_link_courses  = Sensei()->settings->settings['certificates_view_courses'];
 		$view_link_profile  = Sensei()->settings->settings['certificates_view_profile'];
 		$is_viewable        = false;
 
-		if ( ( 'page' == get_post_type( $my_account_page_id )
-			|| is_singular( 'course' )
-			|| isset( $wp_query->query_vars['course_results'] ) ) && $view_link_courses
-			|| isset( $wp_query->query_vars['learner_profile'] ) && $view_link_profile ) {
+		if ( ( 'page' == get_post_type( $my_courses_page_id ) // My Courses page
+			|| is_singular( 'course' ) // Single course page
+			|| isset( $wp_query->query_vars['course_results'] ) ) && $view_link_courses // Course results page
+			|| isset( $wp_query->query_vars['learner_profile'] ) && $view_link_profile ) { // Learner profile page
 			$is_viewable = true;
 		}
 
@@ -1111,7 +1111,7 @@ class WooThemes_Sensei_Certificates {
 
 			$classes = '';
 
-			if ( 'page' == get_post_type( $my_account_page_id ) || isset( $wp_query->query_vars['learner_profile'] ) ) {
+			if ( 'page' == get_post_type( $my_courses_page_id ) || isset( $wp_query->query_vars['learner_profile'] ) ) {
 
 				$classes = 'button ';
 
