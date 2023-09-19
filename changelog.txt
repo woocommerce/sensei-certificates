@@ -1,5 +1,8 @@
 *** Changelog ***
 
+2023.09.19 - version 2.5.1
+Fix: Missing "View Certificate" link for `sensei_user_courses` shortcode - #348
+
 2023.08.24 - version 2.5.0
 * New: Display View Certificate button on public learner profile - #341
 * Fix: Deprecation notice for creation of dynamic property - #343

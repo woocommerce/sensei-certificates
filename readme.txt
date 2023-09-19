@@ -4,7 +4,7 @@ Tags: certificates, course certificate, sensei lms
 Requires at least: 6.1
 Tested up to: 6.3
 Requires PHP: 7.3
-Stable tag: 2.5.0
+Stable tag: 2.5.1
 License: GPLv2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
