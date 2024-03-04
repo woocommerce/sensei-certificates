@@ -890,7 +890,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		// Get the meta key.
 		$meta_key       = '_' . $post_key;
-		$new_meta_value = isset( $_POST[ $post_key ] ) ? intval( $_POST[ $post_key ] ) : '';
+		$new_meta_value = isset( $_POST[ $post_key ] ) && !empty($_POST[ $post_key ]) ? intval( $_POST[ $post_key ] ) : '';
 		// Get the meta value of the custom field key.
 		$meta_value = get_post_meta( $post_id, $meta_key, true );
 		// If a new meta value was added and there was no previous value, add it.
@@ -899,7 +899,7 @@ class WooThemes_Sensei_Certificate_Templates {
 		} elseif ( $new_meta_value && $new_meta_value != $meta_value ) {
 			// If the new meta value does not match the old value, update it.
 			update_post_meta( $post_id, $meta_key, $new_meta_value );
-		} elseif ( 0 == $new_meta_value && $meta_value ) {
+		} elseif ( '' == $new_meta_value && $meta_value ) {
 			// If there is no new meta value but an old value exists, delete it.
 			delete_post_meta( $post_id, $meta_key, $meta_value );
 		}
