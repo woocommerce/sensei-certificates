@@ -1,5 +1,26 @@
 *** Changelog ***
 
+2023.09.19 - version 2.5.1
+Fix: Missing "View Certificate" link for `sensei_user_courses` shortcode - #348
+
+2023.08.24 - version 2.5.0
+* New: Display View Certificate button on public learner profile - #341
+* Fix: Deprecation notice for creation of dynamic property - #343
+
+2023.06.01 - version 2.4.0
+* New: Add "View Certificate" link to Course List templates - #327
+* New: Bump minimum PHP version to 7.2
+* Fix: Error on the certificate page for WP VIP users - #335
+* Fix: Report links on the certificates listing - #298
+* Fix: Deprecated function warning - #336
+
+2022.07.11 - version 2.3.0
+* New: Add View Certificate block - #302
+* New: Bump minimum PHP version to 7.0 - #293
+* New: Add setting to delete data on uninstall - #291
+* Fix: Redirect to login when viewing a certificate as a guest - #289
+* Fix: Fix warning when accessing certificate - #299
+
 2021.08.27 - version 2.2.1
 * Tweak: Add View Certificate button to the Course Completed page automatically - #280
 * Fix: Don't display View Certificate button if course has no certificate template - #277

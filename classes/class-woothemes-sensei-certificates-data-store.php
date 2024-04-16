@@ -20,8 +20,15 @@ class Woothemes_Sensei_Certificate_Data_Store {
 		}
 		$certificate_hash = Woothemes_Sensei_Certificates_Utils::get_certificate_hash( $course_id, $user_id );
 		// check if user certificate already exists
-		$exists = get_page_by_title( $certificate_hash, OBJECT, 'certificate' );
-		if ( ! empty( $exists ) ) {
+		$certificate_query = new WP_Query(
+			array(
+				'post_type'      => 'certificate',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'title'          => $certificate_hash,
+			)
+		);
+		if ( $certificate_query->have_posts() ) {
 			return new WP_Error( 'sensei_certificates_duplicate' );
 		}
 
