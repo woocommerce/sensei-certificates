@@ -794,7 +794,7 @@ class WooThemes_Sensei_Certificates {
 	 * Replace template tags on certificate data fields.
 	 *
 	 * @access public
-	 * @since  2.2.2
+	 * @since  $$next-version$$
 	 *
 	 * @param string       $field_value The data field value.
 	 * @param string       $field_key   The data field key.
