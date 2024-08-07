@@ -55,6 +55,83 @@ class WooThemes_Sensei_Certificate_Templates {
 	public $token;
 
 	/**
+	 * Template post ID.
+	 *
+	 * @var int
+	 */
+	public $id;
+
+	/**
+	 * Template post meta fields.
+	 *
+	 * @var array|false|string
+	 */
+	public $certificate_template_custom_fields;
+
+	/**
+	 * Template image ids.
+	 *
+	 * @var array
+	 */
+	public $image_ids;
+
+	/**
+	 * Template main image id.
+	 *
+	 * @var int
+	 */
+	public $image_id;
+
+	/**
+	 * Template additional image ids.
+	 *
+	 * @var array
+	 */
+	public $additional_image_ids;
+
+	/**
+	 * Font color.
+	 *
+	 * @var
+	 */
+	public $certificate_font_color;
+
+	/**
+	 * Font size.
+	 *
+	 * @var array
+	 */
+	public $certificate_font_size;
+
+	/**
+	 * Font style.
+	 *
+	 * @var array
+	 */
+	public $certificate_font_style;
+
+	/**
+	 * Font family.
+	 *
+	 * @var array
+	 */
+	public $certificate_font_family;
+
+	/**
+	 * Heading position.
+	 *
+	 * @var array
+	 */
+	public $certificate_heading_pos;
+
+	/**
+	 * Template fields.
+	 *
+	 * @var
+	 */
+	public $certificate_template_fields;
+
+	/**
 	 * __construct function.
 	 *
 	 * @access public

@@ -48,6 +48,8 @@ class TTFontFile
    private $charWidths;
    private $defaultWidth;
    private $maxStrLenRead;
+   private $maxUniChar;
+   private $glyphdata = array();
 
    public function __construct()
    {

@@ -36,7 +36,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 1.0
  */
 class WooThemes_Sensei_PDF_Certificate {
-
 	/**
 	 * @var int preview post id
 	 */
@@ -52,6 +51,19 @@ class WooThemes_Sensei_PDF_Certificate {
 	 */
 	public $certificate_pdf_data;
 
+	/**
+	 * The certificate user data.
+	 *
+	 * @var array
+	 */
+	public $certificate_pdf_data_userdata;
+
+	/**
+	 * The background image path.
+	 *
+	 * @var string|null
+	 */
+	public $bg_image_src;
 
 	/**
 	 * Construct certificate with $hash
