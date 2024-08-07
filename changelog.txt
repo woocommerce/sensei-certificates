@@ -1,5 +1,10 @@
 *** Changelog ***
 
+2024.08.08 - version 2.5.2
+* New: Add certificate data field hooks - #292
+* Fix: Allow certificates to be removed from a course - #353
+* Fix: Certificates not rendering on PHP 8.2 - #354
+
 2023.09.19 - version 2.5.1
 Fix: Missing "View Certificate" link for `sensei_user_courses` shortcode - #348
 
