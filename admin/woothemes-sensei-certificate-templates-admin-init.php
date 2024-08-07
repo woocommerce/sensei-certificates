@@ -224,7 +224,6 @@ function sensei_certificate_template_admin_enqueue_scripts() {
 		);
 
 		if ( 'certificate_template' == $screen->id ) {
-
 			// Get the primary image dimensions (if any) which are needed for the page script.
 			$attachment = null;
 			$image_ids  = get_post_meta( $post->ID, '_image_ids', true );
@@ -237,18 +236,17 @@ function sensei_certificate_template_admin_enqueue_scripts() {
 
 			// Pass parameters into the javascript file.
 			$sensei_certificate_templates_params = array(
-				'_certificate_heading_pos'    => __( 'Heading', 'sensei-certificates' ),
-				'_certificate_message_pos'    => __( 'Message', 'sensei-certificates' ),
-				'_certificate_course_pos'     => __( 'Course', 'sensei-certificates' ),
-				'_certificate_completion_pos' => __( 'Completion Date', 'sensei-certificates' ),
-				'_certificate_place_pos'      => __( 'Place', 'sensei-certificates' ),
-				'done_label'                  => __( 'Done', 'sensei-certificates' ),
-				'set_position_label'          => __( 'Set Position', 'sensei-certificates' ),
-				'post_id'                     => $post->ID,
-				'primary_image_width'         => isset( $attachment['width'] ) && $attachment['width'] ? $attachment['width'] : '0',
-				'primary_image_height'        => isset( $attachment['height'] ) && $attachment['height'] ? $attachment['height'] : '0',
+				'done_label'           => __( 'Done', 'sensei-certificates' ),
+				'set_position_label'   => __( 'Set Position', 'sensei-certificates' ),
+				'post_id'              => $post->ID,
+				'primary_image_width'  => isset( $attachment['width'] ) && $attachment['width'] ? $attachment['width'] : '0',
+				'primary_image_height' => isset( $attachment['height'] ) && $attachment['height'] ? $attachment['height'] : '0',
 			);
 
+			$data_fields = sensei_get_certificate_data_fields();
+			foreach ( $data_fields as $field_key => $field_info ) {
+				$sensei_certificate_templates_params[ "_certificate_{$field_key}_pos" ] = $field_info['name'];
+			}
 		}
 
 		wp_enqueue_script( 'sensei_certificate_templates_admin', $woothemes_sensei_certificates->plugin_url . 'assets/dist/js/admin.js', array( 'jquery' ) );
