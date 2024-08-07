@@ -98,7 +98,7 @@ function certificate_template_data_meta_box( $post ) {
 						array(
 							'id'          => "certificate_{$field_key}_pos",
 							'label'       => $field_info['position_label'],
-							'value'       => implode( ',', $woothemes_sensei_certificate_templates->get_field_position( "certificate_$field_key" ) ),
+							'value'       => implode( ',', $woothemes_sensei_certificate_templates->get_field_position( "certificate_{$field_key}" ) ),
 							'description' => $field_info['position_description'],
 						)
 					);
@@ -106,12 +106,12 @@ function certificate_template_data_meta_box( $post ) {
 						array(
 							'id'    => "_certificate_{$field_key}_pos",
 							'class' => 'field_pos',
-							'value' => implode( ',', $woothemes_sensei_certificate_templates->get_field_position( "certificate_$field_key" ) ),
+							'value' => implode( ',', $woothemes_sensei_certificate_templates->get_field_position( "certificate_{$field_key}" ) ),
 						)
 					);
 					certificate_templates_wp_font_select(
 						array(
-							'id'      => "_certificate_$field_key",
+							'id'      => "_certificate_{$field_key}",
 							'label'   => __( 'Font', 'sensei-certificates' ),
 							'options' => $available_fonts,
 						)
@@ -120,7 +120,9 @@ function certificate_template_data_meta_box( $post ) {
 						array(
 							'id'    => "_certificate_{$field_key}_font_color",
 							'label' => __( 'Font color', 'sensei-certificates' ),
-							'value' => isset( $woothemes_sensei_certificate_templates->certificate_template_fields[ "certificate_$field_key" ]['font']['color'] ) ? $woothemes_sensei_certificate_templates->certificate_template_fields[ "certificate_$field_key" ]['font']['color'] : '',
+							'value' => isset( $woothemes_sensei_certificate_templates->certificate_template_fields[ "certificate_{$field_key}" ]['font']['color'] )
+								? $woothemes_sensei_certificate_templates->certificate_template_fields[ "certificate_{$field_key}" ]['font']['color']
+								: '',
 							'class' => 'colorpick',
 						)
 					);
@@ -133,7 +135,9 @@ function certificate_template_data_meta_box( $post ) {
 							'label'       => $field_info['text_label'],
 							'description' => $field_info['text_description'],
 							'placeholder' => $field_info['text_placeholder'],
-							'value'       => isset( $woothemes_sensei_certificate_templates->certificate_template_fields[ "certificate_$field_key" ]['text'] ) ? $woothemes_sensei_certificate_templates->certificate_template_fields[ "certificate_$field_key" ]['text'] : '',
+							'value'       => isset( $woothemes_sensei_certificate_templates->certificate_template_fields[ "certificate_{$field_key}" ]['text'] )
+								? $woothemes_sensei_certificate_templates->certificate_template_fields[ "certificate_{$field_key}" ]['text']
+								: '',
 						)
 					);
 				echo '</div>';
