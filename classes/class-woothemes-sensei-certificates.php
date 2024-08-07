@@ -43,7 +43,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 class WooThemes_Sensei_Certificates {
-
 	/**
 	 * The single instance of WooThemes_Sensei_Certificates.
 	 *
@@ -73,6 +72,55 @@ class WooThemes_Sensei_Certificates {
 	 * @var string inline js code
 	 */
 	public $_inline_js;
+
+	/**
+	 * Template image ids.
+	 *
+	 * @var array
+	 */
+	public $image_ids;
+
+	/**
+	 * The main template image id.
+	 *
+	 * @var int|null
+	 */
+	public $image_id;
+
+	/**
+	 * Font style.
+	 *
+	 * @var array
+	 */
+	public $certificate_font_style;
+
+	/**
+	 * Font color.
+	 *
+	 * @var array
+	 */
+	public $certificate_font_color;
+
+	/**
+	 * Font size.
+	 *
+	 * @var array
+	 */
+	public $certificate_font_size;
+
+	/**
+	 * Font family.
+	 *
+	 * @var array
+	 */
+	public $certificate_font_family;
+
+	/**
+	 * Template fields.
+	 *
+	 * @var array
+	 */
+	public $certificate_template_fields;
 
 	/**
 	 * __construct function.
@@ -610,6 +658,10 @@ class WooThemes_Sensei_Certificates {
 				) . '">' . esc_html( "{$user->display_name} ({$user->user_login})" ) . '</a>';
 				break;
 			case 'course':
+				if ( ! $course ) {
+					break;
+				}
+
 				echo '<a href="' . esc_url(
 					add_query_arg(
 						array(
@@ -624,6 +676,10 @@ class WooThemes_Sensei_Certificates {
 				echo wp_kses_post( $course_end_date );
 				break;
 			case 'actions':
+				if ( ! $course ) {
+					break;
+				}
+
 				$template_id = get_post_meta( $course_id, '_course_certificate_template', true );
 				if ( $template_id ) {
 					echo '<a href="' . esc_url( get_permalink( $post_ID ) ) . '" target="_blank">' . esc_html__( 'View Certificate', 'sensei-certificates' ) . '</a>';
