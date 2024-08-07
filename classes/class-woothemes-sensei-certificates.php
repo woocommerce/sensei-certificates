@@ -940,7 +940,18 @@ class WooThemes_Sensei_Certificates {
 					$field_value = $this->certificate_template_fields[ $meta_key ]['text'];
 				}
 
-				// Replace the template tags.
+				/**
+				 * Filter the content of each of the data fields before they are written to the PDF.
+				 *
+				 * @since $$next-version$$
+				 *
+				 * @param  string  $field_value The field content.
+				 * @param  string  $field_key The field key.
+				 * @param  WP_User $student The student user object.
+				 * @param  WP_Post $course The course post object.
+				 *
+				 * @return string The field content.
+				 */
 				$field_value = apply_filters( 'sensei_certificate_data_field_value', $field_value, $field_key, $student, $course );
 
 				// Check if the field has a set position.

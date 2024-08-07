@@ -379,5 +379,14 @@ function sensei_get_certificate_data_fields() {
 		),
 	);
 
+	/**
+	 * Filter the certificate fields added to each template.
+	 *
+	 * @since $$next-version$$
+	 *
+	 * @param array $data_fields The certificate fields.
+	 *
+	 * @return array The certificate fields.
+	 */
 	return apply_filters( 'sensei_certificate_data_fields', $data_fields );
 }
