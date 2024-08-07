@@ -73,6 +73,8 @@ class WooThemes_Sensei_Certificates {
 	public $_inline_js;
 
 	/**
+	 * Template image ids.
+	 *
 	 * @var array
 	 */
 	public $image_ids;
@@ -85,26 +87,36 @@ class WooThemes_Sensei_Certificates {
 	public $image_id;
 
 	/**
+	 * Font style.
+	 *
 	 * @var array
 	 */
 	public $certificate_font_style;
 
 	/**
+	 * Font color.
+	 *
 	 * @var array
 	 */
 	public $certificate_font_color;
 
 	/**
+	 * Font size.
+	 *
 	 * @var array
 	 */
 	public $certificate_font_size;
 
 	/**
+	 * Font family.
+	 *
 	 * @var array
 	 */
 	public $certificate_font_family;
 
 	/**
+	 * Template fields.
+	 *
 	 * @var array
 	 */
 	public $certificate_template_fields;

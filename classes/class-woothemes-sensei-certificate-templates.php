@@ -125,7 +125,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	public $certificate_heading_pos;
 
 	/**
-	 * Template post meta fields
+	 * Template fields.
 	 *
 	 * @var
 	 */
