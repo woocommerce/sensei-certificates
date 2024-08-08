@@ -326,7 +326,7 @@ function sensei_create_master_certificate_template() {
 /**
  * Gets the data fields that are applied to each certificate.
  *
- * @since $$next-version$$
+ * @since 2.5.2
  *
  * @return array
  */
@@ -382,7 +382,7 @@ function sensei_get_certificate_data_fields() {
 	/**
 	 * Filter the certificate fields added to each template.
 	 *
-	 * @since $$next-version$$
+	 * @since 2.5.2
 	 *
 	 * @param array $data_fields The certificate fields.
 	 *

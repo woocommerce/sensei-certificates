@@ -850,7 +850,7 @@ class WooThemes_Sensei_Certificates {
 	 * Replace template tags on certificate data fields.
 	 *
 	 * @access public
-	 * @since  $$next-version$$
+	 * @since  2.5.2
 	 *
 	 * @param string       $field_value The data field value.
 	 * @param string       $field_key   The data field key.
@@ -999,7 +999,7 @@ class WooThemes_Sensei_Certificates {
 				/**
 				 * Filter the content of each of the data fields before they are written to the PDF.
 				 *
-				 * @since $$next-version$$
+				 * @since 2.5.2
 				 *
 				 * @param  string  $field_value The field content.
 				 * @param  string  $field_key The field key.
