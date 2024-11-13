@@ -191,9 +191,11 @@ class WooThemes_Sensei_Certificate_Templates {
 	 * @access public
 	 * @since 1.0
 	 * @param string $locate locate path
+	 * @param string $type type of template
+	 *
 	 * @return string the location path for the certificate template preview file
 	 */
-	public function certificate_templates_locate_preview_template( $locate, $type, $templates ) {
+	public function certificate_templates_locate_preview_template( $locate, $type ) {
 
 		$post_type = get_query_var( 'post_type' );
 
