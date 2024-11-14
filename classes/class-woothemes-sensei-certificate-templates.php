@@ -162,7 +162,7 @@ class WooThemes_Sensei_Certificate_Templates {
 		}
 
 		// Preview Template
-		add_filter( 'single_template', array( $this, 'certificate_templates_locate_preview_template' ) );
+		add_filter( 'single_template', array( $this, 'certificate_templates_locate_preview_template' ), 10, 2 );
 
 	}
 
@@ -191,18 +191,19 @@ class WooThemes_Sensei_Certificate_Templates {
 	 * @access public
 	 * @since 1.0
 	 * @param string $locate locate path
+	 * @param string $type type of template
+	 *
 	 * @return string the location path for the certificate template preview file
 	 */
-	function certificate_templates_locate_preview_template( $locate ) {
+	public function certificate_templates_locate_preview_template( $locate, $type ) {
 
 		$post_type = get_query_var( 'post_type' );
 
-		if ( 'certificate_template' == $post_type && strpos( $locate, 'single.php' ) ) {
+		if ( 'certificate_template' === $post_type && 'single' === $type ) {
 			$locate = $this->plugin_path() . '/templates/single-certificate_template.php';
 		}
 
 		return $locate;
-
 	}
 
 
