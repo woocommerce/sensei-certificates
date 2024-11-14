@@ -162,7 +162,7 @@ class WooThemes_Sensei_Certificate_Templates {
 		}
 
 		// Preview Template
-		add_filter( 'single_template', array( $this, 'certificate_templates_locate_preview_template' ), 10, 3 );
+		add_filter( 'single_template', array( $this, 'certificate_templates_locate_preview_template' ), 10, 2 );
 
 	}
 
