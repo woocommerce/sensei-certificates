@@ -1,5 +1,8 @@
 *** Changelog ***
 
+2024.11.14 - version 2.5.3
+* Fix: Adjust the template check for the Certificate Template preview - #362
+
 2024.08.08 - version 2.5.2
 * New: Add certificate data field hooks - #292
 * Fix: Allow certificates to be removed from a course - #353

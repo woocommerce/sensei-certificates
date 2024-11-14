@@ -1,10 +1,10 @@
 === Sensei LMS Certificates ===
 Contributors: automattic, alexsanford1, donnapep, jakeom, gikaragia, renathoc, yscik, m1r0, aaronfc
 Tags: certificates, course certificate, sensei lms
-Requires at least: 6.4
-Tested up to: 6.6
+Requires at least: 6.5
+Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 2.5.2
+Stable tag: 2.5.3
 License: GPLv2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
