@@ -66,4 +66,22 @@ class Woothemes_Sensei_Certificates_Utils {
 			$date_format
 		);
 	}
+
+	/**
+	 * Convert UTF-8 text to ISO-8859-1 with transliteration.
+	 *
+	 * Falls back to the original string if conversion fails.
+	 *
+	 * @param string $value Text to convert.
+	 * @return string
+	 */
+	public static function convert_utf8_to_latin1( $value ) {
+		if ( ! $value || ! is_string( $value ) ) {
+			return $value;
+		}
+
+		$converted = iconv( 'UTF-8', 'ISO-8859-1//TRANSLIT', $value );
+
+		return false === $converted ? $value : $converted;
+	}
 }

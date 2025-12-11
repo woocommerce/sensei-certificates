@@ -253,7 +253,7 @@ class WooThemes_Sensei_PDF_Certificate {
 
 			// Decode string based on font type
 			if ( 'latin' == $fonttype ) {
-				$value = utf8_decode( $value );
+				$value = Woothemes_Sensei_Certificates_Utils::convert_utf8_to_latin1( $value );
 			}
 
 			// and write out the value
@@ -284,7 +284,7 @@ class WooThemes_Sensei_PDF_Certificate {
 			$fpdf->setXY( $x, $y );
 
 			// and write out the value
-			$fpdf->Image( esc_url( utf8_decode( $value ) ), $x, $y, $w, $h );
+			$fpdf->Image( esc_url( Woothemes_Sensei_Certificates_Utils::convert_utf8_to_latin1( $value ) ), $x, $y, $w, $h );
 
 		} // End If Statement
 
@@ -382,7 +382,7 @@ class WooThemes_Sensei_PDF_Certificate {
 
 			// Decode string based on font type
 			if ( 'latin' == $fonttype ) {
-				$value = utf8_decode( $value );
+				$value = Woothemes_Sensei_Certificates_Utils::convert_utf8_to_latin1( $value );
 			}
 
 			// and write out the value
@@ -456,7 +456,7 @@ class WooThemes_Sensei_PDF_Certificate {
 
 			// Decode string based on font type
 			if ( 'latin' == $fonttype ) {
-				$value = utf8_decode( $value );
+				$value = Woothemes_Sensei_Certificates_Utils::convert_utf8_to_latin1( $value );
 			}
 
 			// and write out the value
