@@ -671,7 +671,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 			// Decode string based on font type
 			if ( 'latin' == $fonttype ) {
-				$value = utf8_decode( $value );
+				$value = Woothemes_Sensei_Certificates_Utils::convert_utf8_to_latin1( $value );
 			}
 
 			// and write out the value
@@ -772,7 +772,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 			// Decode string based on font type
 			if ( 'latin' == $fonttype ) {
-				$value = utf8_decode( $value );
+				$value = Woothemes_Sensei_Certificates_Utils::convert_utf8_to_latin1( $value );
 			}
 
 			// and write out the value
