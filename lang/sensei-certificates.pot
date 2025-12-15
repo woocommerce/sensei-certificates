@@ -1,17 +1,17 @@
-# Copyright (C) 2024 Automattic
+# Copyright (C) 2025 Automattic
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Sensei LMS Certificates 2.5.3\n"
+"Project-Id-Version: Sensei LMS Certificates 2.5.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sensei-certificates\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-11-14T15:56:22+00:00\n"
+"POT-Creation-Date: 2025-12-15T17:25:44+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: sensei-certificates\n"
 
 #. Plugin Name of the plugin
@@ -262,6 +262,7 @@ msgstr ""
 
 #. translators: %s is replaced with the formatted date timestamp of a certificate template revision
 #: admin/woothemes-sensei-certificate-templates-admin-init.php:285
+#, php-format
 msgid "Certificate Template restored to revision from %s"
 msgstr ""
 
@@ -275,6 +276,7 @@ msgstr ""
 
 #. translators: %1$s is replaced with the date on which the certificate template is scheduled to be published
 #: admin/woothemes-sensei-certificate-templates-admin-init.php:291
+#, php-format
 msgid "Certificate Template scheduled for: <strong>%1$s</strong>."
 msgstr ""
 
@@ -372,11 +374,13 @@ msgstr ""
 
 #. translators: %s is replaced with the title of the certificate template
 #: classes/class-woothemes-sensei-certificate-templates.php:975
+#, php-format
 msgid "Edit %s"
 msgstr ""
 
 #. translators: %1$s is version of PHP that this plugin requires; %2$s is the version of PHP WordPress is running on.
 #: classes/class-woothemes-sensei-certificates-dependency-checker.php:92
+#, php-format
 msgid "<strong>Sensei LMS Certificates</strong> requires a minimum PHP version of %1$s, but you are running %2$s."
 msgstr ""
 
@@ -391,6 +395,7 @@ msgstr ""
 
 #. translators: %1$s is the minimum version number of Sensei that is required.
 #: classes/class-woothemes-sensei-certificates-dependency-checker.php:123
+#, php-format
 msgid "<strong>Sensei LMS Certificates</strong> requires that the plugin <strong>Sensei</strong> (minimum version: <strong>%1$s</strong>) is installed and activated."
 msgstr ""
 
@@ -480,6 +485,7 @@ msgstr ""
 
 #. translators: %1$s is the URL for editing the Course.
 #: classes/class-woothemes-sensei-certificates.php:690
+#, php-format
 msgid "Set a certificate template on the <a href=\"%1$s\">course</a> in order to view this certificate"
 msgstr ""
 
@@ -534,6 +540,7 @@ msgstr ""
 
 #. translators: Placeholder %d is the percentage complete.
 #: classes/tools/class-sensei-certificates-tool-create-certificates.php:91
+#, php-format
 msgid "This task is running in the background and is %d%% complete."
 msgstr ""
 
