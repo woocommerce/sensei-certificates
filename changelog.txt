@@ -1,7 +1,7 @@
 *** Changelog ***
 
 2025.12.15 - version 2.5.4
-* Fix: PHP 8.2 utf8_decode deprecation notice
+* Fix: PHP 8.2 utf8_decode deprecation notice - #369
 
 
 2024.11.14 - version 2.5.3
