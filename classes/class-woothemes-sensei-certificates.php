@@ -1489,7 +1489,6 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function certificates_user_settings_save() {
 		global $current_user;
-		// phpcs:ignore WordPress.VIP.ValidatedSanitizedInput.InputNotSanitized
 		if (
 			is_user_logged_in()
 			&& isset( $_POST['certificates_user_meta_save'] )

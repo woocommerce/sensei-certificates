@@ -6,7 +6,6 @@
  * @package Sensei_Certificates
  */
 
-// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_read_fwrite, WordPress.WP.AlternativeFunctions.file_system_read_fread, WordPress.WP.AlternativeFunctions.file_system_read_fopen, WordPress.WP.AlternativeFunctions.file_system_read_fclose, WordPress.VIP.FileSystemWritesDisallow
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -65,6 +64,7 @@ class VIP_tFPDF extends tFPDF\PDF {
 	 * @return void
 	 */
 	public function Image( $file = '', $x = null, $y = null, $w = 0, $h = 0, $type = '', $link = '' ) {
+		// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_is_writable, WordPress.WP.AlternativeFunctions.file_system_operations_fopen, WordPress.WP.AlternativeFunctions.file_system_operations_fwrite, WordPress.WP.AlternativeFunctions.file_system_operations_fclose, WordPress.WP.AlternativeFunctions.unlink_unlink -- Writes to the system temp dir so tFPDF can read a real file path; WP_Filesystem cannot provide one.
 		global $wp_filesystem;
 		if ( ! is_writable( sys_get_temp_dir() ) ) {
 			$this->Error( 'Unable to access the file system' );
@@ -78,6 +78,7 @@ class VIP_tFPDF extends tFPDF\PDF {
 		fclose( $fhandle );
 		parent::Image( $file, $x, $y, $w, $h, $type, $link );
 		unlink( $file );
+		// phpcs:enable WordPress.WP.AlternativeFunctions.file_system_operations_is_writable, WordPress.WP.AlternativeFunctions.file_system_operations_fopen, WordPress.WP.AlternativeFunctions.file_system_operations_fwrite, WordPress.WP.AlternativeFunctions.file_system_operations_fclose, WordPress.WP.AlternativeFunctions.unlink_unlink
 	}
 
 	/**
