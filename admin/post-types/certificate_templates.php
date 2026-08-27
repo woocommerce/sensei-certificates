@@ -144,6 +144,7 @@ function certificate_template_custom_certificate_columns( $column ) { // phpcs:i
 				}
 			} // End If Statement
 
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Re-applies the WordPress core post_row_actions filter.
 			$actions = apply_filters( 'post_row_actions', $actions, $post );
 
 			echo '<div class="row-actions">';

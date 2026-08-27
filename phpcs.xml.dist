@@ -36,4 +36,8 @@
 			</property>
 		</properties>
 	</rule>
+	<!-- This template follows WordPress's single-{post_type}.php convention for the certificate_template post type, so its filename cannot be hyphenated. -->
+	<rule ref="WordPress.Files.FileName.NotHyphenatedLowercase">
+		<exclude-pattern>templates/single-certificate_template.php</exclude-pattern>
+	</rule>
 </ruleset>
