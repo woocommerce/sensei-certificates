@@ -25,7 +25,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 /**
@@ -136,7 +136,7 @@ class WooThemes_Sensei_PDF_Certificate {
 		} // End If Statement
 		// Create the pdf
 		// TODO: we're assuming a standard DPI here of where 1 point = 1/72 inch = 1 pixel
-		// When writing text to a Cell, the text is vertically-aligned in the middle
+		// When writing text to a Cell, the text is vertically-aligned in the middle.
 		$fpdf = Woothemes_Sensei_Certificates_TFPDF::get_tfpdf_object(
 			$orientation,
 			'pt',
@@ -146,23 +146,20 @@ class WooThemes_Sensei_PDF_Certificate {
 		$fpdf->AddPage();
 		$fpdf->SetAutoPageBreak( false );
 
-		// Add custom font
 		$custom_font = apply_filters( 'sensei_certificates_custom_font', false );
 		if ( $custom_font ) {
 			if ( isset( $custom_font['family'] ) && isset( $custom_font['file'] ) ) {
 				$fpdf->AddFont( $custom_font['family'], '', $custom_font['file'], true );
 			}
 		} else {
-			// Add multibyte font
 			$fpdf->AddFont( 'DejaVu', '', 'DejaVuSansCondensed.ttf', true );
 		}
 
-		// Set the border image as the background
+		// Set the border image as the background.
 		$fpdf->Image( $image, 0, 0, $image_attr[0], $image_attr[1] );
 
 		do_action( 'sensei_certificates_before_pdf_output', $this, $fpdf );
 
-		// download file
 		Woothemes_Sensei_Certificates_TFPDF::output_to_http(
 			$fpdf,
 			'certificate-preview-' . $this->hash . '.pdf'
@@ -196,7 +193,7 @@ class WooThemes_Sensei_PDF_Certificate {
 
 			} // End If Statement
 
-			// Test each font element
+			// Test each font element.
 			if ( empty( $font['font_color'] ) ) {
 				$font['font_color'] = $this->certificate_pdf_data['font_color']; }
 			if ( empty( $font['font_family'] ) ) {
@@ -206,14 +203,12 @@ class WooThemes_Sensei_PDF_Certificate {
 			if ( empty( $font['font_size'] ) ) {
 				$font['font_size'] = $this->certificate_pdf_data['font_size']; }
 
-			// get the field position
 			list( $x, $y, $w, $h ) = $position;
 
-			// font color
 			$font_color = $this->hex2rgb( $font['font_color'] );
 			$fpdf->SetTextColor( $font_color[0], $font_color[1], $font_color[2] );
 
-			// Check for Border and Center align
+			// Check for Border and Center align.
 			$border = 0;
 			$center = 'J';
 			if ( isset( $font['font_style'] ) && ! empty( $font['font_style'] ) && false !== strpos( $font['font_style'], 'C' ) ) {
@@ -227,7 +222,7 @@ class WooThemes_Sensei_PDF_Certificate {
 
 			$custom_font = $this->set_custom_font( $fpdf, $font );
 
-			// Set the field text styling based on the font type
+			// Set the field text styling based on the font type.
 			$fonttype = '';
 			if ( ! $custom_font ) {
 				$fonttype = $this->get_font_type( $value );
@@ -251,12 +246,11 @@ class WooThemes_Sensei_PDF_Certificate {
 				$fpdf->SetDrawColor( $font_color[0], $font_color[1], $font_color[2] );
 			}
 
-			// Decode string based on font type
+			// Decode string based on font type.
 			if ( 'latin' == $fonttype ) {
 				$value = Woothemes_Sensei_Certificates_Utils::convert_utf8_to_latin1( $value );
 			}
 
-			// and write out the value
 			$fpdf->Multicell( $w, $font['font_size'], $value, $show_border, $center );
 
 		} // End If Statement
@@ -277,12 +271,10 @@ class WooThemes_Sensei_PDF_Certificate {
 
 		if ( $value ) {
 
-			// get the field position
 			list( $x, $y, $w, $h ) = $position;
 
 			$fpdf->setXY( $x, $y );
 
-			// and write out the value
 			$fpdf->Image( esc_url( Woothemes_Sensei_Certificates_Utils::convert_utf8_to_latin1( $value ) ), $x, $y, $w, $h );
 
 		} // End If Statement
@@ -315,7 +307,7 @@ class WooThemes_Sensei_PDF_Certificate {
 
 			} // End If Statement
 
-			// Test each font element
+			// Test each font element.
 			if ( empty( $font['font_color'] ) ) {
 				$font['font_color'] = $this->certificate_pdf_data['font_color']; }
 			if ( empty( $font['font_family'] ) ) {
@@ -325,14 +317,12 @@ class WooThemes_Sensei_PDF_Certificate {
 			if ( empty( $font['font_size'] ) ) {
 				$font['font_size'] = $this->certificate_pdf_data['font_size']; }
 
-			// get the field position
 			list( $x, $y, $w, $h ) = $position;
 
-			// font color
 			$font_color = $this->hex2rgb( $font['font_color'] );
 			$fpdf->SetTextColor( $font_color[0], $font_color[1], $font_color[2] );
 
-			// Check for Border and Center align
+			// Check for Border and Center align.
 			$border = 0;
 			$center = 'J';
 			if ( isset( $font['font_style'] ) && ! empty( $font['font_style'] ) && false !== strpos( $font['font_style'], 'C' ) ) {
@@ -346,7 +336,7 @@ class WooThemes_Sensei_PDF_Certificate {
 
 			$custom_font = $this->set_custom_font( $fpdf, $font );
 
-			// Set the field text styling based on the font type
+			// Set the field text styling based on the font type.
 			$fonttype = '';
 			if ( ! $custom_font ) {
 				$fonttype = $this->get_font_type( $value );
@@ -363,7 +353,7 @@ class WooThemes_Sensei_PDF_Certificate {
 				}
 			}
 
-			// show a border for debugging purposes
+			// show a border for debugging purposes.
 			if ( $show_border ) {
 				$fpdf->setXY( $x, $y );
 				$fpdf->Cell( $w, $h, '', 1 );
@@ -374,16 +364,15 @@ class WooThemes_Sensei_PDF_Certificate {
 				$fpdf->SetDrawColor( $font_color[0], $font_color[1], $font_color[2] );
 			} // End If Statement
 
-			// align the text to the bottom edge of the cell by translating as needed
+			// align the text to the bottom edge of the cell by translating as needed.
 			$y = $font['font_size'] > $h ? $y - ( $font['font_size'] - $h ) / 2 : $y + ( $h - $font['font_size'] ) / 2;
 			$fpdf->setXY( $x, $y );
 
-			// Decode string based on font type
+			// Decode string based on font type.
 			if ( 'latin' == $fonttype ) {
 				$value = Woothemes_Sensei_Certificates_Utils::convert_utf8_to_latin1( $value );
 			}
 
-			// and write out the value
 			$fpdf->Cell( $w, $h, $value, $show_border, $position, $center );
 
 		} // End If Statement
@@ -415,16 +404,14 @@ class WooThemes_Sensei_PDF_Certificate {
 
 			} // End If Statement
 
-			// get the field position
 			list( $x, $y, $w, $h ) = $position;
 
-			// font color
 			$font_color = $this->hex2rgb( $font['font_color'] );
 			$fpdf->SetTextColor( $font_color[0], $font_color[1], $font_color[2] );
 
 			$custom_font = $this->set_custom_font( $fpdf, $font );
 
-			// Set the field text styling based on the font type
+			// Set the field text styling based on the font type.
 			$fonttype = '';
 			if ( ! $custom_font ) {
 				$fonttype = $this->get_font_type( $value );
@@ -441,22 +428,21 @@ class WooThemes_Sensei_PDF_Certificate {
 				}
 			}
 
-			// show a border for debugging purposes
+			// show a border for debugging purposes.
 			if ( $show_border ) {
 				$fpdf->setXY( $x, $y );
 				$fpdf->Cell( $w, $h, '', 1 );
 			} // End If Statement
 
-			// align the text to the bottom edge of the cell by translating as needed
+			// align the text to the bottom edge of the cell by translating as needed.
 			$y = $font['font_size'] > $h ? $y - ( $font['font_size'] - $h ) / 2 : $y + ( $h - $font['font_size'] ) / 2;
 			$fpdf->setXY( $x, $y );
 
-			// Decode string based on font type
+			// Decode string based on font type.
 			if ( 'latin' == $fonttype ) {
 				$value = Woothemes_Sensei_Certificates_Utils::convert_utf8_to_latin1( $value );
 			}
 
-			// and write out the value
 			$fpdf->Cell( $w, $h, $value );
 
 		} // End If Statement

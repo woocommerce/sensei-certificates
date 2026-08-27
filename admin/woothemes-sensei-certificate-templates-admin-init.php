@@ -87,7 +87,7 @@ function sensei_certificate_template_admin_init() {
 
 		include_once 'post-types/writepanels/writepanels-init.php';
 
-		// add certificate list/edit pages contextual help
+		// add certificate list/edit pages contextual help.
 		add_action( 'admin_print_styles', 'sensei_certificate_template_admin_help_tab' );
 
 	}

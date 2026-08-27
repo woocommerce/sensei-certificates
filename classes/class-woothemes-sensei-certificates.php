@@ -1,6 +1,6 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 /**
@@ -131,7 +131,6 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function __construct() {
 
-		// Defaults
 		$this->plugin_url  = trailingslashit( plugins_url( '', SENSEI_CERTIFICATES_PLUGIN_FILE ) );
 		$this->plugin_path = plugin_dir_path( SENSEI_CERTIFICATES_PLUGIN_FILE );
 
@@ -172,11 +171,10 @@ class WooThemes_Sensei_Certificates {
 
 		add_action( 'sensei_certificates_run_installer', array( $instance, 'install' ) );
 
-		// Hook onto Sensei settings and load a new tab with settings for extension
+		// Hook onto Sensei settings and load a new tab with settings for extension.
 		add_filter( 'sensei_settings_tabs', array( $instance, 'certificates_settings_tabs' ) );
 		add_filter( 'sensei_settings_fields', array( $instance, 'certificates_settings_fields' ) );
 
-		// Setup post type
 		add_action( 'init', array( $instance, 'setup_certificates_post_type' ), 110 );
 		add_filter( 'manage_edit-certificate_columns', array( $instance, 'post_type_custom_column_headings' ) );
 		add_action( 'manage_certificate_posts_custom_column', array( $instance, 'post_type_custom_column_content' ), 10, 2 );
@@ -185,17 +183,15 @@ class WooThemes_Sensei_Certificates {
 		 * FRONTEND
 		 */
 
-		// Filters
 		add_filter( 'sensei_user_course_status_passed', array( $instance, 'certificate_link' ), 10, 1 );
 		add_filter( 'sensei_results_links', array( $instance, 'certificate_link' ), 10, 3 );
 
-		// Actions
 		add_action( 'wp_enqueue_scripts', array( $instance, 'enqueue_styles' ) );
 		add_action( 'sensei_user_lesson_reset', array( $instance, 'reset_lesson_course_certificate' ), 10, 2 );
 		add_action( 'sensei_user_course_reset', array( $instance, 'reset_course_certificate' ), 10, 2 );
-		// Create certificate endpoint and handle generation of pdf certificate
+		// Create certificate endpoint and handle generation of pdf certificate.
 		add_action( 'template_redirect', array( $instance, 'download_certificate' ) );
-		// User settings output and save handling
+		// User settings output and save handling.
 		add_action( 'sensei_learner_profile_info', array( $instance, 'certificates_user_settings_form' ), 10, 1 );
 		add_action( 'sensei_complete_course', array( $instance, 'certificates_user_settings_save' ), 10 );
 		add_action( 'sensei_frontend_messages', array( $instance, 'certificates_user_settings_messages' ), 10 );
@@ -209,7 +205,6 @@ class WooThemes_Sensei_Certificates {
 		 * BACKEND
 		 */
 		if ( is_admin() ) {
-			// Add Certificates Menu
 			add_action( 'sensei_analysis_course_columns', array( $instance, 'create_columns' ), 10, 2 );
 			add_action( 'sensei_analysis_course_column_data', array( $instance, 'populate_columns' ), 10, 3 );
 			add_filter( 'sensei_scripts_allowed_post_types', array( $instance, 'include_sensei_scripts' ), 10, 1 );
@@ -234,14 +229,13 @@ class WooThemes_Sensei_Certificates {
 
 		// Generate certificate hash when course is completed.
 		add_action( 'sensei_course_status_updated', array( $instance, 'handle_course_completed' ), 9, 3 );
-		// Background Image to display on certificate
+		// Background Image to display on certificate.
 		add_action( 'sensei_certificates_set_background_image', array( $instance, 'certificate_background' ), 10, 1 );
 		// Certificate data field tag replacement.
 		add_filter( 'sensei_certificate_data_field_value', array( $instance, 'replace_data_field_template_tags' ), 10, 5 );
-		// Text to display on certificate
+		// Text to display on certificate.
 		add_action( 'sensei_certificates_before_pdf_output', array( $instance, 'certificate_text' ), 10, 2 );
 
-		// Blocks
 		add_action( 'enqueue_block_editor_assets', array( $instance, 'enqueue_block_editor_assets' ) );
 		add_filter( 'render_block', array( $instance, 'update_view_certificate_button_url' ), 10, 2 );
 		add_filter( 'sensei_course_completed_page_template', array( $instance, 'add_certificate_button_to_course_completed_template' ) );
@@ -390,7 +384,7 @@ class WooThemes_Sensei_Certificates {
 
 		update_option( 'sensei_certificates_version', SENSEI_CERTIFICATES_VERSION );
 
-		// Check if the installer has already been run
+		// Check if the installer has already been run.
 		$sensei_certificates_user_data_installed = get_option( 'sensei_certificate_user_data_installer', false );
 		$sensei_certificate_templates_installed  = get_option( 'sensei_certificate_templates_installer', false );
 		$user_count                              = count_users();
@@ -431,7 +425,7 @@ class WooThemes_Sensei_Certificates {
 			unset( $menu_order[ $item_to_move ] );
 		}
 
-		// Loop through menu order and do some rearranging
+		// Loop through menu order and do some rearranging.
 		foreach ( $menu_order as $k => $v ) {
 			if ( $v == $item_before ) {
 				$new_order[] = $v;
@@ -441,7 +435,6 @@ class WooThemes_Sensei_Certificates {
 			}
 		}
 
-		// Return order
 		return $new_order;
 	}
 
@@ -770,7 +763,7 @@ class WooThemes_Sensei_Certificates {
 
 		$learner_id = get_post_meta( intval( $certificate_id ), 'learner_id', true );
 
-		// Check if student can only view certificate
+		// Check if student can only view certificate.
 		$grant_access      = Sensei()->settings->settings['certificates_public_viewable'];
 		$grant_access_user = get_user_option( 'sensei_certificates_view_by_public', $learner_id );
 
@@ -819,7 +812,6 @@ class WooThemes_Sensei_Certificates {
 				$hash = $hash_meta;
 			}
 
-			// Generate the certificate here
 			require_once 'class-woothemes-sensei-pdf-certificate.php';
 			$pdf = new WooThemes_Sensei_PDF_Certificate( $hash );
 			$pdf->generate_pdf();
@@ -905,7 +897,7 @@ class WooThemes_Sensei_Certificates {
 		$show_border    = apply_filters( 'woothemes_sensei_certificates_show_border', 0 );
 		$start_position = 200;
 
-		// Find certificate based on hash
+		// Find certificate based on hash.
 		$args = array(
 			'post_type'  => 'certificate',
 			'meta_key'   => 'certificate_hash',
@@ -926,11 +918,9 @@ class WooThemes_Sensei_Certificates {
 
 		if ( 0 < intval( $certificate_id ) ) {
 
-			// Get Student Data
 			$user_id = get_post_meta( $certificate_id, 'learner_id', true );
 			$student = get_userdata( $user_id );
 
-			// Get Course Data
 			$course_id       = get_post_meta( $certificate_id, 'course_id', true );
 			$course          = get_post( $course_id );
 			$course_end      = Sensei_Utils::sensei_check_for_activity(
@@ -943,12 +933,11 @@ class WooThemes_Sensei_Certificates {
 			);
 			$course_end_date = $course_end->comment_date;
 
-			// Get the certificate template
 			$certificate_template_id = get_post_meta( $course_id, '_course_certificate_template', true );
 
 			$certificate_template_custom_fields = get_post_custom( $certificate_template_id );
 
-			// Define the data we're going to load: Key => Default value
+			// Define the data we're going to load: Key => Default value.
 			$load_data = array(
 				'certificate_font_style'      => '',
 				'certificate_font_color'      => '',
@@ -958,15 +947,13 @@ class WooThemes_Sensei_Certificates {
 				'certificate_template_fields' => array(),
 			);
 
-			// Load the data from the custom fields
 			foreach ( $load_data as $key => $default ) {
 
-				// set value from db (unserialized if needed) or use default
+				// set value from db (unserialized if needed) or use default.
 				$this->$key = ( isset( $certificate_template_custom_fields[ '_' . $key ][0] ) && '' !== $certificate_template_custom_fields[ '_' . $key ][0] ) ? ( is_array( $default ) ? maybe_unserialize( $certificate_template_custom_fields[ '_' . $key ][0] ) : $certificate_template_custom_fields[ '_' . $key ][0] ) : $default;
 
 			} // End For Loop
 
-			// Set default fonts
 			if ( isset( $this->certificate_font_color ) && '' != $this->certificate_font_color ) {
 				$pdf_certificate->certificate_pdf_data['font_color'] = $this->certificate_font_color; }
 			if ( isset( $this->certificate_font_size ) && '' != $this->certificate_font_size ) {
@@ -1033,7 +1020,7 @@ class WooThemes_Sensei_Certificates {
 
 		$start_position = 200;
 
-		// Find certificate based on hash
+		// Find certificate based on hash.
 		$args = array(
 			'post_type'  => 'certificate',
 			'meta_key'   => 'certificate_hash',
@@ -1050,33 +1037,29 @@ class WooThemes_Sensei_Certificates {
 
 		wp_reset_query();
 
-		// Get Course Data
 		$course_id = get_post_meta( $certificate_id, 'course_id', true );
 
-		// Get the certificate template
 		$certificate_template_id = get_post_meta( $course_id, '_course_certificate_template', true );
 
 		$certificate_template_custom_fields = get_post_custom( $certificate_template_id );
 
-		// Define the data we're going to load: Key => Default value
+		// Define the data we're going to load: Key => Default value.
 		$load_data = array(
 			'image_ids' => array(),
 		);
 
-		// Load the data from the custom fields
 		foreach ( $load_data as $key => $default ) {
 
-			// set value from db (unserialized if needed) or use default
+			// set value from db (unserialized if needed) or use default.
 			$this->$key = ( isset( $certificate_template_custom_fields[ '_' . $key ][0] ) && '' !== $certificate_template_custom_fields[ '_' . $key ][0] ) ? ( is_array( $default ) ? maybe_unserialize( $certificate_template_custom_fields[ '_' . $key ][0] ) : $certificate_template_custom_fields[ '_' . $key ][0] ) : $default;
 
 		} // End For Loop
 
-		// set the certificate main template image, if any
+		// set the certificate main template image, if any.
 		if ( count( $this->image_ids ) > 0 ) {
 			$this->image_id = $this->image_ids[0];
 		} // End If Statement
 
-		// Logo image
 		if ( isset( $this->image_id ) && is_numeric( $this->image_id ) && 0 < intval( $this->image_id ) ) {
 			$pdf_certificate->bg_image_src = get_attached_file( $this->image_id );
 		}
@@ -1157,10 +1140,10 @@ class WooThemes_Sensei_Certificates {
 		$view_link_profile  = Sensei()->settings->settings['certificates_view_profile'];
 		$is_viewable        = false;
 
-		if ( ( 'page' == get_post_type( $my_courses_page_id ) // My Courses page
-			|| is_singular( 'course' ) // Single course page
-			|| isset( $wp_query->query_vars['course_results'] ) ) && $view_link_courses // Course results page
-			|| isset( $wp_query->query_vars['learner_profile'] ) && $view_link_profile ) { // Learner profile page
+		if ( ( 'page' == get_post_type( $my_courses_page_id ) // My Courses page.
+			|| is_singular( 'course' ) // Single course page.
+			|| isset( $wp_query->query_vars['course_results'] ) ) && $view_link_courses // Course results page.
+			|| isset( $wp_query->query_vars['learner_profile'] ) && $view_link_profile ) { // Learner profile page.
 			$is_viewable = true;
 		}
 
@@ -1347,12 +1330,10 @@ class WooThemes_Sensei_Certificates {
 
 			echo "<!-- Sensei LMS Certificates JavaScript-->\n<script type=\"text/javascript\">\njQuery(document).ready(function($) {";
 
-			// Sanitize
 			$this->_inline_js = wp_check_invalid_utf8( $this->_inline_js );
 			$this->_inline_js = preg_replace( '/&#(x)?0*(?(1)27|39);?/i', "'", $this->_inline_js );
 			$this->_inline_js = str_replace( "\r", '', $this->_inline_js );
 
-			// Output
 			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Custom sanitization above.
 			echo $this->_inline_js;
 
@@ -1413,7 +1394,7 @@ class WooThemes_Sensei_Certificates {
 
 		if ( 0 < $user_id && 0 < $course_id ) {
 
-			// Get a list of all Certificates for the Course for the User
+			// Get a list of all Certificates for the Course for the User.
 			$certificates_array = array();
 
 			$certificate_args   = array(
@@ -1440,7 +1421,7 @@ class WooThemes_Sensei_Certificates {
 
 			if ( is_array( $certificates_array ) && ! empty( $certificates_array ) ) {
 
-				// Loop and delete all existing certificates
+				// Loop and delete all existing certificates.
 				foreach ( $certificates_array as $key => $certificate_id ) {
 
 					$dataset_changes = wp_delete_post( $certificate_id, true );
@@ -1461,10 +1442,10 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function certificates_user_settings_form( $user ) {
 
-		// Check if certificates can be made public on this site
+		// Check if certificates can be made public on this site.
 		$grant_access = Sensei()->settings->settings['certificates_public_viewable'];
 
-		// Restrict to current logged in user only
+		// Restrict to current logged in user only.
 		$current_user_id = get_current_user_id();
 		if ( $user->ID == $current_user_id && is_user_logged_in() && true == (bool) $grant_access ) {
 
@@ -1501,7 +1482,6 @@ class WooThemes_Sensei_Certificates {
 			&& wp_verify_nonce( wp_unslash( $_POST['woothemes_sensei_certificates_user_meta_save_noonce'] ), 'woothemes_sensei_certificates_user_meta_save_noonce' )
 		) {
 
-			// Update the user meta with the setting
 			$current_user    = wp_get_current_user();
 			$current_user_id = intval( $current_user->ID );
 

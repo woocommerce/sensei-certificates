@@ -19,7 +19,7 @@ class Woothemes_Sensei_Certificate_Data_Store {
 			include_once 'class-woothemes-sensei-certificates-utils.php';
 		}
 		$certificate_hash = Woothemes_Sensei_Certificates_Utils::get_certificate_hash( $course_id, $user_id );
-		// check if user certificate already exists
+		// check if user certificate already exists.
 		$certificate_query = new WP_Query(
 			array(
 				'post_type'      => 'certificate',
@@ -32,7 +32,6 @@ class Woothemes_Sensei_Certificate_Data_Store {
 			return new WP_Error( 'sensei_certificates_duplicate' );
 		}
 
-		// Insert custom post type
 		$cert_args = array(
 			'post_author' => intval( $user_id ),
 			'post_title'  => $certificate_hash,

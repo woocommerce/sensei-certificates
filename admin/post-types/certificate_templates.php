@@ -29,7 +29,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 /**
@@ -66,7 +66,7 @@ function certificate_template_edit_certificate_bulk_actions( $actions ) {
  */
 function certificate_template_edit_certificate_views( $views ) {
 
-	// publish and private are not important distinctions for certificate templates
+	// publish and private are not important distinctions for certificate templates.
 	unset( $views['publish'], $views['private'] );
 
 	return $views;
@@ -122,14 +122,13 @@ function certificate_template_custom_certificate_columns( $column ) {
 
 			echo '<strong><a class="row-title" href="' . esc_url( $edit_link ) . '">' . esc_html( $title ) . '</a>';
 
-			// display post states a little more selectively than _post_states( $post );
+			// display post states a little more selectively than _post_states( $post );.
 			if ( 'draft' == $post->post_status ) {
 				echo " - <span class='post-state'>" . esc_html__( 'Draft', 'sensei-certificates' ) . '</span>';
 			} // End If Statement
 
 			echo '</strong>';
 
-			// Get actions
 			$actions = array();
 
 			$actions['id'] = 'ID: ' . $post->ID;
