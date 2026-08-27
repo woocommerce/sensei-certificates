@@ -122,7 +122,7 @@ function certificate_template_custom_certificate_columns( $column ) { // phpcs:i
 
 			echo '<strong><a class="row-title" href="' . esc_url( $edit_link ) . '">' . esc_html( $title ) . '</a>';
 
-			// display post states a little more selectively than _post_states( $post );.
+			// Display post states a little more selectively than _post_states( $post ).
 			if ( 'draft' === $post->post_status ) {
 				echo " - <span class='post-state'>" . esc_html__( 'Draft', 'sensei-certificates' ) . '</span>';
 			} // End If Statement
