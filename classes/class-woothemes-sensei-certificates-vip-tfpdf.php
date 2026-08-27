@@ -1,7 +1,7 @@
 <?php
 /**
- * To avoid modifying tFPDF directly we introduce WP_tFPDF,
- * A thin wrapper around the parent class to utilize WP_Filesystem
+ * To avoid modifying tFPDF directly we introduce a thin wrapper around the
+ * parent class to utilize WP_Filesystem.
  *
  * @package Sensei_Certificates
  */
@@ -15,7 +15,7 @@ require_once ABSPATH . '/wp-admin/includes/file.php';
 /**
  * WP_Filesystem-aware wrapper around tFPDF's PDF class.
  */
-class VIP_tFPDF extends tFPDF\PDF {
+class Woothemes_Sensei_Certificates_VIP_TFPDF extends tFPDF\PDF {
 	/**
 	 * Set up the PDF object and initialize the WP Filesystem.
 	 *

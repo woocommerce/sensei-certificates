@@ -28,9 +28,9 @@ class Woothemes_Sensei_Certificates_TFPDF {
 		require_once dirname( __DIR__ ) . '/lib/tfpdf/tFPDF/TTFontFile.php';
 
 		if ( defined( 'WPCOM_IS_VIP_ENV' ) && true === WPCOM_IS_VIP_ENV ) {
-			require_once __DIR__ . '/class-vip-tfpdf.php';
+			require_once __DIR__ . '/class-woothemes-sensei-certificates-vip-tfpdf.php';
 
-			return new VIP_tFPDF( $orientation, $units, $size );
+			return new Woothemes_Sensei_Certificates_VIP_TFPDF( $orientation, $units, $size );
 		}
 
 		return new tFPDF\PDF( $orientation, $units, $size );
