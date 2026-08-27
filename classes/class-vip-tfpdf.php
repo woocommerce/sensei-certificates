@@ -14,11 +14,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once ABSPATH . '/wp-admin/includes/file.php';
 
 class VIP_tFPDF extends tFPDF\PDF {
+	/**
+	 * Set up the PDF object and initialize the WP Filesystem.
+	 *
+	 * @param string $orientation Page orientation.
+	 * @param string $unit        Measurement unit.
+	 * @param string $size        Page size.
+	 */
 	public function __construct( $orientation = 'P', $unit = 'mm', $size = 'A4' ) {
 		parent::__construct( $orientation, $unit, $size );
 		$this->init_wp_filesystem();
 	}
 
+	/**
+	 * Initialize the WP_Filesystem global.
+	 *
+	 * @return WP_Error|bool WP_Error on failure, otherwise true or the wp_filesystem() result.
+	 */
 	private function init_wp_filesystem() {
 		global $wp_filesystem;
 
