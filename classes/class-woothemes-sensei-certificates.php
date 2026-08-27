@@ -1583,7 +1583,7 @@ class WooThemes_Sensei_Certificates {
 	public function enqueue_block_editor_assets() {
 		$screen = get_current_screen();
 
-		if ( ( $screen && 'page' === $screen->post_type ) || 'course' === $screen->post_type ) {
+		if ( $screen && ( 'page' === $screen->post_type || 'course' === $screen->post_type ) ) {
 			self::instance()->assets->enqueue(
 				'sensei-certificates-block',
 				'blocks/index.js'
