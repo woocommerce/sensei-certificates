@@ -52,11 +52,7 @@ updates:
       default-days: 7
 
   - package-ecosystem: "github-actions"
-    # Scan composite actions too — their SHA-pinned `uses:` refs need update
-    # PRs just like the workflow files do ('**' covers nested action dirs).
-    directories:
-      - "/"
-      - "/.github/actions/**"
+    directory: "/"
     schedule:
       interval: "weekly"
       day: "friday"
