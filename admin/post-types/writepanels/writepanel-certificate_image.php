@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Actions and Filters.
  */
-add_action( 'sensei_process_certificate_template_meta', 'certificate_template_process_images_meta', 10, 2 );
+add_action( 'sensei_process_certificate_template_meta', 'certificate_template_process_images_meta' );
 
 /**
  * Display the certificate image meta box.
@@ -80,10 +80,9 @@ function certificate_template_image_meta_box() { // phpcs:ignore WordPress.Namin
  * Function for processing and storing certificate template images.
  *
  * @since 1.0.0
- * @param int    $post_id The certificate template id.
- * @param object $post    The certificate template post object.
+ * @param int $post_id The certificate template id.
  */
-function certificate_template_process_images_meta( $post_id, $post ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
+function certificate_template_process_images_meta( $post_id ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 	if (
 		empty( $_POST['certificates_meta_nonce'] )
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Leave nonce value unmodified.

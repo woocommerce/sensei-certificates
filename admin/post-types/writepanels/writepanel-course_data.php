@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Actions and Filters.
  */
-add_action( 'sensei_process_course_certificate_template_meta', 'course_certificate_templates_process_meta', 10, 2 );
+add_action( 'sensei_process_course_certificate_template_meta', 'course_certificate_templates_process_meta' );
 
 /**
  * Certificates data meta box.
@@ -109,8 +109,7 @@ function course_certificate_template_data_meta_box( $post ) { // phpcs:ignore Wo
  * Function for processing and storing all course certificate data.
  *
  * @since 1.0.0
- * @param int    $post_id The certificate id.
- * @param object $post    The certificate post object.
+ * @param int $post_id The certificate id.
  */
 function course_certificate_templates_process_meta( $post_id ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 

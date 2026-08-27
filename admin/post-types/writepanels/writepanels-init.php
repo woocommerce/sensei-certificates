@@ -57,7 +57,7 @@ add_action( 'add_meta_boxes', 'certificate_templates_meta_boxes' );
 add_filter( 'enter_title_here', 'certificate_templates_enter_title_here', 1, 2 );
 add_action( 'save_post', 'certificate_templates_meta_boxes_save', 1, 2 );
 add_action( 'save_post', 'course_certificate_templates_meta_boxes_save', 1, 2 );
-add_action( 'publish_certificate_template', 'certificate_template_private', 10, 2 );
+add_action( 'publish_certificate_template', 'certificate_template_private' );
 
 
 /**
@@ -209,10 +209,9 @@ function course_certificate_templates_meta_boxes_save( $post_id, $post ) { // ph
  * hidden on the frontend (draft posts are not visible by definition).
  *
  * @since 1.0.0
- * @param int    $post_id The certificate identifier.
- * @param object $post    The certificate object.
+ * @param int $post_id The certificate identifier.
  */
-function certificate_template_private( $post_id, $post ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
+function certificate_template_private( $post_id ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	global $wpdb;
 

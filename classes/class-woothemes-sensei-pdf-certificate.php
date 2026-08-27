@@ -124,7 +124,7 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *
 	 * @return mixed nothing if a $path is supplied, otherwise a PDF download
 	 */
-	public function generate_pdf( $path = '' ) {
+	public function generate_pdf( $path = '' ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter -- Unused; kept for backward compatibility.
 
 		do_action( 'sensei_certificates_set_background_image', $this );
 

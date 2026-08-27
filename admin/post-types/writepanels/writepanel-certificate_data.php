@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Actions and Filters.
  */
-add_action( 'sensei_process_certificate_template_meta', 'certificate_templates_process_meta', 10, 2 );
+add_action( 'sensei_process_certificate_template_meta', 'certificate_templates_process_meta' );
 
 
 /**
@@ -156,10 +156,9 @@ function certificate_template_data_meta_box( $post ) { // phpcs:ignore WordPress
  * Function for processing and storing all certificate data.
  *
  * @since 1.0.0
- * @param int    $post_id The certificate id.
- * @param object $post    The certificate post object.
+ * @param int $post_id The certificate id.
  */
-function certificate_templates_process_meta( $post_id, $post ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
+function certificate_templates_process_meta( $post_id ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 	if (
 		empty( $_POST['certificates_meta_nonce'] )
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Leave nonce value unmodified.
