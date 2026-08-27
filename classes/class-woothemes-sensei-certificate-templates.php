@@ -873,7 +873,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		foreach ( $this->item as $name => $value ) {
 
-			if ( __( $meta_name, 'sensei-certificates' ) === $name ) {
+			if ( $meta_name === $name ) {
 
 				return $value;
 
