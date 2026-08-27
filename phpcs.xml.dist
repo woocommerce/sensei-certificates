@@ -10,6 +10,7 @@
 	<exclude-pattern type="relative">^vendor/*</exclude-pattern>
 	<exclude-pattern type="relative">^build/*</exclude-pattern>
 	<exclude-pattern type="relative">^lib/*</exclude-pattern>
+	<exclude-pattern type="relative">^assets/dist/*</exclude-pattern>
 	<exclude-pattern>tests/</exclude-pattern>
 	<!-- Configs -->
 	<config name="minimum_supported_wp_version" value="4.9" />
