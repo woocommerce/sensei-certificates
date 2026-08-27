@@ -165,11 +165,15 @@ function sensei_create_master_certificate_template() {
 	$file_array['name']     = basename( $matches[0] );
 	$file_array['tmp_name'] = $tmp;
 
+	// TODO: Handle sideload failures properly. On either WP_Error below the code
+	// currently falls through and stores the WP_Error as the template's image
+	// (_image_ids), leaving the example template with a broken background. Instead,
+	// bail early ( return false ) on each WP_Error and clean up the temp file with
+	// wp_delete_file() rather than @unlink().
 	// If error storing temporarily, unlink.
 	if ( is_wp_error( $tmp ) ) {
 		@unlink( $file_array['tmp_name'] );
 		$file_array['tmp_name'] = '';
-		error_log( 'An error occurred while uploading the image' );
 	}
 
 	if ( ! function_exists( 'media_handle_sideload' ) ) {
@@ -183,7 +187,6 @@ function sensei_create_master_certificate_template() {
 	// If error storing permanently, unlink.
 	if ( is_wp_error( $image_id ) ) {
 		@unlink( $file_array['tmp_name'] );
-		error_log( 'An error occurred while uploading the image' );
 	}
 
 	$src = wp_get_attachment_url( $image_id );
