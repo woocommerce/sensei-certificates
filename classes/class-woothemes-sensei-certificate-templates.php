@@ -337,7 +337,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	 *
 	 * @access public
 	 * @since  1.0.0
-	 * @param  int $id
+	 * @param  int $id The post ID.
 	 * @return boolean
 	 */
 	public function populate_object( $id ) {
@@ -908,7 +908,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	 *
 	 * @access public
 	 * @since  1.0.0
-	 * @param  array $defaults
+	 * @param  array $defaults Default column values.
 	 * @return array $new_columns
 	 */
 	public function add_column_headings( $defaults ) {
@@ -924,8 +924,8 @@ class WooThemes_Sensei_Certificate_Templates {
 	 *
 	 * @access public
 	 * @since  1.0.0
-	 * @param  string $column_name
-	 * @param  int    $id
+	 * @param  string $column_name The column name.
+	 * @param  int    $id The post ID.
 	 * @return void
 	 */
 	public function add_column_data( $column_name, $id ) {

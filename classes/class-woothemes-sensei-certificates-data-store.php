@@ -10,8 +10,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Woothemes_Sensei_Certificate_Data_Store {
 	/**
-	 * @param int $user_id
-	 * @param int $course_id
+	 * @param int $user_id User ID.
+	 * @param int $course_id Course post ID.
 	 * @return int|WP_Error
 	 */
 	function insert( $user_id, $course_id ) {

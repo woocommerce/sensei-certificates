@@ -610,7 +610,7 @@ class WooThemes_Sensei_Certificates {
 	 *
 	 * @access public
 	 * @since  1.0.0
-	 * @param  string $column_name
+	 * @param  string $column_name The column name.
 	 * @param  int    $post_ID post id.
 	 * @return void
 	 */
@@ -1071,7 +1071,7 @@ class WooThemes_Sensei_Certificates {
 	 *
 	 * @access public
 	 * @since  1.0.0
-	 * @param string $field_key
+	 * @param string $field_key The template field key.
 	 * @return array $return_array
 	 */
 	public function get_certificate_font_settings( $field_key = '' ) {
@@ -1103,8 +1103,8 @@ class WooThemes_Sensei_Certificates {
 	 * @access public
 	 * @since  1.0.0
 	 * @param  string  $message html.
-	 * @param integer $course_id
-	 * @param integer $user_id
+	 * @param integer $course_id Course post ID.
+	 * @param integer $user_id User ID.
 	 * @return string $message html
 	 */
 	public function certificate_link( $message, $course_id = 0, $user_id = 0 ) {
@@ -1302,7 +1302,7 @@ class WooThemes_Sensei_Certificates {
 	 *
 	 * @access public
 	 * @since  1.0.0
-	 * @param string $code
+	 * @param string $code The certificate hash code.
 	 * @return void
 	 *
 	 * @deprecated 2.0.4

@@ -378,7 +378,7 @@ function certificate_templates_wp_position_picker( $field ) {
  *
  * @access public
  * @since  1.0.0
- * @param  array $field
+ * @param  array $field The field definition array.
  * @return void
  */
 function certificates_wp_text_input( $field ) {
@@ -426,7 +426,7 @@ function certificates_wp_text_input( $field ) {
  *
  * @access public
  * @since  1.0.0
- * @param  array $field
+ * @param  array $field The field definition array.
  * @return void
  */
 function certificates_wp_hidden_input( $field ) {
@@ -446,7 +446,7 @@ function certificates_wp_hidden_input( $field ) {
  *
  * @access public
  * @since  1.0.0
- * @param  array $field
+ * @param  array $field The field definition array.
  * @return void
  */
 function certificates_wp_textarea_input( $field ) {
@@ -483,7 +483,7 @@ function certificates_wp_textarea_input( $field ) {
  *
  * @access public
  * @since  1.0.0
- * @param  array $field
+ * @param  array $field The field definition array.
  * @return void
  */
 function certificates_wp_checkbox( $field ) {
@@ -511,7 +511,7 @@ function certificates_wp_checkbox( $field ) {
  *
  * @access public
  * @since  1.0.0
- * @param  array $field
+ * @param  array $field The field definition array.
  * @return void
  */
 function certificates_wp_select( $field ) {
@@ -554,7 +554,7 @@ function certificates_wp_select( $field ) {
  *
  * @access public
  * @since  1.0.0
- * @param  array $field
+ * @param  array $field The field definition array.
  * @return void
  */
 function certificates_wp_radio( $field ) {

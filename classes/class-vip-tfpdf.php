@@ -41,12 +41,12 @@ class VIP_tFPDF extends tFPDF\PDF {
 	 * We get around that by creating the in the system's temporary folder, performing the necessary operations on that file, and then deleting it.
 	 *
 	 * @param string  $file full path to the file.
-	 * @param [type]  $x
-	 * @param [type]  $y
-	 * @param integer $w
-	 * @param integer $h
-	 * @param string  $type
-	 * @param string  $link
+	 * @param [type]  $x X position.
+	 * @param [type]  $y Y position.
+	 * @param integer $w Image width.
+	 * @param integer $h Image height.
+	 * @param string  $type Image type/format.
+	 * @param string  $link Link the image points to.
 	 * @return void
 	 */
 	public function Image( $file = '', $x = null, $y = null, $w = 0, $h = 0, $type = '', $link = '' ) {
@@ -68,7 +68,7 @@ class VIP_tFPDF extends tFPDF\PDF {
 	/**
 	 * Throws error.
 	 *
-	 * @param string $str_message
+	 * @param string $str_message The error message.
 	 *
 	 * @throws \RuntimeException On error.
 	 */

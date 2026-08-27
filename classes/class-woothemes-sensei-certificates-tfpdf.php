@@ -11,9 +11,9 @@ class Woothemes_Sensei_Certificates_TFPDF {
 	/**
 	 * Create and return the tFPDF object.
 	 *
-	 * @param string $orientation
-	 * @param string $units
-	 * @param string $size
+	 * @param string $orientation Page orientation.
+	 * @param string $units Measurement units.
+	 * @param string $size Page size.
 	 *
 	 * @return tFPDF\PDF
 	 */
