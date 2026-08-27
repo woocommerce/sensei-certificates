@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Requires.
  */
-require_once 'post-types/certificate_templates.php';
+require_once 'post-types/certificate-templates.php';
 
 
 /**

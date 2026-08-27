@@ -84,7 +84,7 @@ function sensei_update_users_certificate_data( $n = 5, $offset = 0 ) {
 
 	$total_pages = intval( ceil( $total_items / $n ) );
 	if ( ! class_exists( 'Woothemes_Sensei_Certificate_Data_Store' ) ) {
-		include_once 'classes/class-woothemes-sensei-certificates-data-store.php';
+		include_once 'classes/class-woothemes-sensei-certificate-data-store.php';
 	}
 
 	$data_store = new Woothemes_Sensei_Certificate_Data_Store();

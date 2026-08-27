@@ -45,9 +45,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Requires.
  */
-require_once 'writepanel-certificate_image.php';
-require_once 'writepanel-certificate_data.php';
-require_once 'writepanel-course_data.php';
+require_once 'writepanel-certificate-image.php';
+require_once 'writepanel-certificate-data.php';
+require_once 'writepanel-course-data.php';
 
 
 /**

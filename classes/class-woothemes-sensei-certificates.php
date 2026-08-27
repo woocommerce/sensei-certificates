@@ -266,7 +266,7 @@ class WooThemes_Sensei_Certificates {
 		require_once __DIR__ . '/class-woothemes-sensei-certificates-utils.php';
 		require_once __DIR__ . '/class-woothemes-sensei-certificates.php';
 		require_once __DIR__ . '/class-woothemes-sensei-certificate-templates.php';
-		require_once __DIR__ . '/class-woothemes-sensei-certificates-data-store.php';
+		require_once __DIR__ . '/class-woothemes-sensei-certificate-data-store.php';
 		require_once __DIR__ . '/class-woothemes-sensei-certificates-tfpdf.php';
 		require_once __DIR__ . '/blocks/class-woothemes-sensei-certificates-view-certificate-link-block.php';
 	}
