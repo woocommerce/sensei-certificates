@@ -1274,9 +1274,9 @@ class WooThemes_Sensei_Certificates {
 	 *
 	 * @access public
 	 * @since  1.0.0
-	 * @param  array $content output.
-	 * @param  int   $course_id course post id.
-	 * @param  int   $user_id  course learner user id.
+	 * @param  array  $content  output.
+	 * @param  object $item     the learner row object.
+	 * @param  object $analysis the course analysis object.
 	 * @return array $content modified output
 	 */
 	public function populate_columns( $content, $item, $analysis ) {
