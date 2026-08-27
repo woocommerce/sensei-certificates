@@ -236,7 +236,9 @@ function certificate_templates_wp_font_select( $field ) { // phpcs:ignore WordPr
 	}
 
 	// Values.
-	$font_family_value = $font_size_value = $font_style_value = '';
+	$font_family_value = '';
+	$font_size_value   = '';
+	$font_style_value  = '';
 
 	if ( '_certificate' === $field['id'] ) {
 

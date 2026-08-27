@@ -186,7 +186,8 @@ class WooThemes_Sensei_Certificate_Templates {
 			return $this->plugin_path;
 		}
 
-		return $this->plugin_path = untrailingslashit( plugin_dir_path( __DIR__ ) );
+		$this->plugin_path = untrailingslashit( plugin_dir_path( __DIR__ ) );
+		return $this->plugin_path;
 	}
 
 
