@@ -72,7 +72,6 @@ function sensei_certificate_add_role_caps() {
 			}
 		}
 	}
-
 }
 
 /**
@@ -92,7 +91,6 @@ function sensei_certificate_template_admin_init() {
 		add_action( 'admin_print_styles', 'sensei_certificate_template_admin_help_tab' );
 
 	}
-
 }
 
 
@@ -145,7 +143,6 @@ function sensei_certificate_template_admin_help_tab() {
 		'<p><strong>' . __( 'For more information:', 'sensei-certificates' ) . '</strong></p>' .
 		'<p><a href="https://senseilms.com/documentation/sensei-certificates/" target="_blank">' . __( 'Certificates Docs', 'sensei-certificates' ) . '</a></p>'
 	);
-
 }
 
 
@@ -163,7 +160,6 @@ function sensei_certificate_template_certificate_help_tab_content() {
 	<p><?php esc_html_e( 'You can define a default font, size, style and color to be used for the certificate text fields.  For each individual text field, you can override these defaults by setting a specific font/style, size or color.  Note that the default font style (Italic/Bold) will only be used if a font is not selected at the field level.', 'sensei-certificates' ); ?></p>
 	<p><strong><?php esc_html_e( 'Previewing', 'sensei-certificates' ); ?></strong> - <?php esc_html_e( 'You must update the certificate template to see any changes in the Preview.', 'sensei-certificates' ); ?></p>
 	<?php
-
 }
 
 
@@ -184,7 +180,6 @@ function sensei_certificate_template_how_to_help_tab_content() {
 		<li><?php esc_html_e( 'Your learners can now earn a Certificate when they have completed a course! Your existing learners who have already completed a course will automatically have certificates generated for them when you installed the plugin.', 'sensei-certificates' ); ?></li>
 	</ol>
 	<?php
-
 }
 
 
@@ -261,7 +256,6 @@ function sensei_certificate_template_admin_enqueue_scripts() {
 		wp_enqueue_script( 'sensei_course_certificate_templates_admin', $woothemes_sensei_certificates->plugin_url . 'assets/dist/js/course.js', array( 'jquery' ) );
 
 	}
-
 }
 
 
@@ -295,5 +289,4 @@ function sensei_certificate_template_item_updated_messages( $messages ) {
 	);
 
 	return $messages;
-
 }

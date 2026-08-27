@@ -95,7 +95,6 @@ class WooThemes_Sensei_PDF_Certificate {
 				'font_family' => 'Times',
 			)
 		);
-
 	} // End __construct()
 
 
@@ -108,7 +107,6 @@ class WooThemes_Sensei_PDF_Certificate {
 	public function get_certificate_filename() {
 
 		return 'certificate-' . $this->hash . '.pdf';
-
 	} // End get_certificate_filename()
 
 	/**
@@ -140,7 +138,9 @@ class WooThemes_Sensei_PDF_Certificate {
 		// TODO: we're assuming a standard DPI here of where 1 point = 1/72 inch = 1 pixel
 		// When writing text to a Cell, the text is vertically-aligned in the middle
 		$fpdf = Woothemes_Sensei_Certificates_TFPDF::get_tfpdf_object(
-			$orientation, 'pt', array( $image_attr[0], $image_attr[1] )
+			$orientation,
+			'pt',
+			array( $image_attr[0], $image_attr[1] )
 		);
 
 		$fpdf->AddPage();
@@ -164,9 +164,9 @@ class WooThemes_Sensei_PDF_Certificate {
 
 		// download file
 		Woothemes_Sensei_Certificates_TFPDF::output_to_http(
-			$fpdf, 'certificate-preview-' . $this->hash . '.pdf'
+			$fpdf,
+			'certificate-preview-' . $this->hash . '.pdf'
 		);
-
 	} // End generate_pdf()
 
 
@@ -260,7 +260,6 @@ class WooThemes_Sensei_PDF_Certificate {
 			$fpdf->Multicell( $w, $font['font_size'], $value, $show_border, $center );
 
 		} // End If Statement
-
 	} // End textarea_field()
 
 	/**
@@ -287,7 +286,6 @@ class WooThemes_Sensei_PDF_Certificate {
 			$fpdf->Image( esc_url( Woothemes_Sensei_Certificates_Utils::convert_utf8_to_latin1( $value ) ), $x, $y, $w, $h );
 
 		} // End If Statement
-
 	} // End image_field()
 
 
@@ -389,7 +387,6 @@ class WooThemes_Sensei_PDF_Certificate {
 			$fpdf->Cell( $w, $h, $value, $show_border, $position, $center );
 
 		} // End If Statement
-
 	} // End text_field()
 
 	/**
@@ -463,7 +460,6 @@ class WooThemes_Sensei_PDF_Certificate {
 			$fpdf->Cell( $w, $h, $value );
 
 		} // End If Statement
-
 	} // End text_field_userdata()
 
 
@@ -494,7 +490,6 @@ class WooThemes_Sensei_PDF_Certificate {
 		} // End If Statement}
 
 		return array( $r, $g, $b );
-
 	} // End hex2rgb()
 
 	/**
@@ -516,7 +511,6 @@ class WooThemes_Sensei_PDF_Certificate {
 		}
 
 		return 'latin';
-
 	}
 
 	/**
@@ -549,5 +543,4 @@ class WooThemes_Sensei_PDF_Certificate {
 
 		return false;
 	} // End set_custom_font()
-
 } // End Class

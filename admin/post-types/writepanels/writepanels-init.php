@@ -337,7 +337,6 @@ function certificate_templates_wp_color_picker_js() {
 	$javascript = ob_get_clean();
 
 	$woothemes_sensei_certificates->add_inline_js( $javascript );
-
 }
 
 

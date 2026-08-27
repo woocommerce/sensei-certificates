@@ -163,7 +163,6 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		// Preview Template
 		add_filter( 'single_template', array( $this, 'certificate_templates_locate_preview_template' ), 10, 2 );
-
 	}
 
 
@@ -180,8 +179,7 @@ class WooThemes_Sensei_Certificate_Templates {
 			return $this->plugin_path;
 		}
 
-		return $this->plugin_path = untrailingslashit( plugin_dir_path( dirname( __FILE__ ) ) );
-
+		return $this->plugin_path = untrailingslashit( plugin_dir_path( __DIR__ ) );
 	}
 
 
@@ -253,7 +251,6 @@ class WooThemes_Sensei_Certificate_Templates {
 		);
 
 		register_post_type( 'certificate_template', $args );
-
 	}
 
 	/**
@@ -272,7 +269,6 @@ class WooThemes_Sensei_Certificate_Templates {
 		$defaults['actions']        = __( 'Actions', 'sensei-certificates' );
 
 		return $defaults;
-
 	}
 
 
@@ -338,7 +334,6 @@ class WooThemes_Sensei_Certificate_Templates {
 				) . '" target="_blank">' . esc_html__( 'View Certificate', 'sensei-certificates' ) . '</a>';
 				break;
 		}
-
 	}
 
 
@@ -382,7 +377,6 @@ class WooThemes_Sensei_Certificate_Templates {
 		}
 
 		return false;
-
 	} // populate_object()
 
 
@@ -402,7 +396,6 @@ class WooThemes_Sensei_Certificate_Templates {
 		}
 
 		return $this->message;
-
 	}
 
 
@@ -427,7 +420,6 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		// otherwise return the template primary image id
 		return $image_id;
-
 	}
 
 
@@ -442,7 +434,6 @@ class WooThemes_Sensei_Certificate_Templates {
 	public function get_field_position( $field_name ) {
 
 		return isset( $this->certificate_template_fields[ $field_name ]['position'] ) ? $this->certificate_template_fields[ $field_name ]['position'] : array();
-
 	}
 
 
@@ -460,7 +451,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		global $post;
 
-		$image    = wp_get_attachment_metadata( $this->get_image_id() );
+		$image = wp_get_attachment_metadata( $this->get_image_id() );
 
 		// determine orientation: landscape or portrait
 		if ( $image['width'] > $image['height'] ) {
@@ -473,7 +464,9 @@ class WooThemes_Sensei_Certificate_Templates {
 		// TODO: we're assuming a standard DPI here of where 1 point = 1/72 inch = 1 pixel
 		// When writing text to a Cell, the text is vertically-aligned in the middle
 		$fpdf = Woothemes_Sensei_Certificates_TFPDF::get_tfpdf_object(
-			$orientation, 'pt', array( $image['width'], $image['height'] )
+			$orientation,
+			'pt',
+			array( $image['width'], $image['height'] )
 		);
 
 		$fpdf->AddPage();
@@ -550,9 +543,9 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		// download file
 		Woothemes_Sensei_Certificates_TFPDF::output_to_http(
-			$fpdf, 'certificate-preview-' . $post->ID . '.pdf'
+			$fpdf,
+			'certificate-preview-' . $post->ID . '.pdf'
 		);
-
 	}
 
 
@@ -584,7 +577,6 @@ class WooThemes_Sensei_Certificate_Templates {
 		}
 
 		return $return_array;
-
 	}
 
 
@@ -678,7 +670,6 @@ class WooThemes_Sensei_Certificate_Templates {
 			$fpdf->Multicell( $w, $font['font_size'], $value, $show_border, $center );
 
 		}
-
 	}
 
 	/**
@@ -779,7 +770,6 @@ class WooThemes_Sensei_Certificate_Templates {
 			$fpdf->Cell( $w, $h, $value, $show_border, $position, $center );
 
 		}
-
 	}
 
 	/**
@@ -809,7 +799,6 @@ class WooThemes_Sensei_Certificate_Templates {
 		}
 
 		return array( $r, $g, $b );
-
 	}
 
 	/**
@@ -831,7 +820,6 @@ class WooThemes_Sensei_Certificate_Templates {
 		}
 
 		return 'latin';
-
 	}
 
 	/**
@@ -893,7 +881,6 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		// not found
 		return '';
-
 	}
 
 
@@ -918,7 +905,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		// Get the meta key.
 		$meta_key       = '_' . $post_key;
-		$new_meta_value = isset( $_POST[ $post_key ] ) && !empty($_POST[ $post_key ]) ? intval( $_POST[ $post_key ] ) : '';
+		$new_meta_value = isset( $_POST[ $post_key ] ) && ! empty( $_POST[ $post_key ] ) ? intval( $_POST[ $post_key ] ) : '';
 		// Get the meta value of the custom field key.
 		$meta_value = get_post_meta( $post_id, $meta_key, true );
 		// If a new meta value was added and there was no previous value, add it.
@@ -931,7 +918,6 @@ class WooThemes_Sensei_Certificate_Templates {
 			// If there is no new meta value but an old value exists, delete it.
 			delete_post_meta( $post_id, $meta_key, $meta_value );
 		}
-
 	}
 
 
@@ -949,7 +935,6 @@ class WooThemes_Sensei_Certificate_Templates {
 		$new_columns['course-certificate-template'] = _x( 'Certificate Template', 'column name', 'sensei-certificates' );
 
 		return $new_columns;
-
 	}
 
 	/**
@@ -981,7 +966,5 @@ class WooThemes_Sensei_Certificate_Templates {
 			default:
 				break;
 		}
-
 	}
-
 }

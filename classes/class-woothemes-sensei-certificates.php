@@ -254,13 +254,13 @@ class WooThemes_Sensei_Certificates {
 	 * Load plugin files.
 	 */
 	private static function load_files() {
-		require_once dirname( dirname( __FILE__ ) ) . '/sensei-certificates-functions.php';
-		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-utils.php';
-		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates.php';
-		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificate-templates.php';
-		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-data-store.php';
-		require_once dirname( __FILE__ ) . '/class-woothemes-sensei-certificates-tfpdf.php';
-		require_once dirname( __FILE__ ) . '/blocks/class-woothemes-sensei-certificates-view-certificate-link-block.php';
+		require_once dirname( __DIR__ ) . '/sensei-certificates-functions.php';
+		require_once __DIR__ . '/class-woothemes-sensei-certificates-utils.php';
+		require_once __DIR__ . '/class-woothemes-sensei-certificates.php';
+		require_once __DIR__ . '/class-woothemes-sensei-certificate-templates.php';
+		require_once __DIR__ . '/class-woothemes-sensei-certificates-data-store.php';
+		require_once __DIR__ . '/class-woothemes-sensei-certificates-tfpdf.php';
+		require_once __DIR__ . '/blocks/class-woothemes-sensei-certificates-view-certificate-link-block.php';
 	}
 
 	/**
@@ -475,8 +475,7 @@ class WooThemes_Sensei_Certificates {
 			return $this->plugin_path;
 		}
 
-		return $this->plugin_path = untrailingslashit( plugin_dir_path( dirname( __FILE__ ) ) );
-
+		return $this->plugin_path = untrailingslashit( plugin_dir_path( __DIR__ ) );
 	} // End plugin_path()
 
 
@@ -496,7 +495,6 @@ class WooThemes_Sensei_Certificates {
 		);
 
 		return $sections;
-
 	} // End certificates_settings_tabs()
 
 	/**
@@ -542,7 +540,6 @@ class WooThemes_Sensei_Certificates {
 		);
 
 		return $fields;
-
 	} // End certificates_settings_fields()
 
 	/**
@@ -592,7 +589,6 @@ class WooThemes_Sensei_Certificates {
 		);
 
 		register_post_type( 'certificate', $args );
-
 	} // End setup_certificates_post_type()
 
 
@@ -613,7 +609,6 @@ class WooThemes_Sensei_Certificates {
 		$defaults['actions']        = __( 'Actions', 'sensei-certificates' );
 
 		return $defaults;
-
 	} // End post_type_custom_column_headings()
 
 
@@ -694,7 +689,6 @@ class WooThemes_Sensei_Certificates {
 				}
 				break;
 		} // End Switch Statement
-
 	} // End post_type_custom_column_content()
 
 	/**
@@ -799,7 +793,6 @@ class WooThemes_Sensei_Certificates {
 		}
 
 		return $response;
-
 	} // End can_view_certificate()
 
 
@@ -843,7 +836,6 @@ class WooThemes_Sensei_Certificates {
 			exit;
 
 		} // End If Statement
-
 	} // End generate_certificate()
 
 	/**
@@ -1027,7 +1019,6 @@ class WooThemes_Sensei_Certificates {
 			wp_die( esc_html__( 'The certificate you are searching for does not exist.', 'sensei-certificates' ), esc_html__( 'Certificate Error', 'sensei-certificates' ) );
 
 		} // End If Statement
-
 	} // End certificate_text()
 
 
@@ -1089,7 +1080,6 @@ class WooThemes_Sensei_Certificates {
 		if ( isset( $this->image_id ) && is_numeric( $this->image_id ) && 0 < intval( $this->image_id ) ) {
 			$pdf_certificate->bg_image_src = get_attached_file( $this->image_id );
 		}
-
 	} // End certificate_background()
 
 
@@ -1122,7 +1112,6 @@ class WooThemes_Sensei_Certificates {
 		} // End If Statement
 
 		return $return_array;
-
 	} // End get_certificate_font_settings()
 
 	/**
@@ -1206,7 +1195,6 @@ class WooThemes_Sensei_Certificates {
 		} // End If Statement
 
 		return $message;
-
 	} // End certificate_link()
 
 
@@ -1244,7 +1232,6 @@ class WooThemes_Sensei_Certificates {
 		wp_reset_postdata();
 
 		return $certificate_url;
-
 	} // End get_certificate_url()
 
 	/**
@@ -1278,7 +1265,6 @@ class WooThemes_Sensei_Certificates {
 		$certificate_id = $wpdb->get_var( $sql );
 
 		return $certificate_id;
-
 	} // End get_certificate_id()
 
 
@@ -1297,7 +1283,6 @@ class WooThemes_Sensei_Certificates {
 		}
 
 		return $columns;
-
 	} // End create_columns()
 
 
@@ -1326,7 +1311,6 @@ class WooThemes_Sensei_Certificates {
 			$content['certificates_link'] = $output;
 		}
 		return $content;
-
 	} // End populate_columns()
 
 
@@ -1344,7 +1328,6 @@ class WooThemes_Sensei_Certificates {
 		_deprecated_function( __METHOD__, '2.0.4' );
 
 		$this->_inline_js .= "\n" . $code . "\n";
-
 	} // End add_inline_js()
 
 
@@ -1378,7 +1361,6 @@ class WooThemes_Sensei_Certificates {
 			$this->_inline_js = '';
 
 		} // End If Statement
-
 	} // End output_inline_js()
 
 
@@ -1396,7 +1378,6 @@ class WooThemes_Sensei_Certificates {
 		array_push( $allowed_post_types, 'certificate_template' );
 
 		return $allowed_post_types;
-
 	} // End include_sensei_scripts()
 
 
@@ -1467,7 +1448,6 @@ class WooThemes_Sensei_Certificates {
 				} // End For Loop
 			} // End If Statement
 		} // End If Statement
-
 	} // End reset_course_certificate()
 
 
@@ -1500,7 +1480,6 @@ class WooThemes_Sensei_Certificates {
 			</div>
 			<?php
 		} // End If Statement
-
 	} // End certificates_user_settings_form()
 
 
@@ -1539,7 +1518,6 @@ class WooThemes_Sensei_Certificates {
 
 			} // End If Statement
 		} // End If Statement
-
 	} // End certificates_user_settings_save()
 
 
@@ -1560,7 +1538,6 @@ class WooThemes_Sensei_Certificates {
 		if ( isset( $this->messages ) && '' != $this->messages ) {
 			echo wp_kses( $this->messages, $allowed_html );
 		} // End If Statement
-
 	} // End certificates_user_settings_message()
 
 	/**
@@ -1751,7 +1728,7 @@ class WooThemes_Sensei_Certificates {
 		$class_name = 'view-certificate';
 
 		$blocks = array_map(
-			function( $block ) use ( $class_name ) {
+			function ( $block ) use ( $class_name ) {
 				/**
 				 * Notice that we check the block through the innerContent and not through
 				 * the anchor attribute directly, which is what we use to check the block

@@ -20,9 +20,9 @@ class WooThemes_Sensei_Certificates_View_Certificate_Link_Block {
 	public function __construct() {
 		Sensei_Blocks::register_sensei_block(
 			'sensei-certificates/view-certificate-link',
-			[
-				'render_callback' => [ $this, 'render' ],
-			],
+			array(
+				'render_callback' => array( $this, 'render' ),
+			),
 			WooThemes_Sensei_Certificates::instance()->assets->src_path( 'blocks/view-certificate-link' )
 		);
 	}

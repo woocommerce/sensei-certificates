@@ -52,7 +52,6 @@ function certificate_template_edit_certificate_bulk_actions( $actions ) {
 	unset( $actions['edit'] );
 
 	return $actions;
-
 } // End certificate_template_edit_certificate_bulk_actions()
 
 
@@ -71,7 +70,6 @@ function certificate_template_edit_certificate_views( $views ) {
 	unset( $views['publish'], $views['private'] );
 
 	return $views;
-
 } // End certificate_template_edit_certificate_views()
 
 
@@ -92,7 +90,6 @@ function certificate_template_edit_certificate_columns( $columns ) {
 	$columns['thumb'] = __( 'Image', 'sensei-certificates' );
 
 	return $columns;
-
 } // End certificate_template_edit_certificate_columns()
 
 
@@ -158,11 +155,10 @@ function certificate_template_custom_certificate_columns( $column ) {
 			foreach ( $actions as $action => $link ) {
 				( $action_count - 1 == $i ) ? $sep = '' : $sep = ' | ';
 				echo '<span class="' . esc_attr( $action ) . '">' . wp_kses_post( $link . $sep ) . '</span>';
-				$i++;
+				++$i;
 			} // End For Loop
 			echo '</div>';
 			break;
 
 	} // End Switch Statement
-
 } // End certificate_template_custom_certificate_columns()

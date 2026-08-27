@@ -196,7 +196,7 @@ class Sensei_Certificate_Data_Cleaner {
 			return;
 		}
 
-		$settings_fields = WooThemes_Sensei_Certificates::instance()->certificates_settings_fields( [] );
+		$settings_fields = WooThemes_Sensei_Certificates::instance()->certificates_settings_fields( array() );
 		foreach ( $settings_fields as $field_key => $field_data ) {
 			unset( $settings[ $field_key ] );
 		}

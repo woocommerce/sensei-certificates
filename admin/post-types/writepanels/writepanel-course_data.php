@@ -79,27 +79,26 @@ function course_certificate_template_data_meta_box( $post ) {
 		$html .= '<p>' . esc_html( __( 'No certificate template exist yet. Please add some first.', 'sensei-certificates' ) ) . '</p>';
 	}
 
-	$allowed_html = [
-		'input'  => [
-			'type'  => [],
-			'name'  => [],
-			'id'    => [],
-			'value' => [],
-		],
-		'select' => [
-			'id'    => [],
-			'name'  => [],
-			'class' => [],
-		],
-		'option' => [
-			'value'    => [],
-			'selected' => [],
-		],
-		'p'      => [],
-	];
+	$allowed_html = array(
+		'input'  => array(
+			'type'  => array(),
+			'name'  => array(),
+			'id'    => array(),
+			'value' => array(),
+		),
+		'select' => array(
+			'id'    => array(),
+			'name'  => array(),
+			'class' => array(),
+		),
+		'option' => array(
+			'value'    => array(),
+			'selected' => array(),
+		),
+		'p'      => array(),
+	);
 
 	echo wp_kses( $html, $allowed_html );
-
 }
 
 
@@ -121,5 +120,4 @@ function course_certificate_templates_process_meta( $post_id ) {
 	}
 
 	$woothemes_sensei_certificate_templates->save_post_meta( 'course_certificate_template', $post_id );
-
 }

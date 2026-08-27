@@ -33,7 +33,6 @@ function sensei_certificates_updates_list( $updates ) {
 	);
 
 	return $updates;
-
 }
 
 /**
