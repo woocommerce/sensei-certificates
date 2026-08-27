@@ -37,17 +37,23 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class WooThemes_Sensei_PDF_Certificate {
 	/**
-	 * @var int preview post id
+	 * Preview post ID.
+	 *
+	 * @var int
 	 */
 	public $preview_id;
 
 	/**
-	 * @var int certificate hash
+	 * Certificate hash.
+	 *
+	 * @var int
 	 */
 	public $hash;
 
 	/**
-	 * @var mixed certificate pdf data
+	 * Certificate PDF data.
+	 *
+	 * @var mixed
 	 */
 	public $certificate_pdf_data;
 

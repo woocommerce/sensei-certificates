@@ -10,6 +10,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Woothemes_Sensei_Certificate_Data_Store {
 	/**
+	 * Insert a certificate for a user and course.
+	 *
 	 * @param int $user_id User ID.
 	 * @param int $course_id Course post ID.
 	 * @return int|WP_Error

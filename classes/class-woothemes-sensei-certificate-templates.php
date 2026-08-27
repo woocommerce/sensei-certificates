@@ -40,17 +40,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WooThemes_Sensei_Certificate_Templates {
 
 	/**
-	 * @var string url link to plugin files
+	 * URL to the plugin files.
+	 *
+	 * @var string
 	 */
 	public $plugin_url;
 
 	/**
-	 * @var string path to the plugin files
+	 * Path to the plugin files.
+	 *
+	 * @var string
 	 */
 	public $plugin_path;
 
 	/**
-	 * @var string class token
+	 * Class token.
+	 *
+	 * @var string
 	 */
 	public $token;
 

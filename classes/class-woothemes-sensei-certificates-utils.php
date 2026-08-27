@@ -10,6 +10,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Woothemes_Sensei_Certificates_Utils {
 	/**
+	 * Generate the certificate hash for a course and user.
+	 *
 	 * @param int $course_id Course post ID.
 	 * @param int $user_id User ID.
 	 * @return string
