@@ -1,4 +1,9 @@
 <?php
+/**
+ * Certificate helper utilities.
+ *
+ * @package Sensei_Certificates
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -10,8 +15,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Woothemes_Sensei_Certificates_Utils {
 	/**
-	 * @param int $course_id
-	 * @param int $user_id
+	 * Generate the certificate hash for a course and user.
+	 *
+	 * @param int $course_id Course post ID.
+	 * @param int $user_id User ID.
 	 * @return string
 	 */
 	public static function get_certificate_hash( $course_id, $user_id ) {

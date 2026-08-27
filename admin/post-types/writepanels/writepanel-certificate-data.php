@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Actions and Filters.
  */
-add_action( 'sensei_process_certificate_template_meta', 'certificate_templates_process_meta', 10, 2 );
+add_action( 'sensei_process_certificate_template_meta', 'certificate_templates_process_meta' );
 
 
 /**
@@ -42,8 +42,9 @@ add_action( 'sensei_process_certificate_template_meta', 'certificate_templates_p
  * Displays the meta box.
  *
  * @since 1.0.0
+ * @param WP_Post $post The post being edited.
  */
-function certificate_template_data_meta_box( $post ) {
+function certificate_template_data_meta_box( $post ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	global $woocommerce, $woothemes_sensei_certificate_templates;
 
@@ -155,10 +156,9 @@ function certificate_template_data_meta_box( $post ) {
  * Function for processing and storing all certificate data.
  *
  * @since 1.0.0
- * @param int    $post_id The certificate id.
- * @param object $post    The certificate post object.
+ * @param int $post_id The certificate id.
  */
-function certificate_templates_process_meta( $post_id, $post ) {
+function certificate_templates_process_meta( $post_id ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 	if (
 		empty( $_POST['certificates_meta_nonce'] )
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Leave nonce value unmodified.
@@ -178,10 +178,10 @@ function certificate_templates_process_meta( $post_id, $post ) {
 	update_post_meta(
 		$post_id,
 		'_certificate_font_style',
-		( isset( $_POST['_certificate_font_style_b'] ) && 'yes' == $_POST['_certificate_font_style_b'] ? 'B' : '' ) .
-														( isset( $_POST['_certificate_font_style_i'] ) && 'yes' == $_POST['_certificate_font_style_i'] ? 'I' : '' ) .
-														( isset( $_POST['_certificate_font_style_c'] ) && 'yes' == $_POST['_certificate_font_style_c'] ? 'C' : '' ) .
-														( isset( $_POST['_certificate_font_style_o'] ) && 'yes' == $_POST['_certificate_font_style_o'] ? 'O' : '' )
+		( isset( $_POST['_certificate_font_style_b'] ) && 'yes' === $_POST['_certificate_font_style_b'] ? 'B' : '' ) .
+														( isset( $_POST['_certificate_font_style_i'] ) && 'yes' === $_POST['_certificate_font_style_i'] ? 'I' : '' ) .
+														( isset( $_POST['_certificate_font_style_c'] ) && 'yes' === $_POST['_certificate_font_style_c'] ? 'C' : '' ) .
+														( isset( $_POST['_certificate_font_style_o'] ) && 'yes' === $_POST['_certificate_font_style_o'] ? 'O' : '' )
 	);
 
 	// Original sizes: default 11, product name 16, sku 8.

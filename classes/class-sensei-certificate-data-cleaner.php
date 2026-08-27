@@ -171,7 +171,7 @@ class Sensei_Certificate_Data_Cleaner {
 		global $wpdb;
 
 		foreach ( self::$attachment_guids as $attachment_guid ) {
-			$attachments = $wpdb->get_results(
+			$attachments = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Uninstall cleanup query; runs once, not cached.
 				$wpdb->prepare(
 					"SELECT ID FROM $wpdb->posts
 					WHERE post_type = 'attachment'
@@ -196,7 +196,7 @@ class Sensei_Certificate_Data_Cleaner {
 			return;
 		}
 
-		$settings_fields = WooThemes_Sensei_Certificates::instance()->certificates_settings_fields( [] );
+		$settings_fields = WooThemes_Sensei_Certificates::instance()->certificates_settings_fields( array() );
 		foreach ( $settings_fields as $field_key => $field_data ) {
 			unset( $settings[ $field_key ] );
 		}
@@ -237,11 +237,11 @@ class Sensei_Certificate_Data_Cleaner {
 	/**
 	 * Helper method to remove capabilities from a user or role object.
 	 *
-	 * @param (WP_User|WP_Role) $object the user or role object.
+	 * @param (WP_User|WP_Role) $user_or_role the user or role object.
 	 */
-	private static function remove_capabilities( $object ) {
+	private static function remove_capabilities( $user_or_role ) {
 		foreach ( self::$caps as $cap ) {
-			$object->remove_cap( $cap );
+			$user_or_role->remove_cap( $cap );
 		}
 	}
 
@@ -253,7 +253,7 @@ class Sensei_Certificate_Data_Cleaner {
 
 		foreach ( array( '_transient_', '_transient_timeout_' ) as $prefix ) {
 			foreach ( self::$transients as $transient ) {
-				$wpdb->query(
+				$wpdb->query( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Uninstall cleanup; write query, caching not applicable.
 					$wpdb->prepare(
 						"DELETE FROM $wpdb->options WHERE option_name RLIKE %s",
 						$prefix . $transient
@@ -272,7 +272,7 @@ class Sensei_Certificate_Data_Cleaner {
 		foreach ( self::$user_meta_keys as $meta_key ) {
 			$meta_key = str_replace( '%BLOG_PREFIX%', preg_quote( $wpdb->get_blog_prefix(), null ), $meta_key );
 
-			$wpdb->query(
+			$wpdb->query( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Uninstall cleanup; write query, caching not applicable.
 				$wpdb->prepare(
 					"DELETE FROM $wpdb->usermeta WHERE meta_key RLIKE %s",
 					$meta_key
@@ -288,7 +288,7 @@ class Sensei_Certificate_Data_Cleaner {
 		global $wpdb;
 
 		foreach ( self::$post_meta as $post_meta ) {
-			$wpdb->delete( $wpdb->postmeta, array( 'meta_key' => $post_meta ) );
+			$wpdb->delete( $wpdb->postmeta, array( 'meta_key' => $post_meta ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Uninstall cleanup; write query, caching not applicable.
 		}
 	}
 }

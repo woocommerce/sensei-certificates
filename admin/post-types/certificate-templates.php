@@ -29,7 +29,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 /**
@@ -44,15 +44,14 @@ add_action( 'manage_certificate_template_posts_custom_column', 'certificate_temp
  * Remove the bulk edit action for certificate templates
  *
  * @since 1.0.0
- * @param array $actions associative array of action identifier to name
+ * @param array $actions associative array of action identifier to name.
  * @return array associative array of action identifier to name
  */
-function certificate_template_edit_certificate_bulk_actions( $actions ) {
+function certificate_template_edit_certificate_bulk_actions( $actions ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	unset( $actions['edit'] );
 
 	return $actions;
-
 } // End certificate_template_edit_certificate_bulk_actions()
 
 
@@ -62,16 +61,15 @@ function certificate_template_edit_certificate_bulk_actions( $actions ) {
  * which are not important and confusing for certificate objects.
  *
  * @since 1.0.0
- * @param array $views associative-array of view state name to link
+ * @param array $views associative-array of view state name to link.
  * @return array associative array of view state name to link
  */
-function certificate_template_edit_certificate_views( $views ) {
+function certificate_template_edit_certificate_views( $views ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
-	// publish and private are not important distinctions for certificate templates
+	// publish and private are not important distinctions for certificate templates.
 	unset( $views['publish'], $views['private'] );
 
 	return $views;
-
 } // End certificate_template_edit_certificate_views()
 
 
@@ -79,11 +77,11 @@ function certificate_template_edit_certificate_views( $views ) {
  * Columns for certificate templates page
  *
  * @since 1.0.0
- * @param array $columns associative-array of column identifier to header names
+ * @param array $columns associative-array of column identifier to header names.
  *
  * @return array associative-array of column identifier to header names for the certificate tempaltes page
  */
-function certificate_template_edit_certificate_columns( $columns ) {
+function certificate_template_edit_certificate_columns( $columns ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	$columns = array();
 
@@ -92,7 +90,6 @@ function certificate_template_edit_certificate_columns( $columns ) {
 	$columns['thumb'] = __( 'Image', 'sensei-certificates' );
 
 	return $columns;
-
 } // End certificate_template_edit_certificate_columns()
 
 
@@ -100,9 +97,9 @@ function certificate_template_edit_certificate_columns( $columns ) {
  * Custom Column values for certificate templates page
  *
  * @since 1.0.0
- * @param string $column column identifier
+ * @param string $column column identifier.
  */
-function certificate_template_custom_certificate_columns( $column ) {
+function certificate_template_custom_certificate_columns( $column ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	global $post;
 
@@ -125,29 +122,29 @@ function certificate_template_custom_certificate_columns( $column ) {
 
 			echo '<strong><a class="row-title" href="' . esc_url( $edit_link ) . '">' . esc_html( $title ) . '</a>';
 
-			// display post states a little more selectively than _post_states( $post );
-			if ( 'draft' == $post->post_status ) {
+			// Display post states a little more selectively than _post_states( $post ).
+			if ( 'draft' === $post->post_status ) {
 				echo " - <span class='post-state'>" . esc_html__( 'Draft', 'sensei-certificates' ) . '</span>';
 			} // End If Statement
 
 			echo '</strong>';
 
-			// Get actions
 			$actions = array();
 
 			$actions['id'] = 'ID: ' . $post->ID;
 
 			if ( current_user_can( $post_type_object->cap->delete_post, $post->ID ) ) {
-				if ( 'trash' == $post->post_status ) {
+				if ( 'trash' === $post->post_status ) {
 					$actions['untrash'] = "<a title='" . esc_attr( __( 'Restore this item from the Trash', 'sensei-certificates' ) ) . "' href='" . wp_nonce_url( admin_url( sprintf( $post_type_object->_edit_link . '&amp;action=untrash', $post->ID ) ), 'untrash-post_' . $post->ID ) . "'>" . __( 'Restore', 'sensei-certificates' ) . '</a>';
 				} elseif ( EMPTY_TRASH_DAYS ) {
 					$actions['trash'] = "<a class='submitdelete' title='" . esc_attr( __( 'Move this item to the Trash', 'sensei-certificates' ) ) . "' href='" . get_delete_post_link( $post->ID ) . "'>" . __( 'Trash', 'sensei-certificates' ) . '</a>';
 				}
-				if ( 'trash' == $post->post_status || ! EMPTY_TRASH_DAYS ) {
+				if ( 'trash' === $post->post_status || ! EMPTY_TRASH_DAYS ) {
 					$actions['delete'] = "<a class='submitdelete' title='" . esc_attr( __( 'Delete this item permanently', 'sensei-certificates' ) ) . "' href='" . get_delete_post_link( $post->ID, '', true ) . "'>" . __( 'Delete Permanently', 'sensei-certificates' ) . '</a>';
 				}
 			} // End If Statement
 
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Re-applies the WordPress core post_row_actions filter.
 			$actions = apply_filters( 'post_row_actions', $actions, $post );
 
 			echo '<div class="row-actions">';
@@ -156,13 +153,12 @@ function certificate_template_custom_certificate_columns( $column ) {
 			$action_count = count( $actions );
 
 			foreach ( $actions as $action => $link ) {
-				( $action_count - 1 == $i ) ? $sep = '' : $sep = ' | ';
+				( $action_count - 1 === $i ) ? $sep = '' : $sep = ' | ';
 				echo '<span class="' . esc_attr( $action ) . '">' . wp_kses_post( $link . $sep ) . '</span>';
-				$i++;
+				++$i;
 			} // End For Loop
 			echo '</div>';
 			break;
 
 	} // End Switch Statement
-
 } // End certificate_template_custom_certificate_columns()

@@ -25,7 +25,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 /**
@@ -37,17 +37,23 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class WooThemes_Sensei_PDF_Certificate {
 	/**
-	 * @var int preview post id
+	 * Preview post ID.
+	 *
+	 * @var int
 	 */
 	public $preview_id;
 
 	/**
-	 * @var int certificate hash
+	 * Certificate hash.
+	 *
+	 * @var int
 	 */
 	public $hash;
 
 	/**
-	 * @var mixed certificate pdf data
+	 * Certificate PDF data.
+	 *
+	 * @var mixed
 	 */
 	public $certificate_pdf_data;
 
@@ -70,7 +76,7 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param int $certificate_hash Certificate hash
+	 * @param int $certificate_hash Certificate hash.
 	 */
 	public function __construct( $certificate_hash ) {
 
@@ -95,7 +101,6 @@ class WooThemes_Sensei_PDF_Certificate {
 				'font_family' => 'Times',
 			)
 		);
-
 	} // End __construct()
 
 
@@ -108,7 +113,6 @@ class WooThemes_Sensei_PDF_Certificate {
 	public function get_certificate_filename() {
 
 		return 'certificate-' . $this->hash . '.pdf';
-
 	} // End get_certificate_filename()
 
 	/**
@@ -120,11 +124,11 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *
 	 * @return mixed nothing if a $path is supplied, otherwise a PDF download
 	 */
-	public function generate_pdf( $path = '' ) {
+	public function generate_pdf( $path = '' ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter -- Unused; kept for backward compatibility.
 
 		do_action( 'sensei_certificates_set_background_image', $this );
 
-		if ( isset( $this->bg_image_src ) && '' != $this->bg_image_src ) {
+		if ( isset( $this->bg_image_src ) && '' !== $this->bg_image_src ) {
 			$image = $this->bg_image_src;
 		} else {
 			$image = apply_filters( 'woothemes_sensei_certificates_background', $GLOBALS['woothemes_sensei_certificates']->plugin_path . 'assets/images/certificate_template.png' );
@@ -138,35 +142,34 @@ class WooThemes_Sensei_PDF_Certificate {
 		} // End If Statement
 		// Create the pdf
 		// TODO: we're assuming a standard DPI here of where 1 point = 1/72 inch = 1 pixel
-		// When writing text to a Cell, the text is vertically-aligned in the middle
+		// When writing text to a Cell, the text is vertically-aligned in the middle.
 		$fpdf = Woothemes_Sensei_Certificates_TFPDF::get_tfpdf_object(
-			$orientation, 'pt', array( $image_attr[0], $image_attr[1] )
+			$orientation,
+			'pt',
+			array( $image_attr[0], $image_attr[1] )
 		);
 
 		$fpdf->AddPage();
 		$fpdf->SetAutoPageBreak( false );
 
-		// Add custom font
 		$custom_font = apply_filters( 'sensei_certificates_custom_font', false );
 		if ( $custom_font ) {
 			if ( isset( $custom_font['family'] ) && isset( $custom_font['file'] ) ) {
 				$fpdf->AddFont( $custom_font['family'], '', $custom_font['file'], true );
 			}
 		} else {
-			// Add multibyte font
 			$fpdf->AddFont( 'DejaVu', '', 'DejaVuSansCondensed.ttf', true );
 		}
 
-		// Set the border image as the background
+		// Set the border image as the background.
 		$fpdf->Image( $image, 0, 0, $image_attr[0], $image_attr[1] );
 
 		do_action( 'sensei_certificates_before_pdf_output', $this, $fpdf );
 
-		// download file
 		Woothemes_Sensei_Certificates_TFPDF::output_to_http(
-			$fpdf, 'certificate-preview-' . $this->hash . '.pdf'
+			$fpdf,
+			'certificate-preview-' . $this->hash . '.pdf'
 		);
-
 	} // End generate_pdf()
 
 
@@ -175,11 +178,12 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param FPDF   $fpdf fpdf library object
-	 * @param string $field_name the field name
-	 * @param mixed  $value string or int value to display
-	 * @param int    $show_border a debugging/helper option to display a border
-	 *           around the position for this field
+	 * @param FPDF  $fpdf fpdf library object.
+	 * @param mixed $value string or int value to display.
+	 * @param int   $show_border a debugging/helper option to display a border
+	 *           around the position for this field.
+	 * @param array $position array of x, y, width and height for the field.
+	 * @param array $font optional font settings for the field.
 	 */
 	public function textarea_field( $fpdf, $value, $show_border, $position, $font = array() ) {
 
@@ -196,7 +200,7 @@ class WooThemes_Sensei_PDF_Certificate {
 
 			} // End If Statement
 
-			// Test each font element
+			// Test each font element.
 			if ( empty( $font['font_color'] ) ) {
 				$font['font_color'] = $this->certificate_pdf_data['font_color']; }
 			if ( empty( $font['font_family'] ) ) {
@@ -206,14 +210,12 @@ class WooThemes_Sensei_PDF_Certificate {
 			if ( empty( $font['font_size'] ) ) {
 				$font['font_size'] = $this->certificate_pdf_data['font_size']; }
 
-			// get the field position
 			list( $x, $y, $w, $h ) = $position;
 
-			// font color
 			$font_color = $this->hex2rgb( $font['font_color'] );
 			$fpdf->SetTextColor( $font_color[0], $font_color[1], $font_color[2] );
 
-			// Check for Border and Center align
+			// Check for Border and Center align.
 			$border = 0;
 			$center = 'J';
 			if ( isset( $font['font_style'] ) && ! empty( $font['font_style'] ) && false !== strpos( $font['font_style'], 'C' ) ) {
@@ -227,7 +229,7 @@ class WooThemes_Sensei_PDF_Certificate {
 
 			$custom_font = $this->set_custom_font( $fpdf, $font );
 
-			// Set the field text styling based on the font type
+			// Set the field text styling based on the font type.
 			$fonttype = '';
 			if ( ! $custom_font ) {
 				$fonttype = $this->get_font_type( $value );
@@ -251,16 +253,14 @@ class WooThemes_Sensei_PDF_Certificate {
 				$fpdf->SetDrawColor( $font_color[0], $font_color[1], $font_color[2] );
 			}
 
-			// Decode string based on font type
-			if ( 'latin' == $fonttype ) {
+			// Decode string based on font type.
+			if ( 'latin' === $fonttype ) {
 				$value = Woothemes_Sensei_Certificates_Utils::convert_utf8_to_latin1( $value );
 			}
 
-			// and write out the value
 			$fpdf->Multicell( $w, $font['font_size'], $value, $show_border, $center );
 
 		} // End If Statement
-
 	} // End textarea_field()
 
 	/**
@@ -268,26 +268,23 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param FPDF   $fpdf fpdf library object
-	 * @param string $field_name the field name
-	 * @param mixed  $value string or int value to display
-	 * @param int    $show_border a debugging/helper option to display a border
-	 *           around the position for this field
+	 * @param FPDF  $fpdf fpdf library object.
+	 * @param mixed $value string or int value to display.
+	 * @param int   $show_border a debugging/helper option to display a border
+	 *           around the position for this field.
+	 * @param array $position array of x, y, width and height for the field.
 	 */
 	public function image_field( $fpdf, $value, $show_border, $position ) {
 
 		if ( $value ) {
 
-			// get the field position
 			list( $x, $y, $w, $h ) = $position;
 
 			$fpdf->setXY( $x, $y );
 
-			// and write out the value
 			$fpdf->Image( esc_url( Woothemes_Sensei_Certificates_Utils::convert_utf8_to_latin1( $value ) ), $x, $y, $w, $h );
 
 		} // End If Statement
-
 	} // End image_field()
 
 
@@ -296,11 +293,12 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param FPDF   $fpdf fpdf library object
-	 * @param string $field_name the field name
-	 * @param mixed  $value string or int value to display
-	 * @param int    $show_border a debugging/helper option to display a border
-	 *           around the position for this field
+	 * @param FPDF  $fpdf fpdf library object.
+	 * @param mixed $value string or int value to display.
+	 * @param int   $show_border a debugging/helper option to display a border
+	 *           around the position for this field.
+	 * @param array $position array of x, y, width and height for the field.
+	 * @param array $font optional font settings for the field.
 	 */
 	public function text_field( $fpdf, $value, $show_border, $position, $font = array() ) {
 
@@ -317,7 +315,7 @@ class WooThemes_Sensei_PDF_Certificate {
 
 			} // End If Statement
 
-			// Test each font element
+			// Test each font element.
 			if ( empty( $font['font_color'] ) ) {
 				$font['font_color'] = $this->certificate_pdf_data['font_color']; }
 			if ( empty( $font['font_family'] ) ) {
@@ -327,14 +325,12 @@ class WooThemes_Sensei_PDF_Certificate {
 			if ( empty( $font['font_size'] ) ) {
 				$font['font_size'] = $this->certificate_pdf_data['font_size']; }
 
-			// get the field position
 			list( $x, $y, $w, $h ) = $position;
 
-			// font color
 			$font_color = $this->hex2rgb( $font['font_color'] );
 			$fpdf->SetTextColor( $font_color[0], $font_color[1], $font_color[2] );
 
-			// Check for Border and Center align
+			// Check for Border and Center align.
 			$border = 0;
 			$center = 'J';
 			if ( isset( $font['font_style'] ) && ! empty( $font['font_style'] ) && false !== strpos( $font['font_style'], 'C' ) ) {
@@ -348,7 +344,7 @@ class WooThemes_Sensei_PDF_Certificate {
 
 			$custom_font = $this->set_custom_font( $fpdf, $font );
 
-			// Set the field text styling based on the font type
+			// Set the field text styling based on the font type.
 			$fonttype = '';
 			if ( ! $custom_font ) {
 				$fonttype = $this->get_font_type( $value );
@@ -365,7 +361,7 @@ class WooThemes_Sensei_PDF_Certificate {
 				}
 			}
 
-			// show a border for debugging purposes
+			// show a border for debugging purposes.
 			if ( $show_border ) {
 				$fpdf->setXY( $x, $y );
 				$fpdf->Cell( $w, $h, '', 1 );
@@ -376,20 +372,18 @@ class WooThemes_Sensei_PDF_Certificate {
 				$fpdf->SetDrawColor( $font_color[0], $font_color[1], $font_color[2] );
 			} // End If Statement
 
-			// align the text to the bottom edge of the cell by translating as needed
+			// align the text to the bottom edge of the cell by translating as needed.
 			$y = $font['font_size'] > $h ? $y - ( $font['font_size'] - $h ) / 2 : $y + ( $h - $font['font_size'] ) / 2;
 			$fpdf->setXY( $x, $y );
 
-			// Decode string based on font type
-			if ( 'latin' == $fonttype ) {
+			// Decode string based on font type.
+			if ( 'latin' === $fonttype ) {
 				$value = Woothemes_Sensei_Certificates_Utils::convert_utf8_to_latin1( $value );
 			}
 
-			// and write out the value
 			$fpdf->Cell( $w, $h, $value, $show_border, $position, $center );
 
 		} // End If Statement
-
 	} // End text_field()
 
 	/**
@@ -397,11 +391,12 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param FPDF   $fpdf fpdf library object
-	 * @param string $field_name the field name
-	 * @param mixed  $value string or int value to display
-	 * @param int    $show_border a debugging/helper option to display a border
-	 *           around the position for this field
+	 * @param FPDF  $fpdf fpdf library object.
+	 * @param mixed $value string or int value to display.
+	 * @param int   $show_border a debugging/helper option to display a border
+	 *           around the position for this field.
+	 * @param array $position array of x, y, width and height for the field.
+	 * @param array $font optional font settings for the field.
 	 */
 	public function text_field_userdata( $fpdf, $value, $show_border, $position, $font = array() ) {
 
@@ -418,16 +413,14 @@ class WooThemes_Sensei_PDF_Certificate {
 
 			} // End If Statement
 
-			// get the field position
 			list( $x, $y, $w, $h ) = $position;
 
-			// font color
 			$font_color = $this->hex2rgb( $font['font_color'] );
 			$fpdf->SetTextColor( $font_color[0], $font_color[1], $font_color[2] );
 
 			$custom_font = $this->set_custom_font( $fpdf, $font );
 
-			// Set the field text styling based on the font type
+			// Set the field text styling based on the font type.
 			$fonttype = '';
 			if ( ! $custom_font ) {
 				$fonttype = $this->get_font_type( $value );
@@ -444,26 +437,24 @@ class WooThemes_Sensei_PDF_Certificate {
 				}
 			}
 
-			// show a border for debugging purposes
+			// show a border for debugging purposes.
 			if ( $show_border ) {
 				$fpdf->setXY( $x, $y );
 				$fpdf->Cell( $w, $h, '', 1 );
 			} // End If Statement
 
-			// align the text to the bottom edge of the cell by translating as needed
+			// align the text to the bottom edge of the cell by translating as needed.
 			$y = $font['font_size'] > $h ? $y - ( $font['font_size'] - $h ) / 2 : $y + ( $h - $font['font_size'] ) / 2;
 			$fpdf->setXY( $x, $y );
 
-			// Decode string based on font type
-			if ( 'latin' == $fonttype ) {
+			// Decode string based on font type.
+			if ( 'latin' === $fonttype ) {
 				$value = Woothemes_Sensei_Certificates_Utils::convert_utf8_to_latin1( $value );
 			}
 
-			// and write out the value
 			$fpdf->Cell( $w, $h, $value );
 
 		} // End If Statement
-
 	} // End text_field_userdata()
 
 
@@ -472,7 +463,7 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *
 	 * @access private
 	 * @since 1.0.0
-	 * @param string $hex hex color code, ie #EEEEEE
+	 * @param string $hex hex color code, ie #EEEEEE.
 	 * @return array rgb components, ie array( 'EE', 'EE', 'EE' )
 	 */
 	private function hex2rgb( $hex ) {
@@ -483,7 +474,7 @@ class WooThemes_Sensei_PDF_Certificate {
 
 		$hex = str_replace( '#', '', $hex );
 
-		if ( 3 == strlen( $hex ) ) {
+		if ( 3 === strlen( $hex ) ) {
 			$r = hexdec( substr( $hex, 0, 1 ) . substr( $hex, 0, 1 ) );
 			$g = hexdec( substr( $hex, 1, 1 ) . substr( $hex, 1, 1 ) );
 			$b = hexdec( substr( $hex, 2, 1 ) . substr( $hex, 2, 1 ) );
@@ -494,7 +485,6 @@ class WooThemes_Sensei_PDF_Certificate {
 		} // End If Statement}
 
 		return array( $r, $g, $b );
-
 	} // End hex2rgb()
 
 	/**
@@ -502,21 +492,20 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *
 	 * @access private
 	 * @since  1.0.4
-	 * @param  string $string String to check
+	 * @param  string $text String to check.
 	 * @return string         Font type
 	 */
-	public function get_font_type( $string = '' ) {
+	public function get_font_type( $text = '' ) {
 
-		if ( ! $string ) {
+		if ( ! $text ) {
 			return 'latin';
 		}
 
-		if ( mb_strlen( $string ) != strlen( $string ) ) {
+		if ( mb_strlen( $text ) !== strlen( $text ) ) {
 			return 'mb';
 		}
 
 		return 'latin';
-
 	}
 
 	/**
@@ -524,8 +513,8 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *
 	 * @access private
 	 * @since  1.0.4
-	 * @param  object $fpdf         The FPDF object
-	 * @param  array  $default_font The default font
+	 * @param  object $fpdf         The FPDF object.
+	 * @param  array  $default_font The default font.
 	 * @return boolean              True if the custom font was set
 	 */
 	public function set_custom_font( $fpdf, $default_font ) {
@@ -549,5 +538,4 @@ class WooThemes_Sensei_PDF_Certificate {
 
 		return false;
 	} // End set_custom_font()
-
 } // End Class

@@ -10,6 +10,7 @@
 	<exclude-pattern type="relative">^vendor/*</exclude-pattern>
 	<exclude-pattern type="relative">^build/*</exclude-pattern>
 	<exclude-pattern type="relative">^lib/*</exclude-pattern>
+	<exclude-pattern type="relative">^assets/dist/*</exclude-pattern>
 	<exclude-pattern>tests/</exclude-pattern>
 	<!-- Configs -->
 	<config name="minimum_supported_wp_version" value="4.9" />
@@ -34,5 +35,9 @@
 				<element value="sensei-certificates"/>
 			</property>
 		</properties>
+	</rule>
+	<!-- This template follows WordPress's single-{post_type}.php convention for the certificate_template post type, so its filename cannot be hyphenated. -->
+	<rule ref="WordPress.Files.FileName.NotHyphenatedLowercase">
+		<exclude-pattern>templates/single-certificate_template.php</exclude-pattern>
 	</rule>
 </ruleset>

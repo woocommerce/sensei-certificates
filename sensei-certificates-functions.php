@@ -1,6 +1,8 @@
 <?php
 /**
  * Sensei LMS Certificates functions.
+ *
+ * @package Sensei_Certificates
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -33,7 +35,6 @@ function sensei_certificates_updates_list( $updates ) {
 	);
 
 	return $updates;
-
 }
 
 /**
@@ -62,7 +63,7 @@ function sensei_certificates_add_update_functions_to_whitelist( $permitted_funct
  */
 function sensei_update_users_certificate_data( $n = 5, $offset = 0 ) {
 	// Calculate if this is the last page.
-	if ( 0 == $offset ) {
+	if ( 0 === $offset ) {
 		$current_page = 1;
 	} else {
 		$current_page = intval( $offset / $n );
@@ -83,7 +84,7 @@ function sensei_update_users_certificate_data( $n = 5, $offset = 0 ) {
 
 	$total_pages = intval( ceil( $total_items / $n ) );
 	if ( ! class_exists( 'Woothemes_Sensei_Certificate_Data_Store' ) ) {
-		include_once 'classes/class-woothemes-sensei-certificates-data-store.php';
+		include_once 'classes/class-woothemes-sensei-certificate-data-store.php';
 	}
 
 	$data_store = new Woothemes_Sensei_Certificate_Data_Store();
@@ -122,7 +123,7 @@ function sensei_update_users_certificate_data( $n = 5, $offset = 0 ) {
 					$data_store->insert( $user_id, $course_id );
 				}
 
-				wp_reset_query();
+				wp_reset_postdata();
 
 			}
 		}
@@ -164,11 +165,14 @@ function sensei_create_master_certificate_template() {
 	$file_array['name']     = basename( $matches[0] );
 	$file_array['tmp_name'] = $tmp;
 
+	// TODO: Handle sideload failures properly. On either WP_Error below the code
+	// currently falls through and stores the WP_Error as the template's image
+	// (_image_ids), leaving the example template with a broken background. Instead,
+	// bail early ( return false ) on each WP_Error.
 	// If error storing temporarily, unlink.
 	if ( is_wp_error( $tmp ) ) {
-		@unlink( $file_array['tmp_name'] );
+		wp_delete_file( $file_array['tmp_name'] );
 		$file_array['tmp_name'] = '';
-		error_log( 'An error occurred while uploading the image' );
 	}
 
 	if ( ! function_exists( 'media_handle_sideload' ) ) {
@@ -181,8 +185,7 @@ function sensei_create_master_certificate_template() {
 
 	// If error storing permanently, unlink.
 	if ( is_wp_error( $image_id ) ) {
-		@unlink( $file_array['tmp_name'] );
-		error_log( 'An error occurred while uploading the image' );
+		wp_delete_file( $file_array['tmp_name'] );
 	}
 
 	$src = wp_get_attachment_url( $image_id );

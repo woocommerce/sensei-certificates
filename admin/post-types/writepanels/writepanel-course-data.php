@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Actions and Filters.
  */
-add_action( 'sensei_process_course_certificate_template_meta', 'course_certificate_templates_process_meta', 10, 2 );
+add_action( 'sensei_process_course_certificate_template_meta', 'course_certificate_templates_process_meta' );
 
 /**
  * Certificates data meta box.
@@ -41,8 +41,9 @@ add_action( 'sensei_process_course_certificate_template_meta', 'course_certifica
  * Displays the meta box.
  *
  * @since 1.0.0
+ * @param WP_Post $post The post being edited.
  */
-function course_certificate_template_data_meta_box( $post ) {
+function course_certificate_template_data_meta_box( $post ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	global $post;
 
@@ -79,27 +80,26 @@ function course_certificate_template_data_meta_box( $post ) {
 		$html .= '<p>' . esc_html( __( 'No certificate template exist yet. Please add some first.', 'sensei-certificates' ) ) . '</p>';
 	}
 
-	$allowed_html = [
-		'input'  => [
-			'type'  => [],
-			'name'  => [],
-			'id'    => [],
-			'value' => [],
-		],
-		'select' => [
-			'id'    => [],
-			'name'  => [],
-			'class' => [],
-		],
-		'option' => [
-			'value'    => [],
-			'selected' => [],
-		],
-		'p'      => [],
-	];
+	$allowed_html = array(
+		'input'  => array(
+			'type'  => array(),
+			'name'  => array(),
+			'id'    => array(),
+			'value' => array(),
+		),
+		'select' => array(
+			'id'    => array(),
+			'name'  => array(),
+			'class' => array(),
+		),
+		'option' => array(
+			'value'    => array(),
+			'selected' => array(),
+		),
+		'p'      => array(),
+	);
 
 	echo wp_kses( $html, $allowed_html );
-
 }
 
 
@@ -109,17 +109,15 @@ function course_certificate_template_data_meta_box( $post ) {
  * Function for processing and storing all course certificate data.
  *
  * @since 1.0.0
- * @param int    $post_id The certificate id.
- * @param object $post    The certificate post object.
+ * @param int $post_id The certificate id.
  */
-function course_certificate_templates_process_meta( $post_id ) {
+function course_certificate_templates_process_meta( $post_id ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	global $woothemes_sensei_certificate_templates;
 
-	if ( ( get_post_type() != 'course' ) ) {
+	if ( ( get_post_type() !== 'course' ) ) {
 		return $post_id;
 	}
 
 	$woothemes_sensei_certificate_templates->save_post_meta( 'course_certificate_template', $post_id );
-
 }

@@ -20,13 +20,13 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 global $post, $woothemes_sensei_certificate_templates;
 
 if ( $woothemes_sensei_certificate_templates->get_image_id() ) {
-	// stream the example certificate pdf
+	// stream the example certificate pdf.
 	$woothemes_sensei_certificate_templates->generate_pdf();
 	exit;
 } else {

@@ -1,4 +1,9 @@
 <?php
+/**
+ * Certificate data store.
+ *
+ * @package Sensei_Certificates
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -10,16 +15,18 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Woothemes_Sensei_Certificate_Data_Store {
 	/**
-	 * @param int $user_id
-	 * @param int $course_id
+	 * Insert a certificate for a user and course.
+	 *
+	 * @param int $user_id User ID.
+	 * @param int $course_id Course post ID.
 	 * @return int|WP_Error
 	 */
-	function insert( $user_id, $course_id ) {
+	public function insert( $user_id, $course_id ) {
 		if ( ! class_exists( 'Woothemes_Sensei_Certificates_Utils' ) ) {
 			include_once 'class-woothemes-sensei-certificates-utils.php';
 		}
 		$certificate_hash = Woothemes_Sensei_Certificates_Utils::get_certificate_hash( $course_id, $user_id );
-		// check if user certificate already exists
+		// check if user certificate already exists.
 		$certificate_query = new WP_Query(
 			array(
 				'post_type'      => 'certificate',
@@ -32,7 +39,6 @@ class Woothemes_Sensei_Certificate_Data_Store {
 			return new WP_Error( 'sensei_certificates_duplicate' );
 		}
 
-		// Insert custom post type
 		$cert_args = array(
 			'post_author' => intval( $user_id ),
 			'post_title'  => $certificate_hash,

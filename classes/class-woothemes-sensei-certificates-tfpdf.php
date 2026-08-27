@@ -1,7 +1,12 @@
 <?php
+/**
+ * Manages the bundled tFPDF library.
+ *
+ * @package Sensei_Certificates
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
-    exit; // Exit if accessed directly.
+	exit; // Exit if accessed directly.
 }
 
 /**
@@ -11,9 +16,9 @@ class Woothemes_Sensei_Certificates_TFPDF {
 	/**
 	 * Create and return the tFPDF object.
 	 *
-	 * @param string $orientation
-	 * @param string $units
-	 * @param string $size
+	 * @param string $orientation Page orientation.
+	 * @param string $units Measurement units.
+	 * @param string $size Page size.
 	 *
 	 * @return tFPDF\PDF
 	 */
@@ -23,9 +28,9 @@ class Woothemes_Sensei_Certificates_TFPDF {
 		require_once dirname( __DIR__ ) . '/lib/tfpdf/tFPDF/TTFontFile.php';
 
 		if ( defined( 'WPCOM_IS_VIP_ENV' ) && true === WPCOM_IS_VIP_ENV ) {
-			require_once dirname( __FILE__ ) . '/class-vip-tfpdf.php';
+			require_once __DIR__ . '/class-woothemes-sensei-certificates-vip-tfpdf.php';
 
-			return new VIP_tFPDF( $orientation, $units, $size );
+			return new Woothemes_Sensei_Certificates_VIP_TFPDF( $orientation, $units, $size );
 		}
 
 		return new tFPDF\PDF( $orientation, $units, $size );
@@ -44,6 +49,6 @@ class Woothemes_Sensei_Certificates_TFPDF {
 		header( 'Cache-Control: private, max-age=0, must-revalidate' );
 		header( 'Pragma: public' );
 
-		echo $tfpdf->output();
+		echo $tfpdf->output(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Binary PDF output; escaping would corrupt it.
 	}
 }

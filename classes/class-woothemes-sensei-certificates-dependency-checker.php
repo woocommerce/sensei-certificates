@@ -1,4 +1,10 @@
 <?php
+/**
+ * Sensei LMS Certificates dependency checker.
+ *
+ * @package Sensei_Certificates
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
