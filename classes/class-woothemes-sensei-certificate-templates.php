@@ -104,7 +104,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	/**
 	 * Font color.
 	 *
-	 * @var
+	 * @var string
 	 */
 	public $certificate_font_color;
 
@@ -139,7 +139,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	/**
 	 * Template fields.
 	 *
-	 * @var
+	 * @var array
 	 */
 	public $certificate_template_fields;
 
