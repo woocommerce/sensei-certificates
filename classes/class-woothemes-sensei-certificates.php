@@ -790,7 +790,7 @@ class WooThemes_Sensei_Certificates {
 		$force_public_access = apply_filters( 'sensei_certificates_force_public_certs', false );
 
 		// If we can view certificates, get out.
-		if ( true === (bool) $grant_access_user && true === (bool) $grant_access || $force_public_access || current_user_can( 'manage_options' ) ) {
+		if ( ( true === (bool) $grant_access_user && true === (bool) $grant_access ) || $force_public_access || current_user_can( 'manage_options' ) ) {
 			return true;
 		}
 
@@ -1156,10 +1156,10 @@ class WooThemes_Sensei_Certificates {
 		$view_link_profile  = Sensei()->settings->settings['certificates_view_profile'];
 		$is_viewable        = false;
 
-		if ( ( 'page' === get_post_type( $my_courses_page_id ) // My Courses page.
+		if ( ( ( 'page' === get_post_type( $my_courses_page_id ) // My Courses page.
 			|| is_singular( 'course' ) // Single course page.
-			|| isset( $wp_query->query_vars['course_results'] ) ) && $view_link_courses // Course results page.
-			|| isset( $wp_query->query_vars['learner_profile'] ) && $view_link_profile ) { // Learner profile page.
+			|| isset( $wp_query->query_vars['course_results'] ) ) && $view_link_courses ) // Course results page.
+			|| ( isset( $wp_query->query_vars['learner_profile'] ) && $view_link_profile ) ) { // Learner profile page.
 			$is_viewable = true;
 		}
 
@@ -1584,7 +1584,7 @@ class WooThemes_Sensei_Certificates {
 	public function enqueue_block_editor_assets() {
 		$screen = get_current_screen();
 
-		if ( $screen && 'page' === $screen->post_type || 'course' === $screen->post_type ) {
+		if ( ( $screen && 'page' === $screen->post_type ) || 'course' === $screen->post_type ) {
 			self::instance()->assets->enqueue(
 				'sensei-certificates-block',
 				'blocks/index.js'
