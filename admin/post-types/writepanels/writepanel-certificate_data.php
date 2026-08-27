@@ -178,10 +178,10 @@ function certificate_templates_process_meta( $post_id, $post ) {
 	update_post_meta(
 		$post_id,
 		'_certificate_font_style',
-		( isset( $_POST['_certificate_font_style_b'] ) && 'yes' == $_POST['_certificate_font_style_b'] ? 'B' : '' ) .
-														( isset( $_POST['_certificate_font_style_i'] ) && 'yes' == $_POST['_certificate_font_style_i'] ? 'I' : '' ) .
-														( isset( $_POST['_certificate_font_style_c'] ) && 'yes' == $_POST['_certificate_font_style_c'] ? 'C' : '' ) .
-														( isset( $_POST['_certificate_font_style_o'] ) && 'yes' == $_POST['_certificate_font_style_o'] ? 'O' : '' )
+		( isset( $_POST['_certificate_font_style_b'] ) && 'yes' === $_POST['_certificate_font_style_b'] ? 'B' : '' ) .
+														( isset( $_POST['_certificate_font_style_i'] ) && 'yes' === $_POST['_certificate_font_style_i'] ? 'I' : '' ) .
+														( isset( $_POST['_certificate_font_style_c'] ) && 'yes' === $_POST['_certificate_font_style_c'] ? 'C' : '' ) .
+														( isset( $_POST['_certificate_font_style_o'] ) && 'yes' === $_POST['_certificate_font_style_o'] ? 'O' : '' )
 	);
 
 	// Original sizes: default 11, product name 16, sku 8.

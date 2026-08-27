@@ -548,19 +548,19 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		$return_array = array();
 
-		if ( isset( $this->certificate_template_fields[ $field_key ]['font']['color'] ) && '' != $this->certificate_template_fields[ $field_key ]['font']['color'] ) {
+		if ( isset( $this->certificate_template_fields[ $field_key ]['font']['color'] ) && '' !== $this->certificate_template_fields[ $field_key ]['font']['color'] ) {
 			$return_array['font_color'] = $this->certificate_template_fields[ $field_key ]['font']['color'];
 		}
 
-		if ( isset( $this->certificate_template_fields[ $field_key ]['font']['family'] ) && '' != $this->certificate_template_fields[ $field_key ]['font']['family'] ) {
+		if ( isset( $this->certificate_template_fields[ $field_key ]['font']['family'] ) && '' !== $this->certificate_template_fields[ $field_key ]['font']['family'] ) {
 			$return_array['font_family'] = $this->certificate_template_fields[ $field_key ]['font']['family'];
 		}
 
-		if ( isset( $this->certificate_template_fields[ $field_key ]['font']['style'] ) && '' != $this->certificate_template_fields[ $field_key ]['font']['style'] ) {
+		if ( isset( $this->certificate_template_fields[ $field_key ]['font']['style'] ) && '' !== $this->certificate_template_fields[ $field_key ]['font']['style'] ) {
 			$return_array['font_style'] = $this->certificate_template_fields[ $field_key ]['font']['style'];
 		}
 
-		if ( isset( $this->certificate_template_fields[ $field_key ]['font']['size'] ) && '' != $this->certificate_template_fields[ $field_key ]['font']['size'] ) {
+		if ( isset( $this->certificate_template_fields[ $field_key ]['font']['size'] ) && '' !== $this->certificate_template_fields[ $field_key ]['font']['size'] ) {
 			$return_array['font_size'] = $this->certificate_template_fields[ $field_key ]['font']['size'];
 		}
 
@@ -649,7 +649,7 @@ class WooThemes_Sensei_Certificate_Templates {
 			}
 
 			// Decode string based on font type.
-			if ( 'latin' == $fonttype ) {
+			if ( 'latin' === $fonttype ) {
 				$value = Woothemes_Sensei_Certificates_Utils::convert_utf8_to_latin1( $value );
 			}
 
@@ -747,7 +747,7 @@ class WooThemes_Sensei_Certificate_Templates {
 			$fpdf->setXY( $x, $y );
 
 			// Decode string based on font type.
-			if ( 'latin' == $fonttype ) {
+			if ( 'latin' === $fonttype ) {
 				$value = Woothemes_Sensei_Certificates_Utils::convert_utf8_to_latin1( $value );
 			}
 
@@ -772,7 +772,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		$hex = str_replace( '#', '', $hex );
 
-		if ( 3 == strlen( $hex ) ) {
+		if ( 3 === strlen( $hex ) ) {
 			$r = hexdec( substr( $hex, 0, 1 ) . substr( $hex, 0, 1 ) );
 			$g = hexdec( substr( $hex, 1, 1 ) . substr( $hex, 1, 1 ) );
 			$b = hexdec( substr( $hex, 2, 1 ) . substr( $hex, 2, 1 ) );
@@ -799,7 +799,7 @@ class WooThemes_Sensei_Certificate_Templates {
 			return 'latin';
 		}
 
-		if ( mb_strlen( $string ) != strlen( $string ) ) {
+		if ( mb_strlen( $string ) !== strlen( $string ) ) {
 			return 'mb';
 		}
 
@@ -855,7 +855,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 		foreach ( $this->item as $name => $value ) {
 
-			if ( __( $meta_name, 'sensei-certificates' ) == $name ) {
+			if ( __( $meta_name, 'sensei-certificates' ) === $name ) {
 
 				return $value;
 
@@ -891,12 +891,12 @@ class WooThemes_Sensei_Certificate_Templates {
 		// Get the meta value of the custom field key.
 		$meta_value = get_post_meta( $post_id, $meta_key, true );
 		// If a new meta value was added and there was no previous value, add it.
-		if ( $new_meta_value && '' == $meta_value ) {
+		if ( $new_meta_value && '' === $meta_value ) {
 			add_post_meta( $post_id, $meta_key, $new_meta_value, true );
-		} elseif ( $new_meta_value && $new_meta_value != $meta_value ) {
+		} elseif ( $new_meta_value && $new_meta_value !== $meta_value ) {
 			// If the new meta value does not match the old value, update it.
 			update_post_meta( $post_id, $meta_key, $new_meta_value );
-		} elseif ( '' == $new_meta_value && $meta_value ) {
+		} elseif ( '' === $new_meta_value && $meta_value ) {
 			// If there is no new meta value but an old value exists, delete it.
 			delete_post_meta( $post_id, $meta_key, $meta_value );
 		}

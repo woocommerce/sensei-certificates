@@ -427,7 +427,7 @@ class WooThemes_Sensei_Certificates {
 
 		// Loop through menu order and do some rearranging.
 		foreach ( $menu_order as $k => $v ) {
-			if ( $v == $item_before ) {
+			if ( $v === $item_before ) {
 				$new_order[] = $v;
 				$new_order[] = $item_to_move;
 			} else {
@@ -777,7 +777,7 @@ class WooThemes_Sensei_Certificates {
 		$force_public_access = apply_filters( 'sensei_certificates_force_public_certs', false );
 
 		// If we can view certificates, get out.
-		if ( true == (bool) $grant_access_user && true == (bool) $grant_access || $force_public_access || current_user_can( 'manage_options' ) ) {
+		if ( true === (bool) $grant_access_user && true === (bool) $grant_access || $force_public_access || current_user_can( 'manage_options' ) ) {
 			return true;
 		}
 
@@ -800,7 +800,7 @@ class WooThemes_Sensei_Certificates {
 
 		global $post;
 
-		if ( ! is_singular() || 'certificate' != get_post_type() ) {
+		if ( ! is_singular() || 'certificate' !== get_post_type() ) {
 			return;
 		}
 
@@ -954,13 +954,13 @@ class WooThemes_Sensei_Certificates {
 
 			} // End For Loop
 
-			if ( isset( $this->certificate_font_color ) && '' != $this->certificate_font_color ) {
+			if ( isset( $this->certificate_font_color ) && '' !== $this->certificate_font_color ) {
 				$pdf_certificate->certificate_pdf_data['font_color'] = $this->certificate_font_color; }
-			if ( isset( $this->certificate_font_size ) && '' != $this->certificate_font_size ) {
+			if ( isset( $this->certificate_font_size ) && '' !== $this->certificate_font_size ) {
 				$pdf_certificate->certificate_pdf_data['font_size'] = $this->certificate_font_size; }
-			if ( isset( $this->certificate_font_family ) && '' != $this->certificate_font_family ) {
+			if ( isset( $this->certificate_font_family ) && '' !== $this->certificate_font_family ) {
 				$pdf_certificate->certificate_pdf_data['font_family'] = $this->certificate_font_family; }
-			if ( isset( $this->certificate_font_style ) && '' != $this->certificate_font_style ) {
+			if ( isset( $this->certificate_font_style ) && '' !== $this->certificate_font_style ) {
 				$pdf_certificate->certificate_pdf_data['font_style'] = $this->certificate_font_style; }
 
 			// Data fields.
@@ -1078,19 +1078,19 @@ class WooThemes_Sensei_Certificates {
 
 		$return_array = array();
 
-		if ( isset( $this->certificate_template_fields[ $field_key ]['font']['color'] ) && '' != $this->certificate_template_fields[ $field_key ]['font']['color'] ) {
+		if ( isset( $this->certificate_template_fields[ $field_key ]['font']['color'] ) && '' !== $this->certificate_template_fields[ $field_key ]['font']['color'] ) {
 			$return_array['font_color'] = $this->certificate_template_fields[ $field_key ]['font']['color'];
 		} // End If Statement
 
-		if ( isset( $this->certificate_template_fields[ $field_key ]['font']['family'] ) && '' != $this->certificate_template_fields[ $field_key ]['font']['family'] ) {
+		if ( isset( $this->certificate_template_fields[ $field_key ]['font']['family'] ) && '' !== $this->certificate_template_fields[ $field_key ]['font']['family'] ) {
 			$return_array['font_family'] = $this->certificate_template_fields[ $field_key ]['font']['family'];
 		} // End If Statement
 
-		if ( isset( $this->certificate_template_fields[ $field_key ]['font']['style'] ) && '' != $this->certificate_template_fields[ $field_key ]['font']['style'] ) {
+		if ( isset( $this->certificate_template_fields[ $field_key ]['font']['style'] ) && '' !== $this->certificate_template_fields[ $field_key ]['font']['style'] ) {
 			$return_array['font_style'] = $this->certificate_template_fields[ $field_key ]['font']['style'];
 		} // End If Statement
 
-		if ( isset( $this->certificate_template_fields[ $field_key ]['font']['size'] ) && '' != $this->certificate_template_fields[ $field_key ]['font']['size'] ) {
+		if ( isset( $this->certificate_template_fields[ $field_key ]['font']['size'] ) && '' !== $this->certificate_template_fields[ $field_key ]['font']['size'] ) {
 			$return_array['font_size'] = $this->certificate_template_fields[ $field_key ]['font']['size'];
 		} // End If Statement
 
@@ -1140,7 +1140,7 @@ class WooThemes_Sensei_Certificates {
 		$view_link_profile  = Sensei()->settings->settings['certificates_view_profile'];
 		$is_viewable        = false;
 
-		if ( ( 'page' == get_post_type( $my_courses_page_id ) // My Courses page.
+		if ( ( 'page' === get_post_type( $my_courses_page_id ) // My Courses page.
 			|| is_singular( 'course' ) // Single course page.
 			|| isset( $wp_query->query_vars['course_results'] ) ) && $view_link_courses // Course results page.
 			|| isset( $wp_query->query_vars['learner_profile'] ) && $view_link_profile ) { // Learner profile page.
@@ -1163,11 +1163,11 @@ class WooThemes_Sensei_Certificates {
 			$certificate_url = $this->get_certificate_url( $course_id, $user_id );
 		}
 
-		if ( '' != $certificate_url ) {
+		if ( '' !== $certificate_url ) {
 
 			$classes = '';
 
-			if ( 'page' == get_post_type( $my_courses_page_id ) || isset( $wp_query->query_vars['learner_profile'] ) ) {
+			if ( 'page' === get_post_type( $my_courses_page_id ) || isset( $wp_query->query_vars['learner_profile'] ) ) {
 
 				$classes = 'button ';
 
@@ -1261,7 +1261,7 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function create_columns( $columns, $analysis ) {
 
-		if ( 'user' == $analysis->view ) {
+		if ( 'user' === $analysis->view ) {
 			$columns['certificates_link'] = __( 'Certificate', 'sensei-certificates' );
 		}
 
@@ -1281,11 +1281,11 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function populate_columns( $content, $item, $analysis ) {
 
-		if ( 'user' == $analysis->view ) {
+		if ( 'user' === $analysis->view ) {
 			$certificate_url = $this->get_certificate_url( $analysis->course_id, $item->user_id );
 			$output          = '';
 
-			if ( '' != $certificate_url ) {
+			if ( '' !== $certificate_url ) {
 
 				$output = '<a href="' . $certificate_url . '" class="sensei-certificate-link" title="' . esc_attr( __( 'View Certificate', 'sensei-certificates' ) ) . '">' . __( 'View Certificate', 'sensei-certificates' ) . '</a>';
 
@@ -1447,7 +1447,7 @@ class WooThemes_Sensei_Certificates {
 
 		// Restrict to current logged in user only.
 		$current_user_id = get_current_user_id();
-		if ( $user->ID == $current_user_id && is_user_logged_in() && true == (bool) $grant_access ) {
+		if ( $user->ID === $current_user_id && is_user_logged_in() && true === (bool) $grant_access ) {
 
 			$view_setting = get_user_option( 'sensei_certificates_view_by_public', $user->ID );
 			?>
@@ -1515,7 +1515,7 @@ class WooThemes_Sensei_Certificates {
 			),
 		);
 
-		if ( isset( $this->messages ) && '' != $this->messages ) {
+		if ( isset( $this->messages ) && '' !== $this->messages ) {
 			echo wp_kses( $this->messages, $allowed_html );
 		} // End If Statement
 	} // End certificates_user_settings_message()

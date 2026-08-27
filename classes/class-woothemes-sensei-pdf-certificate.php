@@ -122,7 +122,7 @@ class WooThemes_Sensei_PDF_Certificate {
 
 		do_action( 'sensei_certificates_set_background_image', $this );
 
-		if ( isset( $this->bg_image_src ) && '' != $this->bg_image_src ) {
+		if ( isset( $this->bg_image_src ) && '' !== $this->bg_image_src ) {
 			$image = $this->bg_image_src;
 		} else {
 			$image = apply_filters( 'woothemes_sensei_certificates_background', $GLOBALS['woothemes_sensei_certificates']->plugin_path . 'assets/images/certificate_template.png' );
@@ -248,7 +248,7 @@ class WooThemes_Sensei_PDF_Certificate {
 			}
 
 			// Decode string based on font type.
-			if ( 'latin' == $fonttype ) {
+			if ( 'latin' === $fonttype ) {
 				$value = Woothemes_Sensei_Certificates_Utils::convert_utf8_to_latin1( $value );
 			}
 
@@ -371,7 +371,7 @@ class WooThemes_Sensei_PDF_Certificate {
 			$fpdf->setXY( $x, $y );
 
 			// Decode string based on font type.
-			if ( 'latin' == $fonttype ) {
+			if ( 'latin' === $fonttype ) {
 				$value = Woothemes_Sensei_Certificates_Utils::convert_utf8_to_latin1( $value );
 			}
 
@@ -442,7 +442,7 @@ class WooThemes_Sensei_PDF_Certificate {
 			$fpdf->setXY( $x, $y );
 
 			// Decode string based on font type.
-			if ( 'latin' == $fonttype ) {
+			if ( 'latin' === $fonttype ) {
 				$value = Woothemes_Sensei_Certificates_Utils::convert_utf8_to_latin1( $value );
 			}
 
@@ -468,7 +468,7 @@ class WooThemes_Sensei_PDF_Certificate {
 
 		$hex = str_replace( '#', '', $hex );
 
-		if ( 3 == strlen( $hex ) ) {
+		if ( 3 === strlen( $hex ) ) {
 			$r = hexdec( substr( $hex, 0, 1 ) . substr( $hex, 0, 1 ) );
 			$g = hexdec( substr( $hex, 1, 1 ) . substr( $hex, 1, 1 ) );
 			$b = hexdec( substr( $hex, 2, 1 ) . substr( $hex, 2, 1 ) );
@@ -495,7 +495,7 @@ class WooThemes_Sensei_PDF_Certificate {
 			return 'latin';
 		}
 
-		if ( mb_strlen( $string ) != strlen( $string ) ) {
+		if ( mb_strlen( $string ) !== strlen( $string ) ) {
 			return 'mb';
 		}
 

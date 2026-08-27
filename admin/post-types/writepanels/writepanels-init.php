@@ -116,7 +116,7 @@ function certificate_templates_meta_boxes() {
  */
 function certificate_templates_enter_title_here( $text, $post ) {
 
-	if ( 'certificate_template' == $post->post_type ) {
+	if ( 'certificate_template' === $post->post_type ) {
 		return __( 'Certificate Template', 'sensei-certificates' );
 	}
 
@@ -155,7 +155,7 @@ function certificate_templates_meta_boxes_save( $post_id, $post ) {
 	if ( ! current_user_can( 'edit_post', $post_id ) ) {
 		return;
 	}
-	if ( 'certificate_template' != $post->post_type ) {
+	if ( 'certificate_template' !== $post->post_type ) {
 		return;
 	}
 
@@ -194,7 +194,7 @@ function course_certificate_templates_meta_boxes_save( $post_id, $post ) {
 	if ( ! current_user_can( 'edit_post', $post_id ) ) {
 		return;
 	}
-	if ( 'course' != $post->post_type ) {
+	if ( 'course' !== $post->post_type ) {
 		return;
 	}
 
@@ -237,7 +237,7 @@ function certificate_templates_wp_font_select( $field ) {
 	// Values.
 	$font_family_value = $font_size_value = $font_style_value = '';
 
-	if ( '_certificate' == $field['id'] ) {
+	if ( '_certificate' === $field['id'] ) {
 
 		// Certificate defaults.
 		$font_family_value = get_post_meta( $thepostid, $field['id'] . '_font_family', true );
@@ -291,7 +291,7 @@ function certificate_templates_wp_font_select( $field ) {
 	checked( false !== strpos( $font_style_value, 'I' ), true );
 	echo ' /> ';
 
-	if ( '_certificate' != $field['id'] ) {
+	if ( '_certificate' !== $field['id'] ) {
 
 		echo '<label for="' . esc_attr( $field['id'] ) . '_font_style_c" style="width:auto;margin:0 5px 0 10px;">' . esc_html__( 'Center Align', 'sensei-certificates' ) . '</label><input type="checkbox" class="checkbox" style="margin-top:4px;" name="' . esc_attr( $field['id'] ) . '_font_style_c" id="' . esc_attr( $field['id'] ) . '_font_style_c" value="yes" ';
 		checked( false !== strpos( $font_style_value, 'C' ), true );

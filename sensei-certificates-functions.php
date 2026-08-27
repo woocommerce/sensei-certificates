@@ -61,7 +61,7 @@ function sensei_certificates_add_update_functions_to_whitelist( $permitted_funct
  */
 function sensei_update_users_certificate_data( $n = 5, $offset = 0 ) {
 	// Calculate if this is the last page.
-	if ( 0 == $offset ) {
+	if ( 0 === $offset ) {
 		$current_page = 1;
 	} else {
 		$current_page = intval( $offset / $n );

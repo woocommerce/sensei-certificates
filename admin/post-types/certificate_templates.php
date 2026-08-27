@@ -123,7 +123,7 @@ function certificate_template_custom_certificate_columns( $column ) {
 			echo '<strong><a class="row-title" href="' . esc_url( $edit_link ) . '">' . esc_html( $title ) . '</a>';
 
 			// display post states a little more selectively than _post_states( $post );.
-			if ( 'draft' == $post->post_status ) {
+			if ( 'draft' === $post->post_status ) {
 				echo " - <span class='post-state'>" . esc_html__( 'Draft', 'sensei-certificates' ) . '</span>';
 			} // End If Statement
 
@@ -134,12 +134,12 @@ function certificate_template_custom_certificate_columns( $column ) {
 			$actions['id'] = 'ID: ' . $post->ID;
 
 			if ( current_user_can( $post_type_object->cap->delete_post, $post->ID ) ) {
-				if ( 'trash' == $post->post_status ) {
+				if ( 'trash' === $post->post_status ) {
 					$actions['untrash'] = "<a title='" . esc_attr( __( 'Restore this item from the Trash', 'sensei-certificates' ) ) . "' href='" . wp_nonce_url( admin_url( sprintf( $post_type_object->_edit_link . '&amp;action=untrash', $post->ID ) ), 'untrash-post_' . $post->ID ) . "'>" . __( 'Restore', 'sensei-certificates' ) . '</a>';
 				} elseif ( EMPTY_TRASH_DAYS ) {
 					$actions['trash'] = "<a class='submitdelete' title='" . esc_attr( __( 'Move this item to the Trash', 'sensei-certificates' ) ) . "' href='" . get_delete_post_link( $post->ID ) . "'>" . __( 'Trash', 'sensei-certificates' ) . '</a>';
 				}
-				if ( 'trash' == $post->post_status || ! EMPTY_TRASH_DAYS ) {
+				if ( 'trash' === $post->post_status || ! EMPTY_TRASH_DAYS ) {
 					$actions['delete'] = "<a class='submitdelete' title='" . esc_attr( __( 'Delete this item permanently', 'sensei-certificates' ) ) . "' href='" . get_delete_post_link( $post->ID, '', true ) . "'>" . __( 'Delete Permanently', 'sensei-certificates' ) . '</a>';
 				}
 			} // End If Statement
@@ -152,7 +152,7 @@ function certificate_template_custom_certificate_columns( $column ) {
 			$action_count = count( $actions );
 
 			foreach ( $actions as $action => $link ) {
-				( $action_count - 1 == $i ) ? $sep = '' : $sep = ' | ';
+				( $action_count - 1 === $i ) ? $sep = '' : $sep = ' | ';
 				echo '<span class="' . esc_attr( $action ) . '">' . wp_kses_post( $link . $sep ) . '</span>';
 				++$i;
 			} // End For Loop

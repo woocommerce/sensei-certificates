@@ -83,7 +83,7 @@ function sensei_certificate_add_role_caps() {
 function sensei_certificate_template_admin_init() {
 	global $pagenow;
 
-	if ( 'post-new.php' == $pagenow || 'post.php' == $pagenow || 'edit.php' == $pagenow ) {
+	if ( 'post-new.php' === $pagenow || 'post.php' === $pagenow || 'edit.php' === $pagenow ) {
 
 		include_once 'post-types/writepanels/writepanels-init.php';
 
@@ -103,7 +103,7 @@ function sensei_certificate_template_admin_help_tab() {
 
 	$screen = get_current_screen();
 
-	if ( 'edit-certificate_template' != $screen->id && 'certificate_template' != $screen->id ) {
+	if ( 'edit-certificate_template' !== $screen->id && 'certificate_template' !== $screen->id ) {
 		return;
 	}
 
@@ -196,7 +196,7 @@ function sensei_certificate_template_admin_enqueue_scripts() {
 	$screen = get_current_screen();
 
 	// Certificate Template admin pages.
-	if ( 'certificate_template' == $screen->id ) {
+	if ( 'certificate_template' === $screen->id ) {
 
 		// Color picker script/styles.
 		wp_enqueue_script( 'wp-color-picker' );
@@ -218,7 +218,7 @@ function sensei_certificate_template_admin_enqueue_scripts() {
 			'primary_image_height' => '',
 		);
 
-		if ( 'certificate_template' == $screen->id ) {
+		if ( 'certificate_template' === $screen->id ) {
 			// Get the primary image dimensions (if any) which are needed for the page script.
 			$attachment = null;
 			$image_ids  = get_post_meta( $post->ID, '_image_ids', true );
