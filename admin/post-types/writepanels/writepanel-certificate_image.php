@@ -99,7 +99,7 @@ function certificate_template_process_images_meta( $post_id ) { // phpcs:ignore 
 	foreach ( $upload_image_id as $i => $image_id ) {
 
 		if ( 0 === $i || $image_id ) {
-			$image_ids[] = $image_id !== 0 ? $image_id : '';
+			$image_ids[] = 0 !== $image_id ? $image_id : '';
 		}
 	}
 
