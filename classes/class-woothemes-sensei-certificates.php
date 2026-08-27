@@ -463,7 +463,7 @@ class WooThemes_Sensei_Certificates {
 	} // End force_hide_wpseo_meta_box()
 
 	/**
-	 * plugin_path function
+	 * The plugin_path function
 	 *
 	 * @access public
 	 * @since  1.0.0
@@ -480,7 +480,7 @@ class WooThemes_Sensei_Certificates {
 
 
 	/**
-	 * certificates_settings_tabs function for settings tabs
+	 * The certificates_settings_tabs function for settings tabs
 	 *
 	 * @access public
 	 * @param  $sections array
@@ -498,7 +498,7 @@ class WooThemes_Sensei_Certificates {
 	} // End certificates_settings_tabs()
 
 	/**
-	 * certificates_settings_fields function for settings fields
+	 * The certificates_settings_fields function for settings fields
 	 *
 	 * @access public
 	 * @param  $fields array
@@ -593,7 +593,7 @@ class WooThemes_Sensei_Certificates {
 
 
 	/**
-	 * post_type_custom_column_headings function.
+	 * The post_type_custom_column_headings function.
 	 *
 	 * @access public
 	 * @since  1.0.0
@@ -613,7 +613,7 @@ class WooThemes_Sensei_Certificates {
 
 
 	/**
-	 * post_type_custom_column_content function.
+	 * The post_type_custom_column_content function.
 	 *
 	 * @access public
 	 * @since  1.0.0
@@ -1115,7 +1115,7 @@ class WooThemes_Sensei_Certificates {
 	} // End get_certificate_font_settings()
 
 	/**
-	 * certificate_link frontend output function for certificate link
+	 * The certificate_link frontend output function for certificate link
 	 *
 	 * @access public
 	 * @since  1.0.0
@@ -1269,7 +1269,7 @@ class WooThemes_Sensei_Certificates {
 
 
 	/**
-	 * create_columns adds columns for certificates
+	 * The create_columns adds columns for certificates
 	 *
 	 * @access public
 	 * @since  1.0.0
@@ -1287,7 +1287,7 @@ class WooThemes_Sensei_Certificates {
 
 
 	/**
-	 * populate_columns outputs column data
+	 * The populate_columns outputs column data
 	 *
 	 * @access public
 	 * @since  1.0.0
@@ -1365,7 +1365,7 @@ class WooThemes_Sensei_Certificates {
 
 
 	/**
-	 * include_sensei_scripts includes Sensei scripts and styles on Certificates pages
+	 * The include_sensei_scripts includes Sensei scripts and styles on Certificates pages
 	 *
 	 * @access public
 	 * @since  1.0.0
@@ -1382,7 +1382,7 @@ class WooThemes_Sensei_Certificates {
 
 
 	/**
-	 * reset_course_certificate deletes existing course certificate when the user resets a lesson
+	 * The reset_course_certificate deletes existing course certificate when the user resets a lesson
 	 *
 	 * @access public
 	 * @since  1.0.7
@@ -1401,7 +1401,7 @@ class WooThemes_Sensei_Certificates {
 	}
 
 	/**
-	 * reset_course_certificate deletes existing course certificate when the user resets the course
+	 * The reset_course_certificate deletes existing course certificate when the user resets the course
 	 *
 	 * @access public
 	 * @since  1.0.0
@@ -1452,7 +1452,7 @@ class WooThemes_Sensei_Certificates {
 
 
 	/**
-	 * certificates_user_settings_form form output
+	 * The certificates_user_settings_form form output
 	 *
 	 * @access public
 	 * @since  1.0.0
@@ -1484,7 +1484,7 @@ class WooThemes_Sensei_Certificates {
 
 
 	/**
-	 * certificates_user_settings_save handles the save from the user meta form
+	 * The certificates_user_settings_save handles the save from the user meta form
 	 *
 	 * @access public
 	 * @since  1.0.0
@@ -1522,7 +1522,7 @@ class WooThemes_Sensei_Certificates {
 
 
 	/**
-	 * certificates_user_settings_messages frontend notification messages
+	 * The certificates_user_settings_messages frontend notification messages
 	 *
 	 * @access public
 	 * @since  1.0.0

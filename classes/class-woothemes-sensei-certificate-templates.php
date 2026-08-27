@@ -167,7 +167,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 
 	/**
-	 * plugin_path function
+	 * The plugin_path function
 	 *
 	 * @access public
 	 * @since  1.0.0
@@ -254,7 +254,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	}
 
 	/**
-	 * post_type_custom_column_headings function.
+	 * The post_type_custom_column_headings function.
 	 *
 	 * @access public
 	 * @since  1.0.0
@@ -273,7 +273,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 
 	/**
-	 * post_type_custom_column_content function.
+	 * The post_type_custom_column_content function.
 	 *
 	 * @access public
 	 * @since  1.0.0
@@ -338,7 +338,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 
 	/**
-	 * populate_object
+	 * The populate_object function.
 	 *
 	 * @access public
 	 * @since  1.0.0
@@ -885,7 +885,7 @@ class WooThemes_Sensei_Certificate_Templates {
 
 
 	/**
-	 * save_post_meta function.
+	 * The save_post_meta function.
 	 *
 	 * Does the save
 	 *
