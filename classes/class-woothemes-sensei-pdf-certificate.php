@@ -492,16 +492,16 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *
 	 * @access private
 	 * @since  1.0.4
-	 * @param  string $string String to check.
+	 * @param  string $text String to check.
 	 * @return string         Font type
 	 */
-	public function get_font_type( $string = '' ) {
+	public function get_font_type( $text = '' ) {
 
-		if ( ! $string ) {
+		if ( ! $text ) {
 			return 'latin';
 		}
 
-		if ( mb_strlen( $string ) !== strlen( $string ) ) {
+		if ( mb_strlen( $text ) !== strlen( $text ) ) {
 			return 'mb';
 		}
 

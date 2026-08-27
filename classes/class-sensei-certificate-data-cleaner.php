@@ -237,11 +237,11 @@ class Sensei_Certificate_Data_Cleaner {
 	/**
 	 * Helper method to remove capabilities from a user or role object.
 	 *
-	 * @param (WP_User|WP_Role) $object the user or role object.
+	 * @param (WP_User|WP_Role) $user_or_role the user or role object.
 	 */
-	private static function remove_capabilities( $object ) {
+	private static function remove_capabilities( $user_or_role ) {
 		foreach ( self::$caps as $cap ) {
-			$object->remove_cap( $cap );
+			$user_or_role->remove_cap( $cap );
 		}
 	}
 
