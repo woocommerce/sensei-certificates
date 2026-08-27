@@ -387,7 +387,7 @@ class WooThemes_Sensei_Certificate_Templates {
 		}
 
 		return false;
-	} // populate_object()
+	}
 
 
 	/** Getter/Setter methods ******************************************************/
