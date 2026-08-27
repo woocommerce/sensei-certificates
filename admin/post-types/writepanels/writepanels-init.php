@@ -65,7 +65,7 @@ add_action( 'publish_certificate_template', 'certificate_template_private', 10, 
  *
  * @since 1.0.0
  */
-function certificate_templates_meta_boxes() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy global function; renaming would break backward compatibility.
+function certificate_templates_meta_boxes() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	// Certificate Primary Image box.
 	add_meta_box(
@@ -114,7 +114,7 @@ function certificate_templates_meta_boxes() { // phpcs:ignore WordPress.NamingCo
  *
  * @return string "Certificate Template Name" when the post type is certificate_template.
  */
-function certificate_templates_enter_title_here( $text, $post ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy global function; renaming would break backward compatibility.
+function certificate_templates_enter_title_here( $text, $post ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	if ( 'certificate_template' === $post->post_type ) {
 		return __( 'Certificate Template', 'sensei-certificates' );
@@ -131,7 +131,7 @@ function certificate_templates_enter_title_here( $text, $post ) { // phpcs:ignor
  * @param int    $post_id Post identifier.
  * @param object $post    Post object.
  */
-function certificate_templates_meta_boxes_save( $post_id, $post ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy global function; renaming would break backward compatibility.
+function certificate_templates_meta_boxes_save( $post_id, $post ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	if ( empty( $post_id ) || empty( $post ) || empty( $_POST ) ) {
 		return;
@@ -170,7 +170,7 @@ function certificate_templates_meta_boxes_save( $post_id, $post ) { // phpcs:ign
  * @param int    $post_id Post identifier.
  * @param object $post    Post object.
  */
-function course_certificate_templates_meta_boxes_save( $post_id, $post ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy global function; renaming would break backward compatibility.
+function course_certificate_templates_meta_boxes_save( $post_id, $post ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	if ( empty( $post_id ) || empty( $post ) || empty( $_POST ) ) {
 		return;
@@ -212,7 +212,7 @@ function course_certificate_templates_meta_boxes_save( $post_id, $post ) { // ph
  * @param int    $post_id The certificate identifier.
  * @param object $post    The certificate object.
  */
-function certificate_template_private( $post_id, $post ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy global function; renaming would break backward compatibility.
+function certificate_template_private( $post_id, $post ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	global $wpdb;
 
@@ -227,12 +227,12 @@ function certificate_template_private( $post_id, $post ) { // phpcs:ignore WordP
  * @since 1.0.0
  * @param array $field The field definition array.
  */
-function certificate_templates_wp_font_select( $field ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy global function; renaming would break backward compatibility.
+function certificate_templates_wp_font_select( $field ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	global $thepostid, $post, $woothemes_sensei_certificates;
 
 	if ( ! $thepostid ) {
-		$thepostid = $post->ID;
+		$thepostid = $post->ID; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Pre-existing global.
 	}
 
 	// Values.
@@ -348,7 +348,7 @@ function certificate_templates_wp_color_picker_js() {
  * @since 1.0.0
  * @param array $field The field definition array.
  */
-function certificate_templates_wp_position_picker( $field ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy global function; renaming would break backward compatibility.
+function certificate_templates_wp_position_picker( $field ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	global $woothemes_sensei_certificates;
 
@@ -383,11 +383,11 @@ function certificate_templates_wp_position_picker( $field ) { // phpcs:ignore Wo
  * @param  array $field The field definition array.
  * @return void
  */
-function certificates_wp_text_input( $field ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy global function; renaming would break backward compatibility.
+function certificates_wp_text_input( $field ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	global $thepostid, $post, $woothemes_sensei_certificates;
 
-	$thepostid              = empty( $thepostid ) ? $post->ID : $thepostid;
+	$thepostid              = empty( $thepostid ) ? $post->ID : $thepostid; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Pre-existing global.
 	$field['placeholder']   = isset( $field['placeholder'] ) ? $field['placeholder'] : '';
 	$field['class']         = isset( $field['class'] ) ? $field['class'] : 'short';
 	$field['wrapper_class'] = isset( $field['wrapper_class'] ) ? $field['wrapper_class'] : '';
@@ -431,11 +431,11 @@ function certificates_wp_text_input( $field ) { // phpcs:ignore WordPress.Naming
  * @param  array $field The field definition array.
  * @return void
  */
-function certificates_wp_hidden_input( $field ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy global function; renaming would break backward compatibility.
+function certificates_wp_hidden_input( $field ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	global $thepostid, $post;
 
-	$thepostid      = empty( $thepostid ) ? $post->ID : $thepostid;
+	$thepostid      = empty( $thepostid ) ? $post->ID : $thepostid; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Pre-existing global.
 	$field['value'] = isset( $field['value'] ) ? $field['value'] : get_post_meta( $thepostid, $field['id'], true );
 	$field['class'] = isset( $field['class'] ) ? $field['class'] : '';
 
@@ -451,11 +451,11 @@ function certificates_wp_hidden_input( $field ) { // phpcs:ignore WordPress.Nami
  * @param  array $field The field definition array.
  * @return void
  */
-function certificates_wp_textarea_input( $field ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy global function; renaming would break backward compatibility.
+function certificates_wp_textarea_input( $field ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	global $thepostid, $post, $woothemes_sensei_certificates;
 
-	$thepostid              = empty( $thepostid ) ? $post->ID : $thepostid;
+	$thepostid              = empty( $thepostid ) ? $post->ID : $thepostid; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Pre-existing global.
 	$field['placeholder']   = isset( $field['placeholder'] ) ? $field['placeholder'] : '';
 	$field['class']         = isset( $field['class'] ) ? $field['class'] : 'short';
 	$field['wrapper_class'] = isset( $field['wrapper_class'] ) ? $field['wrapper_class'] : '';
@@ -488,11 +488,11 @@ function certificates_wp_textarea_input( $field ) { // phpcs:ignore WordPress.Na
  * @param  array $field The field definition array.
  * @return void
  */
-function certificates_wp_checkbox( $field ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy global function; renaming would break backward compatibility.
+function certificates_wp_checkbox( $field ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	global $thepostid, $post;
 
-	$thepostid              = empty( $thepostid ) ? $post->ID : $thepostid;
+	$thepostid              = empty( $thepostid ) ? $post->ID : $thepostid; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Pre-existing global.
 	$field['class']         = isset( $field['class'] ) ? $field['class'] : 'checkbox';
 	$field['wrapper_class'] = isset( $field['wrapper_class'] ) ? $field['wrapper_class'] : '';
 	$field['value']         = isset( $field['value'] ) ? $field['value'] : get_post_meta( $thepostid, $field['id'], true );
@@ -516,11 +516,11 @@ function certificates_wp_checkbox( $field ) { // phpcs:ignore WordPress.NamingCo
  * @param  array $field The field definition array.
  * @return void
  */
-function certificates_wp_select( $field ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy global function; renaming would break backward compatibility.
+function certificates_wp_select( $field ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	global $thepostid, $post, $woothemes_sensei_certificates;
 
-	$thepostid              = empty( $thepostid ) ? $post->ID : $thepostid;
+	$thepostid              = empty( $thepostid ) ? $post->ID : $thepostid; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Pre-existing global.
 	$field['class']         = isset( $field['class'] ) ? $field['class'] : 'select short';
 	$field['wrapper_class'] = isset( $field['wrapper_class'] ) ? $field['wrapper_class'] : '';
 	$field['value']         = isset( $field['value'] ) ? $field['value'] : get_post_meta( $thepostid, $field['id'], true );
@@ -559,11 +559,11 @@ function certificates_wp_select( $field ) { // phpcs:ignore WordPress.NamingConv
  * @param  array $field The field definition array.
  * @return void
  */
-function certificates_wp_radio( $field ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy global function; renaming would break backward compatibility.
+function certificates_wp_radio( $field ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	global $thepostid, $post, $woothemes_sensei_certificates;
 
-	$thepostid              = empty( $thepostid ) ? $post->ID : $thepostid;
+	$thepostid              = empty( $thepostid ) ? $post->ID : $thepostid; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Pre-existing global.
 	$field['class']         = isset( $field['class'] ) ? $field['class'] : 'select short';
 	$field['wrapper_class'] = isset( $field['wrapper_class'] ) ? $field['wrapper_class'] : '';
 	$field['value']         = isset( $field['value'] ) ? $field['value'] : get_post_meta( $thepostid, $field['id'], true );

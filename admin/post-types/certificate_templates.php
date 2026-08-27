@@ -47,7 +47,7 @@ add_action( 'manage_certificate_template_posts_custom_column', 'certificate_temp
  * @param array $actions associative array of action identifier to name.
  * @return array associative array of action identifier to name
  */
-function certificate_template_edit_certificate_bulk_actions( $actions ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy global function; renaming would break backward compatibility.
+function certificate_template_edit_certificate_bulk_actions( $actions ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	unset( $actions['edit'] );
 
@@ -64,7 +64,7 @@ function certificate_template_edit_certificate_bulk_actions( $actions ) { // php
  * @param array $views associative-array of view state name to link.
  * @return array associative array of view state name to link
  */
-function certificate_template_edit_certificate_views( $views ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy global function; renaming would break backward compatibility.
+function certificate_template_edit_certificate_views( $views ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	// publish and private are not important distinctions for certificate templates.
 	unset( $views['publish'], $views['private'] );
@@ -81,7 +81,7 @@ function certificate_template_edit_certificate_views( $views ) { // phpcs:ignore
  *
  * @return array associative-array of column identifier to header names for the certificate tempaltes page
  */
-function certificate_template_edit_certificate_columns( $columns ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy global function; renaming would break backward compatibility.
+function certificate_template_edit_certificate_columns( $columns ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	$columns = array();
 
@@ -99,7 +99,7 @@ function certificate_template_edit_certificate_columns( $columns ) { // phpcs:ig
  * @since 1.0.0
  * @param string $column column identifier.
  */
-function certificate_template_custom_certificate_columns( $column ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy global function; renaming would break backward compatibility.
+function certificate_template_custom_certificate_columns( $column ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	global $post;
 

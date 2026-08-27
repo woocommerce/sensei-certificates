@@ -44,7 +44,7 @@ add_action( 'sensei_process_certificate_template_meta', 'certificate_templates_p
  * @since 1.0.0
  * @param WP_Post $post The post being edited.
  */
-function certificate_template_data_meta_box( $post ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy global function; renaming would break backward compatibility.
+function certificate_template_data_meta_box( $post ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	global $woocommerce, $woothemes_sensei_certificate_templates;
 
@@ -159,7 +159,7 @@ function certificate_template_data_meta_box( $post ) { // phpcs:ignore WordPress
  * @param int    $post_id The certificate id.
  * @param object $post    The certificate post object.
  */
-function certificate_templates_process_meta( $post_id, $post ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy global function; renaming would break backward compatibility.
+function certificate_templates_process_meta( $post_id, $post ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 	if (
 		empty( $_POST['certificates_meta_nonce'] )
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Leave nonce value unmodified.

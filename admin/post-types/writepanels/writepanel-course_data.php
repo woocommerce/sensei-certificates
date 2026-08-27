@@ -43,7 +43,7 @@ add_action( 'sensei_process_course_certificate_template_meta', 'course_certifica
  * @since 1.0.0
  * @param WP_Post $post The post being edited.
  */
-function course_certificate_template_data_meta_box( $post ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy global function; renaming would break backward compatibility.
+function course_certificate_template_data_meta_box( $post ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	global $post;
 
@@ -112,7 +112,7 @@ function course_certificate_template_data_meta_box( $post ) { // phpcs:ignore Wo
  * @param int    $post_id The certificate id.
  * @param object $post    The certificate post object.
  */
-function course_certificate_templates_process_meta( $post_id ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy global function; renaming would break backward compatibility.
+function course_certificate_templates_process_meta( $post_id ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Pre-existing global function.
 
 	global $woothemes_sensei_certificate_templates;
 
