@@ -49,6 +49,6 @@ class Woothemes_Sensei_Certificates_TFPDF {
 		header( 'Cache-Control: private, max-age=0, must-revalidate' );
 		header( 'Pragma: public' );
 
-		echo $tfpdf->output();
+		echo $tfpdf->output(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Binary PDF output; escaping would corrupt it.
 	}
 }

@@ -89,6 +89,6 @@ class VIP_tFPDF extends tFPDF\PDF {
 	 */
 	private function Error( $str_message ) {
 		// Fatal error.
-		throw new \RuntimeException( 'FPDF Error: ' . $str_message );
+		throw new \RuntimeException( esc_html( 'FPDF Error: ' . $str_message ) );
 	}
 }
