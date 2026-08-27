@@ -929,7 +929,7 @@ class WooThemes_Sensei_Certificates {
 
 		} // End If Statement
 
-		wp_reset_query();
+		wp_reset_postdata();
 
 		if ( 0 < intval( $certificate_id ) ) {
 
@@ -1051,7 +1051,7 @@ class WooThemes_Sensei_Certificates {
 
 		} // End If Statement
 
-		wp_reset_query();
+		wp_reset_postdata();
 
 		$course_id = get_post_meta( $certificate_id, 'course_id', true );
 

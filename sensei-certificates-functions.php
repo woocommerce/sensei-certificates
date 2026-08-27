@@ -123,7 +123,7 @@ function sensei_update_users_certificate_data( $n = 5, $offset = 0 ) {
 					$data_store->insert( $user_id, $course_id );
 				}
 
-				wp_reset_query();
+				wp_reset_postdata();
 
 			}
 		}
