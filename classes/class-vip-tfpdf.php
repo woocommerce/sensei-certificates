@@ -12,6 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once ABSPATH . '/wp-admin/includes/file.php';
 
+/**
+ * WP_Filesystem-aware wrapper around tFPDF's PDF class.
+ */
 class VIP_tFPDF extends tFPDF\PDF {
 	/**
 	 * Set up the PDF object and initialize the WP Filesystem.
