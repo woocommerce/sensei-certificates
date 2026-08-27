@@ -183,8 +183,8 @@ class WooThemes_Sensei_Certificate_Templates {
 	 *
 	 * @access public
 	 * @since 1.0
-	 * @param string $locate locate path
-	 * @param string $type type of template
+	 * @param string $locate locate path.
+	 * @param string $type type of template.
 	 *
 	 * @return string the location path for the certificate template preview file
 	 */
@@ -573,11 +573,11 @@ class WooThemes_Sensei_Certificate_Templates {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param FPDF   $fpdf fpdf library object
-	 * @param string $field_name the field name
-	 * @param mixed  $value string or int value to display
+	 * @param FPDF   $fpdf fpdf library object.
+	 * @param string $field_name the field name.
+	 * @param mixed  $value string or int value to display.
 	 * @param int    $show_border a debugging/helper option to display a border
-	 *           around the position for this field
+	 *           around the position for this field.
 	 */
 	public function textarea_field( $fpdf, $value, $show_border, $position, $font = array() ) {
 
@@ -662,11 +662,11 @@ class WooThemes_Sensei_Certificate_Templates {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param FPDF   $fpdf fpdf library object
-	 * @param string $field_name the field name
-	 * @param mixed  $value string or int value to display
+	 * @param FPDF   $fpdf fpdf library object.
+	 * @param string $field_name the field name.
+	 * @param mixed  $value string or int value to display.
 	 * @param int    $show_border a debugging/helper option to display a border
-	 *           around the position for this field
+	 *           around the position for this field.
 	 */
 	private function text_field( $fpdf, $value, $show_border, $position, $font = array() ) {
 
@@ -759,7 +759,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param string $hex hex color code, ie #EEEEEE
+	 * @param string $hex hex color code, ie #EEEEEE.
 	 * @return array rgb components, ie array( 'EE', 'EE', 'EE' )
 	 */
 	private function hex2rgb( $hex ) {
@@ -788,7 +788,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	 *
 	 * @access private
 	 * @since  1.0.4
-	 * @param  string $string String to check
+	 * @param  string $string String to check.
 	 * @return string         Font type
 	 */
 	public function get_font_type( $string = '' ) {
@@ -809,8 +809,8 @@ class WooThemes_Sensei_Certificate_Templates {
 	 *
 	 * @access private
 	 * @since  1.0.4
-	 * @param  object $fpdf         The FPDF object
-	 * @param  array  $default_font The default font
+	 * @param  object $fpdf         The FPDF object.
+	 * @param  array  $default_font The default font.
 	 * @return boolean              True if the custom font was set
 	 */
 	public function set_custom_font( $fpdf, $default_font ) {
@@ -842,7 +842,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param string $meta_name untranslated meta name
+	 * @param string $meta_name untranslated meta name.
 	 * @return string value for $meta_name or empty string
 	 */
 	private function get_item_meta_value( $meta_name ) {
@@ -870,8 +870,8 @@ class WooThemes_Sensei_Certificate_Templates {
 	 * Does the save
 	 *
 	 * @access public
-	 * @param string $post_key (default: '')
-	 * @param int    $post_id (default: 0)
+	 * @param string $post_key (default: '').
+	 * @param int    $post_id (default: 0).
 	 * @return void
 	 */
 	public function save_post_meta( $post_key = '', $post_id = 0 ) {

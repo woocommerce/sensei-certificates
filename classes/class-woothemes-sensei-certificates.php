@@ -413,7 +413,7 @@ class WooThemes_Sensei_Certificates {
 	 * [admin_menu_order description]
 	 *
 	 * @since  1.4.0
-	 * @param  array $menu_order Existing menu order
+	 * @param  array $menu_order Existing menu order.
 	 * @return array             Modified menu order for Sensei
 	 */
 	public function admin_menu_order( $menu_order ) {
@@ -590,7 +590,7 @@ class WooThemes_Sensei_Certificates {
 	 *
 	 * @access public
 	 * @since  1.0.0
-	 * @param  array $defaults default values
+	 * @param  array $defaults default values.
 	 * @return array $defaults modified values
 	 */
 	public function post_type_custom_column_headings( $defaults ) {
@@ -611,7 +611,7 @@ class WooThemes_Sensei_Certificates {
 	 * @access public
 	 * @since  1.0.0
 	 * @param  string $column_name
-	 * @param  int    $post_ID post id
+	 * @param  int    $post_ID post id.
 	 * @return void
 	 */
 	public function post_type_custom_column_content( $column_name, $post_ID ) {
@@ -708,8 +708,8 @@ class WooThemes_Sensei_Certificates {
 	 *
 	 * @access public
 	 * @since  1.0.0
-	 * @param  int $user_id arguments for queries
-	 * @param  int $course_id data to post
+	 * @param  int $user_id arguments for queries.
+	 * @param  int $course_id data to post.
 	 * @return void
 	 */
 	public function generate_certificate_number( $user_id = 0, $course_id = 0 ) {
@@ -1102,7 +1102,7 @@ class WooThemes_Sensei_Certificates {
 	 *
 	 * @access public
 	 * @since  1.0.0
-	 * @param  string  $message html
+	 * @param  string  $message html.
 	 * @param integer $course_id
 	 * @param integer $user_id
 	 * @return string $message html
@@ -1185,8 +1185,8 @@ class WooThemes_Sensei_Certificates {
 	 * Get URL for certificate.
 	 *
 	 * @since  1.0.0
-	 * @param  int $course_id course post id
-	 * @param  int $user_id   course learner user id
+	 * @param  int $course_id course post id.
+	 * @param  int $user_id   course learner user id.
 	 * @return string $certificate_url certificate link
 	 */
 	public function get_certificate_url( $course_id, $user_id ) {
@@ -1221,8 +1221,8 @@ class WooThemes_Sensei_Certificates {
 	 * Get ID for certificate.
 	 *
 	 * @since  2.5.0
-	 * @param  int $course_id course post id
-	 * @param  int $user_id   course learner user id
+	 * @param  int $course_id course post id.
+	 * @param  int $user_id   course learner user id.
 	 * @return string $certificate_id certificate id
 	 */
 	public function get_certificate_id( $course_id, $user_id ) {
@@ -1256,7 +1256,7 @@ class WooThemes_Sensei_Certificates {
 	 *
 	 * @access public
 	 * @since  1.0.0
-	 * @param  array $columns existing columns
+	 * @param  array $columns existing columns.
 	 * @return array $columns existing and new columns
 	 */
 	public function create_columns( $columns, $analysis ) {
@@ -1274,9 +1274,9 @@ class WooThemes_Sensei_Certificates {
 	 *
 	 * @access public
 	 * @since  1.0.0
-	 * @param  array $content output
-	 * @param  int   $course_id course post id
-	 * @param  int   $user_id  course learner user id
+	 * @param  array $content output.
+	 * @param  int   $course_id course post id.
+	 * @param  int   $user_id  course learner user id.
 	 * @return array $content modified output
 	 */
 	public function populate_columns( $content, $item, $analysis ) {
@@ -1350,7 +1350,7 @@ class WooThemes_Sensei_Certificates {
 	 *
 	 * @access public
 	 * @since  1.0.0
-	 * @param  array $allowed_post_types array of existing post types
+	 * @param  array $allowed_post_types array of existing post types.
 	 * @return array $allowed_post_types array of additional post types
 	 */
 	public function include_sensei_scripts( $allowed_post_types ) {
@@ -1367,8 +1367,8 @@ class WooThemes_Sensei_Certificates {
 	 *
 	 * @access public
 	 * @since  1.0.7
-	 * @param  int $user_id   User ID
-	 * @param  int $lesson_id Lesson Post ID
+	 * @param  int $user_id   User ID.
+	 * @param  int $lesson_id Lesson Post ID.
 	 * @return void
 	 */
 	public function reset_lesson_course_certificate( $user_id = 0, $lesson_id = 0 ) {
@@ -1386,8 +1386,8 @@ class WooThemes_Sensei_Certificates {
 	 *
 	 * @access public
 	 * @since  1.0.0
-	 * @param  int $user_id   User ID
-	 * @param  int $course_id Course Post ID
+	 * @param  int $user_id   User ID.
+	 * @param  int $course_id Course Post ID.
 	 * @return void
 	 */
 	public function reset_course_certificate( $user_id = 0, $course_id = 0 ) {
@@ -1437,7 +1437,7 @@ class WooThemes_Sensei_Certificates {
 	 *
 	 * @access public
 	 * @since  1.0.0
-	 * @param  Object $user WordPress User object
+	 * @param  Object $user WordPress User object.
 	 * @return html
 	 */
 	public function certificates_user_settings_form( $user ) {

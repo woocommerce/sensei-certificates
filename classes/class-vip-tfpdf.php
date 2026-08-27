@@ -40,7 +40,7 @@ class VIP_tFPDF extends tFPDF\PDF {
 	 * or uploaded file might not be physically present (when using WP_Filesystem_SSH2, WP_Filesystem_ftpsockets, etc)
 	 * We get around that by creating the in the system's temporary folder, performing the necessary operations on that file, and then deleting it.
 	 *
-	 * @param string  $file full path to the file
+	 * @param string  $file full path to the file.
 	 * @param [type]  $x
 	 * @param [type]  $y
 	 * @param integer $w

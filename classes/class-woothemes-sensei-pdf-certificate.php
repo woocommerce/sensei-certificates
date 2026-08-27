@@ -70,7 +70,7 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param int $certificate_hash Certificate hash
+	 * @param int $certificate_hash Certificate hash.
 	 */
 	public function __construct( $certificate_hash ) {
 
@@ -172,11 +172,11 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param FPDF   $fpdf fpdf library object
-	 * @param string $field_name the field name
-	 * @param mixed  $value string or int value to display
+	 * @param FPDF   $fpdf fpdf library object.
+	 * @param string $field_name the field name.
+	 * @param mixed  $value string or int value to display.
 	 * @param int    $show_border a debugging/helper option to display a border
-	 *           around the position for this field
+	 *           around the position for this field.
 	 */
 	public function textarea_field( $fpdf, $value, $show_border, $position, $font = array() ) {
 
@@ -261,11 +261,11 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param FPDF   $fpdf fpdf library object
-	 * @param string $field_name the field name
-	 * @param mixed  $value string or int value to display
+	 * @param FPDF   $fpdf fpdf library object.
+	 * @param string $field_name the field name.
+	 * @param mixed  $value string or int value to display.
 	 * @param int    $show_border a debugging/helper option to display a border
-	 *           around the position for this field
+	 *           around the position for this field.
 	 */
 	public function image_field( $fpdf, $value, $show_border, $position ) {
 
@@ -286,11 +286,11 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param FPDF   $fpdf fpdf library object
-	 * @param string $field_name the field name
-	 * @param mixed  $value string or int value to display
+	 * @param FPDF   $fpdf fpdf library object.
+	 * @param string $field_name the field name.
+	 * @param mixed  $value string or int value to display.
 	 * @param int    $show_border a debugging/helper option to display a border
-	 *           around the position for this field
+	 *           around the position for this field.
 	 */
 	public function text_field( $fpdf, $value, $show_border, $position, $font = array() ) {
 
@@ -383,11 +383,11 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param FPDF   $fpdf fpdf library object
-	 * @param string $field_name the field name
-	 * @param mixed  $value string or int value to display
+	 * @param FPDF   $fpdf fpdf library object.
+	 * @param string $field_name the field name.
+	 * @param mixed  $value string or int value to display.
 	 * @param int    $show_border a debugging/helper option to display a border
-	 *           around the position for this field
+	 *           around the position for this field.
 	 */
 	public function text_field_userdata( $fpdf, $value, $show_border, $position, $font = array() ) {
 
@@ -454,7 +454,7 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *
 	 * @access private
 	 * @since 1.0.0
-	 * @param string $hex hex color code, ie #EEEEEE
+	 * @param string $hex hex color code, ie #EEEEEE.
 	 * @return array rgb components, ie array( 'EE', 'EE', 'EE' )
 	 */
 	private function hex2rgb( $hex ) {
@@ -483,7 +483,7 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *
 	 * @access private
 	 * @since  1.0.4
-	 * @param  string $string String to check
+	 * @param  string $string String to check.
 	 * @return string         Font type
 	 */
 	public function get_font_type( $string = '' ) {
@@ -504,8 +504,8 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *
 	 * @access private
 	 * @since  1.0.4
-	 * @param  object $fpdf         The FPDF object
-	 * @param  array  $default_font The default font
+	 * @param  object $fpdf         The FPDF object.
+	 * @param  array  $default_font The default font.
 	 * @return boolean              True if the custom font was set
 	 */
 	public function set_custom_font( $fpdf, $default_font ) {

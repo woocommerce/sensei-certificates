@@ -44,7 +44,7 @@ add_action( 'manage_certificate_template_posts_custom_column', 'certificate_temp
  * Remove the bulk edit action for certificate templates
  *
  * @since 1.0.0
- * @param array $actions associative array of action identifier to name
+ * @param array $actions associative array of action identifier to name.
  * @return array associative array of action identifier to name
  */
 function certificate_template_edit_certificate_bulk_actions( $actions ) {
@@ -61,7 +61,7 @@ function certificate_template_edit_certificate_bulk_actions( $actions ) {
  * which are not important and confusing for certificate objects.
  *
  * @since 1.0.0
- * @param array $views associative-array of view state name to link
+ * @param array $views associative-array of view state name to link.
  * @return array associative array of view state name to link
  */
 function certificate_template_edit_certificate_views( $views ) {
@@ -77,7 +77,7 @@ function certificate_template_edit_certificate_views( $views ) {
  * Columns for certificate templates page
  *
  * @since 1.0.0
- * @param array $columns associative-array of column identifier to header names
+ * @param array $columns associative-array of column identifier to header names.
  *
  * @return array associative-array of column identifier to header names for the certificate tempaltes page
  */
@@ -97,7 +97,7 @@ function certificate_template_edit_certificate_columns( $columns ) {
  * Custom Column values for certificate templates page
  *
  * @since 1.0.0
- * @param string $column column identifier
+ * @param string $column column identifier.
  */
 function certificate_template_custom_certificate_columns( $column ) {
 
