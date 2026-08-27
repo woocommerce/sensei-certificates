@@ -1261,7 +1261,7 @@ class WooThemes_Sensei_Certificates {
 			$user_id
 		);
 
-		$certificate_id = $wpdb->get_var( $sql );
+		$certificate_id = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct lookup; result not cached.
 
 		return $certificate_id;
 	} // End get_certificate_id()

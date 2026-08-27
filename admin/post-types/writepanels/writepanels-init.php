@@ -216,7 +216,7 @@ function certificate_template_private( $post_id, $post ) { // phpcs:ignore WordP
 
 	global $wpdb;
 
-	$wpdb->update( $wpdb->posts, array( 'post_status' => 'private' ), array( 'ID' => (int) $post_id ) );
+	$wpdb->update( $wpdb->posts, array( 'post_status' => 'private' ), array( 'ID' => (int) $post_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct write to set post status; caching not applicable.
 }
 
 
