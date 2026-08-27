@@ -56,7 +56,7 @@ class WooThemes_Sensei_Certificates {
 	 * @static
 	 * @since  2.0.0
 	 */
-	private static $_instance = null;
+	private static $instance = null;
 
 	/**
 	 * Sensei assets handler.
@@ -83,8 +83,9 @@ class WooThemes_Sensei_Certificates {
 	 * Inline JS code.
 	 *
 	 * @var string
+	 * @deprecated 2.5.5
 	 */
-	public $_inline_js;
+	public $_inline_js; // phpcs:ignore PSR2.Classes.PropertyDeclaration.Underscore -- Deprecated public property; renaming would break backward compatibility.
 
 	/**
 	 * Template image ids.
@@ -1779,10 +1780,10 @@ class WooThemes_Sensei_Certificates {
 	 * @return Woothemes_Sensei_Certificates
 	 */
 	public static function instance() {
-		if ( is_null( self::$_instance ) ) {
-			self::$_instance = new self();
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
 		}
 
-		return self::$_instance;
+		return self::$instance;
 	}
 } // End Class
