@@ -254,7 +254,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	 * @access public
 	 * @since  1.0.0
 	 * @param  array $defaults Default column headings.
-	 * @return void
+	 * @return array Modified column headings.
 	 */
 	public function post_type_custom_column_headings( $defaults ) {
 
@@ -547,7 +547,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	 * @access public
 	 * @since  1.0.0
 	 * @param  string $field_key The template field key.
-	 * @return void
+	 * @return array Font settings for the field.
 	 */
 	public function get_certificate_font_settings( $field_key = '' ) {
 

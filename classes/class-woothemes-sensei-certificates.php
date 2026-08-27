@@ -357,7 +357,6 @@ class WooThemes_Sensei_Certificates {
 	 * Function that runs on activation.
 	 *
 	 * @since  1.0.0
-	 * @return string
 	 */
 	public static function activate() {
 		self::schedule_installer_check();
@@ -375,7 +374,6 @@ class WooThemes_Sensei_Certificates {
 	 * Performs actions to on activation once dependencies are met.
 	 *
 	 * @since  2.0.0
-	 * @return string
 	 */
 	public function install() {
 		// Register post types, so we can flush the rewrite rules.
@@ -1381,7 +1379,7 @@ class WooThemes_Sensei_Certificates {
 		if ( 0 < $user_id && 0 < $lesson_id ) {
 			$course_id = get_post_meta( $lesson_id, '_lesson_course', true );
 			if ( $course_id ) {
-				return $this->reset_course_certificate( $user_id, $course_id );
+				$this->reset_course_certificate( $user_id, $course_id );
 			}
 		}
 	}
@@ -1443,7 +1441,6 @@ class WooThemes_Sensei_Certificates {
 	 * @access public
 	 * @since  1.0.0
 	 * @param  Object $user WordPress User object.
-	 * @return html
 	 */
 	public function certificates_user_settings_form( $user ) {
 
