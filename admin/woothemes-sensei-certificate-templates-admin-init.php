@@ -210,7 +210,7 @@ function sensei_certificate_template_admin_enqueue_scripts() {
 
 	}
 
-	if ( in_array( $screen->id, array( 'certificate_template' ) ) ) {
+	if ( in_array( $screen->id, array( 'certificate_template' ), true ) ) {
 
 		// Default javascript params.
 		$sensei_certificate_templates_params = array(
@@ -251,7 +251,7 @@ function sensei_certificate_template_admin_enqueue_scripts() {
 
 	}
 
-	if ( in_array( $screen->id, array( 'course' ) ) ) {
+	if ( in_array( $screen->id, array( 'course' ), true ) ) {
 
 		wp_enqueue_script( 'sensei_course_certificate_templates_admin', $woothemes_sensei_certificates->plugin_url . 'assets/dist/js/course.js', array( 'jquery' ) );
 
