@@ -21,7 +21,7 @@ class Woothemes_Sensei_Certificate_Data_Store {
 	 * @param int $course_id Course post ID.
 	 * @return int|WP_Error
 	 */
-	function insert( $user_id, $course_id ) {
+	public function insert( $user_id, $course_id ) {
 		if ( ! class_exists( 'Woothemes_Sensei_Certificates_Utils' ) ) {
 			include_once 'class-woothemes-sensei-certificates-utils.php';
 		}

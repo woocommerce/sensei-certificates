@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once ABSPATH . '/wp-admin/includes/file.php';
 
 class VIP_tFPDF extends tFPDF\PDF {
-	function __construct( $orientation = 'P', $unit = 'mm', $size = 'A4' ) {
+	public function __construct( $orientation = 'P', $unit = 'mm', $size = 'A4' ) {
 		parent::__construct( $orientation, $unit, $size );
 		$this->init_wp_filesystem();
 	}
