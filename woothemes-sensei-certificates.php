@@ -10,6 +10,8 @@
  * Tested up to: 6.9
  * Requires PHP: 7.4
  * License: GPLv2+
+ *
+ * @package Sensei_Certificates
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

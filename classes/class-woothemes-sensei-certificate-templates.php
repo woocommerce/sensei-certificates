@@ -1,4 +1,10 @@
 <?php
+/**
+ * Sensei LMS Certificate Templates.
+ *
+ * @package Sensei_Certificates
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }

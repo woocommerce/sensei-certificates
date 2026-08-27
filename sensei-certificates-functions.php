@@ -1,6 +1,8 @@
 <?php
 /**
  * Sensei LMS Certificates functions.
+ *
+ * @package Sensei_Certificates
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

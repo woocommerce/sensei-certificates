@@ -1,4 +1,9 @@
 <?php
+/**
+ * Manages the bundled tFPDF library.
+ *
+ * @package Sensei_Certificates
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.

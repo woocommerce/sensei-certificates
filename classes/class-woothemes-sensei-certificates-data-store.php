@@ -1,4 +1,9 @@
 <?php
+/**
+ * Certificate data store.
+ *
+ * @package Sensei_Certificates
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

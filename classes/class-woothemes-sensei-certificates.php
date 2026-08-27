@@ -1,4 +1,10 @@
 <?php
+/**
+ * Sensei LMS Certificates main class.
+ *
+ * @package Sensei_Certificates
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -41,7 +47,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * - certificcates_user_settings_save()
  * - certificates_user_settings_messages()
  */
-
 class WooThemes_Sensei_Certificates {
 	/**
 	 * The single instance of WooThemes_Sensei_Certificates.
