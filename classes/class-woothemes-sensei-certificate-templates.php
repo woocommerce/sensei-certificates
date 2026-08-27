@@ -253,6 +253,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	 *
 	 * @access public
 	 * @since  1.0.0
+	 * @param  array $defaults Default column headings.
 	 * @return void
 	 */
 	public function post_type_custom_column_headings( $defaults ) {
@@ -272,6 +273,8 @@ class WooThemes_Sensei_Certificate_Templates {
 	 *
 	 * @access public
 	 * @since  1.0.0
+	 * @param  string $column_name The column name.
+	 * @param  int    $post_ID     The post ID.
 	 * @return void
 	 */
 	public function post_type_custom_column_content( $column_name, $post_ID ) {
@@ -422,6 +425,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	 *
 	 * @access public
 	 * @since 1.0.0
+	 * @param string $field_name The field name.
 	 * @return array associative array with position members 'x1', 'y1', 'width'
 	 *         and 'height'
 	 */
@@ -542,6 +546,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	 *
 	 * @access public
 	 * @since  1.0.0
+	 * @param  string $field_key The template field key.
 	 * @return void
 	 */
 	public function get_certificate_font_settings( $field_key = '' ) {

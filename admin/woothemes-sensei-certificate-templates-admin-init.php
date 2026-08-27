@@ -263,6 +263,8 @@ function sensei_certificate_template_admin_enqueue_scripts() {
  * Set the product updated messages so they're specific to the certificates.
  *
  * @since 1.0.0
+ * @param array $messages Existing post updated messages.
+ * @return array
  */
 function sensei_certificate_template_item_updated_messages( $messages ) {
 

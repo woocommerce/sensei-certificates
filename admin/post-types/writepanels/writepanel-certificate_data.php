@@ -42,6 +42,7 @@ add_action( 'sensei_process_certificate_template_meta', 'certificate_templates_p
  * Displays the meta box.
  *
  * @since 1.0.0
+ * @param WP_Post $post The post being edited.
  */
 function certificate_template_data_meta_box( $post ) {
 

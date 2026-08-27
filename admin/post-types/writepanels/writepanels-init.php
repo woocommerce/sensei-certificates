@@ -225,6 +225,7 @@ function certificate_template_private( $post_id, $post ) {
  * family, size and style (bold/italic).
  *
  * @since 1.0.0
+ * @param array $field The field definition array.
  */
 function certificate_templates_wp_font_select( $field ) {
 
@@ -345,6 +346,7 @@ function certificate_templates_wp_color_picker_js() {
  * the position via two buttons.
  *
  * @since 1.0.0
+ * @param array $field The field definition array.
  */
 function certificate_templates_wp_position_picker( $field ) {
 

@@ -476,7 +476,7 @@ class WooThemes_Sensei_Certificates {
 	 * The certificates_settings_tabs function for settings tabs
 	 *
 	 * @access public
-	 * @param  $sections array
+	 * @param  array $sections Existing settings sections.
 	 * @since  1.0.0
 	 * @return $sections array
 	 */
@@ -494,7 +494,7 @@ class WooThemes_Sensei_Certificates {
 	 * The certificates_settings_fields function for settings fields
 	 *
 	 * @access public
-	 * @param  $fields array
+	 * @param  array $fields Existing settings fields.
 	 * @since  1.0.0
 	 * @return $fields array
 	 */
@@ -749,6 +749,7 @@ class WooThemes_Sensei_Certificates {
 	 *
 	 * @access public
 	 * @since  1.0.0
+	 * @param  int $certificate_id The certificate post ID.
 	 * @return boolean
 	 */
 	public function can_view_certificate( $certificate_id = 0 ) {
@@ -890,6 +891,8 @@ class WooThemes_Sensei_Certificates {
 	 *
 	 * @access public
 	 * @since  1.0.0
+	 * @param  WooThemes_Sensei_PDF_Certificate $pdf_certificate The PDF certificate object.
+	 * @param  FPDF                             $fpdf            The FPDF instance.
 	 * @return void
 	 */
 	public function certificate_text( $pdf_certificate, $fpdf ) {
@@ -1014,6 +1017,7 @@ class WooThemes_Sensei_Certificates {
 	 *
 	 * @access public
 	 * @since  1.0.0
+	 * @param  WooThemes_Sensei_PDF_Certificate $pdf_certificate The PDF certificate object.
 	 * @return void
 	 */
 	public function certificate_background( $pdf_certificate ) {
@@ -1256,7 +1260,8 @@ class WooThemes_Sensei_Certificates {
 	 *
 	 * @access public
 	 * @since  1.0.0
-	 * @param  array $columns existing columns.
+	 * @param  array  $columns existing columns.
+	 * @param  object $analysis The course analysis object.
 	 * @return array $columns existing and new columns
 	 */
 	public function create_columns( $columns, $analysis ) {
