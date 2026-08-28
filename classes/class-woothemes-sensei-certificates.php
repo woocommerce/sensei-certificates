@@ -636,14 +636,7 @@ class WooThemes_Sensei_Certificates {
 		}
 		$user            = get_userdata( $user_id );
 		$course          = get_post( $course_id );
-		$course_end_date = WooThemes_Sensei_Utils::sensei_get_activity_value(
-			array(
-				'post_id' => $course_id,
-				'user_id' => $user_id,
-				'type'    => 'sensei_course_status',
-				'field'   => 'comment_date',
-			)
-		);
+		$course_end_date = get_post_field( 'post_date', $post_ID );
 
 		switch ( $column_name ) {
 			case 'learner':
@@ -860,18 +853,7 @@ class WooThemes_Sensei_Certificates {
 			$course_end_date = '';
 
 			if ( $student instanceof WP_User && $student->ID > 0 ) {
-				$course_end = Sensei_Utils::sensei_check_for_activity(
-					array(
-						'post_id' => $course->ID,
-						'user_id' => $student->ID,
-						'type'    => 'sensei_course_status',
-					),
-					true
-				);
-
-				if ( $course_end ) {
-					$course_end_date = $course_end->comment_date;
-				}
+				$course_end_date = $this->get_completion_date( $course->ID, $student->ID );
 			}
 		} else {
 			// Most likely this is for preview. Use placeholder data.
@@ -903,6 +885,25 @@ class WooThemes_Sensei_Certificates {
 			array_values( $replacement_values ),
 			$field_value
 		);
+	}
+
+	/**
+	 * Get a student's completion date for a course.
+	 *
+	 * @since 2.5.5
+	 *
+	 * @param int $course_id Course post ID.
+	 * @param int $user_id   Student user ID.
+	 * @return string Completion date as a MySQL datetime string, or '' when no certificate exists.
+	 */
+	private function get_completion_date( $course_id, $user_id ) {
+		$certificate_id = $this->get_certificate_id( $course_id, $user_id );
+
+		if ( ! $certificate_id ) {
+			return '';
+		}
+
+		return (string) get_post_field( 'post_date', $certificate_id );
 	}
 
 	/**
