@@ -868,9 +868,12 @@ class WooThemes_Sensei_Certificates {
 		}
 
 		// Get student name.
-		$student_name = $student->display_name;
-		if ( $student->first_name && $student->last_name ) {
-			$student_name = $student->first_name . ' ' . $student->last_name;
+		$student_name = '';
+		if ( $student instanceof WP_User ) {
+			$student_name = $student->display_name;
+			if ( $student->first_name && $student->last_name ) {
+				$student_name = $student->first_name . ' ' . $student->last_name;
+			}
 		}
 
 		// Get end date.
