@@ -871,7 +871,9 @@ class WooThemes_Sensei_Certificates {
 		}
 
 		// Get end date.
-		$completion_date = Woothemes_Sensei_Certificates_Utils::get_certificate_formatted_date( $course_end_date );
+		$completion_date = '' === $course_end_date
+			? ''
+			: Woothemes_Sensei_Certificates_Utils::get_certificate_formatted_date( $course_end_date );
 
 		$replacement_values = array(
 			'{{learner}}'         => $student_name,
