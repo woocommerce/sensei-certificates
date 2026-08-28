@@ -51,6 +51,13 @@ class WooThemes_Sensei_PDF_Certificate {
 	public $hash;
 
 	/**
+	 * Certificate post ID.
+	 *
+	 * @var int
+	 */
+	public $certificate_id;
+
+	/**
 	 * Certificate PDF data.
 	 *
 	 * @var mixed
@@ -77,10 +84,13 @@ class WooThemes_Sensei_PDF_Certificate {
 	 * @access public
 	 * @since 1.0.0
 	 * @param int $certificate_hash Certificate hash.
+	 * @param int $certificate_id   Certificate post ID. Optional; when set, rendering
+	 *                              resolves from it instead of re-querying by hash.
 	 */
-	public function __construct( $certificate_hash ) {
+	public function __construct( $certificate_hash, $certificate_id = 0 ) {
 
-		$this->hash = $certificate_hash;
+		$this->hash           = $certificate_hash;
+		$this->certificate_id = intval( $certificate_id );
 
 		$this->certificate_pdf_data = apply_filters(
 			'woothemes_sensei_certificates_pdf_data',

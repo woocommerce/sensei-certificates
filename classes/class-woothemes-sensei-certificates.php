@@ -766,9 +766,6 @@ class WooThemes_Sensei_Certificates {
 	 * @return boolean
 	 */
 	public function can_view_certificate( $certificate_id = 0 ) {
-
-		global $post, $current_user;
-
 		$response = false;
 
 		if ( 0 >= intval( $certificate_id ) ) {
@@ -787,7 +784,6 @@ class WooThemes_Sensei_Certificates {
 		 * @since 1.9.0
 		 * @param bool $force_public_access default false
 		 */
-
 		$force_public_access = apply_filters( 'sensei_certificates_force_public_certs', false );
 
 		// If we can view certificates, get out.
@@ -795,13 +791,12 @@ class WooThemes_Sensei_Certificates {
 			return true;
 		}
 
-		if ( isset( $current_user->ID ) && ( intval( $current_user->ID ) === intval( $learner_id ) ) ) {
+		if ( is_user_logged_in() && ( get_current_user_id() === intval( $learner_id ) ) ) {
 			$response = true;
 		}
 
 		return $response;
-	} // End can_view_certificate()
-
+	}
 
 	/**
 	 * Download the certificate
@@ -811,7 +806,6 @@ class WooThemes_Sensei_Certificates {
 	 * @return void
 	 */
 	public function download_certificate() {
-
 		global $post;
 
 		if ( ! is_singular() || 'certificate' !== get_post_type() ) {
@@ -819,30 +813,27 @@ class WooThemes_Sensei_Certificates {
 		}
 
 		if ( $this->can_view_certificate( get_the_ID() ) ) {
-
-			$hash      = $post->post_slug;
+			$hash      = $post->post_name;
 			$hash_meta = get_post_meta( get_the_ID(), 'certificate_hash', true );
-			if ( ! empty( $hash_meta ) && 8 >= strlen( $hash_meta ) ) {
+
+			if ( ! empty( $hash_meta ) ) {
 				$hash = $hash_meta;
 			}
 
 			require_once 'class-woothemes-sensei-pdf-certificate.php';
-			$pdf = new WooThemes_Sensei_PDF_Certificate( $hash );
+
+			$pdf = new WooThemes_Sensei_PDF_Certificate( $hash, get_the_ID() );
 			$pdf->generate_pdf();
 			exit;
 
 		} elseif ( is_user_logged_in() ) {
-
 			wp_die( esc_html__( 'You are not allowed to view this Certificate.', 'sensei-certificates' ), esc_html__( 'Certificate Error', 'sensei-certificates' ) );
-
 		} else {
-
 			// Redirect to the login page.
 			wp_safe_redirect( wp_login_url( get_permalink() ) );
 			exit;
-
-		} // End If Statement
-	} // End generate_certificate()
+		}
+	}
 
 	/**
 	 * Replace template tags on certificate data fields.
@@ -900,6 +891,42 @@ class WooThemes_Sensei_Certificates {
 	}
 
 	/**
+	 * Resolve the certificate post ID for a PDF certificate object.
+	 *
+	 * Prefers the explicit certificate ID, falling back to a hash lookup. Skips the
+	 * lookup for an empty hash, which WP_Meta_Query would treat as matching every
+	 * certificate and resolve to the newest one on the site.
+	 *
+	 * @since 2.5.5
+	 * @param  WooThemes_Sensei_PDF_Certificate $pdf_certificate The PDF certificate object.
+	 * @return int The certificate post ID, or 0 when none can be resolved.
+	 */
+	private function get_certificate_id_for_pdf( $pdf_certificate ) {
+		if ( ! empty( $pdf_certificate->certificate_id ) ) {
+			return intval( $pdf_certificate->certificate_id );
+		}
+
+		if ( empty( $pdf_certificate->hash ) ) {
+			return 0;
+		}
+
+		$query = new WP_Query(
+			array(
+				'post_type'      => 'certificate',
+				'meta_key'       => 'certificate_hash', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => $pdf_certificate->hash, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+				'posts_per_page' => 1,
+			)
+		);
+
+		$certificate_id = $query->have_posts() ? intval( $query->posts[0]->ID ) : 0;
+
+		wp_reset_postdata();
+
+		return $certificate_id;
+	}
+
+	/**
 	 * Add text to the certificate
 	 *
 	 * @access public
@@ -913,26 +940,9 @@ class WooThemes_Sensei_Certificates {
 		$show_border    = apply_filters( 'woothemes_sensei_certificates_show_border', 0 );
 		$start_position = 200;
 
-		// Find certificate based on hash.
-		$args = array(
-			'post_type'  => 'certificate',
-			'meta_key'   => 'certificate_hash',
-			'meta_value' => $pdf_certificate->hash,
-		);
+		$certificate_id = $this->get_certificate_id_for_pdf( $pdf_certificate );
 
-		$query          = new WP_Query( $args );
-		$certificate_id = 0;
-
-		if ( $query->have_posts() ) {
-
-			$query->the_post();
-			$certificate_id = $query->posts[0]->ID;
-
-		} // End If Statement
-
-		wp_reset_postdata();
-
-		if ( 0 < intval( $certificate_id ) ) {
+		if ( 0 < $certificate_id ) {
 
 			$user_id = get_post_meta( $certificate_id, 'learner_id', true );
 			$student = get_userdata( $user_id );
@@ -1037,22 +1047,11 @@ class WooThemes_Sensei_Certificates {
 
 		$start_position = 200;
 
-		// Find certificate based on hash.
-		$args = array(
-			'post_type'  => 'certificate',
-			'meta_key'   => 'certificate_hash',
-			'meta_value' => $pdf_certificate->hash,
-		);
+		$certificate_id = $this->get_certificate_id_for_pdf( $pdf_certificate );
 
-		$query = new WP_Query( $args );
-		if ( $query->have_posts() ) {
-
-			$query->the_post();
-			$certificate_id = $query->posts[0]->ID;
-
-		} // End If Statement
-
-		wp_reset_postdata();
+		if ( 0 >= $certificate_id ) {
+			return;
+		}
 
 		$course_id = get_post_meta( $certificate_id, 'course_id', true );
 
