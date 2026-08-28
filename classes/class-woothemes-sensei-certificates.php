@@ -854,7 +854,7 @@ class WooThemes_Sensei_Certificates {
 			$course_title    = $course->post_title;
 			$course_end_date = '';
 
-			if ( $student instanceof WP_User ) {
+			if ( $student instanceof WP_User && $student->ID > 0 ) {
 				$course_end = Sensei_Utils::sensei_check_for_activity(
 					array(
 						'post_id' => $course->ID,
