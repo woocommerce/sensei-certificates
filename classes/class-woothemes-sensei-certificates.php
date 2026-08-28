@@ -850,7 +850,7 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function replace_data_field_template_tags( $field_value, $field_key, $student, $course = null ) {
 		// Prepare data.
-		if ( $course ) {
+		if ( $course && $student instanceof WP_User && $student->ID > 0 ) {
 			$course_title    = $course->post_title;
 			$course_end      = Sensei_Utils::sensei_check_for_activity(
 				array(
@@ -860,7 +860,7 @@ class WooThemes_Sensei_Certificates {
 				),
 				true
 			);
-			$course_end_date = $course_end->comment_date;
+			$course_end_date = $course_end ? $course_end->comment_date : gmdate( 'Y-m-d' );
 		} else {
 			// Most likely this is for preview. Use placeholder data.
 			$course_title    = __( 'Course Title', 'sensei-certificates' );
@@ -949,15 +949,22 @@ class WooThemes_Sensei_Certificates {
 
 			$course_id       = get_post_meta( $certificate_id, 'course_id', true );
 			$course          = get_post( $course_id );
-			$course_end      = Sensei_Utils::sensei_check_for_activity(
-				array(
-					'post_id' => intval( $course_id ),
-					'user_id' => intval( $user_id ),
-					'type'    => 'sensei_course_status',
-				),
-				true
-			);
-			$course_end_date = $course_end->comment_date;
+			$course_end_date = '';
+
+			if ( intval( $user_id ) > 0 ) {
+				$course_end = Sensei_Utils::sensei_check_for_activity(
+					array(
+						'post_id' => intval( $course_id ),
+						'user_id' => intval( $user_id ),
+						'type'    => 'sensei_course_status',
+					),
+					true
+				);
+
+				if ( $course_end ) {
+					$course_end_date = $course_end->comment_date;
+				}
+			}
 
 			$certificate_template_id = get_post_meta( $course_id, '_course_certificate_template', true );
 
