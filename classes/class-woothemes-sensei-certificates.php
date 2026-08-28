@@ -960,8 +960,6 @@ class WooThemes_Sensei_Certificates {
 			$course_id = get_post_meta( $certificate_id, 'course_id', true );
 			$course    = get_post( $course_id );
 
-			// The completion date is resolved per data field in
-			// replace_data_field_template_tags(), so no activity lookup is needed here.
 			$certificate_template_id = get_post_meta( $course_id, '_course_certificate_template', true );
 
 			$certificate_template_custom_fields = get_post_custom( $certificate_template_id );
