@@ -647,6 +647,11 @@ class WooThemes_Sensei_Certificates {
 
 		switch ( $column_name ) {
 			case 'learner':
+				if ( ! $user instanceof WP_User ) {
+					echo '-';
+					break;
+				}
+
 				echo '<a href="' . esc_url(
 					add_query_arg(
 						array(
@@ -850,17 +855,24 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function replace_data_field_template_tags( $field_value, $field_key, $student, $course = null ) {
 		// Prepare data.
-		if ( $course ) {
+		if ( $course instanceof WP_Post ) {
 			$course_title    = $course->post_title;
-			$course_end      = Sensei_Utils::sensei_check_for_activity(
-				array(
-					'post_id' => $course->ID,
-					'user_id' => $student->ID,
-					'type'    => 'sensei_course_status',
-				),
-				true
-			);
-			$course_end_date = $course_end->comment_date;
+			$course_end_date = '';
+
+			if ( $student instanceof WP_User && $student->ID > 0 ) {
+				$course_end = Sensei_Utils::sensei_check_for_activity(
+					array(
+						'post_id' => $course->ID,
+						'user_id' => $student->ID,
+						'type'    => 'sensei_course_status',
+					),
+					true
+				);
+
+				if ( $course_end ) {
+					$course_end_date = $course_end->comment_date;
+				}
+			}
 		} else {
 			// Most likely this is for preview. Use placeholder data.
 			$course_title    = __( 'Course Title', 'sensei-certificates' );
@@ -868,9 +880,12 @@ class WooThemes_Sensei_Certificates {
 		}
 
 		// Get student name.
-		$student_name = $student->display_name;
-		if ( $student->first_name && $student->last_name ) {
-			$student_name = $student->first_name . ' ' . $student->last_name;
+		$student_name = '';
+		if ( $student instanceof WP_User ) {
+			$student_name = $student->display_name;
+			if ( $student->first_name && $student->last_name ) {
+				$student_name = $student->first_name . ' ' . $student->last_name;
+			}
 		}
 
 		// Get end date.
@@ -947,17 +962,15 @@ class WooThemes_Sensei_Certificates {
 			$user_id = get_post_meta( $certificate_id, 'learner_id', true );
 			$student = get_userdata( $user_id );
 
-			$course_id       = get_post_meta( $certificate_id, 'course_id', true );
-			$course          = get_post( $course_id );
-			$course_end      = Sensei_Utils::sensei_check_for_activity(
-				array(
-					'post_id' => intval( $course_id ),
-					'user_id' => intval( $user_id ),
-					'type'    => 'sensei_course_status',
-				),
-				true
-			);
-			$course_end_date = $course_end->comment_date;
+			// A certificate with no resolvable learner (e.g. the student's user
+			// account was deleted, or the learner_id meta is missing) proves nothing
+			// and cannot be rendered meaningfully, so refuse it.
+			if ( ! $student instanceof WP_User ) {
+				wp_die( esc_html__( 'The certificate you are searching for does not exist.', 'sensei-certificates' ), esc_html__( 'Certificate Error', 'sensei-certificates' ) );
+			}
+
+			$course_id = get_post_meta( $certificate_id, 'course_id', true );
+			$course    = get_post( $course_id );
 
 			$certificate_template_id = get_post_meta( $course_id, '_course_certificate_template', true );
 
