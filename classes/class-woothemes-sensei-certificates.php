@@ -957,18 +957,11 @@ class WooThemes_Sensei_Certificates {
 				wp_die( esc_html__( 'The certificate you are searching for does not exist.', 'sensei-certificates' ), esc_html__( 'Certificate Error', 'sensei-certificates' ) );
 			}
 
-			$course_id       = get_post_meta( $certificate_id, 'course_id', true );
-			$course          = get_post( $course_id );
-			$course_end      = Sensei_Utils::sensei_check_for_activity(
-				array(
-					'post_id' => intval( $course_id ),
-					'user_id' => $student->ID,
-					'type'    => 'sensei_course_status',
-				),
-				true
-			);
-			$course_end_date = $course_end ? $course_end->comment_date : '';
+			$course_id = get_post_meta( $certificate_id, 'course_id', true );
+			$course    = get_post( $course_id );
 
+			// The completion date is resolved per data field in
+			// replace_data_field_template_tags(), so no activity lookup is needed here.
 			$certificate_template_id = get_post_meta( $course_id, '_course_certificate_template', true );
 
 			$certificate_template_custom_fields = get_post_custom( $certificate_template_id );
