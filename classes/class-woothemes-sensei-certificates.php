@@ -647,6 +647,11 @@ class WooThemes_Sensei_Certificates {
 
 		switch ( $column_name ) {
 			case 'learner':
+				if ( ! $user instanceof WP_User ) {
+					echo '-';
+					break;
+				}
+
 				echo '<a href="' . esc_url(
 					add_query_arg(
 						array(
