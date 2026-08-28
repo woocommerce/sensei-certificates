@@ -46,7 +46,7 @@ class WooThemes_Sensei_PDF_Certificate {
 	/**
 	 * Certificate hash.
 	 *
-	 * @var int
+	 * @var string
 	 */
 	public $hash;
 
@@ -83,9 +83,9 @@ class WooThemes_Sensei_PDF_Certificate {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param int $certificate_hash Certificate hash.
-	 * @param int $certificate_id   Certificate post ID. Optional; when set, rendering
-	 *                              resolves from it instead of re-querying by hash.
+	 * @param string $certificate_hash Certificate hash.
+	 * @param int    $certificate_id   Certificate post ID. Optional; when set, rendering
+	 *                                 resolves from it instead of re-querying by hash.
 	 */
 	public function __construct( $certificate_hash, $certificate_id = 0 ) {
 

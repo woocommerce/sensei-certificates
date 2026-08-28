@@ -772,11 +772,13 @@ class WooThemes_Sensei_Certificates {
 			return false; // We require a certificate ID value.
 		}
 
-		$learner_id = get_post_meta( intval( $certificate_id ), 'learner_id', true );
+		$learner_id = absint( get_post_meta( intval( $certificate_id ), 'learner_id', true ) );
 
-		// Check if student can only view certificate.
+		// Check if student can only view certificate. Only read the owner's public-view
+		// option for a real learner; passing 0 makes get_user_option() fall back to the
+		// current user, which would leak an ownerless certificate on a public-certs site.
 		$grant_access      = Sensei()->settings->settings['certificates_public_viewable'];
-		$grant_access_user = get_user_option( 'sensei_certificates_view_by_public', $learner_id );
+		$grant_access_user = $learner_id ? get_user_option( 'sensei_certificates_view_by_public', $learner_id ) : false;
 
 		/**
 		 * Filter to force all certificates to be public.
@@ -791,7 +793,7 @@ class WooThemes_Sensei_Certificates {
 			return true;
 		}
 
-		if ( is_user_logged_in() && ( get_current_user_id() === intval( $learner_id ) ) ) {
+		if ( is_user_logged_in() && ( get_current_user_id() === $learner_id ) ) {
 			$response = true;
 		}
 

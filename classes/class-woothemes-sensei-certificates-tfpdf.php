@@ -44,6 +44,10 @@ class Woothemes_Sensei_Certificates_TFPDF {
 	 * @param string     $filename The filename to send in the HTTP headers.
 	 */
 	public static function output_to_http( $tfpdf, $filename ) {
+		// Sanitize before interpolating into the header; the filename derives from the
+		// certificate hash meta, which could contain characters that break the header.
+		$filename = sanitize_file_name( $filename );
+
 		header( 'Content-Type: application/pdf' );
 		header( "Content-Disposition: inline; filename=\"$filename\"" );
 		header( 'Cache-Control: private, max-age=0, must-revalidate' );
