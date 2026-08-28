@@ -18,6 +18,19 @@ class WooThemes_Sensei_Certificates_View_Certificate_Link_Block {
 	 * Sensei_Course_Overview_Block constructor.
 	 */
 	public function __construct() {
+		add_action( 'init', array( $this, 'register_block' ) );
+	}
+
+	/**
+	 * Register the block.
+	 *
+	 * Deferred to the `init` hook so that the block metadata (title, description)
+	 * in block.json is not translated before `init`, which would trigger a
+	 * `_load_textdomain_just_in_time` notice on WordPress 6.7+.
+	 *
+	 * @since 2.5.5
+	 */
+	public function register_block() {
 		Sensei_Blocks::register_sensei_block(
 			'sensei-certificates/view-certificate-link',
 			array(
