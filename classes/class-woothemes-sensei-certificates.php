@@ -850,17 +850,24 @@ class WooThemes_Sensei_Certificates {
 	 */
 	public function replace_data_field_template_tags( $field_value, $field_key, $student, $course = null ) {
 		// Prepare data.
-		if ( $course && $student instanceof WP_User && $student->ID > 0 ) {
+		if ( $course instanceof WP_Post ) {
 			$course_title    = $course->post_title;
-			$course_end      = Sensei_Utils::sensei_check_for_activity(
-				array(
-					'post_id' => $course->ID,
-					'user_id' => $student->ID,
-					'type'    => 'sensei_course_status',
-				),
-				true
-			);
-			$course_end_date = $course_end ? $course_end->comment_date : gmdate( 'Y-m-d' );
+			$course_end_date = '';
+
+			if ( $student instanceof WP_User ) {
+				$course_end = Sensei_Utils::sensei_check_for_activity(
+					array(
+						'post_id' => $course->ID,
+						'user_id' => $student->ID,
+						'type'    => 'sensei_course_status',
+					),
+					true
+				);
+
+				if ( $course_end ) {
+					$course_end_date = $course_end->comment_date;
+				}
+			}
 		} else {
 			// Most likely this is for preview. Use placeholder data.
 			$course_title    = __( 'Course Title', 'sensei-certificates' );
