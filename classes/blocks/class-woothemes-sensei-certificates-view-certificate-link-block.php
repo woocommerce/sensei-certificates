@@ -28,7 +28,7 @@ class WooThemes_Sensei_Certificates_View_Certificate_Link_Block {
 	 * in block.json is not translated before `init`, which would trigger a
 	 * `_load_textdomain_just_in_time` notice on WordPress 6.7+.
 	 *
-	 * @since 2.5.5
+	 * @since 2.6.0
 	 */
 	public function register_block() {
 		Sensei_Blocks::register_sensei_block(

@@ -83,7 +83,7 @@ class WooThemes_Sensei_Certificates {
 	 * Inline JS code.
 	 *
 	 * @var string
-	 * @deprecated 2.5.5
+	 * @deprecated 2.6.0
 	 */
 	public $_inline_js; // phpcs:ignore PSR2.Classes.PropertyDeclaration.Underscore -- Deprecated public property; renaming would break backward compatibility.
 
@@ -888,7 +888,7 @@ class WooThemes_Sensei_Certificates {
 	/**
 	 * Get a student's completion date for a course.
 	 *
-	 * @since 2.5.5
+	 * @since 2.6.0
 	 *
 	 * @param int $course_id Course post ID.
 	 * @param int $user_id   Student user ID.
@@ -911,7 +911,7 @@ class WooThemes_Sensei_Certificates {
 	 * lookup for an empty hash, which WP_Meta_Query would treat as matching every
 	 * certificate and resolve to the newest one on the site.
 	 *
-	 * @since 2.5.5
+	 * @since 2.6.0
 	 * @param  WooThemes_Sensei_PDF_Certificate $pdf_certificate The PDF certificate object.
 	 * @return int The certificate post ID, or 0 when none can be resolved.
 	 */
@@ -1396,14 +1396,14 @@ class WooThemes_Sensei_Certificates {
 	 *
 	 * @access public
 	 * @since  1.0.7
-	 * @deprecated 2.5.5 Certificates are preserved when progress is reset; no replacement.
+	 * @deprecated 2.6.0 Certificates are preserved when progress is reset; no replacement.
 	 *
 	 * @param  int $user_id   User ID.
 	 * @param  int $lesson_id Lesson Post ID.
 	 * @return void
 	 */
 	public function reset_lesson_course_certificate( $user_id = 0, $lesson_id = 0 ) {
-		_deprecated_function( __METHOD__, '2.5.5' );
+		_deprecated_function( __METHOD__, '2.6.0' );
 
 		if ( 0 < $user_id && 0 < $lesson_id ) {
 			$course_id = get_post_meta( $lesson_id, '_lesson_course', true );
@@ -1418,14 +1418,14 @@ class WooThemes_Sensei_Certificates {
 	 *
 	 * @access public
 	 * @since  1.0.0
-	 * @deprecated 2.5.5 Certificates are preserved when progress is reset; no replacement.
+	 * @deprecated 2.6.0 Certificates are preserved when progress is reset; no replacement.
 	 *
 	 * @param  int $user_id   User ID.
 	 * @param  int $course_id Course Post ID.
 	 * @return void
 	 */
 	public function reset_course_certificate( $user_id = 0, $course_id = 0 ) {
-		_deprecated_function( __METHOD__, '2.5.5' );
+		_deprecated_function( __METHOD__, '2.6.0' );
 
 		if ( 0 < $user_id && 0 < $course_id ) {
 
