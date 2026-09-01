@@ -2,7 +2,7 @@
   "name": "automattic/sensei-certificates",
   "description": "Sensei LMS Certificates",
   "require-dev": {
-    "php": "^7 || ^8",
+    "php": "^7.4 || ^8",
     "automattic/jetpack-changelogger": "6.0.17",
     "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
     "phpcompatibility/phpcompatibility-wp": "^2.1.6",
@@ -36,6 +36,9 @@
     ]
   },
   "config": {
+    "platform": {
+      "php": "7.4"
+    },
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true
     }

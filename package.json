@@ -21,7 +21,7 @@
   "scripts": {
     "build": "npm run build:assets && npm run archive",
     "build:assets": "wp-scripts build",
-    "changelog": "./vendor/bin/changelogger add",
+    "changelog": "vendor/bin/changelogger add",
     "archive": "composer archive --file=$npm_package_name --format=zip",
     "postarchive": "rm -rf $npm_package_name && unzip $npm_package_name.zip -d $npm_package_name && rm $npm_package_name.zip && zip -r $npm_package_name.zip $npm_package_name && rm -rf $npm_package_name",
     "check-engines": "wp-scripts check-engines",
