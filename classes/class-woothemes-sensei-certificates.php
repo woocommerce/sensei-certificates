@@ -682,7 +682,7 @@ class WooThemes_Sensei_Certificates {
 					echo wp_kses_post(
 						sprintf(
 							// translators: %1$s is the URL for editing the Course.
-							__( 'Set a certificate template on the <a href="%1$s">course</a> in order to view this certificate', 'sensei-certificates' ),
+							__( 'Set a certificate template for the <a href="%1$s">course</a> in order to view this certificate', 'sensei-certificates' ),
 							esc_url( get_edit_post_link( $course_id ) )
 						)
 					);
@@ -733,6 +733,12 @@ class WooThemes_Sensei_Certificates {
 		if ( null === get_post( $course_id ) ) {
 			return;
 		}
+
+		// Don't generate a certificate for a course that has no certificate template assigned.
+		if ( ! get_post_meta( $course_id, '_course_certificate_template', true ) ) {
+			return;
+		}
+
 		$data_store = new Woothemes_Sensei_Certificate_Data_Store();
 
 		$certificate_id = $data_store->insert( $user_id, $course_id );
