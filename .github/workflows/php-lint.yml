@@ -36,4 +36,4 @@ jobs:
               run: composer install --no-ansi --no-interaction --prefer-dist --no-progress
 
             - name: Run PHPCS
-              run: ./vendor/bin/phpcs
+              run: npm run lint:php
