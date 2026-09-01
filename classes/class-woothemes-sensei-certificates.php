@@ -220,8 +220,6 @@ class WooThemes_Sensei_Certificates {
 			add_action( 'sensei_analysis_course_columns', array( $instance, 'create_columns' ), 10, 2 );
 			add_action( 'sensei_analysis_course_column_data', array( $instance, 'populate_columns' ), 10, 3 );
 			add_filter( 'sensei_scripts_allowed_post_types', array( $instance, 'include_sensei_scripts' ), 10, 1 );
-			add_filter( 'sensei_upgrade_functions', 'sensei_certificates_updates_list', 10, 1 );
-			add_filter( 'sensei_updates_function_whitelist', 'sensei_certificates_add_update_functions_to_whitelist', 1 );
 
 			// We don't need a WordPress SEO meta box for certificates and certificate templates. Hide it.
 			add_filter( 'option_wpseo_titles', array( $instance, 'force_hide_wpseo_meta_box' ) );
