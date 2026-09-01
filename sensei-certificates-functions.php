@@ -10,13 +10,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Function sensei_certificates_updates_list add sensei certificates updates to sensei list.
+ * Add Sensei Certificates data updates to the Sensei updates list.
  *
  * @since  1.0.0
+ * @deprecated 2.6.0 Sensei LMS no longer runs legacy data updates; no replacement.
+ *
  * @param  array $updates List of existing updates.
- * @return array $updates List of existing and new updates.
+ * @return array List of existing and new updates.
  */
 function sensei_certificates_updates_list( $updates ) {
+	_deprecated_function( __FUNCTION__, '2.6.0' );
 
 	$updates['1.0.0'] = array(
 		'auto'   => array(),
@@ -38,12 +41,16 @@ function sensei_certificates_updates_list( $updates ) {
 }
 
 /**
- * Function sensei_certificates_add_update_functions_to_whitelist.
+ * Add Sensei Certificates update functions to the permitted list.
+ *
+ * @deprecated 2.6.0 Sensei LMS no longer runs legacy data updates; no replacement.
  *
  * @param  array $permitted_functions Permitted functions.
  * @return array
  */
 function sensei_certificates_add_update_functions_to_whitelist( $permitted_functions ) {
+	_deprecated_function( __FUNCTION__, '2.6.0' );
+
 	return array_merge(
 		$permitted_functions,
 		array(
