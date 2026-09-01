@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Woothemes_Sensei_Certificates_Dependency_Checker {
 	const MINIMUM_PHP_VERSION    = '7.4';
-	const MINIMUM_SENSEI_VERSION = '3.6.1';
+	const MINIMUM_SENSEI_VERSION = '3.7.0';
 
 
 	/**

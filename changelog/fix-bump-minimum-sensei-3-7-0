@@ -1,0 +1,4 @@
+Significance: patch
+Type: fixed
+
+Raise the minimum supported Sensei LMS version to 3.7.0.
