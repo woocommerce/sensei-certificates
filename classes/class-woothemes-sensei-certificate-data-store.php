@@ -17,11 +17,12 @@ class Woothemes_Sensei_Certificate_Data_Store {
 	/**
 	 * Insert a certificate for a user and course.
 	 *
-	 * @param int $user_id User ID.
-	 * @param int $course_id Course post ID.
+	 * @param int    $user_id         User ID.
+	 * @param int    $course_id       Course post ID.
+	 * @param string $completion_date Optional course completion date (MySQL datetime) to use as the certificate's date.
 	 * @return int|WP_Error
 	 */
-	public function insert( $user_id, $course_id ) {
+	public function insert( $user_id, $course_id, $completion_date = '' ) {
 		if ( ! class_exists( 'Woothemes_Sensei_Certificates_Utils' ) ) {
 			include_once 'class-woothemes-sensei-certificates-utils.php';
 		}
@@ -46,7 +47,13 @@ class Woothemes_Sensei_Certificate_Data_Store {
 			'post_type'   => 'certificate',
 			'post_status' => 'publish',
 		);
-		$post_id   = wp_insert_post( $cert_args, $wp_error = false );
+
+		if ( ! empty( $completion_date ) ) {
+			$cert_args['post_date']     = $completion_date;
+			$cert_args['post_date_gmt'] = get_gmt_from_date( $completion_date );
+		}
+
+		$post_id = wp_insert_post( $cert_args, $wp_error = false );
 
 		if ( ! is_wp_error( $post_id ) ) {
 			add_post_meta( $post_id, 'course_id', absint( $course_id ) );

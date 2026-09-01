@@ -120,7 +120,7 @@ function sensei_update_users_certificate_data( $n = 5, $offset = 0 ) {
 				$query = new WP_Query( $args );
 
 				if ( ! $query->have_posts() ) {
-					$data_store->insert( $user_id, $course_id );
+					$data_store->insert( $user_id, $course_id, $user_course_status->comment_date );
 				}
 
 				wp_reset_postdata();

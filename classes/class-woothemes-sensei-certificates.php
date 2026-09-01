@@ -201,8 +201,6 @@ class WooThemes_Sensei_Certificates {
 		add_filter( 'sensei_results_links', array( $instance, 'certificate_link' ), 10, 3 );
 
 		add_action( 'wp_enqueue_scripts', array( $instance, 'enqueue_styles' ) );
-		add_action( 'sensei_user_lesson_reset', array( $instance, 'reset_lesson_course_certificate' ), 10, 2 );
-		add_action( 'sensei_user_course_reset', array( $instance, 'reset_course_certificate' ), 10, 2 );
 		// Create certificate endpoint and handle generation of pdf certificate.
 		add_action( 'template_redirect', array( $instance, 'download_certificate' ) );
 		// User settings output and save handling.
@@ -636,14 +634,7 @@ class WooThemes_Sensei_Certificates {
 		}
 		$user            = get_userdata( $user_id );
 		$course          = get_post( $course_id );
-		$course_end_date = WooThemes_Sensei_Utils::sensei_get_activity_value(
-			array(
-				'post_id' => $course_id,
-				'user_id' => $user_id,
-				'type'    => 'sensei_course_status',
-				'field'   => 'comment_date',
-			)
-		);
+		$course_end_date = get_post_field( 'post_date', $post_ID );
 
 		switch ( $column_name ) {
 			case 'learner':
@@ -860,18 +851,7 @@ class WooThemes_Sensei_Certificates {
 			$course_end_date = '';
 
 			if ( $student instanceof WP_User && $student->ID > 0 ) {
-				$course_end = Sensei_Utils::sensei_check_for_activity(
-					array(
-						'post_id' => $course->ID,
-						'user_id' => $student->ID,
-						'type'    => 'sensei_course_status',
-					),
-					true
-				);
-
-				if ( $course_end ) {
-					$course_end_date = $course_end->comment_date;
-				}
+				$course_end_date = $this->get_completion_date( $course->ID, $student->ID );
 			}
 		} else {
 			// Most likely this is for preview. Use placeholder data.
@@ -889,7 +869,9 @@ class WooThemes_Sensei_Certificates {
 		}
 
 		// Get end date.
-		$completion_date = Woothemes_Sensei_Certificates_Utils::get_certificate_formatted_date( $course_end_date );
+		$completion_date = '' === $course_end_date
+			? ''
+			: Woothemes_Sensei_Certificates_Utils::get_certificate_formatted_date( $course_end_date );
 
 		$replacement_values = array(
 			'{{learner}}'         => $student_name,
@@ -903,6 +885,25 @@ class WooThemes_Sensei_Certificates {
 			array_values( $replacement_values ),
 			$field_value
 		);
+	}
+
+	/**
+	 * Get a student's completion date for a course.
+	 *
+	 * @since 2.5.5
+	 *
+	 * @param int $course_id Course post ID.
+	 * @param int $user_id   Student user ID.
+	 * @return string Completion date as a MySQL datetime string, or '' when no certificate exists.
+	 */
+	private function get_completion_date( $course_id, $user_id ) {
+		$certificate_id = $this->get_certificate_id( $course_id, $user_id );
+
+		if ( ! $certificate_id ) {
+			return '';
+		}
+
+		return (string) get_post_field( 'post_date', $certificate_id );
 	}
 
 	/**
@@ -1393,15 +1394,18 @@ class WooThemes_Sensei_Certificates {
 
 
 	/**
-	 * The reset_course_certificate deletes existing course certificate when the user resets a lesson
+	 * Delete a course certificate when the user resets a lesson.
 	 *
 	 * @access public
 	 * @since  1.0.7
+	 * @deprecated 2.5.5 Certificates are preserved when progress is reset; no replacement.
+	 *
 	 * @param  int $user_id   User ID.
 	 * @param  int $lesson_id Lesson Post ID.
 	 * @return void
 	 */
 	public function reset_lesson_course_certificate( $user_id = 0, $lesson_id = 0 ) {
+		_deprecated_function( __METHOD__, '2.5.5' );
 
 		if ( 0 < $user_id && 0 < $lesson_id ) {
 			$course_id = get_post_meta( $lesson_id, '_lesson_course', true );
@@ -1412,15 +1416,18 @@ class WooThemes_Sensei_Certificates {
 	}
 
 	/**
-	 * The reset_course_certificate deletes existing course certificate when the user resets the course
+	 * Delete a course certificate when the user resets the course.
 	 *
 	 * @access public
 	 * @since  1.0.0
+	 * @deprecated 2.5.5 Certificates are preserved when progress is reset; no replacement.
+	 *
 	 * @param  int $user_id   User ID.
 	 * @param  int $course_id Course Post ID.
 	 * @return void
 	 */
 	public function reset_course_certificate( $user_id = 0, $course_id = 0 ) {
+		_deprecated_function( __METHOD__, '2.5.5' );
 
 		if ( 0 < $user_id && 0 < $course_id ) {
 
