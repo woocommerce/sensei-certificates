@@ -3,6 +3,7 @@
   "description": "Sensei LMS Certificates",
   "require-dev": {
     "php": "^7 || ^8",
+    "automattic/jetpack-changelogger": "6.0.17",
     "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
     "phpcompatibility/phpcompatibility-wp": "^2.1.6",
     "squizlabs/php_codesniffer": "^3.13.5",
@@ -37,6 +38,20 @@
   "config": {
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  },
+  "extra": {
+    "changelogger": {
+      "changelog": "changelog.txt",
+      "types": {
+        "security": "Security",
+        "added": "Added",
+        "changed": "Changed",
+        "deprecated": "Deprecated",
+        "removed": "Removed",
+        "fixed": "Fixed",
+        "development": "Development"
+      }
     }
   }
 }
