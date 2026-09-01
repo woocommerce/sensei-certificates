@@ -1,4 +1,4 @@
 Significance: patch
 Type: fixed
 
-Raise the minimum supported Sensei LMS version to 3.7.0 to prevent a fatal error on sites running an older Sensei.
+Raise the minimum supported Sensei LMS version to 3.7.0.
