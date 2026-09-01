@@ -201,8 +201,6 @@ class WooThemes_Sensei_Certificates {
 		add_filter( 'sensei_results_links', array( $instance, 'certificate_link' ), 10, 3 );
 
 		add_action( 'wp_enqueue_scripts', array( $instance, 'enqueue_styles' ) );
-		add_action( 'sensei_user_lesson_reset', array( $instance, 'reset_lesson_course_certificate' ), 10, 2 );
-		add_action( 'sensei_user_course_reset', array( $instance, 'reset_course_certificate' ), 10, 2 );
 		// Create certificate endpoint and handle generation of pdf certificate.
 		add_action( 'template_redirect', array( $instance, 'download_certificate' ) );
 		// User settings output and save handling.
@@ -1396,15 +1394,18 @@ class WooThemes_Sensei_Certificates {
 
 
 	/**
-	 * The reset_course_certificate deletes existing course certificate when the user resets a lesson
+	 * Delete a course certificate when the user resets a lesson.
 	 *
 	 * @access public
 	 * @since  1.0.7
+	 * @deprecated 2.5.5 Certificates are preserved when progress is reset; no replacement.
+	 *
 	 * @param  int $user_id   User ID.
 	 * @param  int $lesson_id Lesson Post ID.
 	 * @return void
 	 */
 	public function reset_lesson_course_certificate( $user_id = 0, $lesson_id = 0 ) {
+		_deprecated_function( __METHOD__, '2.5.5' );
 
 		if ( 0 < $user_id && 0 < $lesson_id ) {
 			$course_id = get_post_meta( $lesson_id, '_lesson_course', true );
@@ -1415,15 +1416,18 @@ class WooThemes_Sensei_Certificates {
 	}
 
 	/**
-	 * The reset_course_certificate deletes existing course certificate when the user resets the course
+	 * Delete a course certificate when the user resets the course.
 	 *
 	 * @access public
 	 * @since  1.0.0
+	 * @deprecated 2.5.5 Certificates are preserved when progress is reset; no replacement.
+	 *
 	 * @param  int $user_id   User ID.
 	 * @param  int $course_id Course Post ID.
 	 * @return void
 	 */
 	public function reset_course_certificate( $user_id = 0, $course_id = 0 ) {
+		_deprecated_function( __METHOD__, '2.5.5' );
 
 		if ( 0 < $user_id && 0 < $course_id ) {
 
