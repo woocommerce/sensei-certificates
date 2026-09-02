@@ -1,0 +1,4 @@
+Significance: patch
+Type: fixed
+
+Decode HTML entities and strip tags in certificate text so a course title containing markup (such as &nbsp;) no longer renders literally in the PDF.
