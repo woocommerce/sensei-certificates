@@ -11,6 +11,10 @@
  * @since 1.0.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * TABLE OF CONTENTS
  *
@@ -63,7 +67,7 @@ function certificate_template_image_meta_box() { // phpcs:ignore WordPress.Namin
 
 	?>
 	<div id="certificate_image_wrapper" style="position:relative;">
-		<img id="certificate_image_0" src="<?php echo esc_attr( $image_src ); ?>" style="max-width:100%;" />
+		<img id="certificate_image_0" src="<?php echo esc_url( $image_src ); ?>" style="max-width:100%;" />
 	</div>
 	<input type="hidden" name="upload_image_id[0]" id="upload_image_id_0" value="<?php echo esc_attr( $image_id ); ?>" />
 	<p>

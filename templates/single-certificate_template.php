@@ -11,6 +11,10 @@
  * @since 1.0.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * The template for displaying certificate template previews.  This isn't a page template in
  * the regular sense, instead it streams the certificate template PDF to the client.  The
