@@ -25,7 +25,7 @@ registerBlockVariation( 'core/button', {
 		'Enable students to view their course certificate.',
 		'sensei-certificates'
 	),
-	keywords: [ __( 'Certificates', 'sensei-lms' ) ],
+	keywords: [ __( 'Certificates', 'sensei-certificates' ) ],
 	category: 'sensei-lms',
 	attributes,
 	isActive: ( blockAttributes, variationAttributes ) =>

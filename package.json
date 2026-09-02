@@ -34,8 +34,8 @@
     "lint:pkg-json": "wp-scripts lint-pkg-json",
     "packages-update": "wp-scripts packages-update",
     "start": "wp-scripts start",
-    "i18n:build": "npm run i18n:php",
-    "i18n:php": "wp i18n make-pot --exclude=lib,vendor,node_modules --skip-js --headers='{\"Last-Translator\":null,\"Language-Team\":null,\"Report-Msgid-Bugs-To\":\"https://wordpress.org/support/plugin/sensei-certificates\"}' . lang/sensei-certificates.pot"
+    "i18n:build": "npm run build:assets && npm run i18n:pot",
+    "i18n:pot": "wp i18n make-pot --exclude=lib,vendor,node_modules --headers='{\"Last-Translator\":null,\"Language-Team\":null,\"Report-Msgid-Bugs-To\":\"https://wordpress.org/support/plugin/sensei-certificates\"}' . lang/sensei-certificates.pot"
   },
   "config": {
     "wp_org_slug": "sensei-certificates"
