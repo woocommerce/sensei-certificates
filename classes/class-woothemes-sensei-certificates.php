@@ -1338,7 +1338,7 @@ class WooThemes_Sensei_Certificates {
 
 			if ( '' !== $certificate_url ) {
 
-				$output = '<a href="' . $certificate_url . '" class="sensei-certificate-link" title="' . esc_attr( __( 'View Certificate', 'sensei-certificates' ) ) . '">' . __( 'View Certificate', 'sensei-certificates' ) . '</a>';
+				$output = '<a href="' . esc_url( $certificate_url ) . '" class="sensei-certificate-link" title="' . esc_attr__( 'View Certificate', 'sensei-certificates' ) . '">' . esc_html__( 'View Certificate', 'sensei-certificates' ) . '</a>';
 
 			} // End If Statement
 

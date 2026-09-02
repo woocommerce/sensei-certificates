@@ -1,4 +1,4 @@
 Significance: patch
 Type: fixed
 
-Escape certificate link URLs on output and add direct-access guards.
+Escape certificate link URLs on output.
