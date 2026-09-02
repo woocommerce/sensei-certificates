@@ -147,10 +147,12 @@ gh pr create --base trunk --title "<title>" --body "<filled template body>"
 ```
 
 `gh` pushes the current branch as part of this. Capture the PR number it prints.
-Apply any labels you flagged (e.g. `No Changelog`, `Hooks`, `Deprecation`):
+Apply any labels you flagged (e.g. `No Changelog`, `Hooks`, `Deprecation`), and
+assign the PR to its author (`@me` is the authenticated user opening it):
 
 ```bash
 gh pr edit <PR_NUMBER> --add-label "No Changelog"
+gh pr edit <PR_NUMBER> --add-assignee "@me"
 ```
 
 ### 7. Assign the milestone (required)
