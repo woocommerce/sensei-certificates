@@ -14,8 +14,8 @@ description: >-
 
 # Open a Sensei LMS Certificates Pull Request
 
-Fill the repo's PR template from the diff, do the required chores (changelog,
-milestone), and stop for approval before `gh pr create` — which pushes the branch.
+Fill the repo's PR template from the diff, do the required chores in the steps
+below, and stop for approval before `gh pr create` — which pushes the branch.
 
 ## Who this is for
 
@@ -104,9 +104,9 @@ Fill each section from the diff. Guidance per section:
 ### 4. Changelog — a committed entry, not the PR body
 
 This repo uses Jetpack changelogger; entries live as files under `changelog/` and
-are rolled into `changelog.txt` on release. There is no CI to generate one, so the
-entry is a file you commit to the branch (or the PR carries the **No Changelog**
-label).
+are rolled into `changelog.txt` on release. CI lints PHP but does not generate the
+changelog, so the entry is a file you commit to the branch (or the PR carries the
+**No Changelog** label).
 
 First check whether the branch already has an entry — a dev may have run
 `npm run changelog` during development and committed it:
