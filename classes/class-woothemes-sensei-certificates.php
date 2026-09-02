@@ -894,9 +894,9 @@ class WooThemes_Sensei_Certificates {
 	/**
 	 * Decode HTML entities and strip tags from text bound for the certificate PDF.
 	 *
-	 * The PDF renderer (tFPDF) outputs plain text, so any HTML entities (e.g.
-	 * &nbsp;) or tags present in the source content would otherwise be printed
-	 * literally on the certificate.
+	 * The PDF renderer (tFPDF) outputs plain text, so any HTML entities or tags
+	 * present in the source content would otherwise be printed literally on the
+	 * certificate.
 	 *
 	 * @since 2.6.0
 	 *
