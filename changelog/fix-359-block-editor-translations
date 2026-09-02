@@ -1,0 +1,4 @@
+Significance: patch
+Type: fixed
+
+Fix missing and untranslated strings in the block editor.

@@ -174,7 +174,7 @@ class WooThemes_Sensei_Certificates {
 		self::load_files();
 
 		if ( class_exists( 'Sensei_Assets' ) ) {
-			$instance->assets = new \Sensei_Assets( $instance->plugin_url, dirname( __DIR__ ), SENSEI_CERTIFICATES_VERSION );
+			$instance->assets = new \Sensei_Assets( $instance->plugin_url, dirname( __DIR__ ), SENSEI_CERTIFICATES_VERSION, 'sensei-certificates' );
 		}
 
 		// Load blocks.
