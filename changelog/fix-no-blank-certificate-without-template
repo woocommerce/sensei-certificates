@@ -1,0 +1,4 @@
+Significance: patch
+Type: fixed
+
+Stop generating blank certificates for courses that have no certificate template assigned.
