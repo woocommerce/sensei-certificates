@@ -1,0 +1,4 @@
+Significance: patch
+Type: fixed
+
+Decode HTML entities and strip tags in certificate text fields so markup no longer renders literally in the PDF.

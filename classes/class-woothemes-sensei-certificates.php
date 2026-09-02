@@ -878,10 +878,10 @@ class WooThemes_Sensei_Certificates {
 			: Woothemes_Sensei_Certificates_Utils::get_certificate_formatted_date( $course_end_date );
 
 		$replacement_values = array(
-			'{{learner}}'         => $student_name,
-			'{{course_title}}'    => $course_title,
+			'{{learner}}'         => $this->clean_pdf_text( $student_name ),
+			'{{course_title}}'    => $this->clean_pdf_text( $course_title ),
 			'{{completion_date}}' => $completion_date,
-			'{{course_place}}'    => get_bloginfo( 'name' ),
+			'{{course_place}}'    => $this->clean_pdf_text( get_bloginfo( 'name' ) ),
 		);
 
 		return str_replace(
@@ -889,6 +889,22 @@ class WooThemes_Sensei_Certificates {
 			array_values( $replacement_values ),
 			$field_value
 		);
+	}
+
+	/**
+	 * Decode HTML entities and strip tags from text bound for the certificate PDF.
+	 *
+	 * The PDF renderer (tFPDF) outputs plain text, so any HTML entities or tags
+	 * present in the source content would otherwise be printed literally on the
+	 * certificate.
+	 *
+	 * @since 2.6.0
+	 *
+	 * @param string $text The raw text.
+	 * @return string The decoded, tag-free text.
+	 */
+	private function clean_pdf_text( $text ) {
+		return wp_strip_all_tags( html_entity_decode( (string) $text, ENT_QUOTES, 'UTF-8' ) );
 	}
 
 	/**
