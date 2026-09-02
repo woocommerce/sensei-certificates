@@ -1,4 +1,4 @@
 Significance: patch
 Type: fixed
 
-Escape certificate link URLs on output with esc_url() and add direct-access (ABSPATH) guards to admin and template files, following a WordPress security review.
+Escape certificate link URLs on output and add direct-access guards.
