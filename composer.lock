@@ -4,31 +4,31 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4a23ad8ae663accffdf5e92432da84de",
+    "content-hash": "d1b321a96a495c076e51237c664d27e6",
     "packages": [],
     "packages-dev": [
         {
             "name": "automattic/jetpack-changelogger",
-            "version": "v6.0.17",
+            "version": "v7.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/jetpack-changelogger.git",
-                "reference": "61e1f2af86527a3c9b8f078f2b27a8bad6ae8386"
+                "reference": "b55012d5e84edeeefedf10806bb385bf959eb242"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/jetpack-changelogger/zipball/61e1f2af86527a3c9b8f078f2b27a8bad6ae8386",
-                "reference": "61e1f2af86527a3c9b8f078f2b27a8bad6ae8386",
+                "url": "https://api.github.com/repos/Automattic/jetpack-changelogger/zipball/b55012d5e84edeeefedf10806bb385bf959eb242",
+                "reference": "b55012d5e84edeeefedf10806bb385bf959eb242",
                 "shasum": ""
             },
             "require": {
                 "composer-runtime-api": "^2.2.0",
-                "php": ">=7.2.5",
+                "php": ">=7.4",
                 "symfony/console": "^5.4 || ^6.4 || ^7.1",
                 "symfony/process": "^5.4 || ^6.4 || ^7.1"
             },
             "require-dev": {
-                "wikimedia/testing-access-wrapper": "^1.0 || ^2.0 || ^3.0 || ^4.0",
+                "wikimedia/testing-access-wrapper": "^3.0 || ^4.0",
                 "yoast/phpunit-polyfills": "^4.0.0"
             },
             "bin": [
@@ -39,7 +39,7 @@
                 "autotagger": true,
                 "mirror-repo": "Automattic/jetpack-changelogger",
                 "branch-alias": {
-                    "dev-trunk": "6.0.x-dev"
+                    "dev-trunk": "7.0.x-dev"
                 },
                 "changelogger": {
                     "link-template": "https://github.com/Automattic/jetpack-changelogger/compare/${old}...${new}"
@@ -71,9 +71,9 @@
                 "keepachangelog"
             ],
             "support": {
-                "source": "https://github.com/Automattic/jetpack-changelogger/tree/v6.0.17"
+                "source": "https://github.com/Automattic/jetpack-changelogger/tree/v7.0.0"
             },
-            "time": "2026-06-15T12:14:58+00:00"
+            "time": "2026-08-26T20:01:34+00:00"
         },
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
@@ -1665,5 +1665,5 @@
     "platform-overrides": {
         "php": "7.4"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
