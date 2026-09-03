@@ -1,4 +1,0 @@
-Significance: patch
-Type: fixed
-
-Escape certificate link URLs on output.
