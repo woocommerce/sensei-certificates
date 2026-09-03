@@ -3,7 +3,7 @@
   "description": "Sensei LMS Certificates",
   "require-dev": {
     "php": "^7.4 || ^8",
-    "automattic/jetpack-changelogger": "6.0.17",
+    "automattic/jetpack-changelogger": "7.0.0",
     "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
     "phpcompatibility/phpcompatibility-wp": "^2.1.6",
     "squizlabs/php_codesniffer": "^3.13.5",
