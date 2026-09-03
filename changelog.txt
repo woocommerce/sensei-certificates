@@ -2,7 +2,7 @@
 
 ## 2.6.0 - 2026-09-03
 ### Security
-- Fix unauthenticated certificate PII disclosure. [#376](https://github.com/woocommerce/sensei-certificates/pull/376)
+- Fix unauthenticated certificate PII disclosure. [#377](https://github.com/woocommerce/sensei-certificates/pull/377)
 
 ### Changed
 - Migrate the View Certificate Link block to Block API version 3. [#395](https://github.com/woocommerce/sensei-certificates/pull/395)
