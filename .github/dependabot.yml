@@ -28,6 +28,7 @@ updates:
           - "patch"
     cooldown:
       default-days: 7
+      semver-patch-days: 30
 
   - package-ecosystem: "composer"
     directory: "/"
@@ -54,6 +55,7 @@ updates:
           - "patch"
     cooldown:
       default-days: 7
+      semver-patch-days: 30
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -76,3 +78,4 @@ updates:
           - "major"
     cooldown:
       default-days: 7
+      semver-patch-days: 30
