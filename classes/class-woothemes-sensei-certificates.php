@@ -220,6 +220,7 @@ class WooThemes_Sensei_Certificates {
 			add_action( 'sensei_analysis_course_columns', array( $instance, 'create_columns' ), 10, 2 );
 			add_action( 'sensei_analysis_course_column_data', array( $instance, 'populate_columns' ), 10, 3 );
 			add_filter( 'sensei_scripts_allowed_post_types', array( $instance, 'include_sensei_scripts' ), 10, 1 );
+			add_action( 'pre_get_posts', array( $instance, 'filter_certificates_admin_search_by_learner' ) );
 
 			// We don't need a WordPress SEO meta box for certificates and certificate templates. Hide it.
 			add_filter( 'option_wpseo_titles', array( $instance, 'force_hide_wpseo_meta_box' ) );
@@ -690,6 +691,58 @@ class WooThemes_Sensei_Certificates {
 				break;
 		} // End Switch Statement
 	} // End post_type_custom_column_content()
+	
+	/**
+	 * Extend the "Certificates" admin list table search to also match a
+	 * certificate's learner by name, username, or email address, since the
+	 * default WordPress search only matches the certificate post title.
+	 *
+	 * @access public
+	 * @since  2.6.1
+	 *
+	 * @param  WP_Query $query The current query.
+	 * @return void
+	 */
+	public function filter_certificates_admin_search_by_learner( $query ) {
+
+		if ( ! $query->is_main_query() || 'certificate' !== $query->get( 'post_type' ) ) {
+			return;
+		}
+
+		if ( ! current_user_can( get_post_type_object( 'certificate' )->cap->edit_posts ) ) {
+			return;
+		}
+
+		$search = trim( (string) $query->get( 's' ) );
+
+		if ( '' === $search ) {
+			return;
+		}
+
+		$user_ids = get_users(
+			array(
+				'search' => '*' . $search . '*',
+				'fields' => 'ID',
+				'number' => 500,
+			)
+		);
+
+		if ( empty( $user_ids ) ) {
+			return;
+		}
+
+		$query->set( 's', '' );
+
+		$meta_query   = (array) $query->get( 'meta_query' );
+		$meta_query[] = array(
+			'key'     => 'learner_id',
+			'value'   => $user_ids,
+			'compare' => 'IN',
+		);
+
+		$query->set( 'meta_query', $meta_query );
+
+	} // End filter_certificates_admin_search_by_learner()
 
 	/**
 	 * Ensure certificate is generated on course completion.
