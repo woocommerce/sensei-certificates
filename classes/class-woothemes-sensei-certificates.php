@@ -691,7 +691,7 @@ class WooThemes_Sensei_Certificates {
 				break;
 		} // End Switch Statement
 	} // End post_type_custom_column_content()
-	
+
 	/**
 	 * Extend the "Certificates" admin list table search to also match a
 	 * certificate's learner by name, username, or email address, since the
@@ -741,7 +741,6 @@ class WooThemes_Sensei_Certificates {
 		);
 
 		$query->set( 'meta_query', $meta_query );
-
 	} // End filter_certificates_admin_search_by_learner()
 
 	/**
