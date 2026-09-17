@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6b144c5d73a1c30d1207f062b3f9261d",
+    "content-hash": "fe26e96bd26a0882662a8ac1b57d6c7c",
     "packages": [],
     "packages-dev": [
         {
             "name": "automattic/jetpack-changelogger",
-            "version": "v7.0.1",
+            "version": "v7.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/jetpack-changelogger.git",
-                "reference": "a4c010727f623da93d89d92430c27cfc70e47206"
+                "reference": "6980d32775cbfcab74c8474673eb3c748bec3025"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/jetpack-changelogger/zipball/a4c010727f623da93d89d92430c27cfc70e47206",
-                "reference": "a4c010727f623da93d89d92430c27cfc70e47206",
+                "url": "https://api.github.com/repos/Automattic/jetpack-changelogger/zipball/6980d32775cbfcab74c8474673eb3c748bec3025",
+                "reference": "6980d32775cbfcab74c8474673eb3c748bec3025",
                 "shasum": ""
             },
             "require": {
@@ -71,9 +71,9 @@
                 "keepachangelog"
             ],
             "support": {
-                "source": "https://github.com/Automattic/jetpack-changelogger/tree/v7.0.1"
+                "source": "https://github.com/Automattic/jetpack-changelogger/tree/v7.0.2"
             },
-            "time": "2026-09-01T15:47:48+00:00"
+            "time": "2026-09-08T18:11:31+00:00"
         },
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
