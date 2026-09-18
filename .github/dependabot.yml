@@ -3,12 +3,15 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "tuesday"
+      interval: "monthly"
     open-pull-requests-limit: 5
     labels:
       - "No Changelog"
     groups:
+      security-updates:
+        applies-to: security-updates
+        patterns:
+          - "*"
       wordpress-packages:
         patterns:
           - "@wordpress/*"
@@ -28,17 +31,21 @@ updates:
           - "patch"
     cooldown:
       default-days: 7
+      semver-minor-days: 30
       semver-patch-days: 30
 
   - package-ecosystem: "composer"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "thursday"
+      interval: "monthly"
     open-pull-requests-limit: 5
     labels:
       - "No Changelog"
     groups:
+      security-updates:
+        applies-to: security-updates
+        patterns:
+          - "*"
       composer-development-minor-patch:
         dependency-type: "development"
         patterns:
@@ -55,6 +62,7 @@ updates:
           - "patch"
     cooldown:
       default-days: 7
+      semver-minor-days: 30
       semver-patch-days: 30
 
   - package-ecosystem: "github-actions"
@@ -65,6 +73,10 @@ updates:
     labels:
       - "No Changelog"
     groups:
+      security-updates:
+        applies-to: security-updates
+        patterns:
+          - "*"
       actions-minor-patch:
         patterns:
           - "*"
@@ -78,4 +90,5 @@ updates:
           - "major"
     cooldown:
       default-days: 7
+      semver-minor-days: 30
       semver-patch-days: 30
