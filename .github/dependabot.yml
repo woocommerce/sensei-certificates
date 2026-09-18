@@ -30,6 +30,7 @@ updates:
           - "minor"
           - "patch"
     cooldown:
+      semver-major-days: 30
       default-days: 7
       semver-minor-days: 30
       semver-patch-days: 30
@@ -61,6 +62,7 @@ updates:
           - "minor"
           - "patch"
     cooldown:
+      semver-major-days: 30
       default-days: 7
       semver-minor-days: 30
       semver-patch-days: 30
@@ -89,6 +91,7 @@ updates:
         update-types:
           - "major"
     cooldown:
+      semver-major-days: 30
       default-days: 7
       semver-minor-days: 30
       semver-patch-days: 30
