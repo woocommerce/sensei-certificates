@@ -268,6 +268,9 @@ class WooThemes_Sensei_PDF_Certificate {
 				$value = Woothemes_Sensei_Certificates_Utils::convert_utf8_to_latin1( $value );
 			}
 
+			// The PDF library writes text left to right, so put Hebrew text into visual order.
+			$value = Woothemes_Sensei_Certificates_Utils::reorder_rtl_text( $value );
+
 			$fpdf->Multicell( $w, $font['font_size'], $value, $show_border, $center );
 
 		} // End If Statement
@@ -391,6 +394,9 @@ class WooThemes_Sensei_PDF_Certificate {
 				$value = Woothemes_Sensei_Certificates_Utils::convert_utf8_to_latin1( $value );
 			}
 
+			// The PDF library writes text left to right, so put Hebrew text into visual order.
+			$value = Woothemes_Sensei_Certificates_Utils::reorder_rtl_text( $value );
+
 			$fpdf->Cell( $w, $h, $value, $show_border, $position, $center );
 
 		} // End If Statement
@@ -461,6 +467,9 @@ class WooThemes_Sensei_PDF_Certificate {
 			if ( 'latin' === $fonttype ) {
 				$value = Woothemes_Sensei_Certificates_Utils::convert_utf8_to_latin1( $value );
 			}
+
+			// The PDF library writes text left to right, so put Hebrew text into visual order.
+			$value = Woothemes_Sensei_Certificates_Utils::reorder_rtl_text( $value );
 
 			$fpdf->Cell( $w, $h, $value );
 
