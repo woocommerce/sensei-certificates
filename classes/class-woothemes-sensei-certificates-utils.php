@@ -75,15 +75,13 @@ class Woothemes_Sensei_Certificates_Utils {
 	}
 
 	/**
-	 * Reorder right-to-left (Hebrew) text into visual order for the PDF renderer.
+	 * Convert Hebrew text from logical order to visual order (the order it appears on the page, left to right).
 	 *
-	 * The PDF library writes characters left to right in the order they are given and has no
-	 * bidirectional text support, so Hebrew text would be printed reversed. This puts each line
-	 * into the order it should appear on the page, left to right.
+	 * The PDF library draws characters left to right in the order it is given them, so
+	 * right-to-left text has to be in visual order before it is passed in.
 	 *
-	 * Lines without Hebrew characters are returned unchanged. Each line is handled on its own,
-	 * so a learner name placed on its own line is reordered correctly, but a long Hebrew
-	 * paragraph that the PDF library has to wrap is not.
+	 * Lines without Hebrew characters are returned unchanged. Each line is handled separately,
+	 * so text that the PDF library wraps over several lines is not reordered correctly.
 	 *
 	 * @since 2.6.1
 	 *
