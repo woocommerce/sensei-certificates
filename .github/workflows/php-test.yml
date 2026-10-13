@@ -13,14 +13,23 @@ concurrency:
 
 jobs:
     test:
-        name: PHP ${{ matrix.php }} / WordPress ${{ matrix.wp }} / Sensei ${{ matrix.sensei }}
+        name: "PHP Unit Tests (${{ matrix.php }}, ${{ matrix.wp }}${{ matrix.sensei == 'trunk' && ', Sensei trunk' || '' }})"
         runs-on: ubuntu-latest
         strategy:
             fail-fast: false
             matrix:
                 include:
                     - php: '7.4'
-                      wp: '6.9.0'
+                      wp: minimum
+                      sensei: latest
+                    - php: '8.2'
+                      wp: latest
+                      sensei: latest
+                    - php: '8.3'
+                      wp: latest
+                      sensei: latest
+                    - php: '8.5'
+                      wp: latest
                       sensei: latest
                     - php: '8.3'
                       wp: latest
@@ -60,7 +69,17 @@ jobs:
               run: |
                   set -euo pipefail
                   wp_ref="$WP_VERSION"
-                  if [[ "$wp_ref" == latest ]]; then
+                  if [[ "$wp_ref" == minimum ]]; then
+                      wp_ref=$(sed -nE 's/^[[:space:]]*\*[[:space:]]*Requires at least:[[:space:]]*([0-9]+\.[0-9]+(\.[0-9]+)?).*/\1/p' sensei-certificates/woothemes-sensei-certificates.php)
+                      if [[ -z "$wp_ref" ]]; then
+                          echo "::error::Could not read the minimum WordPress version from the plugin header"
+                          exit 1
+                      fi
+                      # wordpress-develop tags include the patch version for initial releases.
+                      if [[ "$wp_ref" =~ ^[0-9]+\.[0-9]+$ ]]; then
+                          wp_ref="$wp_ref.0"
+                      fi
+                  elif [[ "$wp_ref" == latest ]]; then
                       wp_ref=$(curl --fail --silent --show-error 'https://api.wordpress.org/core/version-check/1.7/' | jq -er '.offers[0].version')
                   fi
                   sensei_ref="$SENSEI_VERSION"
