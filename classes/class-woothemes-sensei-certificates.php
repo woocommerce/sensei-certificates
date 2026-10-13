@@ -192,6 +192,7 @@ class WooThemes_Sensei_Certificates {
 		add_action( 'init', array( $instance, 'setup_certificates_post_type' ), 110 );
 		add_filter( 'manage_edit-certificate_columns', array( $instance, 'post_type_custom_column_headings' ) );
 		add_action( 'manage_certificate_posts_custom_column', array( $instance, 'post_type_custom_column_content' ), 10, 2 );
+		add_filter( 'posts_search', array( $instance, 'search_certificates' ), 10, 2 );
 
 		/**
 		 * FRONTEND
@@ -592,6 +593,63 @@ class WooThemes_Sensei_Certificates {
 
 		register_post_type( 'certificate', $args );
 	} // End setup_certificates_post_type()
+
+	/**
+	 * Search certificate numbers, students and course titles in the admin list.
+	 *
+	 * @since 2.7.0
+	 * @param string   $search Existing search SQL.
+	 * @param WP_Query $query  Current query.
+	 * @return string Search SQL.
+	 */
+	public function search_certificates( $search, $query ) {
+		if ( ! is_admin() || ! $query->is_main_query() || 'certificate' !== $query->get( 'post_type' ) || empty( $query->get( 'search_terms' ) ) ) {
+			return $search;
+		}
+
+		global $wpdb;
+
+		$clauses  = array();
+		$wildcard = $query->get( 'exact' ) ? '' : '%';
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Use WordPress's search exclusion setting.
+		$exclusion_prefix = apply_filters( 'wp_query_search_exclusion_prefix', '-' );
+
+		foreach ( $query->get( 'search_terms' ) as $term ) {
+			$exclude = $exclusion_prefix && 0 === strpos( $term, $exclusion_prefix );
+			if ( $exclude ) {
+				$term = substr( $term, 1 );
+			}
+			$like = $wildcard . $wpdb->esc_like( $term ) . $wildcard;
+
+			// IN keeps certificates unique even when multiple related student or course records match.
+			$matches   = $wpdb->prepare(
+				"({$wpdb->posts}.post_title LIKE %s
+				OR {$wpdb->posts}.ID IN (
+					SELECT student_meta.post_id FROM {$wpdb->postmeta} AS student_meta
+					INNER JOIN {$wpdb->users} AS student ON student.ID = student_meta.meta_value
+					WHERE student_meta.meta_key = 'learner_id'
+					AND (student.display_name LIKE %s OR student.user_login LIKE %s OR student.user_email LIKE %s)
+				)
+				OR {$wpdb->posts}.ID IN (
+					SELECT course_meta.post_id FROM {$wpdb->postmeta} AS course_meta
+					INNER JOIN {$wpdb->posts} AS course ON course.ID = course_meta.meta_value
+					WHERE course_meta.meta_key = 'course_id'
+					AND course.post_type = 'course'
+					AND course.post_title LIKE %s
+				))",
+				$like,
+				$like,
+				$like,
+				$like,
+				$like
+			);
+			$clauses[] = $exclude ? 'NOT ' . $matches : $matches;
+		}
+
+		$search = ' AND (' . implode( ' AND ', $clauses ) . ')';
+
+		return $search;
+	}
 
 
 	/**
