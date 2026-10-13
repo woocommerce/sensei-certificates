@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="tests/unit-tests/bootstrap.php" backupGlobals="false" colors="true"
+    convertErrorsToExceptions="true" convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true" convertDeprecationsToExceptions="true">
+    <php>
+        <server name="SERVER_NAME" value="example.org"/>
+        <server name="SERVER_PORT" value="80"/>
+        <server name="REMOTE_ADDR" value="127.0.0.1"/>
+    </php>
+    <testsuites>
+        <testsuite name="Sensei LMS Certificates">
+            <directory prefix="test-" suffix=".php">tests/unit-tests/tests</directory>
+        </testsuite>
+    </testsuites>
+    <coverage>
+        <include>
+            <directory suffix=".php">classes</directory>
+            <file>sensei-certificates-functions.php</file>
+        </include>
+    </coverage>
+</phpunit>
