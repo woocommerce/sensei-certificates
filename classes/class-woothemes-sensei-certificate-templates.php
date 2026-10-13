@@ -272,7 +272,7 @@ class WooThemes_Sensei_Certificate_Templates {
 	public function post_type_custom_column_headings( $defaults ) {
 
 		unset( $defaults['date'] );
-		$defaults['learner']        = __( 'Learner', 'sensei-certificates' );
+		$defaults['learner']        = __( 'Student', 'sensei-certificates' );
 		$defaults['course']         = __( 'Course', 'sensei-certificates' );
 		$defaults['date_completed'] = __( 'Date Completed', 'sensei-certificates' );
 		$defaults['actions']        = __( 'Actions', 'sensei-certificates' );

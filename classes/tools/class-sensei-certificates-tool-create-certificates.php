@@ -56,7 +56,7 @@ class Sensei_Certificates_Tool_Create_Certificates implements Sensei_Tool_Interf
 	 * @return string
 	 */
 	public function get_description() {
-		return __( 'Creates certificates for learners who have already completed Courses.', 'sensei-certificates' );
+		return __( 'Creates certificates for students who have already completed courses.', 'sensei-certificates' );
 	}
 
 	/**

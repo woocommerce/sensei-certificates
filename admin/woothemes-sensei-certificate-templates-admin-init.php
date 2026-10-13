@@ -111,7 +111,7 @@ function sensei_certificate_template_admin_help_tab() {
 		array(
 			'id'      => 'sensei_certificate_template_overview_help_tab',
 			'title'   => __( 'Overview', 'sensei-certificates' ),
-			'content' => '<p>' . __( 'The Sensei LMS Certificates extension allows you to create and configure customizable certificate templates which can be attached to Sensei Courses.  Your learners will earn a Certificate which they can download and share with others once they have completed a course.', 'sensei-certificates' ) . '</p>',
+			'content' => '<p>' . __( 'The Sensei LMS Certificates extension allows you to create and configure customizable certificate templates which can be attached to Sensei courses. Your students will earn a certificate which they can download and share with others once they have completed a course.', 'sensei-certificates' ) . '</p>',
 		)
 	);
 
@@ -177,7 +177,7 @@ function sensei_certificate_template_how_to_help_tab_content() {
 		<li><?php esc_html_e( 'Set a Certificate Name, and Certificate Background Image.  Optionally configure and add some Certificate Data fields (see the "Editing a Certificate" section for more details)', 'sensei-certificates' ); ?></li>
 		<li><?php esc_html_e( 'Next click "Publish" to save your certificate template.  You can also optionally "Preview" the certificate to check your work and field layout.', 'sensei-certificates' ); ?></li>
 		<li><?php esc_html_e( 'Next go to Sensei &gt; All Courses and either create a new course or edit an existing one, and assigning the template you created to the course.', 'sensei-certificates' ); ?></li>
-		<li><?php esc_html_e( 'Your learners can now earn a Certificate when they have completed a course! Your existing learners who have already completed a course will automatically have certificates generated for them when you installed the plugin.', 'sensei-certificates' ); ?></li>
+		<li><?php esc_html_e( 'Your students can now earn a certificate when they complete a course! Certificates were automatically generated when you installed the plugin for students who had already completed a course.', 'sensei-certificates' ); ?></li>
 	</ol>
 	<?php
 }
