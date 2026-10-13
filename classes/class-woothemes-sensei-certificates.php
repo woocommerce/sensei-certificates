@@ -621,21 +621,19 @@ class WooThemes_Sensei_Certificates {
 			}
 			$like = $wildcard . $wpdb->esc_like( $term ) . $wildcard;
 
-			// EXISTS keeps certificates unique even when more than one related field matches.
+			// IN keeps certificates unique even when multiple related student or course records match.
 			$matches   = $wpdb->prepare(
 				"({$wpdb->posts}.post_title LIKE %s
-				OR EXISTS (
-					SELECT 1 FROM {$wpdb->postmeta} AS student_meta
+				OR {$wpdb->posts}.ID IN (
+					SELECT student_meta.post_id FROM {$wpdb->postmeta} AS student_meta
 					INNER JOIN {$wpdb->users} AS student ON student.ID = student_meta.meta_value
-					WHERE student_meta.post_id = {$wpdb->posts}.ID
-					AND student_meta.meta_key = 'learner_id'
+					WHERE student_meta.meta_key = 'learner_id'
 					AND (student.display_name LIKE %s OR student.user_login LIKE %s OR student.user_email LIKE %s)
 				)
-				OR EXISTS (
-					SELECT 1 FROM {$wpdb->postmeta} AS course_meta
+				OR {$wpdb->posts}.ID IN (
+					SELECT course_meta.post_id FROM {$wpdb->postmeta} AS course_meta
 					INNER JOIN {$wpdb->posts} AS course ON course.ID = course_meta.meta_value
-					WHERE course_meta.post_id = {$wpdb->posts}.ID
-					AND course_meta.meta_key = 'course_id'
+					WHERE course_meta.meta_key = 'course_id'
 					AND course.post_type = 'course'
 					AND course.post_title LIKE %s
 				))",

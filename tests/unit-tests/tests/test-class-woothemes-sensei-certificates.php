@@ -164,18 +164,19 @@ class WooThemes_Sensei_Certificates_Test extends WP_UnitTestCase {
 	 */
 	public function search_terms() {
 		return array(
-			'number without student or course links' => array( '123ef', array( 'abc123ef' ) ),
-			'display name'                           => array( 'Lovelace', array( 'abcdefgh' ) ),
-			'username'                               => array( 'student_login', array( 'abcdefgh' ) ),
-			'email'                                  => array( 'ada@example.org', array( 'abcdefgh' ) ),
-			'course title'                           => array( 'Computing', array( 'abcdefgh' ) ),
-			'quoted name'                            => array( '"Ada Lovelace"', array( 'abcdefgh' ) ),
-			'combined fields'                        => array( 'Lovelace Computing', array( 'abcdefgh' ) ),
-			'excluded term absent from certificate'  => array( 'Computing -unrelated', array( 'abcdefgh' ) ),
-			'excluded student'                       => array( 'Computing -Lovelace', array() ),
-			'excluded course'                        => array( 'Lovelace -Computing', array() ),
-			'unmatched term'                         => array( 'Lovelace Biology', array() ),
-			'quote escaping'                         => array( "' OR 1=1 --", array() ),
+			'number without student or course links'    => array( '123ef', array( 'abc123ef' ) ),
+			'exclusion without student or course links' => array( '123ef -Lovelace', array( 'abc123ef' ) ),
+			'display name'                              => array( 'Lovelace', array( 'abcdefgh' ) ),
+			'username'                                  => array( 'student_login', array( 'abcdefgh' ) ),
+			'email'                                     => array( 'ada@example.org', array( 'abcdefgh' ) ),
+			'course title'                              => array( 'Computing', array( 'abcdefgh' ) ),
+			'quoted name'                               => array( '"Ada Lovelace"', array( 'abcdefgh' ) ),
+			'combined fields'                           => array( 'Lovelace Computing', array( 'abcdefgh' ) ),
+			'excluded term absent from certificate'     => array( 'Computing -unrelated', array( 'abcdefgh' ) ),
+			'excluded student'                          => array( 'Computing -Lovelace', array() ),
+			'excluded course'                           => array( 'Lovelace -Computing', array() ),
+			'unmatched term'                            => array( 'Lovelace Biology', array() ),
+			'quote escaping'                            => array( "' OR 1=1 --", array() ),
 		);
 	}
 
