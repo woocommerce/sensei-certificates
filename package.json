@@ -15,7 +15,11 @@
   "bugs": {
     "url": "https://github.com/woocommerce/sensei-certificates/issues"
   },
+  "dependencies": {
+    "@wordpress/icons": "wp-6.0"
+  },
   "devDependencies": {
+    "@wordpress/env": "10.39.0",
     "@wordpress/scripts": "wp-6.0"
   },
   "scripts": {
@@ -40,8 +44,5 @@
   },
   "config": {
     "wp_org_slug": "sensei-certificates"
-  },
-  "dependencies": {
-    "@wordpress/icons": "wp-6.0"
   }
 }

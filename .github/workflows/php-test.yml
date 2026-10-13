@@ -1,0 +1,92 @@
+name: PHP Tests
+
+on:
+    pull_request:
+    workflow_call:
+
+permissions:
+    contents: read
+
+concurrency:
+    group: php-test-${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    test:
+        name: PHP ${{ matrix.php }} / WordPress ${{ matrix.wp }} / Sensei ${{ matrix.sensei }}
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    - php: '7.4'
+                      wp: '6.9.0'
+                      sensei: latest
+                    - php: '8.3'
+                      wp: latest
+                      sensei: trunk
+        env:
+            WP_VERSION: ${{ matrix.wp }}
+            SENSEI_VERSION: ${{ matrix.sensei }}
+        services:
+            mysql:
+                image: mysql:8.0
+                env:
+                    MYSQL_ROOT_PASSWORD: root
+                ports:
+                    - 3306:3306
+                options: >-
+                    --health-cmd="mysqladmin ping --password=root"
+                    --health-interval=10s
+                    --health-timeout=5s
+                    --health-retries=10
+        steps:
+            - name: Checkout Certificates
+              uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+              with:
+                  path: sensei-certificates
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
+              with:
+                  php-version: ${{ matrix.php }}
+                  extensions: mysqli
+                  tools: composer
+                  coverage: none
+
+            - name: Resolve dependency versions
+              id: versions
+              shell: bash
+              run: |
+                  set -euo pipefail
+                  wp_ref="$WP_VERSION"
+                  if [[ "$wp_ref" == latest ]]; then
+                      wp_ref=$(curl --fail --silent --show-error 'https://api.wordpress.org/core/version-check/1.7/' | jq -er '.offers[0].version')
+                  fi
+                  sensei_ref="$SENSEI_VERSION"
+                  if [[ "$sensei_ref" == latest ]]; then
+                      sensei_version=$(curl --fail --silent --show-error 'https://api.wordpress.org/plugins/info/1.0/sensei-lms.json' | jq -er '.version')
+                      sensei_ref="version/$sensei_version"
+                  fi
+                  echo "wp=$wp_ref" >> "$GITHUB_OUTPUT"
+                  echo "sensei=$sensei_ref" >> "$GITHUB_OUTPUT"
+
+            - name: Checkout WordPress
+              uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+              with:
+                  repository: WordPress/wordpress-develop
+                  ref: ${{ steps.versions.outputs.wp }}
+                  path: wordpress-develop
+
+            - name: Checkout Sensei
+              uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+              with:
+                  repository: Automattic/sensei
+                  ref: ${{ steps.versions.outputs.sensei }}
+                  path: sensei-lms
+
+            - name: Prepare test environment
+              run: ./sensei-certificates/tests/unit-tests/bin/gh-prepare-env.sh
+
+            - name: Run PHPUnit
+              run: ./sensei-certificates/tests/unit-tests/bin/gh-phpunit.sh

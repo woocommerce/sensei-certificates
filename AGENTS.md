@@ -36,7 +36,7 @@ Sensei LMS Certificates is a **runtime** extension of Sensei LMS — there is no
 ## Development environment
 - Match your Node version to `.nvmrc` (`nvm use` reads it) before any `npm` command, so the committed `package-lock.json` isn't rewritten.
 - Install JS deps with `npm ci` and PHP dev tooling (PHPCS) with `composer install`.
-- This repo has no wp-env / Docker sandbox of its own. Develop against a WordPress install that already has an active, compatible Sensei LMS — e.g. the local site this checkout lives under.
+- Use `make up` for an isolated wp-env / Docker site with the sibling Sensei LMS checkout. Existing local WordPress installs with compatible Sensei LMS are also supported. See `tests/README.md` for prerequisites and test commands.
 
 ## Building
 - `npm run build` — full release build: `build:assets` then `archive` (produces `sensei-certificates.zip` via `composer archive`).
@@ -46,7 +46,7 @@ Sensei LMS Certificates is a **runtime** extension of Sensei LMS — there is no
 
 ## Testing
 - **Test-driven development**: Write tests for non-trivial new behavior and bug fixes — a failing test first, then implement until it passes. Skip tests only for trivial changes such as copy/string tweaks, config, mechanical renames, one-line passthroughs, and styling. If unsure whether a change needs a test, ask rather than skip by default.
-- **No harness is wired up yet** (no PHPUnit, Jest, or Playwright config in this repo). Standing up the appropriate runner is part of doing a change properly — add PHPUnit (the WordPress-plugin standard, as the `sensei` repo uses) for PHP behavior, or coordinate with the maintainer. Do not treat the missing harness as license to skip tests, and do not fabricate `make test` / `npm test` commands that don't exist.
+- **PHP integration tests**: Run `make test-php`, or `make test-php-filter FILTER="TestClass::method"` for a focused run. The PHPUnit setup in `tests/unit-tests/` follows Sensei Pro and loads real Sensei LMS and Certificates into WordPress. See `tests/README.md` for Docker and existing test-environment setup. No Jest or Playwright suite is configured.
 - **Ad-hoc UI verification**: For UI or behavior changes, use the `ui-verification` skill (`.claude/skills/ui-verification/SKILL.md`), which scopes from the diff and drives the running site via Chrome DevTools MCP. Requires a WordPress install with Sensei LMS active and a course a student can complete.
 
 ## Linting

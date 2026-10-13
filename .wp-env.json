@@ -1,0 +1,12 @@
+{
+  "core": "WordPress/WordPress#6.9",
+  "phpVersion": "7.4",
+  "plugins": [ ".", "../sensei" ],
+  "port": 8884,
+  "testsPort": 8885,
+  "config": {
+    "WP_DEBUG": true,
+    "WP_DEBUG_LOG": true,
+    "WP_ENVIRONMENT_TYPE": "development"
+  }
+}
