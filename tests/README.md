@@ -55,7 +55,9 @@ Never point WordPress's test configuration at a development or production databa
 
 ## Continuous integration
 
-`.github/workflows/php-test.yml` runs the suite against the minimum WordPress/PHP
-versions with the latest stable Sensei, and the latest stable WordPress with PHP
-8.3 and Sensei trunk. Its preparation scripts use separate WordPress and Sensei
+`.github/workflows/php-test.yml` follows Sensei LMS's required PHP/WordPress version combinations:
+PHP 7.4 with the minimum WordPress version from the plugin header, and PHP 8.2,
+8.3, and 8.5 with the latest stable WordPress. These runs use the latest stable
+Sensei. An additional PHP 8.3 / latest WordPress / Sensei trunk run checks upstream
+compatibility. Its preparation scripts use separate WordPress and Sensei
 checkouts, following Sensei Pro's CI pattern without its WooCommerce dependencies.
