@@ -26,7 +26,7 @@ function sensei_certificates_updates_list( $updates ) {
 		'manual' => array(
 			'sensei_update_users_certificate_data'      => array(
 				'title'   => 'Create Certificates',
-				'desc'    => 'Creates certificates for learners who have already completed Courses.',
+				'desc'    => 'Creates certificates for students who have already completed courses.',
 				'product' => 'Sensei LMS Certificates',
 			),
 			'sensei_create_master_certificate_template' => array(

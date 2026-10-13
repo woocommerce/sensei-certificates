@@ -519,8 +519,8 @@ class WooThemes_Sensei_Certificates {
 		);
 
 		$fields['certificates_view_profile'] = array(
-			'name'        => __( 'View in Learner Profile', 'sensei-certificates' ),
-			'description' => __( 'Show a View Certificate link in the Learner Profile page.', 'sensei-certificates' ),
+			'name'        => __( 'View in Student Profile', 'sensei-certificates' ),
+			'description' => __( 'Show a View Certificate link in the Student Profile page.', 'sensei-certificates' ),
 			'type'        => 'checkbox',
 			'default'     => true,
 			'section'     => 'certificate-settings',
@@ -528,7 +528,7 @@ class WooThemes_Sensei_Certificates {
 
 		$fields['certificates_public_viewable'] = array(
 			'name'        => __( 'Public Certificate', 'sensei-certificates' ),
-			'description' => __( 'Allow the Learner to share their Certificate with the public. (The learner will have to enable this in their profile by going to mysite.com/learner/{learner_username})', 'sensei-certificates' ),
+			'description' => __( 'Allow the student to share their certificate with the public. (The student will have to enable this in their profile by going to mysite.com/learner/{learner_username}).', 'sensei-certificates' ),
 			'type'        => 'checkbox',
 			'default'     => true,
 			'section'     => 'certificate-settings',
@@ -663,7 +663,7 @@ class WooThemes_Sensei_Certificates {
 	public function post_type_custom_column_headings( $defaults ) {
 
 		unset( $defaults['date'] );
-		$defaults['learner']        = __( 'Learner', 'sensei-certificates' );
+		$defaults['learner']        = __( 'Student', 'sensei-certificates' );
 		$defaults['course']         = __( 'Course', 'sensei-certificates' );
 		$defaults['date_completed'] = __( 'Date Completed', 'sensei-certificates' );
 		$defaults['actions']        = __( 'Actions', 'sensei-certificates' );

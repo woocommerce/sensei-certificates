@@ -17,7 +17,7 @@
 - Stop generating blank certificates for courses that have no certificate template assigned. [#389](https://github.com/woocommerce/sensei-certificates/pull/389)
 - Clean up code to meet WordPress coding standards. [#375](https://github.com/woocommerce/sensei-certificates/pull/375)
 - Defer View Certificate block registration to init. [#376](https://github.com/woocommerce/sensei-certificates/pull/376)
-- Prevent PHP notices and a Sensei deprecation warning when viewing or rendering a certificate whose learner no longer exists. [#378](https://github.com/woocommerce/sensei-certificates/pull/378)
+- Prevent PHP notices and a Sensei deprecation warning when viewing or rendering a certificate whose student no longer exists. [#378](https://github.com/woocommerce/sensei-certificates/pull/378)
 - Show original issue date on certificate. [#379](https://github.com/woocommerce/sensei-certificates/pull/379)
 
 ### Deprecated
@@ -45,7 +45,7 @@
 
 ## 2.5.0 - 2023-08-24
 
-- New: Display View Certificate button on public learner profile. [#341](https://github.com/woocommerce/sensei-certificates/pull/341)
+- New: Display View Certificate button on public student profile. [#341](https://github.com/woocommerce/sensei-certificates/pull/341)
 - Fix: Deprecation notice for creation of dynamic property. [#343](https://github.com/woocommerce/sensei-certificates/pull/343)
 
 ## 2.4.0 - 2023-06-01
@@ -160,7 +160,7 @@
 - Add the Display Name to the admin list table for certificates enhancement.
 - Fix Errors when previewing a certificate template bug.
 - Fix the selected admin menu item when editing a certificate template.
-- Fix Permissions error on certificate learner and course links bug.
+- Fix Permissions error on certificate student and course links bug.
 - Fix PHP 7 Errors/Notices on tfpdf.
 
 ## 1.0.13 - 2016-04-29
