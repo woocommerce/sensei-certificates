@@ -1,0 +1,4 @@
+Significance: minor
+Type: added
+
+Search certificates by student display name, username, email, and course title in the Certificates admin list.
