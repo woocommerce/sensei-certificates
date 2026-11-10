@@ -1,5 +1,12 @@
 *** Changelog ***
 
+## 2.7.0 - 2026-11-10
+### Added
+- Search certificates by student display name, username, email, and course title in the Certificates admin list. [#411](https://github.com/woocommerce/sensei-certificates/pull/411)
+
+### Changed
+- Use student terminology in public-facing certificate text. [#412](https://github.com/woocommerce/sensei-certificates/pull/412)
+
 ## 2.6.0 - 2026-09-03
 ### Security
 - Fix unauthenticated certificate PII disclosure. [#377](https://github.com/woocommerce/sensei-certificates/pull/377)
