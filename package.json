@@ -19,7 +19,7 @@
     "@wordpress/icons": "wp-6.0"
   },
   "devDependencies": {
-    "@wordpress/env": "11.16.0",
+    "@wordpress/env": "12.1.0",
     "@wordpress/scripts": "wp-6.0"
   },
   "scripts": {
