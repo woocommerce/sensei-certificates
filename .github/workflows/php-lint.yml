@@ -3,6 +3,9 @@ name: PHP Linting
 on:
     pull_request:
 
+permissions:
+    contents: read
+
 concurrency:
     group: php-lint-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.sha }}
     cancel-in-progress: true
