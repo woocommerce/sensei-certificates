@@ -1,0 +1,4 @@
+Significance: patch
+Type: fixed
+
+Fix Hebrew names and text printing in reverse order on PDF certificates.
