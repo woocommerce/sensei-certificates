@@ -44,5 +44,13 @@
   },
   "config": {
     "wp_org_slug": "sensei-certificates"
+  },
+  "overrides": {
+    "@wp-playground/storage": {
+      "isomorphic-git": "~1.38.10"
+    },
+    "copy-webpack-plugin": {
+      "serialize-javascript": "^7.0.5"
+    }
   }
 }
